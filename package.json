@@ -1,0 +1,19 @@
+{
+  "name": "lewagon-aoc",
+  "private": true,
+  "dependencies": {
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "5.4.0",
+    "autoprefixer": "^9",
+    "postcss": "^7",
+    "stimulus": "^2.0.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "turbolinks": "^5.2.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3.11.2"
+  }
+}

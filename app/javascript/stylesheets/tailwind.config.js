@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   mode: 'jit',
   purge: {
@@ -40,7 +42,10 @@ module.exports = {
             light: '#FE9092'
           }
         }
-      }
+      },
+      fontFamily: {
+        mono: ['\"Source Code Pro\"', ...defaultTheme.fontFamily.mono]
+      },
     },
   },
   variants: {},

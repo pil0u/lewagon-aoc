@@ -1,2 +1,2 @@
 web: bundle exec rails s
-webpack: bin/webpack-dev-server
+webpack: TAILWIND_MODE=watch bin/webpack-dev-server

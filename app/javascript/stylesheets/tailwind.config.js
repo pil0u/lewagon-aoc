@@ -1,9 +1,13 @@
 module.exports = {
-  purge: [
-    './app/**/*.html.erb',
-    './app/helpers/**/*.rb',
-    './app/javascript/**/*.js'
-  ],
+  mode: 'jit',
+  purge: {
+    enabled: true,
+    content: [
+      './app/**/*.html.erb',
+      './app/helpers/**/*.rb',
+      './app/javascript/**/*.js'
+    ]
+  },
   theme: {
     extend: {
       colors: {

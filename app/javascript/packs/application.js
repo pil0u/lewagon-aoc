@@ -11,3 +11,5 @@ Turbolinks.start()
 
 import "controllers"
 require("css/application.scss")
+
+const images = require.context("../images", true)

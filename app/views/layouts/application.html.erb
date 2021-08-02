@@ -16,8 +16,8 @@
   </head>
 
   <body class="font-mono text-aoc-gray bg-dark">
-    <p class="text-right"><%= notice %></p>
-    <p class="text-right"><%= alert %></p>
+    <p class="text-right"><%= "#{notice}".html_safe %></p>
+    <p class="text-right"><%= "#{alert}".html_safe %></p>
     <%= yield %>
   </body>
 </html>

@@ -10,4 +10,6 @@ Rails.start()
 Turbolinks.start()
 
 import "controllers"
-require("css/application.scss")
+import "stylesheets/application"
+
+const images = require.context("../images", true)

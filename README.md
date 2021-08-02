@@ -1,24 +1,21 @@
-# README
+# lewagon_aoc
+```
+Ruby    2.7.4  
+Rails   6.1.4
+```
+## `.env` file
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This file is mainly used for development purposes. It is _not_ versioned and never should.
 
-Things you may want to cover:
+## Overmind
 
-* Ruby version
+Overmind is a tool to run the processes defined in a `Procfile` in different `tmux`.
+You can install the tool on your machine [following these instructions](https://github.com/DarthSim/overmind#installation).
 
-* System dependencies
+Add these lines to your local `.env` file:
+``` sh
+OVERMIND_PROCFILE=Procfile.dev
+OVERMIND_PORT=3000
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Then, instead of the usual `rails s`, you can run `overmind s`.

@@ -1,0 +1,18 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer components {
+  .text-shadow-gold {
+    text-shadow: 0 0 5px #FFFF66;
+  }
+  .text-shadow-green {
+    text-shadow: 0 0 2px #00CC00, 0 0 5px #00CC00;
+  }
+  .text-shadow-red {
+    text-shadow: 0 0 2px #FD1015, 0 0 5px #FD1015;
+  }
+  .text-shadow-white {
+    text-shadow: 0 0 5px #FFFFFF;
+  }
+}

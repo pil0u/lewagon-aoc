@@ -8,6 +8,9 @@ module.exports = {
       './app/**/*.html.erb',
       './app/helpers/**/*.rb',
       './app/javascript/**/*.js'
+    ],
+    safelist: [
+      'underline'
     ]
   },
   theme: {

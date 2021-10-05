@@ -1,6 +1,6 @@
 <% flash.each do |type, message| %>
   <div data-controller="flash" class="absolute right-[-30rem] px-4 py-2 flex rounded bg-aoc-gray text-dark">
-    <p class="font-semibold max-w-[12rem] sm:max-w-[24rem]"><%= message %></p>
+    <p class="font-semibold max-w-[12rem] sm:max-w-[24rem]"><%= message.html_safe %></p>
     <button data-action="flash#close" class="ml-12 px-2 focus:outline-none">
       <i class="fas fa-times"></i>
     </button>

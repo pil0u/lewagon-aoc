@@ -6,7 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       "contact Pilou",
       "https://lewagon-alumni.slack.com/team/URZ0F4TEF",
       target: :blank,
-      class: "text-white text-shadow-white"
+      class: "underline"
     ).html_safe
 
     if @user.persisted?

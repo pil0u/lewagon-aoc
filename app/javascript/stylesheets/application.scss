@@ -3,6 +3,34 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .header-link {
+    @apply hover:text-aoc-gold hover:text-shadow-gold;
+  }
+
+  #links {
+    #dashboard:before {
+      content: "dshbrd_";
+    }
+    #scoreboard:before {
+      content: "scrbrd_";
+    }
+    #settings:before {
+      content: "sttngs_";
+    }
+
+    &:hover {
+      #dashboard:before {
+        content: "dashboard";
+      }
+      #scoreboard:before {
+        content: "scoreboard";
+      }
+      #settings:before {
+        content: "settings";
+      }
+    }
+  }
+
   .text-shadow-gold {
     text-shadow: 0 0 5px #FFFF66;
   }

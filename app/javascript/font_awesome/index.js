@@ -8,10 +8,12 @@ import { dom, library } from "@fortawesome/fontawesome-svg-core"
  */
 
 import {
+  faPowerOff,
   faTimes
 } from "@fortawesome/free-solid-svg-icons"
 
 library.add(
+  faPowerOff,
   faTimes
 )
 

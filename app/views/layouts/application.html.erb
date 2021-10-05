@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html class="GLOBAL RESPONSIVENESS // lg:text-lg">
   <head>
-    <title>Le Wagon x AOC</title>
+    <title>Le Wagon x AoC</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= favicon_pack_tag 'favicon.png' %>
+    <%= javascript_pack_tag "application", "data-turbolinks-track": "reload" %>
+    <%= stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload" %>
+    <%= favicon_pack_tag "favicon.png" %>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
@@ -16,6 +16,10 @@
 
   <body class="font-mono text-aoc-gray bg-dark">
     <%= render "shared/flashes" %>
-    <%= yield %>
+    <%= render "shared/header" %>
+
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>

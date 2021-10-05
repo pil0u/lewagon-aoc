@@ -1,18 +1,20 @@
-<h1 class="my-8 text-center text-xl">
-  <span class="text-wagon-red text-shadow-red">Le Wagon</span>
-  x 
-  <span class="text-aoc-green-flash text-shadow-green">Advent of Code</span>
-</h1>
+<header>
+  <h1 class="my-8 text-center text-xl">
+    <span class="text-wagon-red text-shadow-red">Le Wagon</span>
+    <span>x</span>
+    <span class="text-aoc-green-flash text-shadow-green">Advent of Code</span>
+  </h1>
 
-<% if user_signed_in? %>
+  <% if user_signed_in? %>
 
-  <div id="links" class="mx-auto px-6 py-2 max-w-md flex justify-between items-center border border-aoc-gray-darker">
-    <%= link_to "", root_path, id: "dashboard", class: "header-link" %>
-    <%= link_to "", scoreboard_path, id: "scoreboard", class: "header-link" %>
-    <%= link_to "", settings_path, id: "settings", class: "header-link" %>
-    <%= link_to destroy_user_session_path, method: :delete, class: "hover:text-wagon-red" do %>
-      <i class="fas fa-power-off"></i>
-    <% end %>
-  </div>
+    <div id="links" class="mx-auto px-6 py-2 max-w-md flex justify-between items-center border border-aoc-gray-darker">
+      <%= link_to "", root_path, id: "dashboard", class: "header-link" %>
+      <%= link_to "", scoreboard_path, id: "scoreboard", class: "header-link" %>
+      <%= link_to "", settings_path, id: "settings", class: "header-link" %>
+      <%= link_to destroy_user_session_path, method: :delete, class: "hover:text-wagon-red" do %>
+        <i class="fas fa-power-off"></i>
+      <% end %>
+    </div>
 
-<% end %>
+  <% end %>
+</header>

@@ -15,4 +15,10 @@ class User < ApplicationRecord
       user.city = city
     end
   end
+
+  def status
+    return "KO" if aoc_id.nil?
+
+    Score.where(user: self).any? ? "OK" : "pending"
+  end
 end

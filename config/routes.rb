@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   unauthenticated { root to: "pages#home", as: :unauth_root }
   authenticated { root to: "pages#dashboard" }
 
+  get "/about", to: "pages#about"
   get "/scoreboard", to: "pages#scoreboard"
   get "/settings", to: "pages#settings"
 end

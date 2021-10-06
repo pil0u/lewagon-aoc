@@ -7,11 +7,12 @@
 
   <% if user_signed_in? %>
 
-    <div id="links" class="mx-auto px-6 py-2 max-w-md flex justify-between items-center border border-aoc-gray-darker">
-      <%= link_to "", root_path, id: "dashboard", class: "header-link" %>
-      <%= link_to "", scoreboard_path, id: "scoreboard", class: "header-link" %>
-      <%= link_to "", settings_path, id: "settings", class: "header-link" %>
-      <%= link_to destroy_user_session_path, method: :delete, class: "hover:text-wagon-red" do %>
+    <div id="header-links" class="mx-auto px-4 py-2 max-w-md flex justify-between items-center border border-aoc-gray-darker">
+      <%= link_to "?", about_path, id: "about", class: "px-2 text-xl font-semibold text-center text-aoc-green-flash hover:text-shadow-green" %>
+      <%= link_to "", root_path, id: "dashboard", class: "px-2 link" %>
+      <%= link_to "", scoreboard_path, id: "scoreboard", class: "px-2 link" %>
+      <%= link_to "", settings_path, id: "settings", class: "px-2 link" %>
+      <%= link_to destroy_user_session_path, method: :delete, class: "px-2 hover:text-wagon-red" do %>
         <i class="fas fa-power-off"></i>
       <% end %>
     </div>

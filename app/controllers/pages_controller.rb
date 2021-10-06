@@ -3,12 +3,11 @@ class PagesController < ApplicationController
 
   def home; end
 
-  def dashboard
-  end
+  def about; end
 
-  def scoreboard
-  end
+  def dashboard; end
 
-  def settings
-  end
+  def scoreboard; end
+
+  def settings; end
 end

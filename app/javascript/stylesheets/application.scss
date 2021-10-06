@@ -3,11 +3,7 @@
 @import "tailwindcss/utilities";
 
 @layer components {
-  .header-link {
-    @apply hover:text-aoc-gold hover:text-shadow-gold;
-  }
-
-  #links {
+  #header-links {
     #dashboard:before {
       content: "dshbrd_";
     }
@@ -31,15 +27,38 @@
     }
   }
 
+  .link {
+    @apply hover:text-aoc-gold hover:text-shadow-gold;
+  }
+
+  .link-external {
+    @apply text-aoc-green-flash hover:text-shadow-green;
+  }
+
+  .paragraph {
+    @apply text-justify whitespace-pre-line;
+  }
+
+  .strong {
+    @apply text-white text-shadow-white;
+  }
+
+  .text-shadow-atmospheric {
+    text-shadow: 0 0 5px #79A2D8;
+  }
+
   .text-shadow-gold {
     text-shadow: 0 0 5px #FFFF66;
   }
+
   .text-shadow-green {
     text-shadow: 0 0 2px #00CC00, 0 0 5px #00CC00;
   }
+
   .text-shadow-red {
     text-shadow: 0 0 2px #FD1015, 0 0 5px #FD1015;
   }
+
   .text-shadow-white {
     text-shadow: 0 0 5px #FFFFFF;
   }

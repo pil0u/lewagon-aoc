@@ -14,12 +14,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
   </head>
 
-  <body class="font-mono text-aoc-gray bg-dark">
+  <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
     <%= render "shared/flashes" %>
     <%= render "shared/header" %>
 
     <main>
       <%= yield %>
     </main>
+
+    <%= render "shared/footer" %>
   </body>
 </html>

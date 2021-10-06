@@ -28,7 +28,7 @@
   }
 
   .link {
-    @apply hover:text-aoc-gold hover:text-shadow-gold;
+    @apply text-aoc-gold hover:text-shadow-gold;
   }
 
   .link-external {

@@ -4,7 +4,7 @@
   <ol class="list-decimal" start=0>
     <div class="my-8 px-4">
       <li class="py-2 text-center strong">TL;DR</li>
-      <p class="mt-8 paragraph">Go to <%= link_to "your dashboard", root_path, class: "text-aoc-gold hover:text-shadow-gold" %> and follow the instructions to synchronize your scores.</p>
+      <p class="mt-8 paragraph">Go to <%= link_to "your dashboard", root_path, class: "link" %> and follow the instructions to synchronize your scores.</p>
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
@@ -28,7 +28,7 @@
       <li class="py-2 text-center strong cursor-pointer">I'm not sure about my coding skills...</li>
       <p class="mt-8 paragraph" data-qa-target="answer">The difficulty of a puzzle varies from day to day. The first part of each puzzle is <span class="strong">largely accessible to a Wagoner, student or Alumni</span>. The second part is usually harder, but still accessible to more or less experienced profiles.
 
-      Although the author of the puzzles attempts to <span class="strong">increase the difficulty over time, in reality it's not the case and pretty random</span>. You may find puzzle #20 much easier than #5. The notion of difficulty is very relative to your personal skillset and past experience with problem solving in general.
+      Although the author of the puzzles attempts to <span class="strong">increase the difficulty over time, in reality it's not the case and pretty random</span>. You may find puzzle #20 much easier than #5. The notion of difficulty is very relative to your personal skill set and past experience with problem solving in general.
 
       If you get stuck on a puzzle, talk about it! This event with <span class="text-wagon-red text-shadow-red">Le Wagon</span> is, above all, an occasion <span class="strong">for sharing, learning and helping each other, regardless of your initial skill level</span>. It's also a perfect moment to reconnect with your cohort 🤙
       </p>
@@ -39,12 +39,12 @@
       <p class="mt-8 paragraph" data-qa-target="answer">The AoC platform is where you find and solve the puzzles.
       
       Because @ <span class="text-wagon-red text-shadow-red">Le Wagon</span> we like things spicy, we wanted to build a scoreboard by batch number and by city ⚔️
-      The leaderboard system on AoC is not flexible enough for that. We built this platform to create a link between Kitt and AoC, so we can build <%= link_to "custom agregated scoreboards", scoreboard_path, class: "text-aoc-gold hover:text-shadow-gold" %>.</p>
+      The leaderboard system on AoC is not flexible enough for that. We built this platform to create a link between Kitt and AoC, so we can build <%= link_to "custom agregated scoreboards", scoreboard_path, class: "link" %>.</p>
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
       <li class="py-2 text-center strong cursor-pointer">How can I enter the contest?</li>
-      <p class="mt-8 paragraph" data-qa-target="answer">To dive in and make sure your (hard) earned points go to the right team, you need to be properly synced between here and AoC. It takes less than a minute: go directly to <%= link_to "your dashboard", root_path, class: "text-aoc-gold hover:text-shadow-gold" %> and follow the steps.</p>
+      <p class="mt-8 paragraph" data-qa-target="answer">To dive in and make sure your (hard) earned points go to the right team, you need to be properly synced between here and AoC. It takes less than a minute: go directly to <%= link_to "your dashboard", root_path, class: "link" %> and follow the steps.</p>
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">

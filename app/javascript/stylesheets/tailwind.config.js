@@ -10,7 +10,11 @@ module.exports = {
       './app/javascript/**/*.js'
     ],
     safelist: [
-      'underline'
+      'underline',
+      'text-aoc-atmospheric',
+      'text-aoc-green',
+      'text-wagon-red-light',
+      'text-xl'
     ]
   },
   theme: {

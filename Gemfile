@@ -29,10 +29,13 @@ gem 'omniauth-kitt', '~> 0.1.0'
 gem 'omniauth-rails_csrf_protection', '~> 1.0.0'
 
 group :development, :test do
-  gem "brakeman",             "~> 5.1.1"
-  gem "bundler-audit",        "~> 0.9.0"
+  gem "brakeman", "~> 5.1.1"
+  gem "bundler-audit", "~> 0.9.0"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem "rubocop", "~> 1.22", require: false
+  gem "rubocop-performance", "~> 1.11", require: false
+  gem "rubocop-rails", "~> 2.12", require: false
 end
 
 group :development do

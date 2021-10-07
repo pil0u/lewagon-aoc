@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[home]
-  before_action :get_status, only: %i[dashboard]
+  before_action :find_status, only: %i[dashboard]
 
   def home; end
 
@@ -18,7 +20,7 @@ class PagesController < ApplicationController
 
   private
 
-  def get_status
+  def find_status
     @status = current_user.status
   end
 end

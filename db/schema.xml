@@ -162,11 +162,11 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="last_api_check_start" null="0" autoincrement="0">
+    <row name="last_api_fetch_start" null="0" autoincrement="0">
       <datatype>TIMESTAMP WITH TIME ZONE</datatype>
       <default>'NULL'</default>
     </row>
-    <row name="last_api_check_end" null="0" autoincrement="0">
+    <row name="last_api_fetch_end" null="0" autoincrement="0">
       <datatype>TIMESTAMP WITH TIME ZONE</datatype>
       <default>'NULL'</default>
     </row>

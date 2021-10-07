@@ -10,5 +10,6 @@ Rails.application.routes.draw do
 
   get "/about", to: "pages#about"
   get "/scoreboard", to: "pages#scoreboard"
-  get "/settings", to: "pages#settings"
+  get "/settings", to: "users#edit"
+  patch "/settings", to: "users#update"
 end

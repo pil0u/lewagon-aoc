@@ -170,14 +170,6 @@
       <datatype>TIMESTAMP WITH TIME ZONE</datatype>
       <default>'NULL'</default>
     </row>
-    <row name="slots_room_1" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="slots_room_2" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>

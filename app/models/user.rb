@@ -21,6 +21,6 @@ class User < ApplicationRecord
   def status
     return "KO" if aoc_id.nil?
 
-    Score.where(user: self).any? ? "OK" : "pending"
+    synced ? "OK" : "pending"
   end
 end

@@ -73,6 +73,10 @@
       <default>NULL</default>
       <relation table="cities" row="id" />
     </row>
+    <row name="synced" null="1" autoincrement="0">
+      <datatype>BOOLEAN</datatype>
+      <default>'false'</default>
+    </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
@@ -130,6 +134,22 @@
       <default>NULL</default>
       <relation table="batches" row="id" />
     </row>
+    <row name="day" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="challenge" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="best_completion_unix_time" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
@@ -178,7 +198,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="434" y="402" name="(WIP) city_scores_agg">
+  <table x="428" y="502" name="(WIP) city_scores_agg">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>

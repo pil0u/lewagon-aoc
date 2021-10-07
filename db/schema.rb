@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_153221) do
+ActiveRecord::Schema.define(version: 2021_10_07_220129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_153221) do
     t.integer "aoc_id"
     t.bigint "batch_id"
     t.bigint "city_id"
+    t.boolean "synced", default: false
     t.index ["aoc_id"], name: "index_users_on_aoc_id"
     t.index ["batch_id"], name: "index_users_on_batch_id"
     t.index ["city_id"], name: "index_users_on_city_id"

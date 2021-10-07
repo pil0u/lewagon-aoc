@@ -48,3 +48,4 @@ cities = [
 end
 
 City.create!(cities)
+Rails.logger.info "Cities seeded ✔️"

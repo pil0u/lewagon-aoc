@@ -7,8 +7,6 @@ HardcodedString:
   enabled: false
 
 linters:
-  I18nCorrector:
-    enabled: false
   Rubocop:
     enabled: true
     rubocop_config:

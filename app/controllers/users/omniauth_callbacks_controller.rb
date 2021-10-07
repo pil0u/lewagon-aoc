@@ -5,12 +5,10 @@ module Users
     def kitt
       # pp request.env["omniauth.auth"]
       @user = User.from_kitt(request.env["omniauth.auth"])
-      @contact_me = ActionController::Base.helpers.sanitize(
-        view_context.link_to(
-          "contact Pilou",
-          "slack://user?team=T02NE0241&id=URZ0F4TEF",
-          class: "underline"
-        )
+      @contact_me = view_context.link_to(
+        "contact Pilou",
+        "slack://user?team=T02NE0241&id=URZ0F4TEF",
+        class: "underline"
       )
 
       if @user.persisted?

@@ -40,3 +40,6 @@ jobs:
 
       - name: Run Rubocop
         run: bundle exec rubocop
+
+      - name: Run ERB Lint
+        run: bundle exec erblint --lint-all

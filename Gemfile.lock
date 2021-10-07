@@ -62,6 +62,14 @@ GEM
       zeitwerk (~> 2.3)
     ast (2.4.2)
     bcrypt (3.1.16)
+    better_html (1.0.16)
+      actionview (>= 4.0)
+      activesupport (>= 4.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      html_tokenizer (~> 0.0.6)
+      parser (>= 2.4)
+      smart_properties
     bindex (0.8.1)
     bootsnap (1.7.5)
       msgpack (~> 1.0)
@@ -83,6 +91,14 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
+    erb_lint (0.1.1)
+      activesupport
+      better_html (~> 1.0.7)
+      html_tokenizer
+      parser (>= 2.7.1.4)
+      rainbow
+      rubocop
+      smart_properties
     erubi (1.10.0)
     faraday (1.5.1)
       faraday-em_http (~> 1.0)
@@ -105,6 +121,7 @@ GEM
     globalid (0.5.2)
       activesupport (>= 5.0)
     hashie (4.1.0)
+    html_tokenizer (0.0.7)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
@@ -231,6 +248,7 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
+    smart_properties (1.16.3)
     spring (2.1.1)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -274,6 +292,7 @@ DEPENDENCIES
   byebug
   devise (~> 4.8)
   dotenv-rails
+  erb_lint (~> 0.1.1)
   jbuilder (~> 2.7)
   listen (~> 3.3)
   omniauth-kitt (~> 0.1.0)

@@ -3,6 +3,10 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .contact-me {
+    @apply border-b border-aoc-gray-dark hover:strong hover:border-aoc-gray;
+  }
+
   #header-links {
     #dashboard:before {
       content: "dshbrd_";
@@ -25,6 +29,19 @@
         content: "settings";
       }
     }
+  }
+
+  input[type=number] {
+    -moz-appearance:textfield;
+  }
+
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none; 
+    margin: 0;
+  }
+
+  .input-field {
+    @apply w-48 px-2 bg-aoc-gray-darker bg-opacity-60;
   }
 
   .link {

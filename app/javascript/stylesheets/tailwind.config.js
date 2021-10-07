@@ -13,8 +13,7 @@ module.exports = {
       'underline',
       'text-aoc-atmospheric',
       'text-aoc-green',
-      'text-wagon-red-light',
-      'text-xl'
+      'text-wagon-red-light'
     ]
   },
   theme: {

@@ -3,15 +3,79 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .contact-me {
+    @apply border-b border-aoc-gray-dark hover:strong hover:border-aoc-gray;
+  }
+
+  #header-links {
+    #dashboard:before {
+      content: "dshbrd_";
+    }
+    #scoreboard:before {
+      content: "scrbrd_";
+    }
+    #settings:before {
+      content: "sttngs_";
+    }
+
+    &:hover {
+      #dashboard:before {
+        content: "dashboard";
+      }
+      #scoreboard:before {
+        content: "scoreboard";
+      }
+      #settings:before {
+        content: "settings";
+      }
+    }
+  }
+
+  input[type=number] {
+    -moz-appearance:textfield;
+  }
+
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none; 
+    margin: 0;
+  }
+
+  .input-field {
+    @apply w-48 px-2 bg-aoc-gray-darker bg-opacity-60;
+  }
+
+  .link {
+    @apply text-aoc-gold hover:text-shadow-gold;
+  }
+
+  .link-external {
+    @apply text-aoc-green-flash hover:text-shadow-green;
+  }
+
+  .paragraph {
+    @apply text-justify whitespace-pre-line;
+  }
+
+  .strong {
+    @apply text-white text-shadow-white;
+  }
+
+  .text-shadow-atmospheric {
+    text-shadow: 0 0 5px #79A2D8;
+  }
+
   .text-shadow-gold {
     text-shadow: 0 0 5px #FFFF66;
   }
+
   .text-shadow-green {
     text-shadow: 0 0 2px #00CC00, 0 0 5px #00CC00;
   }
+
   .text-shadow-red {
     text-shadow: 0 0 2px #FD1015, 0 0 5px #FD1015;
   }
+
   .text-shadow-white {
     text-shadow: 0 0 5px #FFFFFF;
   }

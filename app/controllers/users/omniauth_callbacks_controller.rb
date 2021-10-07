@@ -4,9 +4,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_kitt(request.env["omniauth.auth"])
     @contact_me = view_context.link_to(
       "contact Pilou",
-      "https://lewagon-alumni.slack.com/team/URZ0F4TEF",
-      target: :blank,
-      class: "text-white text-shadow-white"
+      "slack://user?team=T02NE0241&id=URZ0F4TEF",
+      class: "underline"
     ).html_safe
 
     if @user.persisted?

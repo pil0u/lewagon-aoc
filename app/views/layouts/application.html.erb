@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html class="GLOBAL RESPONSIVENESS // lg:text-lg">
   <head>
-    <title>Le Wagon x AOC</title>
+    <title>Le Wagon x AoC</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= favicon_pack_tag 'favicon.png' %>
+    <%= javascript_pack_tag "application", "data-turbolinks-track": "reload" %>
+    <%= stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload" %>
+    <%= favicon_pack_tag "favicon.png" %>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;600&display=swap" rel="stylesheet">
   </head>
 
-  <body class="font-mono text-aoc-gray bg-dark">
-    <p class="text-right"><%= "#{notice}".html_safe %></p>
-    <p class="text-right"><%= "#{alert}".html_safe %></p>
-    <%= yield %>
+  <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
+    <%= render "shared/flashes" %>
+    <%= render "shared/header" %>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <%= render "shared/footer" %>
   </body>
 </html>

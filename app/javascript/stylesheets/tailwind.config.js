@@ -8,6 +8,12 @@ module.exports = {
       './app/**/*.html.erb',
       './app/helpers/**/*.rb',
       './app/javascript/**/*.js'
+    ],
+    safelist: [
+      'underline',
+      'text-aoc-atmospheric',
+      'text-aoc-green',
+      'text-wagon-red-light'
     ]
   },
   theme: {

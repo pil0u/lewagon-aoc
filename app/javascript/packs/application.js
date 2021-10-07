@@ -10,6 +10,7 @@ Rails.start()
 Turbolinks.start()
 
 import "controllers"
+import "font_awesome"
 import "stylesheets/application"
 
 const images = require.context("../images", true)

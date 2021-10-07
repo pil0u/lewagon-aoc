@@ -5,5 +5,11 @@ Rails.application.routes.draw do
     delete "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
   end
 
-  root to: "pages#home"
+  unauthenticated { root to: "pages#home", as: :unauth_root }
+  authenticated { root to: "pages#dashboard" }
+
+  get "/about", to: "pages#about"
+  get "/scoreboard", to: "pages#scoreboard"
+  get "/settings", to: "users#edit"
+  patch "/settings", to: "users#update"
 end

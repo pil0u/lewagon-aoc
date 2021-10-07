@@ -1,0 +1,27 @@
+<div class="my-12 mx-4 sm:mx-auto max-w-sm">
+  <%= form_with model: @user, url: settings_path, class: "flex flex-col items-end gap-y-3" do |f| %>
+
+    <div>
+      <%= f.label :username, class: "strong" %>
+      <%= f.text_field :username, value: @user.username, class: "input-field" %>
+    </div>
+
+    <div>
+      <%= f.label :aoc_id, "AoC ID", class: "strong" %>
+      <%= f.number_field :aoc_id, value: @user.aoc_id, min: 0, class: "input-field" %>
+    </div>
+
+    <div>
+      <%= f.label :batch_number, "Batch #", class: "strong" %>
+      <%= f.number_field :batch_number, value: @user.batch.number, min: 0, class: "input-field" %>
+    </div>
+
+    <div>
+      <%= f.label :city_name, "City", class: "strong" %>
+      <%= f.collection_select(:city_id, City.all, :id, :name, { selected: @user.city_id }, class: "h-7 input-field") %>
+    </div>
+    <span class="text-sm tracking-tight">Your city is not here? <%= link_to "Ping me", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %></span>
+
+    <%= f.submit "SAVE", class: "bg-transparent cursor-pointer my-8 px-6 py-2 border border-aoc-gray-darker hover:text-aoc-gold hover:text-shadow-gold" %>
+  <% end %>
+</div>

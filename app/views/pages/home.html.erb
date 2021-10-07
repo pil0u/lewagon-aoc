@@ -1,21 +1,19 @@
-<main class="mt-8 mx-auto max-w-md border border-aoc-gray-darker p-2">
-  <h1 class="text-center">
-    <span class="text-wagon-red text-shadow-red">Le Wagon</span>
-    x 
-    <span class="text-aoc-green-flash text-shadow-green">Advent of Code</span>
-  </h1>
+<div class="my-8 mx-4 sm:mx-auto max-w-prose">
+  <p class="paragraph"><%= link_to "Advent of Code", "https://adventofcode.com/", target: :blank, class: "link-external" %> is an Advent calendar of small programming puzzles that can be solved in any programming language you like.
+  Every day, from <span class="strong">December 1st</span> to <span class="strong">December 25th</span>, a new challenge pops up with some fictional Christmas backstory 🎄
 
-  <% if user_signed_in? %>
+  You don't need a computer science background to participate - just a little programming knowledge and some problem solving skills will get you pretty far.
+  
+  Solving any puzzle earns you points 💎, not only for you, but also for <span class="strong">your batch & your campus city</span> @ <span class="text-wagon-red text-shadow-red">Le Wagon</span>.</p>
+  
+  <p class="whitespace-pre-line text-center">
+    Which Alumni batch is the strongest?
+    Which city has crafted the best talents?
 
-  <p>Authenticated as <span class="text-white text-shadow-white"><%= current_user.username %></span></p>
-  <%= link_to "Sign out", destroy_user_session_path,
-    method: :delete, class: "hover:text-aoc-gold hover:text-shadow-gold" %>
+    <em>There can be only one</em>.
+  </p>
+</div>
 
-  <% else %>
-
-  <p>Unauthenticated</p>
-  <%= link_to "Sign in with Kitt", user_kitt_omniauth_authorize_path,
-    method: :post, class: "hover:text-aoc-gold hover:text-shadow-gold" %>
-
-  <% end %>
-</main>
+<%= link_to user_kitt_omniauth_authorize_path, method: :post, class: "my-8 mx-auto p-2 max-w-md flex justify-around border border-aoc-gray-darker hover:text-aoc-gold hover:text-shadow-gold" do %>
+  <span>Sign in with Kitt</span>
+<% end %>

@@ -18,6 +18,19 @@ class User < ApplicationRecord
     end
   end
 
+  def self.update_sync_status_from(aoc_json)
+    members = aoc_json["members"].keys.map(&:to_i)
+
+    find_each do |user|
+      new_synced = members.include?(user.aoc_id)
+
+      if user.synced != new_synced
+        user.update(synced: new_synced)
+        Rails.logger.info "#{user.id}-#{user.username} is now #{new_synced ? '' : 'un'}synced."
+      end
+    end
+  end
+
   def status
     return "KO" if aoc_id.nil?
 

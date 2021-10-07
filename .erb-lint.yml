@@ -1,0 +1,22 @@
+---
+EnableDefaultLinters: true
+exclude:
+  - '**/vendor/**/*'
+
+HardcodedString:
+  enabled: false
+
+linters:
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      inherit_from:
+        - .rubocop.yml
+      Layout/InitialIndentation:
+        Enabled: false
+      Layout/TrailingEmptyLines:
+        Enabled: false
+      Rails/OutputSafety:
+        Enabled: false
+      Style/FrozenStringLiteralComment:
+        Enabled: false

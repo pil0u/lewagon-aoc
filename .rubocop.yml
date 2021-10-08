@@ -23,6 +23,9 @@ Naming/VariableNumber:
 Rails/BulkChangeTable:
   Enabled: false
 
+Rails/SkipsModelValidations:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 

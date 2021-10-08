@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_220129) do
+ActiveRecord::Schema.define(version: 2021_10_07_225838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,10 +40,8 @@ ActiveRecord::Schema.define(version: 2021_10_07_220129) do
   end
 
   create_table "states", force: :cascade do |t|
-    t.datetime "last_api_check_start"
-    t.datetime "last_api_check_end"
-    t.integer "slots_room_1"
-    t.integer "slots_room_2"
+    t.datetime "last_api_fetch_start"
+    t.datetime "last_api_fetch_end"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

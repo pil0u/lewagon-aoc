@@ -5,7 +5,7 @@ require "scores"
 
 namespace :scores do
   desc "Main task to call from Heroku Scheduler"
-  task update: %i[introduction refresh conclusion] do; end
+  task update: %i[introduction refresh conclusion]
 
   desc "Update last_api_fetch_start"
   task introduction: :environment do

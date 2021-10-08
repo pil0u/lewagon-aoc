@@ -17,7 +17,7 @@ module Aoc
   end
 
   def self.to_scores_array(json)
-    Rails.logger.info "Mapping data to scores table format..."
+    Rails.logger.info "  Transforming JSON to match the scores table format..."
 
     user_aoc_ids = User.pluck(:aoc_id, :id).to_h.except(nil)
     now = Time.now.utc

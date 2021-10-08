@@ -1,7 +1,15 @@
 # frozen_string_literal: true
 
-# Initialize cities
+# Initialize unique state row
+State.create!(
+  {
+    last_api_fetch_start: nil,
+    last_api_fetch_end: nil
+  }
+)
+Rails.logger.info "✔ States initialized"
 
+# Initialize cities
 cities = [
   "Amsterdam",
   "Bali",
@@ -48,4 +56,4 @@ cities = [
 end
 
 City.create!(cities)
-Rails.logger.info "Cities seeded ✔️"
+Rails.logger.info "✔ Cities initialized"

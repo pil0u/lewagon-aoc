@@ -16,7 +16,7 @@ module Scores
   def self.compute_for(table_name)
     Rails.logger.info "  Calculating scores for table '#{table_name}'..."
 
-    # TODO: avoid SQL injections?
+    # This is _not_ subject to SQL injections because table_name is always determined when method is called
     query = <<-SQL.squish
       with
 

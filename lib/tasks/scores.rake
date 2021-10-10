@@ -5,7 +5,7 @@ require "scores"
 
 namespace :scores do
   desc "Main task to call from Heroku Scheduler"
-  task update: %i[introduction refresh conclusion]
+  task update: %i[introduction refresh aggregate compute conclusion]
 
   desc "Update last_api_fetch_start"
   task introduction: :environment do
@@ -29,7 +29,29 @@ namespace :scores do
 
     scores = Aoc.to_scores_array(json)
     Scores.insert(scores)
-    Rails.logger.info "✔ Individual scores updated"
+    Rails.logger.info "✔ Individual results updated"
+  end
+
+  desc "Aggregate & insert best timestamps for batch numbers & cities"
+  task aggregate: :environment do
+    Rails.logger.info "  Erasing all batch_scores..."
+    BatchScore.delete_all
+
+    Rails.logger.info "  Inserting new batch_scores..."
+    ActiveRecord::Base.connection.exec_insert(Batch.agg_insert_query, "agg_insert_batches")
+
+    Rails.logger.info "✔ Results aggregated by batch"
+
+    # TODO: Cities
+  end
+
+  desc "Compute & insert scores"
+  task compute: :environment do
+    Scores.compute_for("scores")
+    Rails.logger.info "✔ Individual scores computed"
+
+    Scores.compute_for("batch_scores")
+    Rails.logger.info "✔ Batch scores computed"
   end
 
   desc "Update last_api_fetch_end"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_10_134113) do
+ActiveRecord::Schema.define(version: 2021_10_10_202103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,18 @@ ActiveRecord::Schema.define(version: 2021_10_10_134113) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_cities_on_name", unique: true
+  end
+
+  create_table "city_scores", force: :cascade do |t|
+    t.bigint "city_id", null: false
+    t.integer "day", limit: 2
+    t.integer "challenge", limit: 2
+    t.bigint "user_id", null: false
+    t.bigint "completion_unix_time"
+    t.integer "score"
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city_id"], name: "index_city_scores_on_city_id"
+    t.index ["user_id"], name: "index_city_scores_on_user_id"
   end
 
   create_table "scores", force: :cascade do |t|
@@ -73,6 +85,8 @@ ActiveRecord::Schema.define(version: 2021_10_10_134113) do
 
   add_foreign_key "batch_scores", "batches"
   add_foreign_key "batch_scores", "users"
+  add_foreign_key "city_scores", "cities"
+  add_foreign_key "city_scores", "users"
   add_foreign_key "scores", "users"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"

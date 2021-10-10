@@ -6,6 +6,7 @@ class User < ApplicationRecord
   belongs_to :batch
   belongs_to :city, optional: true
   has_many :batch_scores, dependent: :destroy
+  has_many :city_scores, dependent: :destroy
   has_many :scores, dependent: :destroy
 
   def self.from_kitt(auth)

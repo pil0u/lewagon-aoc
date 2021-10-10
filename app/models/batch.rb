@@ -21,6 +21,7 @@ class Batch < ApplicationRecord
         on s.user_id = u.id
         left join batches b
         on u.batch_id = b.id
+        where b.id is not null
         order by batch_id, day, challenge
       )
 

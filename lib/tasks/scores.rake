@@ -40,9 +40,15 @@ namespace :scores do
     Rails.logger.info "  Inserting new batch_scores..."
     ActiveRecord::Base.connection.exec_insert(Batch.agg_insert_query, "agg_insert_batches")
 
-    Rails.logger.info "✔ Results aggregated by batch"
+    Rails.logger.info "✔ Results aggregated & inserted by batch number"
 
-    # TODO: Cities
+    Rails.logger.info "  Erasing all city_scores..."
+    CityScore.delete_all
+
+    Rails.logger.info "  Inserting new city_scores..."
+    ActiveRecord::Base.connection.exec_insert(City.agg_insert_query, "agg_insert_cities")
+
+    Rails.logger.info "✔ Results aggregated & inserted by city"
   end
 
   desc "Compute & insert scores"
@@ -52,6 +58,9 @@ namespace :scores do
 
     Scores.compute_for("batch_scores")
     Rails.logger.info "✔ Batch scores computed"
+
+    Scores.compute_for("city_scores")
+    Rails.logger.info "✔ City scores computed"
   end
 
   desc "Update last_api_fetch_end"

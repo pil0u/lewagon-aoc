@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_214948) do
+ActiveRecord::Schema.define(version: 2021_10_10_134113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "batch_scores", force: :cascade do |t|
+    t.bigint "batch_id", null: false
+    t.integer "day", limit: 2
+    t.integer "challenge", limit: 2
+    t.bigint "user_id", null: false
+    t.bigint "completion_unix_time"
+    t.integer "score"
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["batch_id"], name: "index_batch_scores_on_batch_id"
+    t.index ["user_id"], name: "index_batch_scores_on_user_id"
+  end
 
   create_table "batches", force: :cascade do |t|
     t.integer "number"
@@ -34,7 +46,6 @@ ActiveRecord::Schema.define(version: 2021_10_08_214948) do
     t.integer "challenge", limit: 2
     t.bigint "completion_unix_time"
     t.integer "score"
-    t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id", "day", "challenge"], name: "index_scores_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_scores_on_user_id"
@@ -43,8 +54,6 @@ ActiveRecord::Schema.define(version: 2021_10_08_214948) do
   create_table "states", force: :cascade do |t|
     t.datetime "last_api_fetch_start"
     t.datetime "last_api_fetch_end"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,14 +63,16 @@ ActiveRecord::Schema.define(version: 2021_10_08_214948) do
     t.string "uid"
     t.string "username"
     t.integer "aoc_id"
+    t.boolean "synced", default: false
     t.bigint "batch_id"
     t.bigint "city_id"
-    t.boolean "synced", default: false
     t.index ["aoc_id"], name: "index_users_on_aoc_id"
     t.index ["batch_id"], name: "index_users_on_batch_id"
     t.index ["city_id"], name: "index_users_on_city_id"
   end
 
+  add_foreign_key "batch_scores", "batches"
+  add_foreign_key "batch_scores", "users"
   add_foreign_key "scores", "users"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"

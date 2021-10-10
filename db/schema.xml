@@ -63,6 +63,10 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
+    <row name="synced" null="1" autoincrement="0">
+      <datatype>BOOLEAN</datatype>
+      <default>'false'</default>
+    </row>
     <row name="batch_id" null="0" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -72,10 +76,6 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
       <relation table="cities" row="id" />
-    </row>
-    <row name="synced" null="1" autoincrement="0">
-      <datatype>BOOLEAN</datatype>
-      <default>'false'</default>
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
@@ -94,7 +94,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="452" y="102" name="(WIP) scores">
+  <table x="452" y="102" name="scores">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -120,11 +120,15 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>'NULL'</default>
+    </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
   </table>
-  <table x="427" y="302" name="(WIP) batch_scores_agg">
+  <table x="452" y="302" name="batch_scores">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -142,13 +146,22 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="best_completion_unix_time" null="1" autoincrement="0">
+    <row name="user_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <row name="completion_unix_time" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
     <row name="score" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
+    </row>
+    <row name="updated_at" null="0" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>'NULL'</default>
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
@@ -157,7 +170,7 @@
   <table x="402" y="52" name="⬇️ Updated from AoC's JSON API">
     <key type="PRIMARY" name=""></key>
   </table>
-  <table x="832" y="102" name="(WIP) states">
+  <table x="832" y="102" name="states">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -190,7 +203,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="428" y="502" name="(WIP) city_scores_agg">
+  <table x="436" y="551" name="(WIP) city_scores_agg">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>

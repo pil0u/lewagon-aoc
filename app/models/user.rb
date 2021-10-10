@@ -5,6 +5,8 @@ class User < ApplicationRecord
 
   belongs_to :batch
   belongs_to :city, optional: true
+  has_many :batch_scores, dependent: :destroy
+  has_many :city_scores, dependent: :destroy
   has_many :scores, dependent: :destroy
 
   def self.from_kitt(auth)
@@ -18,9 +20,22 @@ class User < ApplicationRecord
     end
   end
 
+  def self.update_sync_status_from(aoc_json)
+    members = aoc_json["members"].keys.map(&:to_i)
+
+    find_each do |user|
+      new_synced = members.include?(user.aoc_id)
+
+      if user.synced != new_synced
+        user.update(synced: new_synced)
+        Rails.logger.info "#{user.id}-#{user.username} is now #{new_synced ? '' : 'un'}synced."
+      end
+    end
+  end
+
   def status
     return "KO" if aoc_id.nil?
 
-    Score.where(user: self).any? ? "OK" : "pending"
+    synced ? "OK" : "pending"
   end
 end

@@ -16,7 +16,7 @@
       <li class="paragraph"><%= link_to "Log in to AoC", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any OAuth option</li>
 
       <%= form_with url: "https://adventofcode.com/2021/leaderboard/private/join", authenticity_token: false, html: { target: :blank } do |f| %>
-        <%= f.hidden_field :join_key, value: ENV["AOC_ROOM"] %>
+        <%= f.hidden_field :join_key, value: ENV["AOC_ROOMS"].split(",").first %>
         <li class="paragraph">Once logged in, <%= f.submit "click here", class: "link-external bg-transparent cursor-pointer" %> to join our leaderboard</li>
       <% end %>
 

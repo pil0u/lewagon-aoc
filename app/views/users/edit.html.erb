@@ -18,7 +18,7 @@
 
     <div>
       <%= f.label :city_name, "City", class: "strong" %>
-      <%= f.collection_select(:city_id, City.all, :id, :name, { selected: @user.city_id }, class: "h-7 input-field") %>
+      <%= f.collection_select(:city_id, City.all, :id, :name, { prompt: "", selected: @user.city_id }, class: "h-7 input-field") %>
     </div>
     <span class="text-sm tracking-tight">Your city is not here? <%= link_to "Ping me", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %></span>
 

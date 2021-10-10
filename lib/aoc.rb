@@ -33,7 +33,6 @@ module Aoc
             day: day.to_i,
             challenge: challenge.to_i,
             completion_unix_time: value["get_star_ts"],
-            created_at: now,
             updated_at: now
           }
 

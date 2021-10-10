@@ -5,7 +5,7 @@ class Batch < ApplicationRecord
   has_many :users, dependent: :nullify
 
   def self.agg_insert_query
-    <<-SQL
+    <<-SQL.squish
       with
 
       _ranked_by_batch as (

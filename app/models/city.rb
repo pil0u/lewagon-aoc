@@ -7,7 +7,7 @@ class City < ApplicationRecord
   validates :name, uniqueness: true
 
   def self.agg_insert_query
-    <<-SQL
+    <<-SQL.squish
       with
 
       _ranked_by_city as (

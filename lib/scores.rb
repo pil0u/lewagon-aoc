@@ -17,7 +17,7 @@ module Scores
     Rails.logger.info "  Calculating scores for table '#{table_name}'..."
 
     # TODO: avoid SQL injections?
-    query = """
+    query = <<-SQL.squish
       with
 
       _compute as (
@@ -33,7 +33,7 @@ module Scores
         score = _compute.score
       from _compute
       where #{table_name}.id = _compute.id
-    """
+    SQL
 
     ActiveRecord::Base.connection.exec_update(query, "compute_#{table_name}")
   end

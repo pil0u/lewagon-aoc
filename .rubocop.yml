@@ -26,6 +26,9 @@ Naming/VariableNumber:
 Rails/BulkChangeTable:
   Enabled: false
 
+Rails/CreateTableWithTimestamps:
+  Enabled: false
+
 Rails/SkipsModelValidations:
   Enabled: false
 

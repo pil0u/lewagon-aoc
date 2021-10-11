@@ -122,6 +122,7 @@ GEM
       activesupport (>= 5.0)
     hashie (4.1.0)
     html_tokenizer (0.0.7)
+    humanize (2.5.1)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
@@ -293,6 +294,7 @@ DEPENDENCIES
   devise (~> 4.8)
   dotenv-rails
   erb_lint (~> 0.1.1)
+  humanize (~> 2.5)
   jbuilder (~> 2.7)
   listen (~> 3.3)
   omniauth-kitt (~> 0.1.0)

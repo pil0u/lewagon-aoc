@@ -1,4 +1,5 @@
-# lewagon_aoc
+![Le Wagon x Advent of Code](public/thumbnail.png)
+
 ```
 Ruby    2.7.4  
 Rails   6.1.4.1

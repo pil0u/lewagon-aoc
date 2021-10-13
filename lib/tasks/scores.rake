@@ -55,7 +55,7 @@ namespace :scores do
     # 3. Incentivize groups to bring more players in
     #
     # Solution: take the median number of players by batch (or by city) as the maximum score and
-    # we use the same formula as the individual score.
+    # use the same formula as the individual score.
 
     max_batch_score = Help.median(User.group(:batch_id).count.values)
     Rails.logger.info "Maximum score_in_batch: #{max_batch_score}"

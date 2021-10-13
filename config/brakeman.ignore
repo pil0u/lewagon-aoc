@@ -1,26 +1,7 @@
 {
   "ignored_warnings": [
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "7e1551c3d622109555087525a4a6db21d50fcb00150ab9ea46a72687177f5bc7",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "lib/scores.rb",
-      "line": 38,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "ActiveRecord::Base.connection.exec_update(\"      with\\n\\n      _compute as (\\n        select\\n          id,\\n          dense_rank() over (partition by day, challenge order by completion_unix_time desc) as score\\n        from #{table_name}\\n      )\\n\\n      update #{table_name}\\n      set\\n        updated_at = current_timestamp,\\n        score = _compute.score\\n      from _compute\\n      where #{table_name}.id = _compute.id\\n\".squish, \"compute_#{table_name}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Scores",
-        "method": "s(:self).compute_for"
-      },
-      "user_input": "table_name",
-      "confidence": "Medium",
-      "note": ""
-    }
+
   ],
-  "updated": "2021-10-10 23:07:02 +0200",
+  "updated": "2021-10-13 02:50:12 +0200",
   "brakeman_version": "5.1.1"
 }

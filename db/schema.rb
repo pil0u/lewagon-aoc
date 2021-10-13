@@ -10,22 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_10_202103) do
+ActiveRecord::Schema.define(version: 2021_10_12_212610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "batch_scores", force: :cascade do |t|
-    t.bigint "batch_id", null: false
-    t.integer "day", limit: 2
-    t.integer "challenge", limit: 2
-    t.bigint "user_id", null: false
-    t.bigint "completion_unix_time"
-    t.integer "score"
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["batch_id"], name: "index_batch_scores_on_batch_id"
-    t.index ["user_id"], name: "index_batch_scores_on_user_id"
-  end
 
   create_table "batches", force: :cascade do |t|
     t.integer "number"
@@ -40,25 +28,18 @@ ActiveRecord::Schema.define(version: 2021_10_10_202103) do
     t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
-  create_table "city_scores", force: :cascade do |t|
-    t.bigint "city_id", null: false
-    t.integer "day", limit: 2
-    t.integer "challenge", limit: 2
-    t.bigint "user_id", null: false
-    t.bigint "completion_unix_time"
-    t.integer "score"
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["city_id"], name: "index_city_scores_on_city_id"
-    t.index ["user_id"], name: "index_city_scores_on_user_id"
-  end
-
   create_table "scores", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "day", limit: 2
     t.integer "challenge", limit: 2
     t.bigint "completion_unix_time"
-    t.integer "score"
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "rank_solo"
+    t.integer "rank_in_batch"
+    t.integer "rank_in_city"
+    t.integer "score_solo"
+    t.integer "score_in_batch"
+    t.integer "score_in_city"
     t.index ["user_id", "day", "challenge"], name: "index_scores_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_scores_on_user_id"
   end
@@ -83,10 +64,6 @@ ActiveRecord::Schema.define(version: 2021_10_10_202103) do
     t.index ["city_id"], name: "index_users_on_city_id"
   end
 
-  add_foreign_key "batch_scores", "batches"
-  add_foreign_key "batch_scores", "users"
-  add_foreign_key "city_scores", "cities"
-  add_foreign_key "city_scores", "users"
   add_foreign_key "scores", "users"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"

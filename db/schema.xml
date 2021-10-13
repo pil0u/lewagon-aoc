@@ -81,7 +81,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="202" y="602" name="cities">
+  <table x="249" y="304" name="cities">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -116,46 +116,27 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="score" null="1" autoincrement="0">
+    <row name="rank_solo" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="updated_at" null="0" autoincrement="0">
-      <datatype>TIMESTAMP</datatype>
-      <default>'NULL'</default>
-    </row>
-    <key type="PRIMARY" name="">
-      <part>id</part>
-    </key>
-  </table>
-  <table x="452" y="352" name="batch_scores">
-    <row name="id" null="1" autoincrement="1">
+    <row name="rank_in_batch" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="batch_id" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-      <relation table="batches" row="id" />
-    </row>
-    <row name="day" null="1" autoincrement="0">
+    <row name="rank_in_city" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="challenge" null="1" autoincrement="0">
+    <row name="score_solo" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="user_id" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-      <relation table="users" row="id" />
-    </row>
-    <row name="completion_unix_time" null="1" autoincrement="0">
+    <row name="score_in_batch" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
-    <row name="score" null="1" autoincrement="0">
+    <row name="score_in_city" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
@@ -190,52 +171,13 @@
   <table x="752" y="51" name="Log latest API request timestamps">
     <key type="PRIMARY" name=""></key>
   </table>
-  <table x="202" y="352" name="batches">
+  <table x="241" y="204" name="batches">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
     <row name="number" null="0" autoincrement="0">
       <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <key type="PRIMARY" name="">
-      <part>id</part>
-    </key>
-  </table>
-  <table x="452" y="602" name="city_scores">
-    <row name="id" null="1" autoincrement="1">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="city_id" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-      <relation table="cities" row="id" />
-    </row>
-    <row name="day" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="challenge" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="user_id" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-      <relation table="users" row="id" />
-    </row>
-    <row name="completion_unix_time" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="score" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-    </row>
-    <row name="updated_at" null="1" autoincrement="0">
-      <datatype>TIMESTAMP</datatype>
       <default>NULL</default>
     </row>
     <key type="PRIMARY" name="">

@@ -84,7 +84,7 @@
 
   <div class="my-8 mx-4 sm:mx-auto max-w-max grid grid-cols-5 p-5 gap-5">
     <% @days.each do |day| %>
-      <div class="calendar-tile flex flex-col items-center justify-center">
+      <div class="calendar-tile hover:wiggle flex flex-col items-center justify-center">
         <div class="relative flex items-center justify-center">
           <h2 class="<%= class_names(day_css(day, @day_of_december)) %> text-5xl"><%= day %></h2>
         </div>

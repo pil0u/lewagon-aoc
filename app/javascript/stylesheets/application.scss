@@ -91,4 +91,19 @@
   .text-shadow-white {
     text-shadow: 0 0 5px #FFFFFF;
   }
+
+  @keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    70% { transform: rotate(0deg); }
+    75% { transform: rotate(2.5deg); }
+    80% { transform: rotate(-5deg); }
+    85% { transform: rotate(7.5deg); }
+    90% { transform: rotate(-7.5deg); }
+    95% { transform: rotate(5deg); }
+    100% { transform: rotate(-2.5deg); }
+  }
+
+  .wiggle {
+    animation: wiggle 3s infinite;
+  }
 }

@@ -3,8 +3,20 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .calendar-tile {
+    @apply w-32 h-32 border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40 rounded-3xl select-none cursor-pointer;
+
+    &:hover h2 {
+      @apply strong;
+    }
+  }
+
   .contact-me {
     @apply border-b border-aoc-gray-dark hover:strong hover:border-aoc-gray;
+  }
+
+  .dashboard-tile {
+    @apply w-48 h-48 border-l border-aoc-gray-darker hover:bg-aoc-gray-darker cursor-default;
   }
 
   #header-links {

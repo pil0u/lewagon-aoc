@@ -22,7 +22,7 @@ namespace :scores do
     room_ids = ENV["AOC_ROOMS"].split(",")
 
     room_id = room_ids.first.split("-").first
-    json = Aoc.fetch_json(room_id)
+    json = Aoc.fetch_json(ENV["EVENT_YEAR"] || 2021, room_id, ENV['SESSION_COOKIE'])
 
     User.update_sync_status_from(json)
     Rails.logger.info "✔ Users sync status updated"

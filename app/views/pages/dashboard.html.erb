@@ -84,9 +84,19 @@
 
   <div class="my-8 mx-4 sm:mx-auto max-w-max grid grid-cols-5 p-5 gap-5">
     <% @advent_days.each do |advent_day| %>
-      <div class="calendar-tile hover:wiggle flex flex-col items-center justify-center">
-        <div class="relative flex items-center justify-center">
-          <h2 class="<%= class_names(day_css(@now, advent_day)) %> text-5xl"><%= advent_day.day %></h2>
+      <div data-controller="modal">
+        <div data-action="click->modal#open" class="calendar-tile hover:wiggle flex flex-col items-center justify-center <%= "wiggle" if @aoc_in_progress && @now.day == advent_day.day %>">
+          <div class="relative flex items-center justify-center">
+            <h2 class="<%= class_names(day_css(@now, advent_day)) %> text-5xl"><%= advent_day.day %></h2>
+          </div>
+        </div>
+
+        <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden fixed inset-0 z-10">
+          <div class="mt-64 mx-auto w-max flex">
+            <div class="text-3xl">
+              <span>Coming soon...</span>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>

@@ -13,8 +13,8 @@
       </div>
 
       <div class="h-1/2 flex items-center">
-        <% if @day_of_december %>
-          <%= link_to "> here <", "https://adventofcode.com/2021/day/#{@day_of_december}", target: :blank, class: "link-external text-2xl" %>
+        <% if @aoc_in_progress %>
+          <%= link_to "> here <", "https://adventofcode.com/#{@year}/day/#{@now.day}", target: :blank, class: "link-external text-2xl" %>
         <% else %>
           <span class="text-2xl">None 🤷</span>
         <% end %>
@@ -83,10 +83,10 @@
   </div>
 
   <div class="my-8 mx-4 sm:mx-auto max-w-max grid grid-cols-5 p-5 gap-5">
-    <% @days.each do |day| %>
+    <% @advent_days.each do |advent_day| %>
       <div class="calendar-tile hover:wiggle flex flex-col items-center justify-center">
         <div class="relative flex items-center justify-center">
-          <h2 class="<%= class_names(day_css(day, @day_of_december)) %> text-5xl"><%= day %></h2>
+          <h2 class="<%= class_names(day_css(@now, advent_day)) %> text-5xl"><%= advent_day.day %></h2>
         </div>
       </div>
     <% end %>
@@ -100,7 +100,7 @@
     <ol class="my-4 mx-14 list-decimal flex flex-col gap-y-1.5">
       <li class="paragraph"><%= link_to "Log in to AoC", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any OAuth option</li>
 
-      <%= form_with url: "https://adventofcode.com/2021/leaderboard/private/join", authenticity_token: false, html: { target: :blank } do |f| %>
+      <%= form_with url: "https://adventofcode.com/#{@year}/leaderboard/private/join", authenticity_token: false, html: { target: :blank } do |f| %>
         <%= f.hidden_field :join_key, value: ENV["AOC_ROOMS"].split(",").first %>
         <li class="paragraph">Once logged in, <%= f.submit "click here", class: "link-external bg-transparent cursor-pointer" %> to join our leaderboard</li>
       <% end %>

@@ -43,4 +43,25 @@ module Aoc
 
     scores
   end
+
+  def self.in_progress?
+    now = Time.now.getlocal("-05:00")
+
+    now >= start_time && now < end_time
+  end
+
+  def self.next_puzzle_time_from(time)
+    return start_time if time < start_time
+    return start_time + 1.year if time >= end_time
+
+    (time + 1.day).midnight
+  end
+
+  def self.start_time
+    Time.new(2021, 12, 1, 0, 0, 0, "-05:00")
+  end
+
+  def self.end_time
+    Time.new(2021, 12, 25, 0, 0, 0, "-05:00")
+  end
 end

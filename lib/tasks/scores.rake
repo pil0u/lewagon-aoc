@@ -57,12 +57,12 @@ namespace :scores do
     # Solution: take the median number of players by batch (or by city) as the maximum score and
     # use the same formula as the individual score.
 
-    max_batch_score = Help.median(User.group(:batch_id).count.values)
+    max_batch_score = Help.median(User.group(:batch_id).count.except(nil).values)
     Rails.logger.info "Maximum score_in_batch: #{max_batch_score}"
     Score.update_all("score_in_batch = greatest(#{max_batch_score} - rank_in_batch + 1, 0)")
     Rails.logger.info "✔ Batch scores computed"
 
-    max_city_score = Help.median(User.group(:city_id).count.values)
+    max_city_score = Help.median(User.group(:city_id).count.except(nil).values)
     Rails.logger.info "Maximum score_in_city: #{max_city_score}"
     Score.update_all("score_in_city = greatest(#{max_city_score} - rank_in_city + 1, 0)")
     Rails.logger.info "✔ City scores computed"

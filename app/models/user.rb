@@ -3,12 +3,13 @@
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i[kitt]
 
-  belongs_to :batch
+  belongs_to :batch, optional: true
   belongs_to :city, optional: true
   has_many :scores, dependent: :destroy
 
   def self.from_kitt(auth)
-    batch = Batch.find_or_create_by(number: auth.info.last_batch_slug)
+    batch_from_oauth = auth.info.last_batch_slug
+    batch = Batch.find_or_create_by(number: batch_from_oauth) if batch_from_oauth.present?
 
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.username = auth.info.github_nickname

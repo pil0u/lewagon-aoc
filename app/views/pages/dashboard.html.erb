@@ -16,7 +16,7 @@
         <% if @aoc_in_progress %>
           <%= link_to "> here <", "https://adventofcode.com/#{@year}/day/#{@now.day}", target: :blank, class: "link-external text-2xl" %>
         <% else %>
-          <span class="text-2xl">None 🤷</span>
+          <span class="text-xl">None 🤷</span>
         <% end %>
       </div>
     </div>
@@ -38,8 +38,12 @@
       </div>
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
-        <span class="text-2xl"><%= @my_batch_rank %><span class="text-aoc-gray-dark">/<%= @sorted_batches.count %></span></span>
-        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_batch_score %> pts</span></span>
+        <% if current_user.batch %>
+          <span class="text-2xl"><%= @my_batch_rank %><span class="text-aoc-gray-dark">/<%= @sorted_batches.count %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_batch_score %> pts</span></span>
+        <% else %>
+          <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "link" %></span>
+        <% end %>
       </div>
     </div>
 
@@ -49,8 +53,12 @@
       </div>
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
-        <span class="text-2xl"><%= @my_city_rank %><span class="text-aoc-gray-dark">/<%= @sorted_cities.count %></span></span>
-        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_city_score %> pts</span></span>
+        <% if current_user.city %>
+          <span class="text-2xl"><%= @my_city_rank %><span class="text-aoc-gray-dark">/<%= @sorted_cities.count %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_city_score %> pts</span></span>
+        <% else %>
+          <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "link" %></span>
+        <% end %>
       </div>
     </div>
 
@@ -60,14 +68,19 @@
       </div>
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
-        <div class="flex flex-col items-center leading-snug">
-          <span>to my batch</span>
-          <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score_in_batch %> pts</span>
-        </div>
-        <div class="flex flex-col items-center leading-snug">
-          <span>to my city</span>
-          <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score_in_city %> pts</span>
-        </div>
+        <% if current_user.batch %>
+          <div class="flex flex-col items-center leading-snug">
+            <span>to my batch</span>
+            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score_in_batch %> pts</span>
+          </div>
+        <% end %>
+
+        <% if current_user.city %>
+          <div class="flex flex-col items-center leading-snug">
+            <span>to my city</span>
+            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score_in_city %> pts</span>
+          </div>
+        <% end %>
       </div>
     </div>
 

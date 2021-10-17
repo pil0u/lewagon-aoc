@@ -3,7 +3,6 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def kitt
-      # pp request.env["omniauth.auth"]
       @user = User.from_kitt(request.env["omniauth.auth"])
       @contact_me = view_context.link_to(
         "contact Pilou",

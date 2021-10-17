@@ -22,7 +22,7 @@ namespace :scores do
     room_ids = ENV["AOC_ROOMS"].split(",")
 
     room_id = room_ids.first.split("-").first
-    json = Aoc.fetch_json(room_id)
+    json = Aoc.fetch_json(ENV["EVENT_YEAR"] || 2021, room_id, ENV["SESSION_COOKIE"])
 
     User.update_sync_status_from(json)
     Rails.logger.info "✔ Users sync status updated"
@@ -55,14 +55,14 @@ namespace :scores do
     # 3. Incentivize groups to bring more players in
     #
     # Solution: take the median number of players by batch (or by city) as the maximum score and
-    # we use the same formula as the individual score.
+    # use the same formula as the individual score.
 
-    max_batch_score = Help.median(User.group(:batch_id).count.values)
+    max_batch_score = Help.median(User.group(:batch_id).count.except(nil).values)
     Rails.logger.info "Maximum score_in_batch: #{max_batch_score}"
     Score.update_all("score_in_batch = greatest(#{max_batch_score} - rank_in_batch + 1, 0)")
     Rails.logger.info "✔ Batch scores computed"
 
-    max_city_score = Help.median(User.group(:city_id).count.values)
+    max_city_score = Help.median(User.group(:city_id).count.except(nil).values)
     Rails.logger.info "Maximum score_in_city: #{max_city_score}"
     Score.update_all("score_in_city = greatest(#{max_city_score} - rank_in_city + 1, 0)")
     Rails.logger.info "✔ City scores computed"

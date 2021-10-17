@@ -17,3 +17,5 @@
 <%= link_to user_kitt_omniauth_authorize_path, method: :post, class: "my-8 mx-auto p-2 max-w-md flex justify-around border border-aoc-gray-darker hover:text-aoc-gold hover:text-shadow-gold" do %>
   <span>Sign in with Kitt</span>
 <% end %>
+
+<span class="block max-w-md mx-auto text-right text-sm">Already <span class="strong"><%= @user_count.humanize %></span> <%= "player".pluralize(@user_count) %> engaged.</span>

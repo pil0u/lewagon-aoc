@@ -1,11 +1,119 @@
 <div class="my-8 text-center">
   <p>Authenticated as: <span class="strong"><%= current_user.username %></span></p>
-  <p>Current sync status: <span class="<%= class_names(@status_css) %>"><%= @status %></span></p>
+  <p>Current sync status: <span class="<%= class_names(status_css(@status)) %>"><%= @status %></span></p>
+  <p>Last data refresh: <span class="strong"><%= distance_of_time_in_words(@last_api_fetch, @now.utc, include_seconds: true) %></span> ago</p>
 </div>
 
 <% if @status == "OK" %>
 
-  <p class="text-center">Coming soon...</p>
+  <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex flex-wrap">
+    <div class="dashboard-tile flex flex-col items-center">
+      <div class="h-1/3 flex items-center">
+        <h2 class="text-lg strong">Today's puzzle</h2>
+      </div>
+
+      <div class="h-1/2 flex items-center">
+        <% if @aoc_in_progress %>
+          <%= link_to "> here <", "https://adventofcode.com/#{@year}/day/#{@now.day}", target: :blank, class: "link-external text-2xl" %>
+        <% else %>
+          <span class="text-xl">None 🤷</span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="dashboard-tile flex flex-col items-center">
+      <div class="h-1/3 flex items-center">
+        <h2 class="text-lg strong text-center">My rank</h2>
+      </div>
+
+      <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
+        <span class="text-2xl"><%= @my_rank %><span class="text-aoc-gray-dark">/<%= User.count %></span></span>
+        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score %> pts</span></span>
+      </div>
+    </div>
+
+    <div class="dashboard-tile flex flex-col items-center">
+      <div class="h-1/3 flex items-center">
+        <h2 class="text-lg strong text-center">My batch rank</h2>
+      </div>
+
+      <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
+        <% if current_user.batch %>
+          <span class="text-2xl"><%= @my_batch_rank %><span class="text-aoc-gray-dark">/<%= @sorted_batches.count %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_batch_score %> pts</span></span>
+        <% else %>
+          <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "link" %></span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="dashboard-tile flex flex-col items-center">
+      <div class="h-1/3 flex items-center">
+        <h2 class="text-lg strong text-center">My city rank</h2>
+      </div>
+
+      <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
+        <% if current_user.city %>
+          <span class="text-2xl"><%= @my_city_rank %><span class="text-aoc-gray-dark">/<%= @sorted_cities.count %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_city_score %> pts</span></span>
+        <% else %>
+          <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "link" %></span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="dashboard-tile flex flex-col items-center">
+      <div class="h-1/3 flex items-center">
+        <h2 class="text-lg strong text-center">My contribution</h2>
+      </div>
+
+      <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
+        <% if current_user.batch %>
+          <div class="flex flex-col items-center leading-snug">
+            <span>to my batch</span>
+            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score_in_batch %> pts</span>
+          </div>
+        <% end %>
+
+        <% if current_user.city %>
+          <div class="flex flex-col items-center leading-snug">
+            <span>to my city</span>
+            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score_in_city %> pts</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="dashboard-tile border-r flex flex-col items-center">
+      <div class="h-1/3 flex items-center">
+        <h2 class="text-lg strong">Next puzzle in</h2>
+      </div>
+
+      <div class="h-1/2 flex items-center">
+        <span class="text-lg"><%= distance_of_time_in_words(@now, @next_puzzle_time) %></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-8 mx-4 sm:mx-auto max-w-max grid grid-cols-5 p-5 gap-5">
+    <% @advent_days.each do |advent_day| %>
+      <div data-controller="modal">
+        <div data-action="click->modal#open" class="calendar-tile hover:wiggle flex flex-col items-center justify-center <%= "wiggle" if @aoc_in_progress && @now.day == advent_day.day %>">
+          <div class="relative flex items-center justify-center">
+            <h2 class="<%= class_names(day_css(@now, advent_day)) %> text-5xl"><%= advent_day.day %></h2>
+          </div>
+        </div>
+
+        <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden fixed inset-0 z-10">
+          <div class="mt-64 mx-auto w-max flex">
+            <div class="text-3xl">
+              <span>Coming soon...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
 <% else %>
 
@@ -15,7 +123,7 @@
     <ol class="my-4 mx-14 list-decimal flex flex-col gap-y-1.5">
       <li class="paragraph"><%= link_to "Log in to AoC", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any OAuth option</li>
 
-      <%= form_with url: "https://adventofcode.com/2021/leaderboard/private/join", authenticity_token: false, html: { target: :blank } do |f| %>
+      <%= form_with url: "https://adventofcode.com/#{@year}/leaderboard/private/join", authenticity_token: false, html: { target: :blank } do |f| %>
         <%= f.hidden_field :join_key, value: ENV["AOC_ROOMS"].split(",").first %>
         <li class="paragraph">Once logged in, <%= f.submit "click here", class: "link-external bg-transparent cursor-pointer" %> to join our leaderboard</li>
       <% end %>
@@ -27,7 +135,7 @@
 
     <p class="paragraph">At this point, your status should switch to <span class="text-aoc-atmospheric text-shadow-atmospheric">pending</span>.
 
-    Wait <span class="strong">10 minutes</span> and refresh this page.
+    Reload this page in <span class="strong"><%= distance_of_time_in_words(@last_api_fetch + 10.minutes, @now.utc) %></span>.
     If your status is still <span class="text-aoc-atmospheric text-shadow-atmospheric">pending</span> and you are 100% certain that your <span class="strong">AoC ID</span> in <%= link_to "your settings", settings_path, class: "link" %> is correct, please <%= link_to "contact me", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %>.</p>
   </div>
 

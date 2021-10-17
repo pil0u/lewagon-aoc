@@ -13,7 +13,7 @@
 
     <div>
       <%= f.label :batch_number, "Batch #", class: "strong" %>
-      <%= f.number_field :batch_number, value: @user.batch.number, min: 0, class: "input-field" %>
+      <%= f.number_field :batch_number, value: @user.batch&.number, min: 0, class: "input-field" %>
     </div>
 
     <div>

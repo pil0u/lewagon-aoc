@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 module Aoc
-  def self.fetch_json(id)
+  def self.fetch_json(event_year, id, session_cookie)
     Rails.logger.info "Fetching data from leaderboard #{id}..."
-    url = URI("https://adventofcode.com/2021/leaderboard/private/view/#{id}.json")
+    url = URI("https://adventofcode.com/#{event_year}/leaderboard/private/view/#{id}.json")
 
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
 
     request = Net::HTTP::Get.new(url)
-    request["Cookie"] = "session=#{ENV['SESSION_COOKIE']}"
+    request["Cookie"] = "session=#{session_cookie}"
     response = https.request(request)
     Rails.logger.info "#{response.code} #{response.message}"
 
@@ -42,5 +42,26 @@ module Aoc
     end
 
     scores
+  end
+
+  def self.in_progress?
+    now = Time.now.getlocal("-05:00")
+
+    now >= start_time && now < end_time
+  end
+
+  def self.next_puzzle_time_from(time)
+    return start_time if time < start_time
+    return start_time + 1.year if time >= end_time
+
+    (time + 1.day).midnight
+  end
+
+  def self.start_time
+    Time.new(2021, 12, 1, 0, 0, 0, "-05:00")
+  end
+
+  def self.end_time
+    Time.new(2021, 12, 25, 0, 0, 0, "-05:00")
   end
 end

@@ -6,6 +6,6 @@ class State < ApplicationRecord
   private
 
   def prevent_create
-    throw :abort unless State.count.zero?
+    throw :abort unless State.count == 0
   end
 end

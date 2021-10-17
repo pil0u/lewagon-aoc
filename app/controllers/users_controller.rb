@@ -6,8 +6,8 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    batch = Batch.find_or_create_by(number: user_params[:batch_number].presence)
-    city = City.find_or_create_by(id: user_params[:city_id])
+    batch = Batch.find_or_create_by(number: user_params[:batch_number]) if user_params[:batch_number].present?
+    city = City.find(user_params[:city_id]) if user_params[:city_id].present?
 
     @user.attributes = {
       username: user_params[:username],

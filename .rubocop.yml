@@ -17,7 +17,13 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Enabled: false
 
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
 Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
   Enabled: false
 
 Naming/VariableNumber:
@@ -34,6 +40,9 @@ Rails/SkipsModelValidations:
 
 Style/Documentation:
   Enabled: false
+
+Style/NumericPredicate:
+  EnforcedStyle: comparison
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes

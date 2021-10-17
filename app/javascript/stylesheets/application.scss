@@ -3,8 +3,20 @@
 @import "tailwindcss/utilities";
 
 @layer components {
+  .calendar-tile {
+    @apply w-32 h-32 border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40 rounded-3xl select-none cursor-pointer;
+
+    &:hover h2 {
+      @apply strong;
+    }
+  }
+
   .contact-me {
     @apply border-b border-aoc-gray-dark hover:strong hover:border-aoc-gray;
+  }
+
+  .dashboard-tile {
+    @apply w-48 h-48 border-l border-aoc-gray-darker hover:bg-aoc-gray-darker cursor-default;
   }
 
   #header-links {
@@ -78,5 +90,20 @@
 
   .text-shadow-white {
     text-shadow: 0 0 5px #FFFFFF;
+  }
+
+  @keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    70% { transform: rotate(0deg); }
+    75% { transform: rotate(2.5deg); }
+    80% { transform: rotate(-5deg); }
+    85% { transform: rotate(7.5deg); }
+    90% { transform: rotate(-7.5deg); }
+    95% { transform: rotate(5deg); }
+    100% { transform: rotate(-2.5deg); }
+  }
+
+  .wiggle {
+    animation: wiggle 3s infinite;
   }
 }

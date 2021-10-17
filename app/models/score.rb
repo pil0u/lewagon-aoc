@@ -4,14 +4,14 @@ class Score < ApplicationRecord
   belongs_to :user
 
   def self.replace_all(scores)
-    if scores.any?
-      Rails.logger.info "  Erasing all scores..."
-      Score.delete_all
+    Rails.logger.info "  Erasing all scores..."
+    Score.delete_all
 
+    if scores.any?
       Rails.logger.info "  Inserting new scores..."
       Score.insert_all(scores, unique_by: %i[user_id day challenge])
     else
-      Rails.logger.info "Nothing to do!"
+      Rails.logger.info "  No scores to insert!"
     end
   end
 

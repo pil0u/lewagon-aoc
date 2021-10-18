@@ -121,15 +121,15 @@
     <p class="paragraph">To make sure your name reaches our <%= link_to "custom scoreboards", scoreboard_path, class: "link" %>, you need to follow these steps:</p>
 
     <ol class="my-4 mx-14 list-decimal flex flex-col gap-y-1.5">
-      <li class="paragraph"><%= link_to "Log in to AoC", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any OAuth option</li>
+      <li class="paragraph"><%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any OAuth option</li>
 
       <%= form_with url: "https://adventofcode.com/#{@year}/leaderboard/private/join", authenticity_token: false, html: { target: :blank } do |f| %>
         <%= f.hidden_field :join_key, value: ENV["AOC_ROOMS"].split(",").first %>
         <li class="paragraph">Once logged in, <%= f.submit "click here", class: "link-external bg-transparent cursor-pointer" %> to join our leaderboard</li>
       <% end %>
 
-      <li class="paragraph">On AoC, go to <%= link_to "your settings page", "https://adventofcode.com/settings", target: :blank, class: "link-external" %> and copy the number next to "anonymous user #<span class="strong">0000000</span>" (without the #)</li>
-      <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "link" %>, next to the field <span class="strong">AoC ID</span></li>
+      <li class="paragraph">On Advent of Code, go to <%= link_to "your settings page", "https://adventofcode.com/settings", target: :blank, class: "link-external" %> and copy the number next to "anonymous user #<span class="strong">0000000</span>" (without the #)</li>
+      <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "link" %>, next to the field <span class="strong">Advent of Code ID</span></li>
       <li class="paragraph">Save</li>
     </ol>
 

@@ -135,7 +135,7 @@
 
     <p class="paragraph">At this point, your status should switch to <span class="text-aoc-atmospheric text-shadow-atmospheric">pending</span>.
 
-    Reload this page in <span class="strong"><%= distance_of_time_in_words(@last_api_fetch + 10.minutes, @now.utc) %></span>.
+    Reload this page in <span class="strong"><%= @estimated_next_api_fetch %></span>.
     If your status is still <span class="text-aoc-atmospheric text-shadow-atmospheric">pending</span> and you are 100% certain that your <span class="strong">AoC ID</span> in <%= link_to "your settings", settings_path, class: "link" %> is correct, please <%= link_to "contact me", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %>.</p>
   </div>
 

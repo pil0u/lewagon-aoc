@@ -14,10 +14,12 @@ class PagesController < ApplicationController
   def about; end
 
   def dashboard
+    @now = Time.now.getlocal("-05:00")
+
     @status = current_user.status
     @last_api_fetch = State.first.last_api_fetch_end
+    @estimated_next_api_fetch = @now.utc < @last_api_fetch + 10.minutes ? helpers.distance_of_time_in_words(@last_api_fetch + 10.minutes, @now.utc) : "soon™"
 
-    @now = Time.now.getlocal("-05:00")
     @aoc_in_progress = Aoc.in_progress?
     @year = ENV["EVENT_YEAR"] || 2021
 

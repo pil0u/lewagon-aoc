@@ -1,7 +1,7 @@
 <div class="my-8 text-center">
   <p>Authenticated as: <span class="strong"><%= current_user.username %></span></p>
   <p>Current sync status: <span class="<%= class_names(status_css(@status)) %>"><%= @status %></span></p>
-  <p>Last data refresh: <span class="strong"><%= distance_of_time_in_words(@last_api_fetch, @now.utc, include_seconds: true) %></span> ago</p>
+  <p class="inline-block group relative">Last data refresh: <span class="strong"><%= distance_of_time_in_words(@last_api_fetch, @now.utc, include_seconds: true) %></span> ago <span class="hidden group-hover:inline absolute ml-3 w-max italic">(every ~10 minutes)</span></p>
 </div>
 
 <% if @status == "OK" %>

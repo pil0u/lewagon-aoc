@@ -6,7 +6,7 @@
 
 <% if @status == "OK" %>
 
-  <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex flex-wrap">
+  <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex justify-center">
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <h2 class="text-lg strong">Today's puzzle</h2>
@@ -129,14 +129,14 @@
       <% end %>
 
       <li class="paragraph">On Advent of Code, go to <%= link_to "your settings page", "https://adventofcode.com/settings", target: :blank, class: "link-external" %> and copy the number next to "anonymous user #<span class="strong">0000000</span>" (without the #)</li>
-      <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "link" %>, next to the field <span class="strong">Advent of Code ID</span></li>
+      <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "link" %>, next to <span class="strong">Advent of Code ID</span></li>
       <li class="paragraph">Save</li>
     </ol>
 
-    <p class="paragraph">At this point, your status should switch to <span class="text-aoc-atmospheric text-shadow-atmospheric">pending</span>.
+    <p class="paragraph">At this point, your status should have switched to <span class="text-aoc-atmospheric">pending</span>.
+    It should switch to <span class="text-aoc-green">OK</span> in <span class="strong"><%= @estimated_next_api_fetch %></span>.
 
-    Reload this page in <span class="strong"><%= @estimated_next_api_fetch %></span>.
-    If your status is still <span class="text-aoc-atmospheric text-shadow-atmospheric">pending</span> and you are 100% certain that your <span class="strong">AoC ID</span> in <%= link_to "your settings", settings_path, class: "link" %> is correct, please <%= link_to "contact me", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %>.</p>
+    <em class="text-sm">If your status remains <span class="text-aoc-atmospheric">pending</span> while your <span class="strong">Advent of Code ID</span> in <%= link_to "your settings", settings_path, class: "link" %> is 100% correct, <%= link_to "contact me", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %>.</em></p>
   </div>
 
 <% end %>

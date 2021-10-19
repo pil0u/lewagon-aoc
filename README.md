@@ -10,12 +10,12 @@ This file is mainly used for development purposes. It is _not_ versioned and nev
 
 ## Advent of Code API
 
-On AoC platform, a user can create one (and only one) private leaderboard. Up to 200 other users can join it using the generated code. A first room was already generated from the generic account `lewagon-aoc`.  
+On `adventofcode.com`, a user can create one (and only one) private leaderboard. Up to 200 other users can join it using the generated code. A first room was already generated from the generic account `lewagon-aoc`.  
 
 A JSON object containing scores can be fetched from a `GET` request that needs a session cookie to succeed. This session cookie is stored in the `SESSION_COOKIE` environment variable (valid ~ 1 month).
 
 If this first room is filled and more than 200 people enter the contest, here is the "bypass" strategy:
-  1. Create a new private leaderboard on AoC, from another account
+  1. Create a new private leaderboard on Advent of Code, from another account
   2. Invite the `lewagon-aoc` account to that leaderboard
   3. Append the new leaderboard code (format: `9999999-a0b1c2d3`) to the `AOC_ROOMS` environment variable, comma-separated
 

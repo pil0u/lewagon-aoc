@@ -1,22 +1,22 @@
 <div class="my-12 mx-4 sm:mx-auto max-w-prose">
   <h2 class="text-center text-lg text-aoc-atmospheric text-shadow-atmospheric">Questions & answers</h2>
 
-  <ol class="list-decimal" start=0>
+  <ol class="list-decimal list-inside" start=0>
     <div class="my-8 px-4">
       <li class="py-2 text-center strong">TL;DR</li>
       <p class="mt-8 paragraph">Go to <%= link_to "your dashboard", root_path, class: "link" %> and follow the instructions to synchronize your scores.</p>
     </div>
 
-    <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
-      <li class="py-2 text-center strong cursor-pointer">What is Advent of Code (AoC)?</li>
+    <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">What is Advent of Code?</li>
       <p class="mt-8 paragraph" data-qa-target="answer"><%= link_to "Advent of Code", "https://adventofcode.com/", target: :blank, class: "link-external" %> is an Advent calendar of small programming puzzles that can be solved in any programming language.
       Every day at midnight EST/UTC-5, from <span class="strong">December 1st</span> to <span class="strong">December 25th</span>, a new challenge pops up with some fictional Christmas backstory 🎄
 
       Solving any puzzle earns you points 💎, not only for you, but also for <span class="strong">your batch & your campus city</span> @ <span class="text-wagon-red text-shadow-red">Le Wagon</span>.</p>
     </div>
 
-    <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
-      <li class="py-2 text-center strong cursor-pointer">What does a puzzle look like?</li>
+    <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">What does a puzzle look like?</li>
       <p class="mt-8 paragraph" data-qa-target="answer">A puzzle is a problem defined in plain English terms, for which the answer can only be found using programming. For a given <span class="strong">input</span>, you need to compute the corresponding <span class="strong">output</span>, usually a number.
 
       <span class="strong">A puzzle is made of two parts</span>: you access the second one only if you solved the first one.
@@ -24,8 +24,8 @@
       If you want to take a closer look, puzzles from previous editions are available <%= link_to "here", "https://adventofcode.com/events", target: :blank, class: "link-external" %>.</p>
     </div>
 
-    <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
-      <li class="py-2 text-center strong cursor-pointer">I'm not sure about my coding skills...</li>
+    <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">I'm not sure about my coding skills...</li>
       <p class="mt-8 paragraph" data-qa-target="answer">The difficulty of a puzzle varies from day to day. The first part of each puzzle is <span class="strong">largely accessible to a Wagoner, student or Alumni</span>. The second part is usually harder, but still accessible to more or less experienced profiles.
 
       Although the author of the puzzles attempts to <span class="strong">increase the difficulty over time, in reality it's not the case and pretty random</span>. You may find puzzle #20 much easier than #5. The notion of difficulty is very relative to your personal skill set and past experience with problem solving in general.
@@ -34,26 +34,26 @@
       </p>
     </div>
 
-    <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
-      <li class="py-2 text-center strong cursor-pointer">Why are there two different platforms?</li>
-      <p class="mt-8 paragraph" data-qa-target="answer">The AoC platform is where you find and solve the puzzles.
+    <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">Why are there two different platforms?</li>
+      <p class="mt-8 paragraph" data-qa-target="answer">The Advent of Code platform is where you find and solve the puzzles.
 
-      Because @ <span class="text-wagon-red text-shadow-red">Le Wagon</span> we like things spicy, we wanted to build a scoreboard by batch number and by city ⚔️
-      The leaderboard system on AoC is not flexible enough for that. We built this platform to create a link between Kitt and AoC, so we can build <%= link_to "custom agregated scoreboards", scoreboard_path, class: "link" %>.</p>
+      Because @ <span class="text-wagon-red text-shadow-red">Le Wagon</span> we like things spicy, we wanted to build a scoreboard <span class="strong">by batch number and by city ⚔️</span>
+      The leaderboard system on adventofcode.com is not flexible enough for that. We built this platform to create a link between Kitt and Advent of Code, so we can build <%= link_to "custom agregated scoreboards", scoreboard_path, class: "link" %>.</p>
     </div>
 
-    <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
-      <li class="py-2 text-center strong cursor-pointer">How can I enter the contest?</li>
-      <p class="mt-8 paragraph" data-qa-target="answer">To dive in and make sure your (hard) earned points go to the right team, you need to be properly synced between here and AoC. It takes less than a minute: go directly to <%= link_to "your dashboard", root_path, class: "link" %> and follow the steps.</p>
+    <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">How can I enter the contest?</li>
+      <p class="mt-8 paragraph" data-qa-target="answer">To dive in and make sure your (hard) earned points go to the right team, you need to be properly synced between here and Advent of Code. It takes less than a minute: go directly to <%= link_to "your dashboard", root_path, class: "link" %> and follow the steps.</p>
     </div>
 
-    <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
-      <li class="py-2 text-center strong cursor-pointer">What are the prizes? 🎁</li>
+    <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">What are the prizes? 🎁</li>
       <p class="mt-8 paragraph" data-qa-target="answer">Coming soon...</p>
     </div>
 
-    <div class="my-8 px-4" data-controller="qa" data-action="click->qa#toggle" data-qa-target="block">
-      <li class="py-2 text-center strong cursor-pointer">How do I earn points? 💎</li>
+    <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">How do I earn points? 💎</li>
       <p class="mt-8 paragraph" data-qa-target="answer">Coming soon...</p>
     </div>
   </ol>

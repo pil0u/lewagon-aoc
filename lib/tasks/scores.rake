@@ -66,13 +66,11 @@ namespace :scores do
 
     max_batch_score = Help.median(User.group(:batch_id).count.except(nil).values) || 1
     Rails.logger.info "Maximum rank_in_batch considered: #{max_batch_score}"
-    # Score.update_all("score_in_batch = greatest(#{max_batch_score} - rank_in_batch + 1, 0)")
     Score.update_all("score_in_batch = case when rank_in_batch <= #{max_batch_score} then score_solo else 0 end")
     Rails.logger.info "✔ Batch scores computed"
 
     max_city_score = Help.median(User.group(:city_id).count.except(nil).values) || 1
     Rails.logger.info "Maximum rank_in_city considered: #{max_city_score}"
-    # Score.update_all("score_in_city = greatest(#{max_city_score} - rank_in_city + 1, 0)")
     Score.update_all("score_in_city = case when rank_in_city <= #{max_city_score} then score_solo else 0 end")
     Rails.logger.info "✔ City scores computed"
   end

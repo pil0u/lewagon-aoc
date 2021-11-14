@@ -85,6 +85,21 @@ if Rails.env.development?
                    username: "test_5",
                    batch: Batch.find_by(number: 123),
                    aoc_id: 1_258_899
+                 },
+                 {
+                   username: "test_6",
+                   batch: Batch.find_by(number: 454),
+                   aoc_id: 1_259_034
+                 },
+                 {
+                   username: "test_7",
+                   batch: Batch.find_by(number: 454),
+                   aoc_id: 1_259_062
+                 },
+                 {
+                   username: "test_8",
+                   batch: Batch.find_by(number: 343),
+                   aoc_id: 1_259_379
                  }
                ])
   Rails.logger.info "✔ Users initialized"

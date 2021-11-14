@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "aoc"
+require "help"
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[home]
@@ -46,5 +47,26 @@ class PagesController < ApplicationController
     @advent_days = MAGIC_DAYS.map { |advent_day| Time.new(2021, 12, advent_day, 0, 0, 0, "-05:00") }
   end
 
-  def scoreboard; end
+  def scoreboard
+    @max_city_contributors = Help.median(User.group(:city_id).count.except(nil).values) || 1
+    @sorted_cities = Score.includes(user: :city)
+                          .group(:city_id)
+                          .sum(:score_in_city)
+                          .except(nil)
+                          .transform_keys { |k| City.find(k).name }
+                          .sort_by { |_k, v| -v }
+
+    @max_batch_contributors = Help.median(User.group(:batch_id).count.except(nil).values) || 1
+    @sorted_batches = Score.includes(user: :batch)
+                           .group(:batch_id)
+                           .sum(:score_in_batch)
+                           .except(nil)
+                           .transform_keys { |k| Batch.find(k).number }
+                           .sort_by { |_k, v| -v }
+
+    @sorted_users = Score.group(:user_id)
+                         .sum(:score_solo)
+                         .transform_keys { |k| User.find(k).username }
+                         .sort_by { |_k, v| -v }
+  end
 end

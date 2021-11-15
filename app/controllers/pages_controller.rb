@@ -12,7 +12,32 @@ class PagesController < ApplicationController
     @user_count = User.count
   end
 
-  def about; end
+  def about
+    @ranking_example = [
+      { user_id: 14,  day: 1, challenge: 1, time: "1 minute",           score: 5 },
+      { user_id: 32,  day: 1, challenge: 1, time: "1 minute 1 second",  score: 4 },
+      { user_id: 18,  day: 1, challenge: 1, time: "1 hour",             score: 3 },
+      { user_id: 5,   day: 1, challenge: 1, time: "2 hours",            score: 2 },
+      { user_id: 97,  day: 1, challenge: 1, time: "5 days",             score: 1 },
+      { user_id: 14,  day: 1, challenge: 2, time: "never",              score: 0 },
+      { user_id: 32,  day: 1, challenge: 2, time: "6 hours",            score: 4 },
+      { user_id: 18,  day: 1, challenge: 2, time: "6 days",             score: 2 },
+      { user_id: 5,   day: 1, challenge: 2, time: "3 hours",            score: 5 },
+      { user_id: 97,  day: 1, challenge: 2, time: "5 days 2 hours",     score: 3 }
+    ]
+    @ranking_example_updated = [
+      { user_id: 14,  day: 1, challenge: 1, time: "1 minute",           score: 12 },
+      { user_id: 32,  day: 1, challenge: 1, time: "1 minute 1 second",  score: 11 },
+      { user_id: 18,  day: 1, challenge: 1, time: "1 hour",             score: 10 },
+      { user_id: 5,   day: 1, challenge: 1, time: "2 hours",            score: 9 },
+      { user_id: 97,  day: 1, challenge: 1, time: "5 days",             score: 8 },
+      { user_id: 14,  day: 1, challenge: 2, time: "never",              score: 0 },
+      { user_id: 32,  day: 1, challenge: 2, time: "6 hours",            score: 11 },
+      { user_id: 18,  day: 1, challenge: 2, time: "6 days",             score: 9 },
+      { user_id: 5,   day: 1, challenge: 2, time: "3 hours",            score: 12 },
+      { user_id: 97,  day: 1, challenge: 2, time: "5 days 2 hours",     score: 10 }
+    ]
+  end
 
   def dashboard
     @now = Time.now.getlocal("-05:00")

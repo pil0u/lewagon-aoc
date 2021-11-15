@@ -15,7 +15,7 @@
         <tbody class="text-center text-xl">
           <% @sorted_cities.each_with_index do |city, index| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= class_names(
-              "border-l border-aoc-green border-opacity-50 hover:bg-aoc-green-flash": city[0] == current_user.city&.name
+              "bg-opacity-10 bg-aoc-green-flash": city[0] == current_user.city&.name
             ) %>">
               <td class="py-1 <%= class_names(ranking_css(index, rank_col=true)) %>"><%= index + 1 %></td>
               <td class="<%= class_names(ranking_css(index)) %>"><%= city[0] %></td>
@@ -46,7 +46,7 @@
         <tbody class="text-center text-xl">
           <% @sorted_batches.each_with_index do |batch, index| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= class_names(
-              "border-l border-aoc-green border-opacity-50 hover:bg-aoc-green-flash": batch[0] == current_user.batch&.number
+              "bg-opacity-10 bg-aoc-green-flash": batch[0] == current_user.batch&.number
             ) %>">
               <td class="py-1 <%= class_names(ranking_css(index, rank_col=true)) %>"><%= index + 1 %></td>
               <td class="<%= class_names(ranking_css(index)) %>">#<%= batch[0] %></td>
@@ -78,7 +78,7 @@
         <tbody class="text-center text-xl">
           <% @sorted_users.each_with_index do |user, index| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= class_names(
-              "border-l border-aoc-green border-opacity-50 hover:bg-aoc-green-flash": user[0] == current_user.username
+              "bg-opacity-10 bg-aoc-green-flash": user[0] == current_user.username
             ) %>">
               <td class="py-1 <%= class_names(ranking_css(index, rank_col=true)) %>"><%= index + 1 %></td>
               <td class="<%= class_names(ranking_css(index)) %>"><%= user[0] %></td>

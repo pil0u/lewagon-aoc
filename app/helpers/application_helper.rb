@@ -25,13 +25,13 @@ module ApplicationHelper
     }
   end
 
-  def ranking_css(index, rank_col=false)
+  def ranking_css(index, rank_col: false)
     {
       "text-aoc-gold text-shadow-gold": index == 0,
       "text-aoc-silver text-shadow-silver": index == 1,
       "text-aoc-bronze text-shadow-bronze": index == 2,
       "text-3xl": index <= 2 && rank_col,
-      "strong": index > 2
+      strong: index > 2
     }
   end
 end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "aoc"
-require "help"
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[home]

@@ -39,35 +39,70 @@ class PagesController < ApplicationController
   end
 
   def dashboard
+    # Time
     @now = Time.now.getlocal("-05:00")
 
-    @status = current_user.status
     @last_api_fetch = State.first.last_api_fetch_end
     @estimated_next_api_fetch = @now.utc < @last_api_fetch + 10.minutes ? helpers.distance_of_time_in_words(@last_api_fetch + 10.minutes, @now.utc) : "soon™"
 
-    @aoc_in_progress = Aoc.in_progress?
-    @year = ENV["EVENT_YEAR"] || 2021
-
-    sorted_users = Score.group(:user_id).sum(:score_solo).sort_by { |_k, v| -v }
-    @my_score = current_user.scores.sum(:score_solo)
-    @my_rank = sorted_users.index([current_user.id, @my_score])&.+1
-
-    @sorted_batches = Score.includes(user: :batch).group(:batch_id).sum(:score_in_batch).except(nil).sort_by { |_k, v| -v }
-    if current_user.batch
-      @my_batch_score = current_user.batch.scores.sum(:score_in_batch)
-      @my_batch_rank = @sorted_batches.index([current_user.batch.id, @my_batch_score])&.+1
-      @my_score_in_batch = current_user.scores.sum(:score_in_batch)
-    end
-
-    @sorted_cities = Score.includes(user: :city).group(:city_id).sum(:score_in_city).except(nil).sort_by { |_k, v| -v }
-    if current_user.city
-      @my_city_score = current_user.city.scores.sum(:score_in_city)
-      @my_city_rank = @sorted_cities.index([current_user.city.id, @my_city_score])&.+1
-      @my_score_in_city = current_user.scores.sum(:score_in_city)
-    end
-
     @next_puzzle_time = Aoc.next_puzzle_time_from(@now)
 
+    # Event
+    @aoc_in_progress = Aoc.in_progress?
+    @year = ENV["EVENT_YEAR"] || 2021
+    @user_status = current_user.status
+
+    # User stats
+
+    ## Individual rank & scores
+    fields = %i[user_id score_solo score_in_batch score_in_city]
+    users_scores = Score.group(:user_id)
+                        .pluck("user_id", "sum(score_solo)", "sum(score_in_batch)", "sum(score_in_city)")
+                        .map { |row| fields.zip(row).to_h }
+
+    ranked_users = users_scores.sort_by { |h| -h[:score_solo] }
+                               .map.with_index { |h, idx| h.merge!(rank_solo: idx + 1) }
+
+    @user_score = ranked_users.find { |h| h[:user_id] == current_user.id }
+    @total_users = ranked_users.count
+
+    ## Batch rank & score
+    @user_batch = current_user.batch
+
+    if @user_batch
+      fields = %i[batch_id batch_score]
+      batches_scores = Score.includes(user: :batch)
+                            .group(:batch_id)
+                            .pluck("batch_id", "sum(score_in_batch)")
+                            .map { |row| fields.zip(row).to_h }
+                            .reject { |h| h[:batch_id].nil? }
+
+      ranked_batches = batches_scores.sort_by { |h| -h[:batch_score] }
+                                     .map.with_index { |h, idx| h.merge!(batch_rank: idx + 1) }
+
+      @user_batch_score = ranked_batches.find { |h| h[:batch_id] == @user_batch.id }
+      @total_batches = ranked_batches.count
+    end
+
+    ## City rank & score
+    @user_city = current_user.city
+
+    if @user_city
+      fields = %i[city_id city_score]
+      cities_scores = Score.includes(user: :city)
+                           .group(:city_id)
+                           .pluck("city_id", "sum(score_in_city)")
+                           .map { |row| fields.zip(row).to_h }
+                           .reject { |h| h[:city_id].nil? }
+
+      ranked_cities = cities_scores.sort_by { |h| -h[:city_score] }
+                                   .map.with_index { |h, idx| h.merge!(city_rank: idx + 1) }
+
+      @user_city_score = ranked_cities.find { |h| h[:city_id] == @user_city.id }
+      @total_cities = ranked_cities.count
+    end
+
+    # Advent calendar
     @advent_days = MAGIC_DAYS.map { |advent_day| Time.new(2021, 12, advent_day, 0, 0, 0, "-05:00") }
   end
 

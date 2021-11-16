@@ -1,10 +1,10 @@
 <div class="my-8 text-center">
   <p>Authenticated as: <span class="strong"><%= current_user.username %></span></p>
-  <p>Current sync status: <span class="<%= class_names(status_css(@status)) %>"><%= @status %></span></p>
+  <p>Current sync status: <span class="<%= class_names(status_css(@user_status)) %>"><%= @user_status %></span></p>
   <p class="inline-block group relative">Last data refresh: <span class="strong"><%= distance_of_time_in_words(@last_api_fetch, @now.utc, include_seconds: true) %></span> ago <em class="hidden group-hover:inline absolute ml-3 w-max">(every ~10 minutes)</em></p>
 </div>
 
-<% if @status == "OK" %>
+<% if @user_status == "OK" %>
 
   <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex justify-center">
     <div class="dashboard-tile flex flex-col items-center">
@@ -28,9 +28,9 @@
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <span class="text-2xl">
-          <%= @my_rank %><sup class="text-sm"><%= @my_rank.ordinal %></sup><span class="text-aoc-gray-dark">/<%= User.where(synced: true).count %><span class="absolute"><sup>*</sup></span></span>
+          <%= @user_score[:rank_solo] %><sup class="text-sm"><%= @user_score[:rank_solo].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_users %><span class="absolute"><sup>*</sup></span></span>
         </span>
-        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score %> pts</span></span>
+        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score_solo] %> pts</span></span>
       </div>
 
       <span class="text-sm text-aoc-gray-dark">* synced users</span>
@@ -38,17 +38,17 @@
 
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
-        <% if current_user.batch %>
-          <h2 class="text-lg strong text-center">Batch #<%= current_user.batch.number %></h2>
+        <% if @user_batch %>
+          <h2 class="text-lg strong text-center">Batch #<%= @user_batch.number %></h2>
         <% else %>
           <h2 class="text-lg strong text-center">My batch rank</h2>
         <% end %>
       </div>
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
-        <% if current_user.batch %>
-          <span class="text-2xl"><%= @my_batch_rank %><sup class="text-sm"><%= @my_batch_rank.ordinal %></sup><span class="text-aoc-gray-dark">/<%= @sorted_batches.count %></span></span>
-          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_batch_score %> pts</span></span>
+        <% if @user_batch %>
+          <span class="text-2xl"><%= @user_batch_score[:batch_rank] %><sup class="text-sm"><%= @user_batch_score[:batch_rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_batches %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_batch_score[:batch_score] %> pts</span></span>
         <% else %>
           <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "link" %></span>
         <% end %>
@@ -57,17 +57,17 @@
 
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
-        <% if current_user.city %>
-          <h2 class="text-lg strong text-center"><%= current_user.city.name %></h2>
+        <% if @user_city %>
+          <h2 class="text-lg strong text-center"><%= @user_city.name %></h2>
         <% else %>
           <h2 class="text-lg strong text-center">My city rank</h2>
         <% end %>
       </div>
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
-        <% if current_user.city %>
-          <span class="text-2xl"><%= @my_city_rank %><sup class="text-sm"><%= @my_city_rank.ordinal %></sup><span class="text-aoc-gray-dark">/<%= @sorted_cities.count %></span></span>
-          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @my_city_score %> pts</span></span>
+        <% if @user_city %>
+          <span class="text-2xl"><%= @user_city_score[:city_rank] %><sup class="text-sm"><%= @user_city_score[:city_rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_cities %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_city_score[:city_score] %> pts</span></span>
         <% else %>
           <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "link" %></span>
         <% end %>
@@ -80,17 +80,17 @@
       </div>
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
-        <% if current_user.batch %>
+        <% if @user_batch %>
           <div class="flex flex-col items-center leading-snug">
-            <span>to batch #<%= current_user.batch.number %></span>
-            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score_in_batch %> pts</span>
+            <span>to batch #<%= @user_batch.number %></span>
+            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score_in_batch] %> pts</span>
           </div>
         <% end %>
 
-        <% if current_user.city %>
+        <% if @user_city %>
           <div class="flex flex-col items-center leading-snug">
-            <span>to <%= current_user.city.name %></span>
-            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @my_score_in_city %> pts</span>
+            <span>to <%= @user_city.name %></span>
+            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score_in_city] %> pts</span>
           </div>
         <% end %>
       </div>

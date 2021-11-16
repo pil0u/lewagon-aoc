@@ -1,8 +1,8 @@
 <div class="my-12 mx-4 sm:mx-auto max-w-3xl flex flex-col gap-y-12">
   <div>
-    <h2 class="text-xl text-aoc-atmospheric text-shadow-atmospheric">City scoreboard</h2>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">City scoreboard</h2>
 
-    <div class="mx-auto my-4 w-full max-w-lg">
+    <div class="mx-auto my-4 w-full max-w-xl">
       <table class="w-full">
         <thead>
           <tr class="text-aoc-gray border-b border-aoc-gray-darker">
@@ -12,26 +12,26 @@
             <th class="w-5/12 font-normal">Score</th>
           </tr>
         </thead>
-        <tbody class="text-center text-xl">
+        <tbody class="text-center">
           <% @sorted_cities.each_with_index do |city, index| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if city[0] == current_user.city&.name %>">
               <td class="py-1 <%= class_names(ranking_css(index, rank_col: true)) %>"><%= index + 1 %></td>
               <td class="<%= class_names(ranking_css(index)) %>"><%= city[0] %></td>
               <td><%= City.find_by(name: city[0]).users.where(synced: true).count %></td>
-              <td class="py-1 strong text-2xl"><%= city[1] %></td>
+              <td class="py-1 strong text-lg"><%= city[1] %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 
-    <p class="text-center">City scores are currently computed from their <span class="strong text-lg">top <%= @max_city_contributors %></span> <%= "contributor".pluralize(@max_city_contributors) %></p>
+    <p class="text-center text-sm">City scores are currently computed from their <span class="strong">top <%= @max_city_contributors %></span> <%= "contributor".pluralize(@max_city_contributors) %></p>
   </div>
 
   <div>
-    <h2 class="text-xl text-aoc-atmospheric text-shadow-atmospheric">Batch scoreboard</h2>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">Batch scoreboard</h2>
 
-    <div class="mx-auto my-4 w-full max-w-lg">
+    <div class="mx-auto my-4 w-full max-w-xl">
       <table class="w-full">
         <thead>
           <tr class="text-aoc-gray border-b border-aoc-gray-darker">
@@ -41,24 +41,24 @@
             <th class="w-5/12 font-normal">Score</th>
           </tr>
         </thead>
-        <tbody class="text-center text-xl">
+        <tbody class="text-center">
           <% @sorted_batches.each_with_index do |batch, index| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if batch[0] == current_user.batch&.number %>">
               <td class="py-1 <%= class_names(ranking_css(index, rank_col: true)) %>"><%= index + 1 %></td>
               <td class="<%= class_names(ranking_css(index)) %>">#<%= batch[0] %></td>
               <td><%= Batch.find_by(number: batch[0]).users.where(synced: true).count %></td>
-              <td class="py-1 strong text-2xl"><%= batch[1] %></td>
+              <td class="py-1 strong text-lg"><%= batch[1] %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 
-    <p class="text-center">Batch scores are currently computed from their <span class="strong text-lg">top <%= @max_batch_contributors %></span> <%= "contributor".pluralize(@max_batch_contributors) %></p>
+    <p class="text-center text-sm">Batch scores are currently computed from their <span class="strong">top <%= @max_batch_contributors %></span> <%= "contributor".pluralize(@max_batch_contributors) %></p>
   </div>
 
   <div>
-    <h2 class="text-xl text-aoc-atmospheric text-shadow-atmospheric">Solo scoreboard</h2>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">Solo scoreboard</h2>
 
     <div class="mx-auto my-4 w-full max-w-3xl">
       <table class="w-full">
@@ -71,14 +71,14 @@
             <th class="w-3/12 font-normal">Score</th>
           </tr>
         </thead>
-        <tbody class="text-center text-xl">
+        <tbody class="text-center">
           <% @sorted_users.each_with_index do |user, index| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[0] == current_user.username %>">
               <td class="py-1 <%= class_names(ranking_css(index, rank_col: true)) %>"><%= index + 1 %></td>
               <td class="<%= class_names(ranking_css(index)) %>"><%= user[0] %></td>
               <td>#<%= User.find_by(username: user[0]).batch&.number || "###" %></td>
               <td><%= User.find_by(username: user[0]).city&.name %></td>
-              <td class="py-1 strong text-2xl"><%= user[1] %></td>
+              <td class="py-1 strong text-lg"><%= user[1] %></td>
             </tr>
           <% end %>
         </tbody>

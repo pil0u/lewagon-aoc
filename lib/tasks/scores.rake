@@ -64,12 +64,12 @@ namespace :scores do
     # Batch #2 players scores: 16, 15, 9, 8, 3, 2           Batch #2 score = 53
     # Batch #3 players scores: 17, 13, 12, 11, 10, 7, 5, 4  Batch #3 score = 70 (only the first 6)
 
-    max_batch_contributors = Help.median(User.group(:batch_id).count.except(nil).values) || 1
+    max_batch_contributors = Batch.max_contributors
     Rails.logger.info "Maximum rank_in_batch considered: #{max_batch_contributors}"
     Score.update_all("score_in_batch = case when rank_in_batch <= #{max_batch_contributors} then score_solo else 0 end")
     Rails.logger.info "✔ Batch scores computed"
 
-    max_city_contributors = Help.median(User.group(:city_id).count.except(nil).values) || 1
+    max_city_contributors = City.max_contributors
     Rails.logger.info "Maximum rank_in_city considered: #{max_city_contributors}"
     Score.update_all("score_in_city = case when rank_in_city <= #{max_city_contributors} then score_solo else 0 end")
     Rails.logger.info "✔ City scores computed"

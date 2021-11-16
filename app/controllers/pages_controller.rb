@@ -73,7 +73,7 @@ class PagesController < ApplicationController
   end
 
   def scoreboard
-    @max_city_contributors = Help.median(User.group(:city_id).count.except(nil).values) || 1
+    @max_city_contributors = City.max_contributors
     @sorted_cities = Score.includes(user: :city)
                           .group(:city_id)
                           .sum(:score_in_city)
@@ -81,7 +81,7 @@ class PagesController < ApplicationController
                           .transform_keys { |k| City.find(k).name }
                           .sort_by { |_k, v| -v }
 
-    @max_batch_contributors = Help.median(User.group(:batch_id).count.except(nil).values) || 1
+    @max_batch_contributors = Batch.max_contributors
     @sorted_batches = Score.includes(user: :batch)
                            .group(:batch_id)
                            .sum(:score_in_batch)

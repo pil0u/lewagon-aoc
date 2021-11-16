@@ -4,9 +4,6 @@
 Ruby    2.7.4  
 Rails   6.1.4.1
 ```
-## `.env` file
-
-This file is mainly used for development purposes. It is _not_ versioned and never should.
 
 ## Advent of Code API
 
@@ -19,9 +16,19 @@ If this first room is filled and more than 200 people enter the contest, here is
   2. Invite the `lewagon-aoc` account to that leaderboard
   3. Append the new leaderboard code (format: `9999999-a0b1c2d3`) to the `AOC_ROOMS` environment variable, comma-separated
 
-## Overmind
+## How to contribute
 
-Overmind is a tool to run the processes defined in a `Procfile` in different `tmux`.
+Found a bug? Have a feature request? Do not hesitate to [open an Issue](/../../issues/new).
+
+If you want to help me fix a bug or implement a new requested feature:
+1. Make sure [an Issue exists](/../../issues) for it
+2. Fork the project
+3. Code changes on your fork
+4. Create a Pull Request here from your fork
+
+### Overmind
+
+Overmind is a tool to run the processes defined in a `Procfile` in different `tmux` sessions.
 You can install the tool on your machine [following these instructions](https://github.com/DarthSim/overmind#installation).
 
 Add these lines to your local `.env` file:
@@ -31,3 +38,7 @@ OVERMIND_PORT=3000
 ```
 
 Then, instead of the usual `rails s`, you can run `overmind s`.
+
+### `.env` file
+
+This file is used for development purposes. It is _not_ versioned and never should.

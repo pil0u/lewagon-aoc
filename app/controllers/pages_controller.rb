@@ -58,7 +58,7 @@ class PagesController < ApplicationController
     fields = %i[user_id score_solo score_in_batch score_in_city]
     ranked_users = Score.includes(:user)
                         .group("users.id, users.username")
-                        .order("sum(score_solo) desc, users.username")
+                        .order("sum(score_solo) desc, users.id desc")
                         .pluck("users.id", "sum(score_solo)", "sum(score_in_batch)", "sum(score_in_city)")
                         .map { |row| fields.zip(row).to_h }
                         .map.with_index { |h, idx| h.merge!(rank_solo: idx + 1) }
@@ -130,7 +130,7 @@ class PagesController < ApplicationController
     fields = %i[username batch city score_solo]
     @ranked_users = Score.includes(user: %i[batch city])
                          .group("users.id, users.username")
-                         .order("sum(score_solo) desc, users.username")
+                         .order("sum(score_solo) desc, users.id desc")
                          .pluck("users.username", "max(batches.number)", "max(cities.name)", "sum(score_solo)")
                          .map { |row| fields.zip(row).to_h }
                          .map.with_index { |h, idx| h.merge!(rank: idx + 1) }

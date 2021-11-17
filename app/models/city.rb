@@ -9,6 +9,6 @@ class City < ApplicationRecord
   validates :name, uniqueness: { case_sensitive: false }
 
   def self.max_contributors
-    Help.median(User.group(:city_id).count.except(nil).values) || 1
+    Help.median(User.where(synced: true).group(:city_id).count.except(nil).values) || 1
   end
 end

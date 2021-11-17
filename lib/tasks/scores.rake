@@ -76,7 +76,7 @@ namespace :scores do
 
     # If a synced User does not have any Score yet, we insert an empty Score.
     # This is required to properly display stats and scoreboards in that specific case (i.e. all Users before the event)
-    synced_users_without_score = User.where(synced: true).distinct.pluck(:id) - Score.distinct.pluck(:user_id).uniq
+    synced_users_without_score = User.where(synced: true).distinct.pluck(:id) - Score.distinct.pluck(:user_id)
     score_fillers = synced_users_without_score.map do |user_id|
       { user_id: user_id, score_solo: 0, score_in_batch: 0, score_in_city: 0, updated_at: Time.now.utc }
     end

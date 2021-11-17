@@ -73,6 +73,15 @@ namespace :scores do
     Rails.logger.info "Maximum rank_in_city considered: #{max_city_contributors}"
     Score.update_all("score_in_city = case when rank_in_city <= #{max_city_contributors} then score_solo else 0 end")
     Rails.logger.info "✔ City scores computed"
+
+    # If a synced User does not have any Score yet, we insert an empty Score.
+    # This is required to properly display stats and scoreboards in that specific case (i.e. all Users before the event)
+    synced_users_without_score = User.where(synced: true).distinct.pluck(:id) - Score.distinct.pluck(:user_id)
+    score_fillers = synced_users_without_score.map do |user_id|
+      { user_id: user_id, score_solo: 0, score_in_batch: 0, score_in_city: 0, updated_at: Time.now.utc }
+    end
+
+    Score.insert_all(score_fillers) unless score_fillers.empty?
   end
 
   desc "Update last_api_fetch_end"

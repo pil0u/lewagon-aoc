@@ -74,7 +74,7 @@ if Rails.env.development?
                  {
                    username: "test_3",
                    batch: Batch.create!(number: 123),
-                   aoc_id: 1_222_761
+                   aoc_id: 1_266_664
                  },
                  {
                    username: "test_4",

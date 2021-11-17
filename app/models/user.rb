@@ -7,6 +7,8 @@ class User < ApplicationRecord
   belongs_to :city, optional: true
   has_many :scores, dependent: :destroy
 
+  scope :synced, -> { where(synced: true) }
+
   def self.from_kitt(auth)
     batch_from_oauth = auth.info.last_batch_slug
     batch = Batch.find_or_create_by(number: batch_from_oauth) if batch_from_oauth.present?

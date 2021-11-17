@@ -42,7 +42,7 @@ namespace :scores do
   task compute_scores: :environment do
     # Use the same ranking system as AoC for individual scores, except that it will
     # gather _all_ players if there are more than 1 AoC room
-    max_solo_score = User.where(synced: true).count
+    max_solo_score = User.synced.count
     Rails.logger.info "Maximum score_solo: #{max_solo_score}"
     Score.update_all("score_solo = #{max_solo_score} - rank_solo + 1")
     Rails.logger.info "✔ Individual scores computed"
@@ -76,7 +76,7 @@ namespace :scores do
 
     # If a synced User does not have any Score yet, we insert an empty Score.
     # This is required to properly display stats and scoreboards in that specific case (i.e. all Users before the event)
-    synced_users_without_score = User.where(synced: true).distinct.pluck(:id) - Score.distinct.pluck(:user_id)
+    synced_users_without_score = User.synced.pluck(:id) - Score.distinct.pluck(:user_id)
     score_fillers = synced_users_without_score.map do |user_id|
       { user_id: user_id, score_solo: 0, score_in_batch: 0, score_in_city: 0, updated_at: Time.now.utc }
     end

@@ -112,7 +112,7 @@ class PagesController < ApplicationController
                           .reject { |h| h[:city_name].nil? }
                           .sort_by { |h| -h[:city_score] }
                           .map.with_index { |h, idx| h.merge!(city_rank: idx + 1) }
-    
+
     @max_city_contributors = City.max_contributors
 
     fields = %i[batch_number batch_n_users batch_score]

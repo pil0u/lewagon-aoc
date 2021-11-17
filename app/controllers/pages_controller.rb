@@ -99,13 +99,11 @@ class PagesController < ApplicationController
       @total_cities = ranked_cities.count
     end
 
-    # Advent calendar
+    # Calendar
     @advent_days = MAGIC_DAYS.map { |advent_day| Time.new(2021, 12, advent_day, 0, 0, 0, "-05:00") }
   end
 
   def scoreboard
-    @max_city_contributors = City.max_contributors
-
     fields = %i[city_name city_n_users city_score]
     @ranked_cities = Score.includes(user: :city)
                           .group("cities.name")
@@ -114,8 +112,8 @@ class PagesController < ApplicationController
                           .reject { |h| h[:city_name].nil? }
                           .sort_by { |h| -h[:city_score] }
                           .map.with_index { |h, idx| h.merge!(city_rank: idx + 1) }
-
-    @max_batch_contributors = Batch.max_contributors
+    
+    @max_city_contributors = City.max_contributors
 
     fields = %i[batch_number batch_n_users batch_score]
     @ranked_batches = Score.includes(user: :batch)
@@ -125,6 +123,8 @@ class PagesController < ApplicationController
                            .reject { |h| h[:batch_number].nil? }
                            .sort_by { |h| -h[:batch_score] }
                            .map.with_index { |h, idx| h.merge!(batch_rank: idx + 1) }
+
+    @max_batch_contributors = Batch.max_contributors
 
     fields = %i[username batch city score_solo]
     @ranked_users = Score.includes(user: %i[batch city])

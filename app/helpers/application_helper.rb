@@ -24,4 +24,14 @@ module ApplicationHelper
       "text-aoc-green": status == "OK"
     }
   end
+
+  def ranking_css(rank, rank_col: false)
+    {
+      "text-aoc-gold text-shadow-gold": rank == 1,
+      "text-aoc-silver text-shadow-silver": rank == 2,
+      "text-aoc-bronze text-shadow-bronze": rank == 3,
+      "text-xl": rank <= 3 && rank_col,
+      strong: rank > 3 && rank_col
+    }
+  end
 end

@@ -36,7 +36,8 @@ module.exports = {
             DEFAULT: '#FFFF66',
             light: '#FFFFCC'
           },
-          silver: '#9999CC'
+          silver: '#9999CC',
+          bronze: '#FFCC99'
         },
         dark: '#0F0F23',
         wagon: {

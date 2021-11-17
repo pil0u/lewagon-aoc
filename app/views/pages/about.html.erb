@@ -4,7 +4,12 @@
   <ol class="list-decimal list-inside" start=0>
     <div class="my-8 px-4">
       <li class="py-2 text-center strong">TL;DR</li>
-      <p class="mt-8 paragraph">Go to <%= link_to "your dashboard", root_path, class: "link" %> and follow the instructions to synchronize your scores.</p>
+      <p class="mt-8 paragraph">Solve puzzles 🧠 Earn points 💎 Win prizes 🎁
+
+      Also, finally settle which batch and which city is the GOAT <span class="strong">🐐</span>
+
+      Go to <%= link_to "your dashboard", root_path, class: "link" %> and follow the instructions to synchronize your scores.
+</p>
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
@@ -43,8 +48,87 @@
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
-      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">How can I enter the contest?</li>
-      <p class="mt-8 paragraph" data-qa-target="answer">To dive in and make sure your (hard) earned points go to the right team, you need to be properly synced between here and Advent of Code. It takes less than a minute: go directly to <%= link_to "your dashboard", root_path, class: "link" %> and follow the steps.</p>
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">How do I earn points? 💎</li>
+      <div class="mt-8 paragraph" data-qa-target="answer">TL;DR ➡️ Solve challenges as fast as you can and <span class="strong">coordinate with your batch and your city</span> to survive in the long run.
+
+      <span class="underline">Individual scores</span>
+      Let <code>N</code> be the number of total participants in the contest.
+      For each <em>challenge</em> (out of a total of <code>50 = 25 days * 2 challenges per day</code>), participants are ranked by their time to complete it.
+
+      The first participant to find the correct answer to a puzzle wins <code>N</code> points, the second wins one <code>N-1</code> points, the third one <code>N-2</code> points and so on. Example:
+
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Day</th>
+            <th>Challenge</th>
+            <th>Time to complete</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center text-xl">
+          <% @ranking_example.each do |user| %>
+            <tr>
+              <td><%= user[:user_id] %></td>
+              <td><%= user[:day] %></td>
+              <td><%= user[:challenge] %></td>
+              <td class="text-sm"><%= user[:time] %></td>
+              <td><%= user[:score] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      This system has two major consequences:
+      <span class="ml-4"></span> 1. Even if you solve a puzzle 3 days after it's released, <span class="strong">you always earn points</span> 💰</span>
+      <span class="ml-4">2. Scores are dynamically adjusted: if you were the first to complete a challenge when there were 5 participants, the ranking showed 5 points at the time of completion. If there are now 12 participants, you have 12 points for this challenge and <span class="strong">all rankings are adjusted accordingly</span>:</span>
+
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Day</th>
+            <th>Challenge</th>
+            <th>Time to complete</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center text-xl">
+          <% @ranking_example_updated.each do |user| %>
+            <tr>
+              <td><%= user[:user_id] %></td>
+              <td><%= user[:day] %></td>
+              <td><%= user[:challenge] %></td>
+              <td class="text-sm"><%= user[:time] %></td>
+              <td class="strong"><%= user[:score] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      Your total score is the sum of the scores for all challenges.
+
+      <span class="underline">City and batch scores</span>
+      For each challenge, your city score is the sum of the individual scores from the <span class="strong">top contributors of your city</span>.
+
+      The number of top contributors taken into accounts is determined by <span class="strong">the median number of participants in cities</span>. Example:
+      <code>3</code> participants play for Amsterdam
+      <code>7</code> participants play for Lisbon
+      <code>21</code> participants play for London
+      <code>10</code> participants play for Montreal
+      <code>8</code> participants play for Rio de Janeiro
+      <span class="group"><code>125</code> participants play for Paris<em class="hidden group-hover:inline absolute ml-3 w-max">cheaters!</em></span>
+
+      The median of <code>[3, 7, 21, 10, 8, 125]</code> is <code class="strong">9</code>, so the <span class="strong">top 9 contributors of your city</span> will contribute to your city score.
+
+      Again, this is valid <span class="strong">for each challenge</span>, so you might be the 15<sup>th</sup> for challenge A, but 7<sup>th</sup> for challenge B, so you <em>will</em> contribute to your city score with challenge B.
+
+      Also note that the median will progressively increase (and converge) as new participants enter the competition. This means that if you are the 10<sup>th</sup> person to solve challenge C in your city, your points will be added to your city as soon as the median moves to <code class="strong">10</code>.
+
+      Batch scores work the same.
+
+      Scores will be very dynamic as new players enter the competition, <span class="strong">don't worry too much about them</span> because the bottom line is to solve the problems as soon as possible. A good coordination within your city / your batch is <em>probably</em> a success factor in the long run.
+
+      All scoreboards can be found <%= link_to "here", scoreboard_path, class: "link" %>.</div>
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
@@ -53,8 +137,8 @@
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
-      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">How do I earn points? 💎</li>
-      <p class="mt-8 paragraph" data-qa-target="answer">Coming soon...</p>
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">How can I enter the contest?</li>
+      <p class="mt-8 paragraph" data-qa-target="answer">To dive in and make sure your (hard) earned points go to the right team, you need to be properly synced between here and Advent of Code. It takes less than a minute: go directly to <%= link_to "your dashboard", root_path, class: "link" %> and follow the instructions.</p>
     </div>
   </ol>
 </div>

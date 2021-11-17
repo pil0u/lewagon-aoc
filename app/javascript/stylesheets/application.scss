@@ -11,6 +11,10 @@
     }
   }
 
+  code {
+    @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
+  }
+
   .contact-me {
     @apply border-b border-aoc-gray-dark hover:strong hover:border-aoc-gray;
   }
@@ -78,6 +82,14 @@
 
   .text-shadow-gold {
     text-shadow: 0 0 5px #FFFF66;
+  }
+
+  .text-shadow-silver {
+    text-shadow: 0 0 5px #9999CC;
+  }
+
+  .text-shadow-bronze {
+    text-shadow: 0 0 5px #FFCC99;
   }
 
   .text-shadow-green {

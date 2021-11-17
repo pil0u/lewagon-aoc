@@ -16,7 +16,7 @@ namespace :scores do
     Rails.logger.info "🤖 Scores update started at #{now}"
   end
 
-  desc "Fetch completition timestamps from AoC API and insert them in scores table"
+  desc "Fetch completion timestamps from AoC API and insert them in scores table"
   task refresh: :environment do
     # TODO: Add some logic in case of multiple rooms
     room_ids = ENV["AOC_ROOMS"].split(",")
@@ -42,29 +42,36 @@ namespace :scores do
   task compute_scores: :environment do
     # Use the same ranking system as AoC for individual scores, except that it will
     # gather _all_ players if there are more than 1 AoC room
-    max_solo_score = User.count
+    max_solo_score = User.where(synced: true).count
     Rails.logger.info "Maximum score_solo: #{max_solo_score}"
     Score.update_all("score_solo = #{max_solo_score} - rank_solo + 1")
     Rails.logger.info "✔ Individual scores computed"
 
     # To build scores for batches and cities, we considered that:
-    # 1. A larger city or larger batch should not have too big an advantage
-    #    => Limit the number of awarded players per batch
-    # 2. All players should be encouraged to take part in the contest
+    # 1. All players should be encouraged to take part in the contest
     #    => Award points even if you are not the very first to solve a puzzle
+    # 2. A larger city or larger batch should not have too big an advantage
+    #    => Limit the number of awarded players per batch
     # 3. Incentivize groups to bring more players in
     #
-    # Solution: take the median number of players by batch (or by city) as the maximum score and
-    # use the same formula as the individual score.
+    # Solution: take the median number of players per batch (or per city) as the maximum number
+    # of players to contribute for their batch (or their city), for each challenge.
+    #
+    # Example: Suppose 3 batches enter the competition, each with 4, 6 and 8 members. The median
+    # number of players per batch is 6. For a given challenge (i.e. day 2, challenge ):
+    #
+    # Batch #1 players scores: 18, 14, 6, 1                 Batch #1 score = 39
+    # Batch #2 players scores: 16, 15, 9, 8, 3, 2           Batch #2 score = 53
+    # Batch #3 players scores: 17, 13, 12, 11, 10, 7, 5, 4  Batch #3 score = 70 (only the first 6)
 
-    max_batch_score = Help.median(User.group(:batch_id).count.except(nil).values)
-    Rails.logger.info "Maximum score_in_batch: #{max_batch_score}"
-    Score.update_all("score_in_batch = greatest(#{max_batch_score} - rank_in_batch + 1, 0)")
+    max_batch_contributors = Batch.max_contributors
+    Rails.logger.info "Maximum rank_in_batch considered: #{max_batch_contributors}"
+    Score.update_all("score_in_batch = case when rank_in_batch <= #{max_batch_contributors} then score_solo else 0 end")
     Rails.logger.info "✔ Batch scores computed"
 
-    max_city_score = Help.median(User.group(:city_id).count.except(nil).values)
-    Rails.logger.info "Maximum score_in_city: #{max_city_score}"
-    Score.update_all("score_in_city = greatest(#{max_city_score} - rank_in_city + 1, 0)")
+    max_city_contributors = City.max_contributors
+    Rails.logger.info "Maximum rank_in_city considered: #{max_city_contributors}"
+    Score.update_all("score_in_city = case when rank_in_city <= #{max_city_contributors} then score_solo else 0 end")
     Rails.logger.info "✔ City scores computed"
   end
 

@@ -1,3 +1,88 @@
-<div class="my-12 mx-4 sm:mx-auto max-w-prose">
-  Coming soon...
+<div class="my-12 mx-4 sm:mx-auto max-w-3xl flex flex-col gap-y-12">
+  <div>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">City scoreboard</h2>
+
+    <div class="mx-auto my-4 w-full max-w-xl">
+      <table class="w-full">
+        <thead>
+          <tr class="text-aoc-gray border-b border-aoc-gray-darker">
+            <th class="w-2/12 font-normal"></th>
+            <th class="w-3/12 font-normal">City</th>
+            <th class="w-2/12 font-normal"># Coders</th>
+            <th class="w-5/12 font-normal">Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% @ranked_cities.each do |city| %>
+            <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if city[:city_name] == current_user.city&.name %>">
+              <td class="py-1 <%= class_names(ranking_css(city[:city_rank], rank_col: true)) %>"><%= city[:city_rank] %></td>
+              <td class="<%= class_names(ranking_css(city[:city_rank])) %>"><%= city[:city_name] %></td>
+              <td><%= city[:city_n_users] %></td>
+              <td class="py-1 strong text-lg"><%= city[:city_score] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-center text-sm">City scores are currently computed from their <span class="strong">top <%= @max_city_contributors %></span> <%= "contributor".pluralize(@max_city_contributors) %> for each challenge</p>
+  </div>
+
+  <div>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">Batch scoreboard</h2>
+
+    <div class="mx-auto my-4 w-full max-w-xl">
+      <table class="w-full">
+        <thead>
+          <tr class="text-aoc-gray border-b border-aoc-gray-darker">
+            <th class="w-2/12 font-normal"></th>
+            <th class="w-3/12 font-normal">Batch</th>
+            <th class="w-2/12 font-normal"># Coders</th>
+            <th class="w-5/12 font-normal">Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% @ranked_batches.each do |batch| %>
+            <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if batch[:batch_number] == current_user.batch&.number %>">
+              <td class="py-1 <%= class_names(ranking_css(batch[:batch_rank], rank_col: true)) %>"><%= batch[:batch_rank] %></td>
+              <td class="<%= class_names(ranking_css(batch[:batch_rank])) %>">#<%= batch[:batch_number] %></td>
+              <td><%= batch[:batch_n_users] %></td>
+              <td class="py-1 strong text-lg"><%= batch[:batch_score] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-center text-sm">Batch scores are currently computed from their <span class="strong">top <%= @max_batch_contributors %></span> <%= "contributor".pluralize(@max_batch_contributors) %> for each challenge</p>
+  </div>
+
+  <div>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">Solo scoreboard</h2>
+
+    <div class="mx-auto my-4 w-full max-w-3xl">
+      <table class="w-full">
+        <thead>
+          <tr class="text-aoc-gray border-b border-aoc-gray-darker">
+            <th class="w-2/12 font-normal"></th>
+            <th class="w-2/12 font-normal">Username</th>
+            <th class="w-2/12 font-normal">Batch</th>
+            <th class="w-3/12 font-normal">City</th>
+            <th class="w-3/12 font-normal">Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% @ranked_users.each do |user| %>
+            <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[:username] == current_user.username %>">
+              <td class="py-1 <%= class_names(ranking_css(user[:rank], rank_col: true)) %>"><%= user[:rank] %></td>
+              <td class="<%= class_names(ranking_css(user[:rank])) %>"><%= user[:username] %></td>
+              <td><%= "##{user[:batch]}" if user[:batch] %></td>
+              <td><%= user[:city] %></td>
+              <td class="py-1 strong text-lg"><%= user[:score_solo] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

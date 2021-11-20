@@ -133,14 +133,17 @@
     <p class="paragraph">To make sure your name reaches our <%= link_to "custom scoreboards", scoreboard_path, class: "link" %>, you need to follow these steps:</p>
 
     <ol class="my-4 mx-14 list-decimal flex flex-col gap-y-1.5">
-      <li class="paragraph"><%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any OAuth option</li>
+      <li class="paragraph"><%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any other OAuth option</li>
 
       <%= form_with url: "https://adventofcode.com/#{@year}/leaderboard/private/join", authenticity_token: false, html: { target: :blank } do |f| %>
-        <%= f.hidden_field :join_key, value: ENV["AOC_ROOMS"].split(",").first %>
-        <li class="paragraph">Once logged in, <%= f.submit "click here", class: "link-external bg-transparent cursor-pointer" %> to join our leaderboard</li>
+        <%= f.hidden_field :join_key, value: @current_open_room %>
+        <li class="paragraph">Once logged in, <%= f.submit "click here", class: "link-external bg-transparent cursor-pointer" %> to join our leaderboard on the external platform. You should be prompted:
+        <code>You have joined that private leaderboard.</code>
+        If not, go to <%= link_to "that page instead", "https://adventofcode.com/2021/leaderboard/private", target: :blank, class: "link-external" %> and enter the code:
+        <code class="strong"><%= @current_open_room %></code></li>
       <% end %>
 
-      <li class="paragraph">On Advent of Code, go to <%= link_to "your settings page", "https://adventofcode.com/settings", target: :blank, class: "link-external" %> and copy the number next to "anonymous user #<span class="strong">0000000</span>" (without the #)</li>
+      <li class="paragraph">On Advent of Code, go to <%= link_to "your settings page", "https://adventofcode.com/settings", target: :blank, class: "link-external" %> and copy the number next to "anonymous user #<span class="strong">0000000</span>"</li>
       <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "link" %>, next to <span class="strong">Advent of Code ID</span></li>
       <li class="paragraph">Save</li>
     </ol>
@@ -148,7 +151,7 @@
     <p class="paragraph">At this point, your status should have switched to <span class="text-aoc-atmospheric">pending</span>.
     It should switch to <span class="text-aoc-green">OK</span> in <span class="strong"><%= @estimated_next_api_fetch %></span>.
 
-    <em class="text-sm">If your status remains <span class="text-aoc-atmospheric">pending</span> while your <span class="strong">Advent of Code ID</span> in <%= link_to "your settings", settings_path, class: "link" %> is 100% correct, <%= link_to "contact me", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %>.</em></p>
+    <em class="text-sm">If your status remains <span class="text-aoc-atmospheric">pending</span> after a data refresh while you carefully followed each one of these steps, <%= link_to "contact me on Slack", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %>.</em></p>
   </div>
 
 <% end %>

@@ -50,6 +50,7 @@ class PagesController < ApplicationController
     # Event
     @aoc_in_progress = Aoc.in_progress?
     @year = ENV["EVENT_YEAR"] || 2021
+    @current_open_room = ENV["AOC_ROOMS"].split(",").last
     @user_status = current_user.status
 
     # User stats

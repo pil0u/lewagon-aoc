@@ -20,7 +20,7 @@ namespace :scores do
   task refresh: :environment do
     # Retrieve AoC leaderboard IDs to call the API
     leaderboard_ids = ENV["AOC_ROOMS"].split(",").map { |id| id.split("-").first }
-    
+
     # Merge members timestamps from all AoC leaderboards
     members = {}
     leaderboard_ids.each do |room_id|

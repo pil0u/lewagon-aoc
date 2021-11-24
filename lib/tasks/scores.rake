@@ -18,16 +18,21 @@ namespace :scores do
 
   desc "Fetch completion timestamps from AoC API and insert them in scores table"
   task refresh: :environment do
-    # TODO: Add some logic in case of multiple rooms
-    room_ids = ENV["AOC_ROOMS"].split(",")
+    # Retrieve AoC leaderboard IDs to call the API
+    leaderboard_ids = ENV["AOC_ROOMS"].split(",").map { |id| id.split("-").first }
 
-    room_id = room_ids.first.split("-").first
-    json = Aoc.fetch_json(ENV["EVENT_YEAR"] || 2021, room_id, ENV["SESSION_COOKIE"])
+    # Merge members timestamps from all AoC leaderboards
+    members = {}
+    leaderboard_ids.each do |room_id|
+      members_to_merge = Aoc.fetch_json(ENV["EVENT_YEAR"] || 2021, room_id, ENV["SESSION_COOKIE"])["members"]
 
-    User.update_sync_status_from(json)
+      members.deep_merge!(members_to_merge)
+    end
+
+    User.update_sync_status_from(members)
     Rails.logger.info "✔ Users sync status updated"
 
-    scores = Aoc.to_scores_array(json)
+    scores = Aoc.to_scores_array(members)
     Score.replace_all(scores)
     Rails.logger.info "✔ Individual timestamps updated"
   end

@@ -42,3 +42,9 @@ Then, instead of the usual `rails s`, you can run `overmind s`.
 ### `.env` file
 
 This file is used for development purposes. It is _not_ versioned and never should.
+
+You can add an announcement banner with the `ANNOUNCEMENT` environment variable. Write the announcement text into the variable to make the banner appear:
+```
+ANNOUNCEMENT=We are aware of an issue regarding XXX. Work is in progress.
+```
+Let the variable *empty* to make the banner disappear.

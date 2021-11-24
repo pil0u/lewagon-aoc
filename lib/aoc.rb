@@ -16,14 +16,14 @@ module Aoc
     JSON.parse(response.body)
   end
 
-  def self.to_scores_array(json)
+  def self.to_scores_array(members)
     Rails.logger.info "  Transforming JSON to match the scores table format..."
 
     user_aoc_ids = User.pluck(:aoc_id, :id).to_h.except(nil)
     now = Time.now.utc
     scores = []
 
-    json["members"].each do |member_id, results|
+    members.each do |member_id, results|
       next unless (user_id = user_aoc_ids[member_id.to_i])
 
       results["completion_day_level"].each do |day, challenges|

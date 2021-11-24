@@ -1,8 +1,14 @@
 <div class="my-12 mx-4 sm:mx-auto max-w-3xl flex flex-col gap-y-12">
   <div>
-    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">City scoreboard</h2>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">
+      City scoreboard
+    </h2>
 
-    <div class="mx-auto my-4 w-full max-w-xl">
+    <p class="my-4 text-center text-sm">
+      City scores are currently computed from their <span class="strong">top <%= @max_city_contributors %></span> <%= "contributor".pluralize(@max_city_contributors) %> for each challenge
+    </p>
+
+    <div class="mx-auto w-full max-w-xl">
       <table class="w-full">
         <thead>
           <tr class="text-aoc-gray border-b border-aoc-gray-darker">
@@ -24,14 +30,18 @@
         </tbody>
       </table>
     </div>
-
-    <p class="text-center text-sm">City scores are currently computed from their <span class="strong">top <%= @max_city_contributors %></span> <%= "contributor".pluralize(@max_city_contributors) %> for each challenge</p>
   </div>
 
   <div>
-    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">Batch scoreboard</h2>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">
+      Batch scoreboard
+    </h2>
 
-    <div class="mx-auto my-4 w-full max-w-xl">
+    <p class="my-4 text-center text-sm">
+      Batch scores are currently computed from their <span class="strong">top <%= @max_batch_contributors %></span> <%= "contributor".pluralize(@max_batch_contributors) %> for each challenge
+    </p>
+
+    <div class="mx-auto w-full max-w-xl">
       <table class="w-full">
         <thead>
           <tr class="text-aoc-gray border-b border-aoc-gray-darker">
@@ -53,12 +63,12 @@
         </tbody>
       </table>
     </div>
-
-    <p class="text-center text-sm">Batch scores are currently computed from their <span class="strong">top <%= @max_batch_contributors %></span> <%= "contributor".pluralize(@max_batch_contributors) %> for each challenge</p>
   </div>
 
   <div>
-    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">Solo scoreboard</h2>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric">
+      Solo scoreboard
+    </h2>
 
     <div class="mx-auto my-4 w-full max-w-3xl">
       <table class="w-full">

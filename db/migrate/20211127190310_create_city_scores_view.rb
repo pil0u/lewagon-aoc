@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCityScoresView < ActiveRecord::Migration[6.1]
   def change
     create_view :city_scores, materialized: true

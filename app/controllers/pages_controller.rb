@@ -89,19 +89,19 @@ class PagesController < ApplicationController
 
   def scoreboard
     @ranked_cities = CityScore.joins(city: :users).order(:rank)
-      pluck(:name, Arel.sql("count(distinct users.id)"), :in_contest, :rank).
-      map { |row| fields.zip(row).to_h }.
-      reject { |h| h[:city_name].nil? }
+                              .pluck(:name, Arel.sql("count(distinct users.id)"), :in_contest, :rank)
+                              .map { |row| fields.zip(row).to_h }
+                              .reject { |h| h[:city_name].nil? }
     @max_city_contributors = CityScore.max_contributors
 
-    @ranked_batches = BatchScore.joins(batch: :user).order(:rank, 'batches.number': :desc).
-      pluck(:number, Arel.sql("count(distinct users.id)"), :in_contest).
-      map { |row| fields.zip(row).to_h }.
-      reject { |h| h[:batch_number].nil? }
+    @ranked_batches = BatchScore.joins(batch: :user).order(:rank, "batches.number": :desc)
+                                .pluck(:number, Arel.sql("count(distinct users.id)"), :in_contest)
+                                .map { |row| fields.zip(row).to_h }
+                                .reject { |h| h[:batch_number].nil? }
     @max_batch_contributors = BatchScore.max_contributors
 
-    @ranked_users = Score.joins(user: [:rank, :batch, :city]).order('ranks.in_contest').
-      pluck('users.username', 'batches.number', 'cities.name', 'scores.in_contest', 'ranks.in_contest').
-      map { |row| fields.zip(row).to_h }
+    @ranked_users = Score.joins(user: %i[rank batch city]).order("ranks.in_contest")
+                         .pluck("users.username", "batches.number", "cities.name", "scores.in_contest", "ranks.in_contest")
+                         .map { |row| fields.zip(row).to_h }
   end
 end

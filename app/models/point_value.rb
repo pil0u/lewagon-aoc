@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PointValue < ApplicationRecord
   belongs_to :completion
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePointValuesView < ActiveRecord::Migration[6.1]
   def change
     create_view :point_values, materialized: true

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BatchPoint < ApplicationRecord
   belongs_to :batch
 

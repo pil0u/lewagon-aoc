@@ -2,8 +2,8 @@
 
 class Completion < ApplicationRecord
   belongs_to :user
-  has_one :point_value
-  has_one :completion_rank
+  has_one :point_value # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
+  has_one :completion_rank # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
 
   def self.replace_all(completions)
     Rails.logger.info "  Erasing all completions..."

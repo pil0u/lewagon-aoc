@@ -63,50 +63,24 @@ class PagesController < ApplicationController
 
     # User stats
 
-    ## Individual rank & scores
-    fields = %i[user_id score_solo score_in_batch score_in_city]
-    ranked_users = Score.includes(:user)
-                        .group("users.id, users.username")
-                        .order("sum(score_solo) desc, users.id desc")
-                        .pluck("users.id", "sum(score_solo)", "sum(score_in_batch)", "sum(score_in_city)")
-                        .map { |row| fields.zip(row).to_h }
-                        .map.with_index { |h, idx| h.merge!(rank_solo: idx + 1) }
-
-    @user_score = ranked_users.find { |h| h[:user_id] == current_user.id }
-    @total_users = ranked_users.count
+    ## Individual rank & score
+    @user_score = current_user.score.in_contest
+    @total_users = User.joins(:score).count
 
     ## Batch rank & score
     @user_batch = current_user.batch
 
     if @user_batch
-      fields = %i[batch_id batch_score]
-      ranked_batches = Completion.includes(user: :batch)
-                            .group("batches.id, batches.number")
-                            .order("sum(score_in_batch) desc, batches.number")
-                            .pluck("batches.id", "sum(score_in_batch)")
-                            .map { |row| fields.zip(row).to_h }
-                            .reject { |h| h[:batch_id].nil? }
-                            .map.with_index { |h, idx| h.merge!(batch_rank: idx + 1) }
-
-      @user_batch_score = ranked_batches.find { |h| h[:batch_id] == @user_batch.id }
-      @total_batches = ranked_batches.count
+      @user_batch_score = current_user.score.in_batch
+      @total_batches = User.joins(:score).distinct(:batch_id).pluck(:batch_id).count
     end
 
     ## City rank & score
     @user_city = current_user.city
 
     if @user_city
-      fields = %i[city_id city_score]
-      ranked_cities = Score.includes(user: :city)
-                           .group("cities.id, cities.name")
-                           .order("sum(score_in_city) desc, cities.name")
-                           .pluck("cities.id", "sum(score_in_city)")
-                           .map { |row| fields.zip(row).to_h }
-                           .reject { |h| h[:city_id].nil? }
-                           .map.with_index { |h, idx| h.merge!(city_rank: idx + 1) }
-
-      @user_city_score = ranked_cities.find { |h| h[:city_id] == @user_city.id }
-      @total_cities = ranked_cities.count
+      @user_city_score = current_user.score.in_city
+      @total_cities = User.joins(:score).distinct(:city_id).pluck(:city_id).count
     end
 
     # Calendar
@@ -115,7 +89,7 @@ class PagesController < ApplicationController
 
   def scoreboard
     fields = %i[city_name city_n_users city_score]
-    @ranked_cities = Score.includes(user: :city)
+    @ranked_cities = Completion.includes(user: :city)
                           .group("cities.name")
                           .order("sum(score_in_city) desc, cities.name")
                           .pluck("cities.name", Arel.sql("count(distinct users.id)"), "sum(score_in_city)")
@@ -126,7 +100,7 @@ class PagesController < ApplicationController
     @max_city_contributors = City.max_contributors
 
     fields = %i[batch_number batch_n_users batch_score]
-    @ranked_batches = Score.includes(user: :batch)
+    @ranked_batches = Completion.includes(user: :batch)
                            .group("batches.number")
                            .order("sum(score_in_batch) desc, batches.number")
                            .pluck("batches.number", Arel.sql("count(distinct users.id)"), "sum(score_in_batch)")
@@ -137,7 +111,7 @@ class PagesController < ApplicationController
     @max_batch_contributors = Batch.max_contributors
 
     fields = %i[uid username batch city score_solo]
-    @ranked_users = Score.includes(user: %i[batch city])
+    @ranked_users = Completion.includes(user: %i[batch city])
                          .group("users.id, users.username")
                          .order("sum(score_solo) desc, users.id desc")
                          .pluck("users.uid", "users.username", "max(batches.number)", "max(cities.name)", "sum(score_solo)")

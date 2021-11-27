@@ -1,12 +1,10 @@
 SELECT
   co.id AS completion_id,
-  dense_rank() over (partition by co.day, co.challenge order by co.completion_unix_time) AS in_contest,
-  dense_rank() over (partition by b.id, co.day, co.challenge order by co.completion_unix_time) AS in_batch,
-  dense_rank() over (partition by ci.id, co.day, co.challenge order by co.completion_unix_time) AS in_city
+  (SELECT COUNT(*) FROM users WHERE synced)                                 - cr.in_contest + 1 AS in_contest,
+  (SELECT COUNT(*) FROM users WHERE synced AND users.batch_id = u.batch_id) - cr.in_batch + 1   AS in_batch,
+  (SELECT COUNT(*) FROM users WHERE synced AND users.city_id = u.city_id)   - cr.in_city + 1    AS in_city
 FROM completions co
 LEFT JOIN users u
 ON co.user_id = u.id
-LEFT JOIN batches b
-ON u.batch_id = b.id
-LEFT JOIN cities ci
-ON u.city_id = ci.id;
+LEFT JOIN completion_ranks cr
+ON cr.completion_id = co.id;

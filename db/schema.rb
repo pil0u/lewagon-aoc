@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_27_031000) do
+ActiveRecord::Schema.define(version: 2021_11_27_172605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,15 +68,31 @@ ActiveRecord::Schema.define(version: 2021_11_27_031000) do
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"
 
-  create_view "point_values", materialized: true, sql_definition: <<-SQL
+  create_view "completion_ranks", materialized: true, sql_definition: <<-SQL
       SELECT co.id AS completion_id,
       dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY co.completion_unix_time) AS in_contest,
-      dense_rank() OVER (PARTITION BY b.id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_batch,
-      dense_rank() OVER (PARTITION BY ci.id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_city
-     FROM (((completions co
+      dense_rank() OVER (PARTITION BY u.batch_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_batch,
+      dense_rank() OVER (PARTITION BY u.city_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_city
+     FROM (completions co
+       LEFT JOIN users u ON ((co.user_id = u.id)));
+  SQL
+  add_index "completion_ranks", ["completion_id"], name: "index_completion_ranks_on_completion_id", unique: true
+  add_index "completion_ranks", ["in_batch"], name: "index_completion_ranks_on_in_batch"
+
+  create_view "point_values", materialized: true, sql_definition: <<-SQL
+      SELECT co.id AS completion_id,
+      ((( SELECT count(*) AS count
+             FROM users
+            WHERE users.synced) - cr.in_contest) + 1) AS in_contest,
+      ((( SELECT count(*) AS count
+             FROM users
+            WHERE (users.synced AND (users.batch_id = u.batch_id))) - cr.in_batch) + 1) AS in_batch,
+      ((( SELECT count(*) AS count
+             FROM users
+            WHERE (users.synced AND (users.city_id = u.city_id))) - cr.in_city) + 1) AS in_city
+     FROM ((completions co
        LEFT JOIN users u ON ((co.user_id = u.id)))
-       LEFT JOIN batches b ON ((u.batch_id = b.id)))
-       LEFT JOIN cities ci ON ((u.city_id = ci.id)));
+       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)));
   SQL
   add_index "point_values", ["completion_id"], name: "index_point_values_on_completion_id", unique: true
 
@@ -103,5 +119,41 @@ ActiveRecord::Schema.define(version: 2021_11_27_031000) do
        LEFT JOIN cities ci ON ((u.city_id = ci.id)));
   SQL
   add_index "ranks", ["user_id"], name: "index_ranks_on_user_id", unique: true
+
+  create_view "batch_points", materialized: true, sql_definition: <<-SQL
+      WITH synced_user_numbers AS (
+           SELECT ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))) AS median
+             FROM ( SELECT count(u_1.*) AS value
+                     FROM (batches
+                       LEFT JOIN users u_1 ON ((u_1.batch_id = batches.id)))
+                    WHERE u_1.synced
+                    GROUP BY batches.id) synced_user_counts
+          )
+   SELECT b.id AS batch_id,
+      co.day,
+      co.challenge,
+      sum(pv.in_contest) AS points
+     FROM ((((batches b
+       LEFT JOIN users u ON ((u.batch_id = b.id)))
+       LEFT JOIN completions co ON ((co.user_id = u.id)))
+       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
+       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)))
+    WHERE ((cr.in_batch)::double precision <= ( SELECT synced_user_numbers.median
+             FROM synced_user_numbers))
+    GROUP BY b.id, co.day, co.challenge
+    ORDER BY co.day, co.challenge, (sum(pv.in_contest)) DESC;
+  SQL
+  add_index "batch_points", ["batch_id", "day", "challenge"], name: "index_batch_points_on_batch_id_and_day_and_challenge", unique: true
+
+  create_view "batch_scores", materialized: true, sql_definition: <<-SQL
+      SELECT scores.batch_id,
+      scores.score,
+      dense_rank() OVER (ORDER BY scores.score DESC) AS rank
+     FROM ( SELECT batch_points.batch_id,
+              sum(batch_points.points) AS score
+             FROM batch_points
+            GROUP BY batch_points.batch_id) scores;
+  SQL
+  add_index "batch_scores", ["batch_id"], name: "index_batch_scores_on_batch_id", unique: true
 
 end

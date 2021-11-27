@@ -5,6 +5,8 @@ require "help"
 class Batch < ApplicationRecord
   has_many :users, dependent: :nullify
   has_many :scores, through: :users
+  has_one :batch_score
+  has_many :batch_points
 
   MINIMUM_CONTRIBUTORS = 3
 

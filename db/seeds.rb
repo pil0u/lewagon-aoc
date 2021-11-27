@@ -60,47 +60,18 @@ Rails.logger.info "✔ Cities initialized"
 
 # Initialize some users in development
 if Rails.env.development?
-  User.create!([
-                 {
-                   username: "test_1",
-                   batch: Batch.create!(number: 343),
-                   aoc_id: 151_323
-                 },
-                 {
-                   username: "test_2",
-                   batch: Batch.create!(number: 454),
-                   aoc_id: 1_095_582
-                 },
-                 {
-                   username: "test_3",
-                   batch: Batch.create!(number: 123),
-                   aoc_id: 1_266_664
-                 },
-                 {
-                   username: "test_4",
-                   batch: Batch.find_by(number: 123),
-                   aoc_id: 1_237_086
-                 },
-                 {
-                   username: "test_5",
-                   batch: Batch.find_by(number: 123),
-                   aoc_id: 1_258_899
-                 },
-                 {
-                   username: "test_6",
-                   batch: Batch.find_by(number: 454),
-                   aoc_id: 1_259_034
-                 },
-                 {
-                   username: "test_7",
-                   batch: Batch.find_by(number: 454),
-                   aoc_id: 1_259_062
-                 },
-                 {
-                   username: "test_8",
-                   batch: Batch.find_by(number: 343),
-                   aoc_id: 1_259_379
-                 }
-               ])
   Rails.logger.info "✔ Users initialized"
+
+  url = URI("https://adventofcode.com/#{2020}/leaderboard/private/view/#{1222761}.json")
+  session_cookie = ENV['SESSION_COOKIE']
+  https = Net::HTTP.new(url.host, url.port)
+  https.use_ssl = true
+  request = Net::HTTP::Get.new(url)
+  request["Cookie"] = "session=#{session_cookie}"
+  response = https.request(request)
+  JSON(response.body)
+  pr = JSON(response.body)
+  members = pr['members']
+  members.first
+  members.each { |aoc_id, attrs| User.create!(username: attrs['name'], batch: Batch.all.sample, aoc_id: aoc_id) }
 end

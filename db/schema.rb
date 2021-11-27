@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_27_172605) do
+ActiveRecord::Schema.define(version: 2021_11_27_190310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,9 +110,9 @@ ActiveRecord::Schema.define(version: 2021_11_27_172605) do
 
   create_view "ranks", materialized: true, sql_definition: <<-SQL
       SELECT u.id AS user_id,
-      dense_rank() OVER (ORDER BY s.in_contest) AS in_contest,
-      dense_rank() OVER (PARTITION BY b.id ORDER BY s.in_batch) AS in_batch,
-      dense_rank() OVER (PARTITION BY ci.id ORDER BY s.in_city) AS in_city
+      dense_rank() OVER (ORDER BY s.in_contest DESC) AS in_contest,
+      dense_rank() OVER (PARTITION BY b.id ORDER BY s.in_batch DESC) AS in_batch,
+      dense_rank() OVER (PARTITION BY ci.id ORDER BY s.in_city DESC) AS in_city
      FROM (((users u
        LEFT JOIN scores s ON ((s.user_id = u.id)))
        LEFT JOIN batches b ON ((u.batch_id = b.id)))
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 2021_11_27_172605) do
 
   create_view "batch_scores", materialized: true, sql_definition: <<-SQL
       SELECT scores.batch_id,
-      scores.score,
+      scores.score AS in_contest,
       dense_rank() OVER (ORDER BY scores.score DESC) AS rank
      FROM ( SELECT batch_points.batch_id,
               sum(batch_points.points) AS score
@@ -155,5 +155,41 @@ ActiveRecord::Schema.define(version: 2021_11_27_172605) do
             GROUP BY batch_points.batch_id) scores;
   SQL
   add_index "batch_scores", ["batch_id"], name: "index_batch_scores_on_batch_id", unique: true
+
+  create_view "city_points", materialized: true, sql_definition: <<-SQL
+      WITH synced_user_numbers AS (
+           SELECT ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))) AS median
+             FROM ( SELECT count(u_1.*) AS value
+                     FROM (cities
+                       LEFT JOIN users u_1 ON ((u_1.city_id = cities.id)))
+                    WHERE u_1.synced
+                    GROUP BY cities.id) synced_user_counts
+          )
+   SELECT b.id AS city_id,
+      co.day,
+      co.challenge,
+      sum(pv.in_contest) AS points
+     FROM ((((cities b
+       LEFT JOIN users u ON ((u.city_id = b.id)))
+       LEFT JOIN completions co ON ((co.user_id = u.id)))
+       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
+       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)))
+    WHERE ((cr.in_city)::double precision <= ( SELECT synced_user_numbers.median
+             FROM synced_user_numbers))
+    GROUP BY b.id, co.day, co.challenge
+    ORDER BY co.day, co.challenge, (sum(pv.in_contest)) DESC;
+  SQL
+  add_index "city_points", ["city_id", "day", "challenge"], name: "index_city_points_on_city_id_and_day_and_challenge", unique: true
+
+  create_view "city_scores", materialized: true, sql_definition: <<-SQL
+      SELECT scores.city_id,
+      scores.score AS in_contest,
+      dense_rank() OVER (ORDER BY scores.score DESC) AS rank
+     FROM ( SELECT city_points.city_id,
+              sum(city_points.points) AS score
+             FROM city_points
+            GROUP BY city_points.city_id) scores;
+  SQL
+  add_index "city_scores", ["city_id"], name: "index_city_scores_on_city_id", unique: true
 
 end

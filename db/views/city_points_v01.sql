@@ -2,11 +2,11 @@ WITH synced_user_numbers AS (
   SELECT CEIL(percentile_cont(0.5) WITHIN GROUP (ORDER BY value)) AS median
   FROM (
     SELECT COUNT(u.*) AS value
-    FROM cityes
+    FROM cities
     LEFT JOIN users AS u
-    ON u.city_id = batches.id
+    ON u.city_id = cities.id
     WHERE u.synced
-    GROUP BY cityes.id
+    GROUP BY cities.id
   ) AS synced_user_counts
 )
 
@@ -16,7 +16,7 @@ SELECT
   co.challenge AS challenge,
   SUM(pv.in_contest) AS points
 
-FROM cityes AS b
+FROM cities AS b
 LEFT JOIN users u
 ON u.city_id = b.id
 LEFT JOIN completions co

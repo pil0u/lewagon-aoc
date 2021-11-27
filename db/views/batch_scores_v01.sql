@@ -1,6 +1,6 @@
 SELECT
   batch_id AS batch_id,
-  score,
+  score AS in_contest,
   dense_rank() OVER (ORDER BY score DESC) AS rank
 FROM (
   SELECT

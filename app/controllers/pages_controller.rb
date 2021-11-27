@@ -80,7 +80,7 @@ class PagesController < ApplicationController
 
     if @user_batch
       fields = %i[batch_id batch_score]
-      ranked_batches = Score.includes(user: :batch)
+      ranked_batches = Completion.includes(user: :batch)
                             .group("batches.id, batches.number")
                             .order("sum(score_in_batch) desc, batches.number")
                             .pluck("batches.id", "sum(score_in_batch)")

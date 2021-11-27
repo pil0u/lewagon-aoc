@@ -16,19 +16,19 @@ module Aoc
     JSON.parse(response.body)
   end
 
-  def self.to_scores_array(members)
-    Rails.logger.info "  Transforming JSON to match the scores table format..."
+  def self.to_completions_array(members)
+    Rails.logger.info "  Transforming JSON to match the completions table format..."
 
     user_aoc_ids = User.pluck(:aoc_id, :id).to_h.except(nil)
     now = Time.now.utc
-    scores = []
+    completions = []
 
     members.each do |member_id, results|
       next unless (user_id = user_aoc_ids[member_id.to_i])
 
       results["completion_day_level"].each do |day, challenges|
         challenges.each do |challenge, value|
-          score = {
+          completion = {
             user_id: user_id,
             day: day.to_i,
             challenge: challenge.to_i,
@@ -36,12 +36,12 @@ module Aoc
             updated_at: now
           }
 
-          scores << score
+          completions << completion
         end
       end
     end
 
-    scores
+    completions
   end
 
   def self.in_progress?

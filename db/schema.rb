@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_12_212610) do
+ActiveRecord::Schema.define(version: 2021_11_27_020148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2021_10_12_212610) do
     t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
-  create_table "scores", force: :cascade do |t|
+  create_table "completions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "day", limit: 2
     t.integer "challenge", limit: 2
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 2021_10_12_212610) do
     t.integer "score_solo"
     t.integer "score_in_batch"
     t.integer "score_in_city"
-    t.index ["user_id", "day", "challenge"], name: "index_scores_on_user_id_and_day_and_challenge", unique: true
-    t.index ["user_id"], name: "index_scores_on_user_id"
+    t.index ["user_id", "day", "challenge"], name: "index_completions_on_user_id_and_day_and_challenge", unique: true
+    t.index ["user_id"], name: "index_completions_on_user_id"
   end
 
   create_table "states", force: :cascade do |t|
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_10_12_212610) do
     t.index ["city_id"], name: "index_users_on_city_id"
   end
 
-  add_foreign_key "scores", "users"
+  add_foreign_key "completions", "users"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"
 end

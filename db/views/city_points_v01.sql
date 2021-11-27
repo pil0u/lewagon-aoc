@@ -14,7 +14,10 @@ SELECT
   b.id AS city_id,
   co.day AS day,
   co.challenge AS challenge,
-  SUM(pv.in_contest) AS points
+  SUM(pv.in_contest) AS points,
+  dense_rank() OVER (ORDER BY SUM(pv.in_contest)) AS rank,
+  COUNT(pv.*) AS participating_users,
+  COUNT(pv.*) >= (SELECT median FROM synced_user_numbers) AS complete
 
 FROM cities AS b
 LEFT JOIN users u

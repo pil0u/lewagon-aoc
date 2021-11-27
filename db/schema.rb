@@ -132,7 +132,11 @@ ActiveRecord::Schema.define(version: 2021_11_27_190310) do
    SELECT b.id AS batch_id,
       co.day,
       co.challenge,
-      sum(pv.in_contest) AS points
+      sum(pv.in_contest) AS points,
+      dense_rank() OVER (ORDER BY (sum(pv.in_contest))) AS rank,
+      count(pv.*) AS participating_users,
+      ((count(pv.*))::double precision >= ( SELECT synced_user_numbers.median
+             FROM synced_user_numbers)) AS complete
      FROM ((((batches b
        LEFT JOIN users u ON ((u.batch_id = b.id)))
        LEFT JOIN completions co ON ((co.user_id = u.id)))
@@ -168,7 +172,11 @@ ActiveRecord::Schema.define(version: 2021_11_27_190310) do
    SELECT b.id AS city_id,
       co.day,
       co.challenge,
-      sum(pv.in_contest) AS points
+      sum(pv.in_contest) AS points,
+      dense_rank() OVER (ORDER BY (sum(pv.in_contest))) AS rank,
+      count(pv.*) AS participating_users,
+      ((count(pv.*))::double precision >= ( SELECT synced_user_numbers.median
+             FROM synced_user_numbers)) AS complete
      FROM ((((cities b
        LEFT JOIN users u ON ((u.city_id = b.id)))
        LEFT JOIN completions co ON ((co.user_id = u.id)))

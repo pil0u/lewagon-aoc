@@ -2,6 +2,7 @@
 
 class Completion < ApplicationRecord
   belongs_to :user
+  has_one :point_value
 
   def self.replace_all(completions)
     Rails.logger.info "  Erasing all completions..."

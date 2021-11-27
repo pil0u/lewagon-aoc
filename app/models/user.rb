@@ -6,6 +6,8 @@ class User < ApplicationRecord
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
   has_many :completions, dependent: :destroy
+  has_one :score
+  has_one :rank
 
   scope :synced, -> { where(synced: true) }
 

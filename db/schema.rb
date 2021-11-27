@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_27_020148) do
+ActiveRecord::Schema.define(version: 2021_11_27_031000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,4 +67,41 @@ ActiveRecord::Schema.define(version: 2021_11_27_020148) do
   add_foreign_key "completions", "users"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"
+
+  create_view "point_values", materialized: true, sql_definition: <<-SQL
+      SELECT co.id AS completion_id,
+      dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY co.completion_unix_time) AS in_contest,
+      dense_rank() OVER (PARTITION BY b.id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_batch,
+      dense_rank() OVER (PARTITION BY ci.id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_city
+     FROM (((completions co
+       LEFT JOIN users u ON ((co.user_id = u.id)))
+       LEFT JOIN batches b ON ((u.batch_id = b.id)))
+       LEFT JOIN cities ci ON ((u.city_id = ci.id)));
+  SQL
+  add_index "point_values", ["completion_id"], name: "index_point_values_on_completion_id", unique: true
+
+  create_view "scores", materialized: true, sql_definition: <<-SQL
+      SELECT u.id AS user_id,
+      sum(pv.in_contest) AS in_contest,
+      sum(pv.in_batch) AS in_batch,
+      sum(pv.in_city) AS in_city
+     FROM ((users u
+       LEFT JOIN completions co ON ((co.user_id = u.id)))
+       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
+    GROUP BY u.id;
+  SQL
+  add_index "scores", ["user_id"], name: "index_scores_on_user_id", unique: true
+
+  create_view "ranks", materialized: true, sql_definition: <<-SQL
+      SELECT u.id AS user_id,
+      dense_rank() OVER (ORDER BY s.in_contest) AS in_contest,
+      dense_rank() OVER (PARTITION BY b.id ORDER BY s.in_batch) AS in_batch,
+      dense_rank() OVER (PARTITION BY ci.id ORDER BY s.in_city) AS in_city
+     FROM (((users u
+       LEFT JOIN scores s ON ((s.user_id = u.id)))
+       LEFT JOIN batches b ON ((u.batch_id = b.id)))
+       LEFT JOIN cities ci ON ((u.city_id = ci.id)));
+  SQL
+  add_index "ranks", ["user_id"], name: "index_ranks_on_user_id", unique: true
+
 end

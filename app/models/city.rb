@@ -4,7 +4,7 @@ require "help"
 
 class City < ApplicationRecord
   has_many :users, dependent: :nullify
-  has_many :scores, through: :users
+  has_many :completions, through: :users
   has_one :city_score # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
   has_many :city_points # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
 

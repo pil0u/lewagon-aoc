@@ -37,7 +37,7 @@ export default class extends Controller {
     this.secondsTarget.innerHTML = "00"
     this.millisecondsTarget.innerHTML = "000"
     for (let t of this.partyTargets) {
-      t.innerHTML = "🎉"
+      t.classList.remove("hidden")
     }
 
     this.stopRefreshing()

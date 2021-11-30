@@ -128,11 +128,11 @@ class PagesController < ApplicationController
 
     @max_batch_contributors = Batch.max_contributors
 
-    fields = %i[username batch city score_solo]
+    fields = %i[uid username batch city score_solo]
     @ranked_users = Score.includes(user: %i[batch city])
                          .group("users.id, users.username")
                          .order("sum(score_solo) desc, users.id desc")
-                         .pluck("users.username", "max(batches.number)", "max(cities.name)", "sum(score_solo)")
+                         .pluck("users.uid", "users.username", "max(batches.number)", "max(cities.name)", "sum(score_solo)")
                          .map { |row| fields.zip(row).to_h }
                          .map.with_index { |h, idx| h.merge!(rank: idx + 1) }
   end

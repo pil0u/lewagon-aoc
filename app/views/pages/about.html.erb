@@ -15,7 +15,7 @@
     <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
       <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">What is Advent of Code?</li>
       <p class="mt-8 paragraph" data-qa-target="answer"><%= link_to "Advent of Code", "https://adventofcode.com/", target: :blank, class: "link-external" %> is an Advent calendar of small programming puzzles that can be solved in any programming language.
-      Every day at midnight EST/UTC-5, from <span class="strong">December 1st</span> to <span class="strong">December 25th</span>, a new challenge pops up with some fictional Christmas backstory 🎄
+      Every day at midnight EST/UTC-5, from <span class="strong">December 1st</span> to <span class="strong">December 25th</span>, a new puzzle pops up with some fictional Christmas backstory 🎄
 
       Solving any puzzle earns you points 💎, not only for you, but also for <span class="strong">your batch & your campus city</span> @ <span class="text-wagon-red text-shadow-red">Le Wagon</span>.</p>
     </div>
@@ -49,7 +49,7 @@
 
     <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
       <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">How do I earn points? 💎</li>
-      <div class="mt-8 paragraph" data-qa-target="answer">TL;DR ➡️ Solve challenges as fast as you can and <span class="strong">coordinate with your batch and your city</span> to survive in the long run.
+      <div class="mt-8 paragraph" data-qa-target="answer">TL;DR ➡️ Solve puzzles as fast as you can and <span class="strong">coordinate with your batch and your city</span> to survive in the long run.
 
       <span class="underline">Individual scores</span>
       Let <code>N</code> be the number of total participants in the contest.
@@ -132,8 +132,19 @@
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
+      <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">When does the contest end?</li>
+      <p class="mt-8 paragraph" data-qa-target="answer">You have until <span class="strong">January 7th 10:00 UTC</span> to solve the puzzles 🏁
+
+      From that moment, all scores will freeze to determine and announce the results.</p>
+    </div>
+
+    <div class="my-8 px-4" data-controller="qa" data-qa-target="block">
       <li data-action="click->qa#toggle" class="py-2 text-center strong cursor-pointer select-none">What are the prizes? 🎁</li>
-      <p class="mt-8 paragraph" data-qa-target="answer">Coming soon...</p>
+      <p class="mt-8 paragraph" data-qa-target="answer">🥇 The participant with the highest score wins <span class="strong">a Macbook Air</span>
+
+      🥇 The batch with the highest score will be able to organise <span class="strong">an activity for a value up to 1500€</span>. <%= link_to "Lamiaa", "slack://user?team=T02NE0241&id=UTSDT4WA2", class: "contact-me" %> will get in touch with the winning batch for the logistics.
+
+      🥇 Just like the Football World Cup, the winning city will earn <span class="strong">a Golden Star ⭐</span>, which will be permanently displayed on next year's scoreboard.</p>
     </div>
 
     <div class="my-8 px-4" data-controller="qa" data-qa-target="block">

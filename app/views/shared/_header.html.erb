@@ -7,11 +7,19 @@
     </div>
   <% end %>
 
-  <h1 class="my-8 text-center text-xl select-none">
-    <span class="text-wagon-red text-shadow-red">Le Wagon</span>
-    <span>x</span>
-    <span class="text-aoc-green-flash text-shadow-green">Advent of Code</span>
-  </h1>
+  <div class="my-8 select-none">
+    <h1 class="text-center text-xl">
+      <span class="text-wagon-red text-shadow-red">Le Wagon</span>
+      <span>x</span>
+      <span class="text-aoc-green-flash text-shadow-green">Advent of Code</span>
+    </h1>
+
+    <div data-controller="countdown" data-countdown-refresh-interval-value="23" class="my-4 text-center text-2xl text-aoc-atmospheric">
+      <span data-countdown-target="party" class="text-xl"></span>
+      <span data-countdown-target="hours"></span>:<span data-countdown-target="minutes"></span>:<span data-countdown-target="seconds"></span>.<span data-countdown-target="milliseconds"></span>
+      <span data-countdown-target="party" class="text-xl"></span>
+    </div>
+  </div>
 
   <% if user_signed_in? %>
 

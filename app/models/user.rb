@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :completions, dependent: :destroy
   has_one :score # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
   has_one :rank # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
+  has_many :city_contributions, through: :completions
+  has_many :batch_contributions, through: :completions
 
   scope :synced, -> { where(synced: true) }
 

@@ -1,8 +1,8 @@
 SELECT
   u.id AS user_id,
-  SUM(pv.in_contest) AS in_contest,
-  SUM(pv.in_batch) AS in_batch,
-  SUM(pv.in_city) AS in_city
+  COALESCE(SUM(pv.in_contest), 0) AS in_contest,
+  COALESCE(SUM(pv.in_batch), 0) AS in_batch,
+  COALESCE(SUM(pv.in_city), 0) AS in_city
 FROM users u
 LEFT JOIN completions co
 ON co.user_id = u.id

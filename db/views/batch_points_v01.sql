@@ -14,21 +14,17 @@ SELECT
   b.id AS batch_id,
   co.day AS day,
   co.challenge AS challenge,
-  SUM(pv.in_contest) AS points,
-  dense_rank() OVER (ORDER BY SUM(pv.in_contest)) AS rank,
-  COUNT(pv.*) AS participating_users,
-  COUNT(pv.*) >= (SELECT median FROM synced_user_numbers) AS complete
-
+  SUM(bc.points) AS points,
+  dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY SUM(bc.points) DESC) AS rank,
+  COUNT(*) FILTER (WHERE bc.points <> 0) AS participating_users,
+  COUNT(*) FILTER (WHERE bc.points <> 0) >= (SELECT median FROM synced_user_numbers) AS complete
 FROM batches AS b
 LEFT JOIN users u
 ON u.batch_id = b.id
 LEFT JOIN completions co
 ON co.user_id = u.id
-LEFT JOIN point_values pv
-ON pv.completion_id = co.id
-LEFT JOIN completion_ranks cr
-ON cr.completion_id = co.id
+LEFT JOIN batch_contributions bc
+ON bc.completion_id = co.id
 
-WHERE cr.in_batch <= (SELECT median FROM synced_user_numbers)
 GROUP BY b.id, co.day, co.challenge
 ORDER BY day, challenge, points DESC;

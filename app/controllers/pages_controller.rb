@@ -64,14 +64,14 @@ class PagesController < ApplicationController
     # User stats
 
     ## Individual rank & score
-    @user_score = current_user.score.in_contest
+    @user_score = { rank: current_user.rank.in_contest, score: current_user.score.in_contest, score_in_batch: current_user.batch_contributions.sum(:points), score_in_city: current_user.city_contributions.sum(:points) }
     @total_users = User.synced.count
 
     ## Batch rank & score
     @user_batch = current_user.batch
 
     if @user_batch
-      @user_batch_score = @user_batch.score.in_contest
+      @user_batch_score = { score: @user_batch.batch_score.in_contest, rank: @user_batch.batch_score.rank }
       @total_batches = BatchScore.count
     end
 
@@ -79,7 +79,7 @@ class PagesController < ApplicationController
     @user_city = current_user.city
 
     if @user_city
-      @user_city_score = @user_city.score.in_contest
+      @user_city_score = { score: @user_city.city_score.in_contest, rank: @user_city.city_score.rank }
       @total_cities = CityScore.count
     end
 

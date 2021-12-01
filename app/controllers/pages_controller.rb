@@ -41,11 +41,19 @@ class PagesController < ApplicationController
   def dashboard
     # Time
     @now = Time.now.getlocal("-05:00")
+    
+    now_utc = Time.now.utc
+    last_api_fetch_utc = State.first.last_api_fetch_end
+    @time_since_last_api_fetch = helpers.distance_of_time_in_words(last_api_fetch_utc, now_utc)
 
-    @last_api_fetch = State.first.last_api_fetch_end
-    @estimated_next_api_fetch = @now.utc < @last_api_fetch + 10.minutes ? helpers.distance_of_time_in_words(@last_api_fetch + 10.minutes, @now.utc) : "soon™"
+    if now_utc < last_api_fetch_utc + 10.minutes
+      @estimated_next_api_fetch = helpers.distance_of_time_in_words(last_api_fetch_utc + 10.minutes, now_utc)
+    else
+      @estimated_next_api_fetch = "soon™"
+    end
 
-    @next_puzzle_time = Aoc.next_puzzle_time_from(@now)
+    next_puzzle_time = Aoc.next_puzzle_time_from(@now)
+    @time_to_next_puzzle = helpers.distance_of_time_in_words(@now, next_puzzle_time)
 
     # Event
     @aoc_in_progress = Aoc.in_progress?

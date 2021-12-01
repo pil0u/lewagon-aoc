@@ -1,7 +1,7 @@
 <div class="my-8 text-center">
   <p>Authenticated as: <span class="strong"><%= current_user.username %></span></p>
   <p>Current sync status: <span class="<%= class_names(status_css(@user_status)) %>"><%= @user_status %></span></p>
-  <p class="inline-block group relative">Last data refresh: <span class="strong"><%= distance_of_time_in_words(@last_api_fetch, @now.utc, include_seconds: true) %></span> ago <em class="hidden group-hover:inline absolute ml-3 w-max">(every ~10 minutes)</em></p>
+  <p class="inline-block group relative">Last data refresh: <span class="strong"><%= @time_since_last_api_fetch %></span> ago <em class="hidden group-hover:inline absolute ml-3 w-max">(every ~10 minutes)</em></p>
 </div>
 
 <% if @user_status == "OK" %>
@@ -102,7 +102,7 @@
       </div>
 
       <div class="h-1/2 flex items-center">
-        <span class="text-lg"><%= distance_of_time_in_words(@now, @next_puzzle_time) %></span>
+        <span class="text-lg"><%= @time_to_next_puzzle %></span>
       </div>
     </div>
   </div>

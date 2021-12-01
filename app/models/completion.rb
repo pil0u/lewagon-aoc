@@ -17,6 +17,7 @@ class Completion < ApplicationRecord
     else
       Rails.logger.info "  No completions to insert!"
     end
+    Help.refresh_views!
   end
 
   def self.compute_ranks

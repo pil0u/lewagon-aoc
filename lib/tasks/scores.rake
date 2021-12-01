@@ -39,10 +39,6 @@ namespace :scores do
 
   desc "Compute individual rank, rank within batch & rank within city for each completion"
   task compute_ranks: :environment do
-    Rank.refresh
-    CityScore.refresh
-    BatchScore.refresh
-
     Completion.compute_ranks
     Rails.logger.info "✔ Ranks computed"
   end

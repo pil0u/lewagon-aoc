@@ -13,6 +13,10 @@ class User < ApplicationRecord
 
   scope :synced, -> { where(synced: true) }
 
+  after_create do
+    Help.refresh_views!
+  end
+
   def self.from_kitt(auth)
     batch_from_oauth = auth.info.last_batch_slug
     batch = Batch.find_or_create_by(number: batch_from_oauth) if batch_from_oauth.present?

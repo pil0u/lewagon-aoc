@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
    SELECT b.id AS batch_id,
       co.day,
       co.challenge,
-      sum(bc.points) AS points,
+      COALESCE(sum(bc.points), (0)::numeric) AS points,
       dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
       count(*) FILTER (WHERE (bc.points <> 0)) AS participating_users,
       ((count(*) FILTER (WHERE (bc.points <> 0)))::double precision >= ( SELECT synced_user_numbers.median
@@ -185,7 +185,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
        LEFT JOIN completions co ON ((co.user_id = u.id)))
        LEFT JOIN batch_contributions bc ON ((bc.completion_id = co.id)))
     GROUP BY b.id, co.day, co.challenge
-    ORDER BY co.day, co.challenge, (sum(bc.points)) DESC;
+    ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
   SQL
   add_index "batch_points", ["batch_id", "day", "challenge"], name: "index_batch_points_on_batch_id_and_day_and_challenge", unique: true
 
@@ -212,7 +212,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
    SELECT b.id AS city_id,
       co.day,
       co.challenge,
-      sum(bc.points) AS points,
+      COALESCE(sum(bc.points), (0)::numeric) AS points,
       dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
       count(*) FILTER (WHERE (bc.points <> 0)) AS participating_users,
       ((count(*) FILTER (WHERE (bc.points <> 0)))::double precision >= ( SELECT synced_user_numbers.median
@@ -222,7 +222,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
        LEFT JOIN completions co ON ((co.user_id = u.id)))
        LEFT JOIN city_contributions bc ON ((bc.completion_id = co.id)))
     GROUP BY b.id, co.day, co.challenge
-    ORDER BY co.day, co.challenge, (sum(bc.points)) DESC;
+    ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
   SQL
   add_index "city_points", ["city_id", "day", "challenge"], name: "index_city_points_on_city_id_and_day_and_challenge", unique: true
 

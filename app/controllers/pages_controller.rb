@@ -88,20 +88,22 @@ class PagesController < ApplicationController
   end
 
   def scoreboard
-    @ranked_cities = CityScore.joins(city: :users).order(:rank)
-                              .pluck(:name, Arel.sql("count(distinct users.id)"), :in_contest, :rank)
-                              .map { |row| fields.zip(row).to_h }
+    @ranked_cities = CityScore.joins(:city).left_joins(city: :users)
+                              .order(:rank, "cities.name").distinct
+                              .pluck(:name, Arel.sql("count(*) OVER (PARTITION BY cities.id)"), :in_contest, :rank)
+                              .map { |row| %i[city_name city_n_users city_score city_rank].zip(row).to_h }
                               .reject { |h| h[:city_name].nil? }
-    @max_city_contributors = CityScore.max_contributors
+    @max_city_contributors = City.max_contributors
 
-    @ranked_batches = BatchScore.joins(batch: :user).order(:rank, "batches.number": :desc)
-                                .pluck(:number, Arel.sql("count(distinct users.id)"), :in_contest)
-                                .map { |row| fields.zip(row).to_h }
+    @ranked_batches = BatchScore.joins(:batch).left_joins(batch: :users)
+                                .order(:rank, "batches.number": :desc).distinct
+                                .pluck(:number, Arel.sql("count(*) OVER (PARTITION BY batches.id)"), :in_contest, :rank)
+                                .map { |row| %i[batch_number batch_n_users batch_score batch_rank].zip(row).to_h }
                                 .reject { |h| h[:batch_number].nil? }
-    @max_batch_contributors = BatchScore.max_contributors
+    @max_batch_contributors = Batch.max_contributors
 
-    @ranked_users = Score.joins(user: %i[rank batch city]).order("ranks.in_contest")
+    @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).order("ranks.in_contest")
                          .pluck("users.username", "batches.number", "cities.name", "scores.in_contest", "ranks.in_contest")
-                         .map { |row| fields.zip(row).to_h }
+                         .map { |row| %i[username batch city score_solo rank].zip(row).to_h }
   end
 end

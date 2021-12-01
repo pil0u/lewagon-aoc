@@ -14,7 +14,7 @@ SELECT
   b.id AS city_id,
   co.day AS day,
   co.challenge AS challenge,
-  SUM(bc.points) AS points,
+  COALESCE(SUM(bc.points), 0) AS points,
   dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY SUM(bc.points) DESC) AS rank,
   COUNT(*) FILTER (WHERE bc.points <> 0) AS participating_users,
   COUNT(*) FILTER (WHERE bc.points <> 0) >= (SELECT median FROM synced_user_numbers) AS complete

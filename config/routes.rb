@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   get "/scoreboard", to: "pages#scoreboard"
   get "/settings", to: "users#edit"
   patch "/settings", to: "users#update"
+  get "/city", to: "users#city"
+  get "/batch", to: "users#batch"
 end

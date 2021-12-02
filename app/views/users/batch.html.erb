@@ -1,0 +1,9 @@
+<div class="my-12 mx-4 sm:mx-auto max-w-sm">
+  <h2 class="text-lg strong text-center">Batch Mates<h2>
+  <ul>
+  <% @batch_mates.each do |user| %>
+    <li><%= user.username %></li>
+  <% end %>
+  </ul>
+  <%= link_to "Back to dashboard", root_path, class: "link" %>
+</div>

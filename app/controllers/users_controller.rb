@@ -23,6 +23,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def city
+    @city_mates = current_user.city.users
+  end
+
+  def batch
+    @batch_mates = current_user.batch.users
+  end
+
   private
 
   def set_current_user

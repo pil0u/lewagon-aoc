@@ -3,6 +3,8 @@
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i[kitt]
 
+  CONTRIBUTORS = [6788, 449]
+
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
   has_many :completions, dependent: :destroy
@@ -12,6 +14,7 @@ class User < ApplicationRecord
   has_many :batch_contributions, through: :completions
 
   scope :synced, -> { where(synced: true) }
+  scope :contributors, -> { where(uid: CONTRIBUTORS) }
 
   after_create do
     Help.refresh_views!

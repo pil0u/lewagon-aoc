@@ -26,5 +26,7 @@ ON co.user_id = u.id
 LEFT JOIN city_contributions bc
 ON bc.completion_id = co.id
 
+WHERE u.synced
+
 GROUP BY b.id, co.day, co.challenge
 ORDER BY day, challenge, points DESC;

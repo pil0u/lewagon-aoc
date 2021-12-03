@@ -5,4 +5,5 @@ SELECT
   dense_rank() OVER (PARTITION BY u.city_id,  co.day, co.challenge ORDER BY co.completion_unix_time ASC) AS in_city
 FROM completions co
 LEFT JOIN users u
-ON co.user_id = u.id;
+ON co.user_id = u.id
+WHERE co.completion_unix_time IS NOT NULL;

@@ -7,4 +7,6 @@ FROM completions co
 LEFT JOIN users u
 ON co.user_id = u.id
 LEFT JOIN completion_ranks cr
-ON cr.completion_id = co.id;
+ON cr.completion_id = co.id
+
+WHERE co.completion_unix_time IS NOT NULL;

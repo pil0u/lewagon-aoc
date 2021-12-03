@@ -74,7 +74,8 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
       dense_rank() OVER (PARTITION BY u.batch_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_batch,
       dense_rank() OVER (PARTITION BY u.city_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_city
      FROM (completions co
-       LEFT JOIN users u ON ((co.user_id = u.id)));
+       LEFT JOIN users u ON ((co.user_id = u.id)))
+    WHERE (co.completion_unix_time IS NOT NULL);
   SQL
   add_index "completion_ranks", ["completion_id"], name: "index_completion_ranks_on_completion_id", unique: true
   add_index "completion_ranks", ["in_batch"], name: "index_completion_ranks_on_in_batch"
@@ -92,7 +93,8 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
             WHERE (users.synced AND (users.city_id = u.city_id))) - cr.in_city) + 1) AS in_city
      FROM ((completions co
        LEFT JOIN users u ON ((co.user_id = u.id)))
-       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)));
+       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)))
+    WHERE (co.completion_unix_time IS NOT NULL);
   SQL
   add_index "point_values", ["completion_id"], name: "index_point_values_on_completion_id", unique: true
 
@@ -123,7 +125,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
 
   create_view "batch_contributions", materialized: true, sql_definition: <<-SQL
       WITH synced_user_numbers AS (
-           SELECT ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))) AS median
+           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
              FROM ( SELECT count(u.*) AS value
                      FROM (batches
                        LEFT JOIN users u ON ((u.batch_id = batches.id)))
@@ -132,7 +134,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
           )
    SELECT co.id AS completion_id,
           CASE
-              WHEN ((cr.in_batch)::double precision <= ( SELECT synced_user_numbers.median
+              WHEN (cr.in_batch <= ( SELECT synced_user_numbers.median
                  FROM synced_user_numbers)) THEN pv.in_contest
               ELSE (0)::bigint
           END AS points
@@ -144,7 +146,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
 
   create_view "city_contributions", materialized: true, sql_definition: <<-SQL
       WITH synced_user_numbers AS (
-           SELECT ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))) AS median
+           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
              FROM ( SELECT count(u.*) AS value
                      FROM (cities
                        LEFT JOIN users u ON ((u.city_id = cities.id)))
@@ -153,7 +155,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
           )
    SELECT co.id AS completion_id,
           CASE
-              WHEN ((cr.in_city)::double precision <= ( SELECT synced_user_numbers.median
+              WHEN (cr.in_city <= ( SELECT synced_user_numbers.median
                  FROM synced_user_numbers)) THEN pv.in_contest
               ELSE (0)::bigint
           END AS points
@@ -165,7 +167,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
 
   create_view "batch_points", materialized: true, sql_definition: <<-SQL
       WITH synced_user_numbers AS (
-           SELECT ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))) AS median
+           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
              FROM ( SELECT count(u_1.*) AS value
                      FROM (batches
                        LEFT JOIN users u_1 ON ((u_1.batch_id = batches.id)))
@@ -178,12 +180,13 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
       COALESCE(sum(bc.points), (0)::numeric) AS points,
       dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
       count(*) FILTER (WHERE (bc.points <> 0)) AS participating_users,
-      ((count(*) FILTER (WHERE (bc.points <> 0)))::double precision >= ( SELECT synced_user_numbers.median
+      (count(*) FILTER (WHERE (bc.points <> 0)) >= ( SELECT synced_user_numbers.median
              FROM synced_user_numbers)) AS complete
      FROM (((batches b
        LEFT JOIN users u ON ((u.batch_id = b.id)))
        LEFT JOIN completions co ON ((co.user_id = u.id)))
        LEFT JOIN batch_contributions bc ON ((bc.completion_id = co.id)))
+    WHERE u.synced
     GROUP BY b.id, co.day, co.challenge
     ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
   SQL
@@ -202,7 +205,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
 
   create_view "city_points", materialized: true, sql_definition: <<-SQL
       WITH synced_user_numbers AS (
-           SELECT ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))) AS median
+           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
              FROM ( SELECT count(u_1.*) AS value
                      FROM (cities
                        LEFT JOIN users u_1 ON ((u_1.city_id = cities.id)))
@@ -215,12 +218,13 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
       COALESCE(sum(bc.points), (0)::numeric) AS points,
       dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
       count(*) FILTER (WHERE (bc.points <> 0)) AS participating_users,
-      ((count(*) FILTER (WHERE (bc.points <> 0)))::double precision >= ( SELECT synced_user_numbers.median
+      (count(*) FILTER (WHERE (bc.points <> 0)) >= ( SELECT synced_user_numbers.median
              FROM synced_user_numbers)) AS complete
      FROM (((cities b
        LEFT JOIN users u ON ((u.city_id = b.id)))
        LEFT JOIN completions co ON ((co.user_id = u.id)))
        LEFT JOIN city_contributions bc ON ((bc.completion_id = co.id)))
+    WHERE u.synced
     GROUP BY b.id, co.day, co.challenge
     ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
   SQL

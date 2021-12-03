@@ -95,25 +95,30 @@ class PagesController < ApplicationController
   def scoreboard
     @ranked_cities = CityScore.joins(:city).left_joins(city: :users).where("users.synced")
                               .order(:rank, "cities.name").distinct
-                              .pluck(:name, Arel.sql("count(*) OVER (PARTITION BY cities.id)"), :in_contest, :rank)
-                              .map { |row| %i[city_name city_n_users city_score city_rank].zip(row).to_h }
+                              .select("name AS city_name",
+                                      Arel.sql("count(*) OVER (PARTITION BY cities.id) AS city_n_users"),
+                                      "in_contest AS city_score",
+                                      "rank AS city_rank")
+                              .map { |row| row.attributes.symbolize_keys }
                               .reject { |h| h[:city_name].nil? }
                               .each { |h| h[:city_score] = h[:city_score].to_i }
     @max_city_contributors = City.max_contributors
 
     @ranked_batches = BatchScore.joins(:batch).left_joins(batch: :users).where("users.synced")
                                 .order(:rank, "batches.number": :desc).distinct
-                                .pluck(:number, Arel.sql("count(*) OVER (PARTITION BY batches.id)"), :in_contest, :rank)
-                                .map { |row| %i[batch_number batch_n_users batch_score batch_rank].zip(row).to_h }
+                                .select("number AS batch_number",
+                                        Arel.sql("count(*) OVER (PARTITION BY batches.id) AS batch_n_users"),
+                                        "in_contest AS batch_score", "rank AS batch_rank")
+                                .map { |row| row.attributes.symbolize_keys }
                                 .reject { |h| h[:batch_number].nil? }
                                 .each { |h| h[:batch_score] = h[:batch_score].to_i }
     @max_batch_contributors = Batch.max_contributors
 
     @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).where("users.synced")
                          .order("ranks.in_contest, users.id DESC")
-                         .pluck("users.uid", "users.username", "batches.number",
-                                "cities.name", "scores.in_contest", "ranks.in_contest")
-                         .map { |row| %i[uid username batch city score_solo rank].zip(row).to_h }
+                         .select("users.uid AS uid", "users.username AS username", "batches.number AS batch",
+                                "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank")
+                         .map { |row| row.attributes.symbolize_keys }
                          .each { |h| h[:score_solo] = h[:score_solo].to_i }
   end
 end

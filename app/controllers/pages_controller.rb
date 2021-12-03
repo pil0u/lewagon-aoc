@@ -117,7 +117,7 @@ class PagesController < ApplicationController
     @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).where("users.synced")
                          .order("ranks.in_contest, users.id DESC")
                          .select("users.uid AS uid", "users.username AS username", "batches.number AS batch",
-                                "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank")
+                                 "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank")
                          .map { |row| row.attributes.symbolize_keys }
                          .each { |h| h[:score_solo] = h[:score_solo].to_i }
   end

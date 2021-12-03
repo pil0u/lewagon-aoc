@@ -16,8 +16,8 @@ SELECT
   co.challenge AS challenge,
   COALESCE(SUM(bc.points), 0) AS points,
   dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY SUM(bc.points) DESC) AS rank,
-  COUNT(*) FILTER (WHERE bc.points <> 0) AS participating_users,
-  COUNT(*) FILTER (WHERE bc.points <> 0) >= (SELECT median FROM synced_user_numbers) AS complete
+  COUNT(*) AS participating_users,
+  COUNT(*) >= (SELECT median FROM synced_user_numbers) AS complete
 FROM batches AS b
 LEFT JOIN users u
 ON u.batch_id = b.id

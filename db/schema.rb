@@ -179,8 +179,8 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
       co.challenge,
       COALESCE(sum(bc.points), (0)::numeric) AS points,
       dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
-      count(*) FILTER (WHERE (bc.points <> 0)) AS participating_users,
-      (count(*) FILTER (WHERE (bc.points <> 0)) >= ( SELECT synced_user_numbers.median
+      count(*) AS participating_users,
+      (count(*) >= ( SELECT synced_user_numbers.median
              FROM synced_user_numbers)) AS complete
      FROM (((batches b
        LEFT JOIN users u ON ((u.batch_id = b.id)))
@@ -217,8 +217,8 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
       co.challenge,
       COALESCE(sum(bc.points), (0)::numeric) AS points,
       dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
-      count(*) FILTER (WHERE (bc.points <> 0)) AS participating_users,
-      (count(*) FILTER (WHERE (bc.points <> 0)) >= ( SELECT synced_user_numbers.median
+      count(*) AS participating_users,
+      (count(*) >= ( SELECT synced_user_numbers.median
              FROM synced_user_numbers)) AS complete
      FROM (((cities b
        LEFT JOIN users u ON ((u.city_id = b.id)))

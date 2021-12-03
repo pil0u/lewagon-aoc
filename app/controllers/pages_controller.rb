@@ -111,8 +111,9 @@ class PagesController < ApplicationController
 
     @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).where('users.synced')
                          .order("ranks.in_contest, users.id DESC")
-                         .pluck("users.username", "batches.number", "cities.name", "scores.in_contest", "ranks.in_contest")
-                         .map { |row| %i[username batch city score_solo rank].zip(row).to_h }
+                         .pluck("users.uid", "users.username", "batches.number",
+                                "cities.name", "scores.in_contest", "ranks.in_contest")
+                         .map { |row| %i[uid username batch city score_solo rank].zip(row).to_h }
                          .each { |h| h[:score_solo] = h[:score_solo].to_i }
   end
 end

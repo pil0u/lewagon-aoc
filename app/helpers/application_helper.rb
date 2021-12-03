@@ -7,7 +7,7 @@ module ApplicationHelper
     unlocked = now >= Aoc.start_time && advent_day <= now
 
     # TODO: eager load all scores
-    parts_solved = Score.where(user: current_user, day: advent_day.day).count
+    parts_solved = Completion.where(user: current_user, day: advent_day.day).count
 
     {
       "text-aoc-gray-darker": !unlocked,

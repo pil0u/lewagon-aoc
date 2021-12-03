@@ -28,9 +28,9 @@
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <span class="text-2xl">
-          <%= @user_score[:rank_solo] %><sup class="text-sm"><%= @user_score[:rank_solo].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_users %><span class="absolute"><sup>*</sup></span></span>
+          <%= @user_score[:rank] %><sup class="text-sm"><%= @user_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_users %><span class="absolute"><sup>*</sup></span></span>
         </span>
-        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score_solo] %> pts</span></span>
+        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score] %> pts</span></span>
       </div>
 
       <span class="text-sm text-aoc-gray-dark">* synced users</span>
@@ -47,8 +47,8 @@
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <% if @user_batch %>
-          <span class="text-2xl"><%= @user_batch_score[:batch_rank] %><sup class="text-sm"><%= @user_batch_score[:batch_rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_batches %></span></span>
-          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_batch_score[:batch_score] %> pts</span></span>
+          <span class="text-2xl"><%= @user_batch_score[:rank] || 0 %><sup class="text-sm"><%= @user_batch_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_batches %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_batch_score[:score] %> pts</span></span>
         <% else %>
           <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "link" %></span>
         <% end %>
@@ -66,8 +66,8 @@
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <% if @user_city %>
-          <span class="text-2xl"><%= @user_city_score[:city_rank] %><sup class="text-sm"><%= @user_city_score[:city_rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_cities %></span></span>
-          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_city_score[:city_score] %> pts</span></span>
+          <span class="text-2xl"><%= @user_city_score[:rank] %><sup class="text-sm"><%= @user_city_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_cities %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_city_score[:score] %> pts</span></span>
         <% else %>
           <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "link" %></span>
         <% end %>

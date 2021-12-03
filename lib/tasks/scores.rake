@@ -13,10 +13,10 @@ namespace :scores do
     now = Time.now.utc
 
     state.update(last_api_fetch_start: now)
-    Rails.logger.info "🤖 Scores update started at #{now}"
+    Rails.logger.info "🤖 Completions update started at #{now}"
   end
 
-  desc "Fetch completion timestamps from AoC API and insert them in scores table"
+  desc "Fetch completion timestamps from AoC API and insert them in completions table"
   task refresh: :environment do
     # Retrieve AoC leaderboard IDs to call the API
     leaderboard_ids = ENV["AOC_ROOMS"].split(",").map { |id| id.split("-").first }
@@ -32,14 +32,14 @@ namespace :scores do
     User.update_sync_status_from(members)
     Rails.logger.info "✔ Users sync status updated"
 
-    scores = Aoc.to_scores_array(members)
-    Score.replace_all(scores)
+    completions = Aoc.to_completions_array(members)
+    Completion.replace_all(completions)
     Rails.logger.info "✔ Individual timestamps updated"
   end
 
-  desc "Compute individual rank, rank within batch & rank within city for each score"
+  desc "Compute individual rank, rank within batch & rank within city for each completion"
   task compute_ranks: :environment do
-    Score.compute_ranks
+    Completion.compute_ranks
     Rails.logger.info "✔ Ranks computed"
   end
 
@@ -49,7 +49,7 @@ namespace :scores do
     # gather _all_ players if there are more than 1 AoC room
     max_solo_score = User.synced.count
     Rails.logger.info "Maximum score_solo: #{max_solo_score}"
-    Score.update_all("score_solo = #{max_solo_score} - rank_solo + 1")
+    Completion.update_all("score_solo = #{max_solo_score} - rank_solo + 1")
     Rails.logger.info "✔ Individual scores computed"
 
     # To build scores for batches and cities, we considered that:
@@ -71,22 +71,22 @@ namespace :scores do
 
     max_batch_contributors = Batch.max_contributors
     Rails.logger.info "Maximum rank_in_batch considered: #{max_batch_contributors}"
-    Score.update_all("score_in_batch = case when rank_in_batch <= #{max_batch_contributors} then score_solo else 0 end")
+    Completion.update_all("score_in_batch = case when rank_in_batch <= #{max_batch_contributors} then score_solo else 0 end")
     Rails.logger.info "✔ Batch scores computed"
 
     max_city_contributors = City.max_contributors
     Rails.logger.info "Maximum rank_in_city considered: #{max_city_contributors}"
-    Score.update_all("score_in_city = case when rank_in_city <= #{max_city_contributors} then score_solo else 0 end")
+    Completion.update_all("score_in_city = case when rank_in_city <= #{max_city_contributors} then score_solo else 0 end")
     Rails.logger.info "✔ City scores computed"
 
-    # If a synced User does not have any Score yet, we insert an empty Score.
+    # If a synced User does not have any Completion yet, we insert an empty Completion.
     # This is required to properly display stats and scoreboards in that specific case (i.e. all Users before the event)
-    synced_users_without_score = User.synced.pluck(:id) - Score.distinct.pluck(:user_id)
+    synced_users_without_score = User.synced.pluck(:id) - Completion.distinct.pluck(:user_id)
     score_fillers = synced_users_without_score.map do |user_id|
       { user_id: user_id, score_solo: 0, score_in_batch: 0, score_in_city: 0, updated_at: Time.now.utc }
     end
 
-    Score.insert_all(score_fillers) unless score_fillers.empty?
+    Completion.insert_all(score_fillers) unless score_fillers.empty?
   end
 
   desc "Update last_api_fetch_end"
@@ -95,6 +95,6 @@ namespace :scores do
     now = Time.now.utc
 
     state.update(last_api_fetch_end: now)
-    Rails.logger.info "🏁 Scores update finished at #{now}"
+    Rails.logger.info "🏁 Completions update finished at #{now}"
   end
 end

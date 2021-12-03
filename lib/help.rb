@@ -9,4 +9,10 @@ module Help
 
     (0.5 * (sorted[(l - 1) / 2] + sorted[l / 2])).ceil
   end
+
+  def self.refresh_views!
+    Rank.refresh
+    CityScore.refresh
+    BatchScore.refresh
+  end
 end

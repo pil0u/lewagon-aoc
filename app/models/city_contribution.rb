@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CityContribution < ApplicationRecord
   belongs_to :completion
 

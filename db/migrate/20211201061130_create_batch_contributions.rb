@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBatchContributions < ActiveRecord::Migration[6.1]
   def change
     create_view :batch_contributions, materialized: true

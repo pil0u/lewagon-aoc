@@ -57,7 +57,7 @@ class PagesController < ApplicationController
 
     # Event
     @aoc_in_progress = Aoc.in_progress?
-    @year = ENV["EVENT_YEAR"] || Date.today.year
+    @year = ENV["EVENT_YEAR"] || Time.zone.today.year
     @current_open_room = ENV["AOC_ROOMS"].split(",").last
     @user_status = current_user.status
 
@@ -68,7 +68,7 @@ class PagesController < ApplicationController
       rank: current_user.rank.in_contest,
       score: current_user.score.in_contest.to_i,
       score_in_batch: current_user.batch_contributions.sum(:points),
-      score_in_city: current_user.city_contributions.sum(:points),
+      score_in_city: current_user.city_contributions.sum(:points)
     }
     @total_users = User.synced.count
 
@@ -93,7 +93,7 @@ class PagesController < ApplicationController
   end
 
   def scoreboard
-    @ranked_cities = CityScore.joins(:city).left_joins(city: :users).where('users.synced')
+    @ranked_cities = CityScore.joins(:city).left_joins(city: :users).where("users.synced")
                               .order(:rank, "cities.name").distinct
                               .pluck(:name, Arel.sql("count(*) OVER (PARTITION BY cities.id)"), :in_contest, :rank)
                               .map { |row| %i[city_name city_n_users city_score city_rank].zip(row).to_h }
@@ -101,7 +101,7 @@ class PagesController < ApplicationController
                               .each { |h| h[:city_score] = h[:city_score].to_i }
     @max_city_contributors = City.max_contributors
 
-    @ranked_batches = BatchScore.joins(:batch).left_joins(batch: :users).where('users.synced')
+    @ranked_batches = BatchScore.joins(:batch).left_joins(batch: :users).where("users.synced")
                                 .order(:rank, "batches.number": :desc).distinct
                                 .pluck(:number, Arel.sql("count(*) OVER (PARTITION BY batches.id)"), :in_contest, :rank)
                                 .map { |row| %i[batch_number batch_n_users batch_score batch_rank].zip(row).to_h }
@@ -109,7 +109,7 @@ class PagesController < ApplicationController
                                 .each { |h| h[:batch_score] = h[:batch_score].to_i }
     @max_batch_contributors = Batch.max_contributors
 
-    @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).where('users.synced')
+    @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).where("users.synced")
                          .order("ranks.in_contest, users.id DESC")
                          .pluck("users.uid", "users.username", "batches.number",
                                 "cities.name", "scores.in_contest", "ranks.in_contest")

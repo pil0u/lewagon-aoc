@@ -12,12 +12,14 @@ import {
 } from "@fortawesome/free-brands-svg-icons"
 
 import {
+  faPlus,
   faPowerOff,
   faTimes
 } from "@fortawesome/free-solid-svg-icons"
 
 library.add(
   faGithub,
+  faPlus,
   faPowerOff,
   faTimes
 )

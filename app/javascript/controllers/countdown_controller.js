@@ -8,10 +8,16 @@ export default class extends Controller {
   static values = { refreshInterval: Number }
 
   connect () {
-    this.updateClock()
+    const now = new Date()
 
-    if (this.hasRefreshIntervalValue) {
-      this.startRefreshing()
+    if (now > Date.parse('December 3 2021 23:59:59 UTC')) {
+      this.element.classList.add("hidden")
+    } else {
+      this.updateClock()
+
+      if (this.hasRefreshIntervalValue) {
+        this.startRefreshing()
+      }
     }
   }
 

@@ -10,7 +10,9 @@ class City < ApplicationRecord
 
   validates :name, uniqueness: { case_sensitive: false }
 
+  MINIMUM_CONTRIBUTORS = 3
+
   def self.max_contributors
-    Help.median(User.synced.group(:city_id).count.except(nil).values) || 1
+    [MINIMUM_CONTRIBUTORS, Help.median(User.synced.group(:city_id).count.except(nil).values) || 1].max
   end
 end

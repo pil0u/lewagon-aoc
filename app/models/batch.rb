@@ -11,6 +11,6 @@ class Batch < ApplicationRecord
   MINIMUM_CONTRIBUTORS = 3
 
   def self.max_contributors
-    [Help.median(User.synced.group(:batch_id).count.except(nil).values) || 1, MINIMUM_CONTRIBUTORS].max
+    [MINIMUM_CONTRIBUTORS, Help.median(User.synced.group(:batch_id).count.except(nil).values) || 1].max
   end
 end

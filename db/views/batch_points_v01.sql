@@ -1,5 +1,5 @@
 WITH synced_user_numbers AS (
-  SELECT CEIL(percentile_cont(0.5) WITHIN GROUP (ORDER BY value)) AS median
+  SELECT GREATEST(3, CEIL(percentile_cont(0.5) WITHIN GROUP (ORDER BY value))::int) AS median
   FROM (
     SELECT COUNT(u.*) AS value
     FROM batches

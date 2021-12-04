@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_090310) do
+ActiveRecord::Schema.define(version: 2021_12_04_055424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,15 +70,17 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
 
   create_view "completion_ranks", materialized: true, sql_definition: <<-SQL
       SELECT co.id AS completion_id,
-      dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY co.completion_unix_time) AS in_contest,
-      dense_rank() OVER (PARTITION BY u.batch_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_batch,
-      dense_rank() OVER (PARTITION BY u.city_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_city
+      rank() OVER (PARTITION BY co.day, co.challenge ORDER BY co.completion_unix_time) AS in_contest,
+      rank() OVER (PARTITION BY u.batch_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_batch,
+      rank() OVER (PARTITION BY u.city_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_city
      FROM (completions co
        LEFT JOIN users u ON ((co.user_id = u.id)))
     WHERE (co.completion_unix_time IS NOT NULL);
   SQL
   add_index "completion_ranks", ["completion_id"], name: "index_completion_ranks_on_completion_id", unique: true
   add_index "completion_ranks", ["in_batch"], name: "index_completion_ranks_on_in_batch"
+  add_index "completion_ranks", ["in_city"], name: "index_completion_ranks_on_in_city"
+  add_index "completion_ranks", ["in_contest"], name: "index_completion_ranks_on_in_contest"
 
   create_view "point_values", materialized: true, sql_definition: <<-SQL
       SELECT co.id AS completion_id,
@@ -112,9 +114,9 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
 
   create_view "ranks", materialized: true, sql_definition: <<-SQL
       SELECT u.id AS user_id,
-      dense_rank() OVER (ORDER BY s.in_contest DESC) AS in_contest,
-      dense_rank() OVER (PARTITION BY b.id ORDER BY s.in_batch DESC) AS in_batch,
-      dense_rank() OVER (PARTITION BY ci.id ORDER BY s.in_city DESC) AS in_city
+      rank() OVER (ORDER BY s.in_contest DESC) AS in_contest,
+      rank() OVER (PARTITION BY b.id ORDER BY s.in_batch DESC) AS in_batch,
+      rank() OVER (PARTITION BY ci.id ORDER BY s.in_city DESC) AS in_city
      FROM (((users u
        LEFT JOIN scores s ON ((s.user_id = u.id)))
        LEFT JOIN batches b ON ((u.batch_id = b.id)))
@@ -178,15 +180,14 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
       co.day,
       co.challenge,
       COALESCE(sum(bc.points), (0)::numeric) AS points,
-      dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
-      count(*) AS participating_users,
-      (count(*) >= ( SELECT synced_user_numbers.median
+      rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
+      count(*) FILTER (WHERE (co.id IS NOT NULL)) AS participating_users,
+      (count(*) FILTER (WHERE (co.id IS NOT NULL)) >= ( SELECT synced_user_numbers.median
              FROM synced_user_numbers)) AS complete
      FROM (((batches b
        LEFT JOIN users u ON ((u.batch_id = b.id)))
        LEFT JOIN completions co ON ((co.user_id = u.id)))
        LEFT JOIN batch_contributions bc ON ((bc.completion_id = co.id)))
-    WHERE u.synced
     GROUP BY b.id, co.day, co.challenge
     ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
   SQL
@@ -195,7 +196,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
   create_view "batch_scores", materialized: true, sql_definition: <<-SQL
       SELECT scores.batch_id,
       scores.score AS in_contest,
-      dense_rank() OVER (ORDER BY scores.score DESC) AS rank
+      rank() OVER (ORDER BY scores.score DESC) AS rank
      FROM ( SELECT batch_points.batch_id,
               sum(batch_points.points) AS score
              FROM batch_points
@@ -212,28 +213,27 @@ ActiveRecord::Schema.define(version: 2021_12_01_090310) do
                     WHERE u_1.synced
                     GROUP BY cities.id) synced_user_counts
           )
-   SELECT b.id AS city_id,
+   SELECT c.id AS city_id,
       co.day,
       co.challenge,
-      COALESCE(sum(bc.points), (0)::numeric) AS points,
-      dense_rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
-      count(*) AS participating_users,
-      (count(*) >= ( SELECT synced_user_numbers.median
+      COALESCE(sum(cc.points), (0)::numeric) AS points,
+      rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(cc.points)) DESC) AS rank,
+      count(*) FILTER (WHERE (co.id IS NOT NULL)) AS participating_users,
+      (count(*) FILTER (WHERE (co.id IS NOT NULL)) >= ( SELECT synced_user_numbers.median
              FROM synced_user_numbers)) AS complete
-     FROM (((cities b
-       LEFT JOIN users u ON ((u.city_id = b.id)))
+     FROM (((cities c
+       LEFT JOIN users u ON ((u.city_id = c.id)))
        LEFT JOIN completions co ON ((co.user_id = u.id)))
-       LEFT JOIN city_contributions bc ON ((bc.completion_id = co.id)))
-    WHERE u.synced
-    GROUP BY b.id, co.day, co.challenge
-    ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
+       LEFT JOIN city_contributions cc ON ((cc.completion_id = co.id)))
+    GROUP BY c.id, co.day, co.challenge
+    ORDER BY co.day, co.challenge, COALESCE(sum(cc.points), (0)::numeric) DESC;
   SQL
   add_index "city_points", ["city_id", "day", "challenge"], name: "index_city_points_on_city_id_and_day_and_challenge", unique: true
 
   create_view "city_scores", materialized: true, sql_definition: <<-SQL
       SELECT scores.city_id,
       scores.score AS in_contest,
-      dense_rank() OVER (ORDER BY scores.score DESC) AS rank
+      rank() OVER (ORDER BY scores.score DESC) AS rank
      FROM ( SELECT city_points.city_id,
               sum(city_points.points) AS score
              FROM city_points

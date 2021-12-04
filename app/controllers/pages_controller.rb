@@ -95,10 +95,10 @@ class PagesController < ApplicationController
   def scoreboard
     @ranked_cities = CityScore.joins(:city).left_joins(city: :users).where("users.synced")
                               .order(:rank, "cities.name").distinct
-                              .select("name AS city_name",
+                              .select("cities.name AS city_name",
                                       Arel.sql("count(*) OVER (PARTITION BY cities.id) AS city_n_users"),
                                       "in_contest AS city_score",
-                                      "rank AS city_rank")
+                                      "city_scores.rank AS city_rank")
                               .map { |row| row.attributes.symbolize_keys }
                               .reject { |h| h[:city_name].nil? }
                               .each { |h| h[:city_score] = h[:city_score].to_i }
@@ -106,9 +106,10 @@ class PagesController < ApplicationController
 
     @ranked_batches = BatchScore.joins(:batch).left_joins(batch: :users).where("users.synced")
                                 .order(:rank, "batches.number": :desc).distinct
-                                .select("number AS batch_number",
+                                .select("batches.number AS batch_number",
                                         Arel.sql("count(*) OVER (PARTITION BY batches.id) AS batch_n_users"),
-                                        "in_contest AS batch_score", "rank AS batch_rank")
+                                        "in_contest AS batch_score",
+                                        "batch_scores.rank AS batch_rank")
                                 .map { |row| row.attributes.symbolize_keys }
                                 .reject { |h| h[:batch_number].nil? }
                                 .each { |h| h[:batch_score] = h[:batch_score].to_i }

@@ -24,11 +24,17 @@ class UsersController < ApplicationController
   end
 
   def city
+    @contributor_ids = User.contributors.pluck(:uid)
     @city_mates = current_user.city.users
+      .left_joins(:batch).joins(:score, :rank).preload(:score, :rank, :batch)
+      .order('ranks.in_city')
   end
 
   def batch
+    @contributor_ids = User.contributors.pluck(:uid)
     @batch_mates = current_user.batch.users
+      .left_joins(:city).joins(:score, :rank).preload(:score, :rank, :city)
+      .order('ranks.in_batch')
   end
 
   private

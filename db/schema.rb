@@ -179,14 +179,13 @@ ActiveRecord::Schema.define(version: 2021_12_04_055424) do
       co.challenge,
       COALESCE(sum(bc.points), (0)::numeric) AS points,
       rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
-      count(*) AS participating_users,
-      (count(*) >= ( SELECT synced_user_numbers.median
+      count(*) FILTER (WHERE (co.id IS NOT NULL)) AS participating_users,
+      (count(*) FILTER (WHERE (co.id IS NOT NULL)) >= ( SELECT synced_user_numbers.median
              FROM synced_user_numbers)) AS complete
      FROM (((batches b
        LEFT JOIN users u ON ((u.batch_id = b.id)))
        LEFT JOIN completions co ON ((co.user_id = u.id)))
        LEFT JOIN batch_contributions bc ON ((bc.completion_id = co.id)))
-    WHERE u.synced
     GROUP BY b.id, co.day, co.challenge
     ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
   SQL
@@ -212,21 +211,20 @@ ActiveRecord::Schema.define(version: 2021_12_04_055424) do
                     WHERE u_1.synced
                     GROUP BY cities.id) synced_user_counts
           )
-   SELECT b.id AS city_id,
+   SELECT c.id AS city_id,
       co.day,
       co.challenge,
-      COALESCE(sum(bc.points), (0)::numeric) AS points,
-      rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
-      count(*) AS participating_users,
-      (count(*) >= ( SELECT synced_user_numbers.median
+      COALESCE(sum(cc.points), (0)::numeric) AS points,
+      rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(cc.points)) DESC) AS rank,
+      count(*) FILTER (WHERE (co.id IS NOT NULL)) AS participating_users,
+      (count(*) FILTER (WHERE (co.id IS NOT NULL)) >= ( SELECT synced_user_numbers.median
              FROM synced_user_numbers)) AS complete
-     FROM (((cities b
-       LEFT JOIN users u ON ((u.city_id = b.id)))
+     FROM (((cities c
+       LEFT JOIN users u ON ((u.city_id = c.id)))
        LEFT JOIN completions co ON ((co.user_id = u.id)))
-       LEFT JOIN city_contributions bc ON ((bc.completion_id = co.id)))
-    WHERE u.synced
-    GROUP BY b.id, co.day, co.challenge
-    ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
+       LEFT JOIN city_contributions cc ON ((cc.completion_id = co.id)))
+    GROUP BY c.id, co.day, co.challenge
+    ORDER BY co.day, co.challenge, COALESCE(sum(cc.points), (0)::numeric) DESC;
   SQL
   add_index "city_points", ["city_id", "day", "challenge"], name: "index_city_points_on_city_id_and_day_and_challenge", unique: true
 

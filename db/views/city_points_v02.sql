@@ -11,22 +11,20 @@ WITH synced_user_numbers AS (
 )
 
 SELECT
-  b.id AS city_id,
+  c.id AS city_id,
   co.day AS day,
   co.challenge AS challenge,
-  COALESCE(SUM(bc.points), 0) AS points,
-  rank() OVER (PARTITION BY co.day, co.challenge ORDER BY SUM(bc.points) DESC) AS rank,
-  COUNT(*) FILTER (WHERE u.id IS NOT NULL) AS participating_users,
-  COUNT(*) FILTER (WHERE u.id IS NOT NULL) >= (SELECT median FROM synced_user_numbers) AS complete
-FROM cities AS b
+  COALESCE(SUM(cc.points), 0) AS points,
+  rank() OVER (PARTITION BY co.day, co.challenge ORDER BY SUM(cc.points) DESC) AS rank,
+  COUNT(*) FILTER (WHERE co.id IS NOT NULL) AS participating_users,
+  COUNT(*) FILTER (WHERE co.id IS NOT NULL) >= (SELECT median FROM synced_user_numbers) AS complete
+FROM cities AS c
 LEFT JOIN users u
-ON u.city_id = b.id
+ON u.city_id = c.id
 LEFT JOIN completions co
 ON co.user_id = u.id
-LEFT JOIN city_contributions bc
-ON bc.completion_id = co.id
+LEFT JOIN city_contributions cc
+ON cc.completion_id = co.id
 
-WHERE u.synced
-
-GROUP BY b.id, co.day, co.challenge
+GROUP BY c.id, co.day, co.challenge
 ORDER BY day, challenge, points DESC;

@@ -16,8 +16,8 @@ SELECT
   co.challenge AS challenge,
   COALESCE(SUM(bc.points), 0) AS points,
   rank() OVER (PARTITION BY co.day, co.challenge ORDER BY SUM(bc.points) DESC) AS rank,
-  COUNT(*) AS participating_users,
-  COUNT(*) >= (SELECT median FROM synced_user_numbers) AS complete
+  COUNT(*) FILTER (WHERE u.id IS NOT NULL) AS participating_users,
+  COUNT(*) FILTER (WHERE u.id IS NOT NULL) >= (SELECT median FROM synced_user_numbers) AS complete
 FROM cities AS b
 LEFT JOIN users u
 ON u.city_id = b.id

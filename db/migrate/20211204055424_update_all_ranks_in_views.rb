@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateAllRanksInViews < ActiveRecord::Migration[6.1]
   # Since views are dependent from one another they have to be replaced in-place or all dropped and recreated
   # but since they are MATERIALIZED VIEWs we cannot do in-place replacement, so we have to drop them all.
@@ -44,7 +46,7 @@ class UpdateAllRanksInViews < ActiveRecord::Migration[6.1]
   end
 
   def readd_indexes
-    add_index :completion_ranks,    :completion_id,             unique: true
+    add_index :completion_ranks,    :completion_id, unique: true
     add_index :completion_ranks,    :in_batch
     add_index :point_values,        :completion_id,             unique: true
     add_index :scores,              :user_id,                   unique: true

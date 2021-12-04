@@ -47,7 +47,9 @@ class UpdateAllRanksInViews < ActiveRecord::Migration[6.1]
 
   def readd_indexes
     add_index :completion_ranks,    :completion_id, unique: true
+    add_index :completion_ranks,    :in_contest
     add_index :completion_ranks,    :in_batch
+    add_index :completion_ranks,    :in_city
     add_index :point_values,        :completion_id,             unique: true
     add_index :scores,              :user_id,                   unique: true
     add_index :ranks,               :user_id,                   unique: true

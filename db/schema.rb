@@ -79,6 +79,8 @@ ActiveRecord::Schema.define(version: 2021_12_04_055424) do
   SQL
   add_index "completion_ranks", ["completion_id"], name: "index_completion_ranks_on_completion_id", unique: true
   add_index "completion_ranks", ["in_batch"], name: "index_completion_ranks_on_in_batch"
+  add_index "completion_ranks", ["in_city"], name: "index_completion_ranks_on_in_city"
+  add_index "completion_ranks", ["in_contest"], name: "index_completion_ranks_on_in_contest"
 
   create_view "point_values", materialized: true, sql_definition: <<-SQL
       SELECT co.id AS completion_id,

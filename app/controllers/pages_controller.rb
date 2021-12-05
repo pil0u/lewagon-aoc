@@ -121,6 +121,5 @@ class PagesController < ApplicationController
                                  "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank")
                          .map { |row| row.attributes.symbolize_keys }
                          .each { |h| h[:score_solo] = h[:score_solo].to_i }
-    @contributor_ids = User.contributors.pluck(:uid)
   end
 end

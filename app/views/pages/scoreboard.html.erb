@@ -106,7 +106,7 @@
               <td class="<%= class_names(ranking_css(user[:rank])) %>">
                 <div class="flex justify-center">
                   <%= user[:username] %>
-                  <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid].in? @contributor_ids %>
+                  <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid].in? contributor_ids %>
                 </div>
               </td>
               <td><%= "##{user[:batch]}" if user[:batch] %></td>

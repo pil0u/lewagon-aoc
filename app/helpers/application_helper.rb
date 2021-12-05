@@ -34,4 +34,8 @@ module ApplicationHelper
       strong: rank > 3 && rank_col
     }
   end
+
+  def contributor_ids
+    User.contributors.pluck(:uid)
+  end
 end

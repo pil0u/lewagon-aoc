@@ -42,63 +42,50 @@ class PagesController < ApplicationController
     # Time
     @now = Time.now.getlocal("-05:00")
 
-    @last_api_fetch = State.first.last_api_fetch_end
-    @estimated_next_api_fetch = @now.utc < @last_api_fetch + 10.minutes ? helpers.distance_of_time_in_words(@last_api_fetch + 10.minutes, @now.utc) : "soon™"
+    now_utc = Time.now.utc
+    last_api_fetch_utc = State.first.last_api_fetch_end
+    @time_since_last_api_fetch = helpers.distance_of_time_in_words(last_api_fetch_utc, now_utc)
 
-    @next_puzzle_time = Aoc.next_puzzle_time_from(@now)
+    @estimated_next_api_fetch = if now_utc < last_api_fetch_utc + 10.minutes
+                                  helpers.distance_of_time_in_words(last_api_fetch_utc + 10.minutes, now_utc)
+                                else
+                                  "soon™"
+                                end
+
+    next_puzzle_time = Aoc.next_puzzle_time_from(@now)
+    @time_to_next_puzzle = helpers.distance_of_time_in_words(@now, next_puzzle_time)
 
     # Event
     @aoc_in_progress = Aoc.in_progress?
-    @year = ENV["EVENT_YEAR"] || 2021
+    @year = ENV["EVENT_YEAR"] || Time.zone.today.year
     @current_open_room = ENV["AOC_ROOMS"].split(",").last
     @user_status = current_user.status
 
     # User stats
 
-    ## Individual rank & scores
-    fields = %i[user_id score_solo score_in_batch score_in_city]
-    ranked_users = Score.includes(:user)
-                        .group("users.id, users.username")
-                        .order("sum(score_solo) desc, users.id desc")
-                        .pluck("users.id", "sum(score_solo)", "sum(score_in_batch)", "sum(score_in_city)")
-                        .map { |row| fields.zip(row).to_h }
-                        .map.with_index { |h, idx| h.merge!(rank_solo: idx + 1) }
-
-    @user_score = ranked_users.find { |h| h[:user_id] == current_user.id }
-    @total_users = ranked_users.count
+    ## Individual rank & score
+    @user_score = {
+      rank: current_user.rank.in_contest,
+      score: current_user.score.in_contest.to_i,
+      score_in_batch: current_user.batch_contributions.sum(:points),
+      score_in_city: current_user.city_contributions.sum(:points)
+    }
+    @total_users = User.synced.count
 
     ## Batch rank & score
     @user_batch = current_user.batch
 
     if @user_batch
-      fields = %i[batch_id batch_score]
-      ranked_batches = Score.includes(user: :batch)
-                            .group("batches.id, batches.number")
-                            .order("sum(score_in_batch) desc, batches.number")
-                            .pluck("batches.id", "sum(score_in_batch)")
-                            .map { |row| fields.zip(row).to_h }
-                            .reject { |h| h[:batch_id].nil? }
-                            .map.with_index { |h, idx| h.merge!(batch_rank: idx + 1) }
-
-      @user_batch_score = ranked_batches.find { |h| h[:batch_id] == @user_batch.id }
-      @total_batches = ranked_batches.count
+      @user_batch_score = { score: @user_batch.batch_score.in_contest.to_i, rank: @user_batch.batch_score.rank }
+      @total_batches = BatchScore.count
     end
 
     ## City rank & score
     @user_city = current_user.city
 
     if @user_city
-      fields = %i[city_id city_score]
-      ranked_cities = Score.includes(user: :city)
-                           .group("cities.id, cities.name")
-                           .order("sum(score_in_city) desc, cities.name")
-                           .pluck("cities.id", "sum(score_in_city)")
-                           .map { |row| fields.zip(row).to_h }
-                           .reject { |h| h[:city_id].nil? }
-                           .map.with_index { |h, idx| h.merge!(city_rank: idx + 1) }
-
-      @user_city_score = ranked_cities.find { |h| h[:city_id] == @user_city.id }
-      @total_cities = ranked_cities.count
+      @user_city_score = { score: @user_city.city_score.in_contest.to_i, rank: @user_city.city_score.rank }
+      @total_cities = CityScore.count
     end
 
     # Calendar
@@ -106,34 +93,34 @@ class PagesController < ApplicationController
   end
 
   def scoreboard
-    fields = %i[city_name city_n_users city_score]
-    @ranked_cities = Score.includes(user: :city)
-                          .group("cities.name")
-                          .order("sum(score_in_city) desc, cities.name")
-                          .pluck("cities.name", Arel.sql("count(distinct users.id)"), "sum(score_in_city)")
-                          .map { |row| fields.zip(row).to_h }
-                          .reject { |h| h[:city_name].nil? }
-                          .map.with_index { |h, idx| h.merge!(city_rank: idx + 1) }
-
+    @ranked_cities = CityScore.joins(:city).left_joins(city: :users).where("users.synced")
+                              .order(:rank, "cities.name").distinct
+                              .select("cities.name AS city_name",
+                                      Arel.sql("count(*) OVER (PARTITION BY cities.id) AS city_n_users"),
+                                      "in_contest AS city_score",
+                                      "city_scores.rank AS city_rank")
+                              .map { |row| row.attributes.symbolize_keys }
+                              .reject { |h| h[:city_name].nil? }
+                              .each { |h| h[:city_score] = h[:city_score].to_i }
     @max_city_contributors = City.max_contributors
 
-    fields = %i[batch_number batch_n_users batch_score]
-    @ranked_batches = Score.includes(user: :batch)
-                           .group("batches.number")
-                           .order("sum(score_in_batch) desc, batches.number")
-                           .pluck("batches.number", Arel.sql("count(distinct users.id)"), "sum(score_in_batch)")
-                           .map { |row| fields.zip(row).to_h }
-                           .reject { |h| h[:batch_number].nil? }
-                           .map.with_index { |h, idx| h.merge!(batch_rank: idx + 1) }
-
+    @ranked_batches = BatchScore.joins(:batch).left_joins(batch: :users).where("users.synced")
+                                .order(:rank, "batches.number": :desc).distinct
+                                .select("batches.number AS batch_number",
+                                        Arel.sql("count(*) OVER (PARTITION BY batches.id) AS batch_n_users"),
+                                        "in_contest AS batch_score",
+                                        "batch_scores.rank AS batch_rank")
+                                .map { |row| row.attributes.symbolize_keys }
+                                .reject { |h| h[:batch_number].nil? }
+                                .each { |h| h[:batch_score] = h[:batch_score].to_i }
     @max_batch_contributors = Batch.max_contributors
 
-    fields = %i[uid username batch city score_solo]
-    @ranked_users = Score.includes(user: %i[batch city])
-                         .group("users.id, users.username")
-                         .order("sum(score_solo) desc, users.id desc")
-                         .pluck("users.uid", "users.username", "max(batches.number)", "max(cities.name)", "sum(score_solo)")
-                         .map { |row| fields.zip(row).to_h }
-                         .map.with_index { |h, idx| h.merge!(rank: idx + 1) }
+    @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).where("users.synced")
+                         .order("ranks.in_contest, users.id DESC")
+                         .select("users.uid AS uid", "users.username AS username", "batches.number AS batch",
+                                 "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank")
+                         .map { |row| row.attributes.symbolize_keys }
+                         .each { |h| h[:score_solo] = h[:score_solo].to_i }
+    @contributor_ids = User.contributors.pluck(:uid)
   end
 end

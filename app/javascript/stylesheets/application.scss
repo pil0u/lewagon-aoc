@@ -4,7 +4,7 @@
 
 @layer components {
   .calendar-tile {
-    @apply w-32 h-32 border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40 rounded-3xl select-none cursor-pointer;
+    @apply w-32 h-32 border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40 rounded-3xl select-none;
 
     &:hover h2 {
       @apply strong;

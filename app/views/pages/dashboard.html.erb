@@ -1,7 +1,7 @@
 <div class="my-8 text-center">
   <p>Authenticated as: <span class="strong"><%= current_user.username %></span></p>
   <p>Current sync status: <span class="<%= class_names(status_css(@user_status)) %>"><%= @user_status %></span></p>
-  <p class="inline-block group relative">Last data refresh: <span class="strong"><%= distance_of_time_in_words(@last_api_fetch, @now.utc, include_seconds: true) %></span> ago <em class="hidden group-hover:inline absolute ml-3 w-max">(every ~10 minutes)</em></p>
+  <p class="inline-block group relative">Last data refresh: <span class="strong"><%= @time_since_last_api_fetch %></span> ago <em class="hidden group-hover:inline absolute ml-3 w-max">(every ~10 minutes)</em></p>
 </div>
 
 <% if @user_status == "OK" %>
@@ -28,9 +28,9 @@
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <span class="text-2xl">
-          <%= @user_score[:rank_solo] %><sup class="text-sm"><%= @user_score[:rank_solo].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_users %><span class="absolute"><sup>*</sup></span></span>
+          <%= @user_score[:rank] %><sup class="text-sm"><%= @user_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_users %><span class="absolute"><sup>*</sup></span></span>
         </span>
-        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score_solo] %> pts</span></span>
+        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score] %> pts</span></span>
       </div>
 
       <span class="text-sm text-aoc-gray-dark">* synced users</span>
@@ -47,8 +47,8 @@
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <% if @user_batch %>
-          <span class="text-2xl"><%= @user_batch_score[:batch_rank] %><sup class="text-sm"><%= @user_batch_score[:batch_rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_batches %></span></span>
-          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_batch_score[:batch_score] %> pts</span></span>
+          <span class="text-2xl"><%= @user_batch_score[:rank] || 0 %><sup class="text-sm"><%= @user_batch_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_batches %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_batch_score[:score] %> pts</span></span>
         <% else %>
           <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "link" %></span>
         <% end %>
@@ -66,8 +66,8 @@
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <% if @user_city %>
-          <span class="text-2xl"><%= @user_city_score[:city_rank] %><sup class="text-sm"><%= @user_city_score[:city_rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_cities %></span></span>
-          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_city_score[:city_score] %> pts</span></span>
+          <span class="text-2xl"><%= @user_city_score[:rank] %><sup class="text-sm"><%= @user_city_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_cities %></span></span>
+          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_city_score[:score] %> pts</span></span>
         <% else %>
           <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "link" %></span>
         <% end %>
@@ -102,7 +102,7 @@
       </div>
 
       <div class="h-1/2 flex items-center">
-        <span class="text-lg"><%= distance_of_time_in_words(@now, @next_puzzle_time) %></span>
+        <span class="text-lg"><%= @time_to_next_puzzle %></span>
       </div>
     </div>
   </div>
@@ -110,10 +110,26 @@
   <div class="my-8 mx-4 sm:mx-auto max-w-max grid grid-cols-5 p-5 gap-5">
     <% @advent_days.each do |advent_day| %>
       <div data-controller="modal">
-        <div data-action="click->modal#open" class="calendar-tile hover:wiggle flex flex-col items-center justify-center <%= "wiggle" if @aoc_in_progress && @now.day == advent_day.day %>">
-          <div class="relative flex items-center justify-center">
+        <div class="relative calendar-tile flex flex-col items-center justify-center
+        <%= "wiggle" if @aoc_in_progress && @now.day == advent_day.day %>
+        <%= @now.day < advent_day.day ? "cursor-not-allowed" : "cursor-pointer" %>">
+
+          <% if @now.day < advent_day.day %>
+
             <h2 class="<%= class_names(day_css(@now, advent_day)) %> text-5xl"><%= advent_day.day %></h2>
-          </div>
+
+          <% else %>
+
+            <%= link_to "https://adventofcode.com/#{@year}/day/#{advent_day.day}", target: :blank, class: "w-full h-full flex items-center justify-center rounded-3xl" do %>
+              <h2 class="<%= class_names(day_css(@now, advent_day)) %> text-5xl"><%= advent_day.day %></h2>
+
+              <div data-action="click->modal#open" class="h-9 w-9 absolute right-0 bottom-0 flex items-center justify-center hover:bg-aoc-atmospheric rounded-br-3xl rounded-tl-2xl text-aoc-gray-darker">
+                <i class="fas fa-plus"></i>
+              </div>
+            <% end %>
+
+          <% end %>
+
         </div>
 
         <div data-modal-target="container" data-action="click->modal#closeBackground keyup@window->modal#closeWithKeyboard" class="hidden fixed inset-0 z-10">

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Score < ApplicationRecord
+class Rank < ApplicationRecord
   belongs_to :user
 
   def self.refresh

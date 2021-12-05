@@ -1,3 +1,11 @@
+<% if ENV["ANNOUNCEMENT"].present? %>
+  <div id="announcement" class="my-12 flex justify-center bg-aoc-gray">
+    <p class="max-w-6xl paragraph text-dark text-center tracking-tighter"><span class="font-semibold"><%= ENV["ANNOUNCEMENT"] %></span>
+    To discuss the puzzles and get event-related information, <%= link_to "join the #aoc Slack channel", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "font-semibold text-aoc-gray-dark hover:text-aoc-gray-darker" %>.
+    </p>
+  </div>
+<% end %>
+
 <div class="my-12 mx-4 sm:mx-auto max-w-3xl flex flex-col gap-y-12">
   <div>
     <h2 class="text-aoc-atmospheric text-shadow-atmospheric">
@@ -19,10 +27,10 @@
           </tr>
         </thead>
         <tbody class="text-center">
-          <% @ranked_cities.each do |city| %>
+          <% [{}, *@ranked_cities].each_cons(2) do |(previous_city, city)| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if city[:city_name] == current_user.city&.name %>">
               <td class="py-1 <%= class_names(ranking_css(city[:city_rank], rank_col: true)) %>">
-                <%= city[:city_rank] %>
+                <%= city[:city_rank] unless previous_city[:city_rank] == city[:city_rank] %>
               </td>
               <td class="<%= class_names(ranking_css(city[:city_rank])) %>">
                 <%= city[:city_name] %>
@@ -56,10 +64,10 @@
           </tr>
         </thead>
         <tbody class="text-center">
-          <% @ranked_batches.each do |batch| %>
+          <% [{}, *@ranked_batches].each_cons(2) do |(previous_batch, batch)| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if batch[:batch_number] == current_user.batch&.number %>">
               <td class="py-1 <%= class_names(ranking_css(batch[:batch_rank], rank_col: true)) %>">
-                <%= batch[:batch_rank] %>
+                <%= batch[:batch_rank] unless previous_batch[:batch_rank] == batch[:batch_rank] %>
               </td>
               <td class="<%= class_names(ranking_css(batch[:batch_rank])) %>">
                 #<%= batch[:batch_number] %>
@@ -90,15 +98,15 @@
           </tr>
         </thead>
         <tbody class="text-center">
-          <% @ranked_users.each do |user| %>
+          <% [{}, *@ranked_users].each_cons(2) do |(previous_user, user)| %>
             <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[:username] == current_user.username %>">
               <td class="py-1 <%= class_names(ranking_css(user[:rank], rank_col: true)) %>">
-                <%= user[:rank] %>
+                <%= user[:rank] unless user[:rank] == previous_user[:rank] %>
               </td>
               <td class="<%= class_names(ranking_css(user[:rank])) %>">
                 <div class="flex justify-center">
                   <%= user[:username] %>
-                  <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid] == "6788" %>
+                  <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid].in? @contributor_ids %>
                 </div>
               </td>
               <td><%= "##{user[:batch]}" if user[:batch] %></td>

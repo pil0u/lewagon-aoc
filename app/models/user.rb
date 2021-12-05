@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i[kitt]
 
-  CONTRIBUTORS = [6788, 449].freeze
+  CONTRIBUTORS = [6788, 449, 5083].freeze
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true

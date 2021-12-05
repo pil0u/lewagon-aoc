@@ -36,6 +36,6 @@ module ApplicationHelper
   end
 
   def contributor_ids
-    User.contributors.pluck(:uid)
+    User::CONTRIBUTORS
   end
 end

@@ -143,6 +143,8 @@ class PagesController < ApplicationController
     @total_kitt_signups = User.where(provider: 'kitt').count
     @total_synced_users = User.synced.count
     @total_participating_users = User.distinct(:id).joins(:completions).merge(Completion.actual).count
+
+    @stars_per_day = Completion.actual.group(:day, :challenge).count.sort_by(&:first).to_h
   end
 
   def status

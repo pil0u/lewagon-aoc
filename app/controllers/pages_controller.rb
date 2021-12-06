@@ -138,6 +138,13 @@ class PagesController < ApplicationController
     @contributor_ids = User.contributors.pluck(:uid)
   end
 
+  def stats
+    @total_stars = Completion.actual.count
+    @total_kitt_signups = User.where(provider: 'kitt').count
+    @total_synced_users = User.synced.count
+    @total_participating_users = User.distinct(:id).joins(:completions).merge(Completion.actual).count
+  end
+
   def status
     @total_completions = Completion.count
     @total_users = User.count

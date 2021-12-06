@@ -7,6 +7,8 @@ class Completion < ApplicationRecord
   has_one :city_contribution # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
   has_one :batch_contribution # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
 
+  scope :actual, -> { where.not(completion_unix_time: nil) }
+
   def self.replace_all(completions)
     Rails.logger.info "  Erasing all completions..."
     Completion.delete_all

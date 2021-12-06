@@ -104,8 +104,9 @@
               <th class="w-2/12 font-light"></th>
               <th class="w-2/12 font-light">Username</th>
               <th class="w-2/12 font-light">Batch</th>
-              <th class="w-3/12 font-light">City</th>
-              <th class="w-3/12 font-light">Score</th>
+              <th class="w-2/12 font-light">City</th>
+              <th class="w-2/12 font-light">Stars</th>
+              <th class="w-2/12 font-light">Score</th>
             </tr>
           </thead>
           <tbody class="text-center">
@@ -123,6 +124,7 @@
                 </td>
                 <td><%= "##{user[:batch]}" if user[:batch] %></td>
                 <td><%= user[:city] %></td>
+                <td class="py-1 strong text-lg"><%= user[:total_stars] %>*</td>
                 <td class="py-1 strong text-lg"><%= user[:score_solo] %></td>
               </tr>
             <% end %>

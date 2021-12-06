@@ -128,10 +128,11 @@ class PagesController < ApplicationController
                               .each { |h| h[:score_average] = h[:score_average].round(1) }
     @max_batch_contributors = Batch.max_contributors
 
-    @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).where("users.synced")
+    @ranked_users = Score.joins(user: :rank).left_joins(user: [:batch, :city]).where("users.synced")
                          .order("ranks.in_contest, users.id DESC")
                          .select("users.uid AS uid", "users.username AS username", "batches.number AS batch",
-                                 "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank")
+                                 "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank",
+                                 "(SELECT COUNT(*) FROM completions co WHERE co.user_id = users.id) AS total_stars")
                          .map { |row| row.attributes.symbolize_keys }
                          .each { |h| h[:score_solo] = h[:score_solo].to_i }
 

@@ -93,6 +93,15 @@ class PagesController < ApplicationController
   end
 
   def scoreboard
+    @anchors = {
+      "#cities-scoreboard": "Cities scoreboard",
+      "#user-city-rank": current_user.city&.name,
+      "#batches-scoreboard": "Batches scoreboard",
+      "#user-batch-rank": ("Batch ##{current_user.batch.number}" if current_user.batch),
+      "#solo-scoreboard": "Solo scoreboard",
+      "#user-rank": current_user.username
+    }.compact
+
     @ranked_cities = CityScore.joins(:city).left_joins(city: :users).where("users.synced")
                               .order(:rank, "cities.name").distinct
                               .select("cities.name AS city_name",
@@ -121,6 +130,7 @@ class PagesController < ApplicationController
                                  "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank")
                          .map { |row| row.attributes.symbolize_keys }
                          .each { |h| h[:score_solo] = h[:score_solo].to_i }
+
     @contributor_ids = User.contributors.pluck(:uid)
   end
 

@@ -1,0 +1,39 @@
+<p>
+  - Nombre total d'étoiles récupérées: <%= @total_stars %>*<br />
+  - Score: <%= @score %><br />
+  - Score batch: <%= @batch_score %><br />
+  - Contribution score batch: <%= @batch_contribution %><br />
+  - Score city: <%= @city_score %><br />
+  - Contribution score city: <%= @city_contribution %><br />
+</p>
+<p>
+  Personal times:<br />
+  <br />
+  <% 1.upto(25).each do |n| %>
+    <hr>
+    <br />
+    # Day <%= n %> <br />
+    Challenge 1: <br />
+    <% if challenge_1 = @completions[[n, 1]] %>
+      - Rank: <%= challenge_1[:rank] %><br />
+      - Score: <%= challenge_1[:score] %><br />
+      <% publication = DateTime.new(ENV['EVENT_YEAR'].to_i, 12, n, 0, 0, 0, 'UTC-5') %>
+      <% duration = ActiveSupport::Duration.build(Time.at(challenge_1[:timestamp].to_i, in: '+00:00') - publication) %>
+      - Duration: <%= duration.parts %><br />
+    <% else %>
+      Challenge 1 non complété<br />
+    <% end %>
+    <br />
+    Challenge 2: <br />
+    <% if challenge_2 = @completions[[n, 2]] %>
+      - Rank: <%= challenge_2[:rank] %><br />
+      - Score: <%= challenge_2[:score] %><br />
+      <% publication = DateTime.new(ENV['EVENT_YEAR'].to_i, 12, n, 0, 0, 0, 'UTC-5') %>
+      <% duration = ActiveSupport::Duration.build(Time.at(challenge_2[:timestamp].to_i, in: '+00:00') - publication) %>
+      - Duration: <%= duration.parts %><br />
+    <% else %>
+      Challenge 2 non complété<br />
+    <% end %>
+    <br />
+  <% end %>
+</p>

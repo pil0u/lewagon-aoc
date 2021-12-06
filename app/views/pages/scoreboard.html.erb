@@ -26,9 +26,10 @@
           <thead>
             <tr class="text-aoc-gray border-b border-aoc-gray-darker">
               <th class="w-2/12 font-light"></th>
-              <th class="w-3/12 font-light">City</th>
+              <th class="w-2/12 font-light">City</th>
               <th class="w-2/12 font-light"># Coders</th>
-              <th class="w-5/12 font-light">Score</th>
+              <th class="w-2/12 font-light">Average score</th>
+              <th class="w-4/12 font-light">Score</th>
             </tr>
           </thead>
           <tbody class="text-center">
@@ -42,6 +43,7 @@
                   <%= city[:city_name] %>
                 </td>
                 <td><%= city[:city_n_users] %></td>
+                <td class="text-lg"><%= city[:score_average] %></td>
                 <td class="py-1 strong text-lg"><%= city[:city_score] %></td>
               </tr>
             <% end %>
@@ -64,9 +66,10 @@
           <thead>
             <tr class="text-aoc-gray border-b border-aoc-gray-darker">
               <th class="w-2/12 font-light"></th>
-              <th class="w-3/12 font-light">Batch</th>
+              <th class="w-2/12 font-light">Batch</th>
               <th class="w-2/12 font-light"># Coders</th>
-              <th class="w-5/12 font-light">Score</th>
+              <th class="w-2/12 font-light">Average score</th>
+              <th class="w-3/12 font-light">Score</th>
             </tr>
           </thead>
           <tbody class="text-center">
@@ -80,6 +83,7 @@
                   #<%= batch[:batch_number] %>
                 </td>
                 <td><%= batch[:batch_n_users] %></td>
+                <td class="text-lg"><%= batch[:score_average] %></td>
                 <td class="py-1 strong text-lg"><%= batch[:batch_score] %></td>
               </tr>
             <% end %>

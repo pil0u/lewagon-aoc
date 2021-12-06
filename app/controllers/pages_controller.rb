@@ -102,26 +102,30 @@ class PagesController < ApplicationController
       "#user-rank": current_user.username
     }.compact
 
-    @ranked_cities = CityScore.joins(:city).left_joins(city: :users).where("users.synced")
+    @ranked_cities = CityScore.joins(:city).left_joins(city: {users: :score}).where("users.synced")
                               .order(:rank, "cities.name").distinct
                               .select("cities.name AS city_name",
                                       Arel.sql("count(*) OVER (PARTITION BY cities.id) AS city_n_users"),
-                                      "in_contest AS city_score",
+                                      Arel.sql("avg(scores.in_contest) OVER (PARTITION BY cities.id) AS score_average"),
+                                      "city_scores.in_contest AS city_score",
                                       "city_scores.rank AS city_rank")
                               .map { |row| row.attributes.symbolize_keys }
                               .reject { |h| h[:city_name].nil? }
                               .each { |h| h[:city_score] = h[:city_score].to_i }
+                              .each { |h| h[:score_average] = h[:score_average].round(1) }
     @max_city_contributors = City.max_contributors
 
-    @ranked_batches = BatchScore.joins(:batch).left_joins(batch: :users).where("users.synced")
+    @ranked_batches = BatchScore.joins(:batch).left_joins(batch: {users: :score}).where("users.synced")
                                 .order(:rank, "batches.number": :desc).distinct
                                 .select("batches.number AS batch_number",
                                         Arel.sql("count(*) OVER (PARTITION BY batches.id) AS batch_n_users"),
-                                        "in_contest AS batch_score",
+                                        Arel.sql("avg(scores.in_contest) OVER (PARTITION BY batches.id) AS score_average"),
+                                        "batch_scores.in_contest AS batch_score",
                                         "batch_scores.rank AS batch_rank")
                                 .map { |row| row.attributes.symbolize_keys }
                                 .reject { |h| h[:batch_number].nil? }
                                 .each { |h| h[:batch_score] = h[:batch_score].to_i }
+                              .each { |h| h[:score_average] = h[:score_average].round(1) }
     @max_batch_contributors = Batch.max_contributors
 
     @ranked_users = Score.joins(user: :rank).left_joins(user: :batch).left_joins(user: :city).where("users.synced")

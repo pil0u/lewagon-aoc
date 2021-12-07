@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i[kitt]
 
-  CONTRIBUTORS = [6788, 449].freeze
+  CONTRIBUTORS = %w[6788 449].freeze
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
@@ -16,7 +16,7 @@ class User < ApplicationRecord
   scope :synced, -> { where(synced: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS) }
 
-  after_create do
+  after_save do
     Help.refresh_views!
   end
 

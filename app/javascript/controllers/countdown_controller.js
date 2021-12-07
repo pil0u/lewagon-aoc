@@ -10,9 +10,8 @@ export default class extends Controller {
   connect () {
     const now = new Date()
 
-    if (now > Date.parse('December 3 2021 23:59:59 UTC')) {
-      this.element.classList.add("hidden")
-    } else {
+    if (now < Date.parse('December 2 2021 12:00:00 EST')) {
+      this.element.classList.remove("hidden")
       this.updateClock()
 
       if (this.hasRefreshIntervalValue) {

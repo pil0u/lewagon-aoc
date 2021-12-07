@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   patch "/settings", to: "users#update"
 
   get "/stats", to: "pages#stats"
-  namespace 'stats' do
+  namespace "stats" do
     resources :users, only: [:show]
     # resources :days, only: [:show], param: :number
     # resources :batches, only: [:show], param: :number

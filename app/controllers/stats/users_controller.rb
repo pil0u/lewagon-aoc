@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Stats
   class UsersController < ApplicationController
     before_action :set_user, only: [:show]
@@ -13,14 +15,15 @@ module Stats
         @city_contribution = @user.city_contributions.sum(:points).to_i
       end
       @completions = @user.completions.actual.left_joins(:point_value, :completion_rank)
-        .select(
-          :day,
-          :challenge,
-          'completion_ranks.in_contest AS rank',
-          'point_values.in_contest AS score',
-          'completion_unix_time AS timestamp')
-        .map(&:attributes).map(&:symbolize_keys)
-        .map { |attrs| [[attrs[:day], attrs[:challenge]], attrs] }.to_h
+                          .select(
+                            :day,
+                            :challenge,
+                            "completion_ranks.in_contest AS rank",
+                            "point_values.in_contest AS score",
+                            "completion_unix_time AS timestamp"
+                          )
+                          .map(&:attributes).map(&:symbolize_keys)
+                          .index_by { |attrs| [attrs[:day], attrs[:challenge]] }
     end
 
     private

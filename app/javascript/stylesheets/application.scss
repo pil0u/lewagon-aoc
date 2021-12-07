@@ -20,7 +20,7 @@
   }
 
   .dashboard-tile {
-    @apply w-48 h-48 border-l border-aoc-gray-darker hover:bg-aoc-gray-darker cursor-default;
+    @apply w-48 h-48 border-aoc-gray-darker cursor-default;
   }
 
   input[type=number] {
@@ -37,6 +37,10 @@
   }
 
   .link {
+    @apply hover:text-aoc-gold hover:text-shadow-gold;
+  }
+
+  .link-gold {
     @apply text-aoc-gold hover:text-shadow-gold;
   }
 

@@ -23,10 +23,10 @@
 
     <div class="mx-auto px-4 py-2 max-w-xl flex justify-between items-center border-b border-aoc-gray-darker select-none">
       <%= link_to "Q&A", about_path, class: "text-center text-aoc-green-flash hover:text-shadow-green" %>
-      <%= link_to "dashboard", root_path, class: "hover:text-aoc-gold hover:text-shadow-gold" %>
-      <%= link_to "scoreboards", scoreboard_path, class: "hover:text-aoc-gold hover:text-shadow-gold" %>
-      <%= link_to "stats", stats_path, class: "hover:text-aoc-gold hover:text-shadow-gold" %>
-      <%= link_to "settings", settings_path, class: "hover:text-aoc-gold hover:text-shadow-gold" %>
+      <%= link_to "dashboard", root_path, class: "link" %>
+      <%= link_to "scoreboards", scoreboard_path, class: "link" %>
+      <%= link_to "stats", stats_path, class: "link" %>
+      <%= link_to "settings", settings_path, class: "link" %>
       <%= link_to destroy_user_session_path, method: :delete, class: "hover:text-wagon-red" do %>
         <i class="fas fa-power-off"></i>
       <% end %>

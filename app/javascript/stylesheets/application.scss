@@ -23,30 +23,6 @@
     @apply w-48 h-48 border-l border-aoc-gray-darker hover:bg-aoc-gray-darker cursor-default;
   }
 
-  #header-links {
-    #dashboard:before {
-      content: "dshbrd_";
-    }
-    #scoreboard:before {
-      content: "scrbrd_";
-    }
-    #settings:before {
-      content: "sttngs_";
-    }
-
-    &:hover {
-      #dashboard:before {
-        content: "dashboard";
-      }
-      #scoreboard:before {
-        content: "scoreboard";
-      }
-      #settings:before {
-        content: "settings";
-      }
-    }
-  }
-
   input[type=number] {
     -moz-appearance:textfield;
   }

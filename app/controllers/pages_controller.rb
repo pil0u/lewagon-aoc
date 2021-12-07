@@ -146,6 +146,7 @@ class PagesController < ApplicationController
     @total_participating_users = User.distinct(:id).joins(:completions).merge(Completion.actual).count
 
     @stars_per_day = Completion.actual.group(:day, :challenge).count.sort_by(&:first).to_h
+    @users_per_star = (@stars_per_day.map(&:last).max / 40.0).ceil # AoC formula for how many users per star
   end
 
   def status

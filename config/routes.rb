@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   patch "/settings", to: "users#update"
   get "/city", to: "users#city"
   get "/batch", to: "users#batch"
+  get "/status", to: "pages#status"
 end

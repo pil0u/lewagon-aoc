@@ -1,0 +1,5 @@
+<ul class="pr-6 border-r border-aoc-gray-dark text-right space-y-4">
+  <% anchors.each do |css_id, title| %>
+    <li><%= link_to title, css_id.to_s, data: { controller: "scroll-to" }, class: "hover:strong" %></li>
+  <% end %>
+</ul>

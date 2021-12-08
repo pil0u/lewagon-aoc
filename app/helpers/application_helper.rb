@@ -46,7 +46,7 @@ module ApplicationHelper
       parts = duration.parts
       [parts[:hours] || 0, parts[:minutes] || 0, parts[:seconds] || 0].map { |n| n.to_i.to_s.rjust(2, '0') }.join(':')
     else
-      distance_of_time_in_words(duration)
+      ">24h"
     end
   end
 end

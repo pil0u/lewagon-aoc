@@ -21,7 +21,7 @@ class User < ApplicationRecord
   end
 
   def self.from_kitt(auth)
-    batch_from_oauth = auth.info.last_batch_slug
+    batch_from_oauth = auth.info.last_batch_slug&.gsub(/[^\d]/, "")
     batch = Batch.find_or_create_by(number: batch_from_oauth) if batch_from_oauth.present?
 
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

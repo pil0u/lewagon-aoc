@@ -122,7 +122,9 @@
               <td><%= "##{user[:batch]}" if user[:batch] %></td>
               <td><%= user[:city] %></td>
               <td class="text-lg">
-                <span class="text-aoc-silver"><%= user[:silver_stars] %>*</span>
+                <% if user[:silver_stars] - user[:gold_stars] > 0 %>
+                  <span class="text-aoc-silver"><%= user[:silver_stars] - user[:gold_stars] %>*</span>
+                <% end %>
                 <span class="text-aoc-gold"><%= user[:gold_stars] %>*</span>
               </td>
               <td class="py-1 strong text-lg"><%= user[:score_solo] %></td>

@@ -130,7 +130,10 @@ class PagesController < ApplicationController
 
     @ranked_users = Score.joins(user: :rank).left_joins(user: %i[batch city]).where("users.synced")
                          .order("ranks.in_contest, users.id DESC")
-                         .select("users.uid AS uid", "users.username AS username", "batches.number AS batch",
+                         .select("users.uid AS uid",
+                                 "users.id AS id",
+                                 "users.username AS username",
+                                 "batches.number AS batch",
                                  "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank",
                                  "(SELECT COUNT(*) FROM completions co WHERE co.user_id = users.id AND co.challenge = 1) AS silver_stars",
                                  "(SELECT COUNT(*) FROM completions co WHERE co.user_id = users.id  AND co.challenge = 2) AS gold_stars")

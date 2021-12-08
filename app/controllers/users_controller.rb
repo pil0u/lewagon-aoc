@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    batch_number = user_params[:batch_number]&.gsub(/[^\d]/, '')
+    batch_number = user_params[:batch_number]&.gsub(/[^\d]/, "")
     batch = Batch.find_or_create_by(number: batch_number) if batch_number.present?
 
     city = City.find(user_params[:city_id]) if user_params[:city_id].present?

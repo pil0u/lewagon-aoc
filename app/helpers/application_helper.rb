@@ -36,15 +36,15 @@ module ApplicationHelper
   end
 
   def publication_datetime(day)
-    DateTime.new(ENV['EVENT_YEAR'].to_i, 12, day, 0, 0, 0, 'UTC-5') # publication
+    DateTime.new(ENV["EVENT_YEAR"].to_i, 12, day, 0, 0, 0, "UTC-5")
   end
 
   def duration_as_chrono(date, since:)
-    date = Time.at(date, in: '+00:00') if date.is_a?(String) || date.is_a?(Numeric)
+    date = Time.zone.at(date, in: "+00:00") if date.is_a?(String) || date.is_a?(Numeric)
     duration = ActiveSupport::Duration.build(date - since)
     if duration < 1.day
       parts = duration.parts
-      [parts[:hours] || 0, parts[:minutes] || 0, parts[:seconds] || 0].map { |n| n.to_i.to_s.rjust(2, '0') }.join(':')
+      [parts[:hours] || 0, parts[:minutes] || 0, parts[:seconds] || 0].map { |n| n.to_i.to_s.rjust(2, "0") }.join(":")
     else
       ">24h"
     end

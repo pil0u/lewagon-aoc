@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Stats
   class DaysController < ApplicationController
     def show
@@ -27,7 +29,6 @@ module Stats
         @city_score_2 = points.find_by(day: @number, challenge: 2)
       end
       @max_city_contributors = City.max_contributors
-
     end
   end
 end

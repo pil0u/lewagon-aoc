@@ -26,6 +26,8 @@ module Stats
         @city_contribution = @user.city_contributions.sum(:points).to_i
       end
 
+      @latest_day = Aoc.in_progress? ? Time.now.getlocal("-05:00").day : 25
+
       @completions = @user.completions.actual.left_joins(:point_value, :completion_rank)
                           .select(
                             :day,

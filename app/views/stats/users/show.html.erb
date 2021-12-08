@@ -60,7 +60,7 @@
   <% end %>
 </div>
 
-<div class="my-8 mx-4 sm:mx-auto max-w-6xl flex justify-center divide-x">
+<div class="my-8 mx-4 sm:mx-auto flex justify-center">
   <table cellspacing="0" class="text-lg text-right leading-tight">
     <tr class="mx-2">
       <th rowspan="2" class="align-bottom font-light">Day</th>
@@ -76,7 +76,7 @@
       <th scope="col" class="w-20 font-light text-aoc-gold">Score</th>
     </tr>
 
-    <% 1.upto(25).each do |day| %>
+    <% 1.upto(@latest_day).reverse_each do |day| %>
       <tr>
         <th class="font-light"><%= day %></th>
 

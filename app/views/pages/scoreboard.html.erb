@@ -145,57 +145,45 @@
                 class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[:uid] == current_user.uid %>">
 
                 <td class="py-1 <%= class_names(ranking_css(user[:rank], rank_col: true)) %>">
-                <%= link_to stats_user_path(user[:id]), class: "flex" do %>
-
-                  <span class="w-full"><%= user[:rank] unless user[:rank] == previous_user[:rank] %></span>
-
-                <% end %>
+                  <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                    <%= user[:rank] unless user[:rank] == previous_user[:rank] %>
+                  <% end %>
                 </td>
 
                 <td class="<%= class_names(ranking_css(user[:rank])) %>">
-                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
-
-                  <div class="flex">
-                    <%= user[:username] %>
-                    <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid].in? contributor_ids %>
-                  </div>
-
-                <% end %>
+                  <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                    <div class="flex">
+                      <%= user[:username] %>
+                      <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid].in? contributor_ids %>
+                    </div>
+                  <% end %>
                 </td>
 
                 <td>
-                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
-
-                  <%= "##{user[:batch]}" if user[:batch] %>
-
-                <% end %>
+                  <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                    <%= "##{user[:batch]}" if user[:batch] %>
+                  <% end %>
                 </td>
 
                 <td>
-                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
-
-                  <span class="w-full"><%= user[:city] || "–" %></span>
-
-                <% end %>
+                  <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                    <%= user[:city] || "–" %>
+                  <% end %>
                 </td>
 
                 <td class="text-lg">
-                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
-
-                  <% if user[:silver_stars] - user[:gold_stars] > 0 %>
-                    <span class="text-aoc-silver"><%= user[:silver_stars] - user[:gold_stars] %>*</span>
+                  <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                    <% if user[:silver_stars] - user[:gold_stars] > 0 %>
+                      <span class="text-aoc-silver"><%= user[:silver_stars] - user[:gold_stars] %>*</span>
+                    <% end %>
+                    <span class="text-aoc-gold"><%= user[:gold_stars] %>*</span>
                   <% end %>
-                  <span class="text-aoc-gold"><%= user[:gold_stars] %>*</span>
-
-                <% end %>
                 </td>
 
                 <td class="py-1 strong text-lg">
-                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
-
-                  <%= user[:score_solo] %>
-
-                <% end %>
+                  <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                    <%= user[:score_solo] %>
+                  <% end %>
                 </td>
 
             </tr>

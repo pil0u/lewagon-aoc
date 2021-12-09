@@ -1,5 +1,5 @@
 <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex justify-center divide-x">
-  <div class="dashboard-tile flex flex-col items-center hover:bg-aoc-gray-darker">
+  <div class="dashboard-tile flex flex-col items-center">
     <div class="h-1/3 flex items-center">
       <h2 class="text-lg strong text-center"><%= @user.username %></h2>
     </div>
@@ -14,7 +14,7 @@
     <span class="text-sm text-aoc-gray-dark">* synced users</span>
   </div>
 
-  <div class="dashboard-tile flex flex-col items-center hover:bg-aoc-gray-darker">
+  <div class="dashboard-tile flex flex-col items-center">
     <div class="h-1/3 flex items-center">
       <h2 class="text-lg strong">Stars</h2>
     </div>
@@ -29,7 +29,7 @@
 
   <% if @user.batch %>
 
-    <div class="dashboard-tile flex flex-col items-center hover:bg-aoc-gray-darker">
+    <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <h2 class="text-lg strong text-center">
           <%= link_to "Batch ##{@user.batch.number}", stats_batch_path(@user.batch.number), class: "link" %>
@@ -47,7 +47,7 @@
 
   <% if @user.city %>
 
-    <div class="dashboard-tile flex flex-col items-center hover:bg-aoc-gray-darker">
+    <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <h2 class="text-lg strong text-center">
           <%= link_to @user.city.name, stats_city_path(@user.city.slug), class: "link" %>

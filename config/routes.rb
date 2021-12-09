@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get "/stats", to: "pages#stats"
   namespace "stats" do
     resources :users, only: [:show]
-    resources :days, only: [:show], param: :number
+    # resources :days, only: [:show], param: :number
     resources :batches, only: [:show], param: :number
     resources :cities, only: [:show], param: :slug
   end

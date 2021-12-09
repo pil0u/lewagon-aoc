@@ -49,4 +49,8 @@ module ApplicationHelper
       ">24h"
     end
   end
+
+  def contributor_ids
+    User::CONTRIBUTORS
+  end
 end

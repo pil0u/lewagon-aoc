@@ -139,8 +139,6 @@ class PagesController < ApplicationController
                                  "(SELECT COUNT(*) FROM completions co WHERE co.user_id = users.id  AND co.challenge = 2) AS gold_stars")
                          .map { |row| row.attributes.symbolize_keys }
                          .each { |h| h[:score_solo] = h[:score_solo].to_i }
-
-    @contributor_ids = User::CONTRIBUTORS
   end
 
   def stats

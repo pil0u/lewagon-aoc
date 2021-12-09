@@ -41,7 +41,9 @@
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <% if @user_batch %>
-          <h2 class="text-lg strong text-center">Batch #<%= @user_batch.number %></h2>
+          <h2 class="text-lg strong text-center">
+            <%= link_to "Batch ##{@user_batch.number}", stats_batch_path(@user_batch.number) %>
+          </h2>
         <% else %>
           <h2 class="text-lg strong text-center">My batch rank</h2>
         <% end %>
@@ -60,7 +62,9 @@
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <% if @user_city %>
-          <h2 class="text-lg strong text-center"><%= @user_city.name %></h2>
+          <h2 class="text-lg strong text-center">
+            <%= link_to @user_city.name, stats_city_path(@user_city.slug) %>
+          </h2>
         <% else %>
           <h2 class="text-lg strong text-center">My city rank</h2>
         <% end %>

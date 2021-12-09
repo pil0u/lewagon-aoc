@@ -1,0 +1,43 @@
+<div class="my-12 mx-4 sm:mx-auto max-w-3xl flex flex-col gap-y-12">
+  <div>
+    <h2 class="text-aoc-atmospheric text-shadow-atmospheric text-center text-xl">
+      Batch Mates
+    </h2>
+
+    <div class="mx-auto my-4 w-full max-w-3xl">
+      <table class="w-full">
+        <thead>
+          <tr class="text-aoc-gray border-b border-aoc-gray-darker">
+            <th class="w-1/12 font-normal"></th>
+            <th class="w-3/12 font-normal">Username</th>
+            <th class="w-2/12 font-normal">Batch</th>
+            <th class="w-2/12 font-normal">Score (in batch)</th>
+            <th class="w-2/12 font-normal">Rank (global)</th>
+            <th class="w-2/12 font-normal">Score (global)</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% [nil, *@batch_mates].each_cons(2) do |(previous_user, user)| %>
+            <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[:username] == current_user.username %>">
+              <td class="py-1 <%= class_names(ranking_css(user.rank.in_batch, rank_col: true)) %>">
+                <%= user.rank.in_batch unless user.rank.in_batch == previous_user&.rank&.in_batch %>
+              </td>
+              <td class="<%= class_names(ranking_css(user.rank.in_batch)) %>">
+                <div class="flex justify-center">
+                  <%= user.username %>
+                  <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user.uid.in? contributor_ids %>
+                </div>
+              </td>
+              <td><%= user.city.name if user.city %></td>
+              <td><%= user.score.in_batch.to_i %></td>
+              <td class="<%= class_names(ranking_css(user.rank.in_contest, rank_col: false)) %>">
+                <%= user.rank.in_contest.to_i %>
+              </td>
+              <td><%= user.score.in_contest.to_i %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

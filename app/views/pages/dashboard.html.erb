@@ -107,7 +107,7 @@
             <%= link_to "https://adventofcode.com/#{@year}/day/#{advent_day.day}", target: :blank, class: "w-full h-full flex items-center justify-center rounded-3xl" do %>
               <h2 class="<%= class_names(day_css(@now, advent_day)) %> text-5xl"><%= advent_day.day %></h2>
 
-              <div data-action="click->modal#open" class="h-9 w-9 absolute right-0 bottom-0 flex items-center justify-center hover:bg-aoc-atmospheric rounded-br-3xl rounded-tl-2xl text-aoc-gray-darker">
+              <div data-action="click->modal#open" class="hidden h-9 w-9 absolute right-0 bottom-0 ---flex items-center justify-center hover:bg-aoc-atmospheric rounded-br-3xl rounded-tl-2xl text-aoc-gray-darker">
                 <i class="fas fa-plus"></i>
               </div>
             <% end %>

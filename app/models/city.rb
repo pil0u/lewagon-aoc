@@ -21,7 +21,7 @@ class City < ApplicationRecord
   end
 
   def self.slugify(name)
-    name.underscore.downcase
+    name.gsub(" ", "_").downcase
   end
 
   def slug

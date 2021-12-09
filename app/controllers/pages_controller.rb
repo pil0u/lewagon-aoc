@@ -144,13 +144,16 @@ class PagesController < ApplicationController
   end
 
   def stats
-    @total_stars = Completion.actual.count
+    @gold_stars = Completion.where(challenge: 2).count
+    @silver_stars = Completion.where(challenge: 1).count - @gold_stars
     @total_kitt_signups = User.where(provider: "kitt").count
     @total_synced_users = User.synced.count
     @total_participating_users = User.distinct(:id).joins(:completions).merge(Completion.actual).count
 
-    @stars_per_day = Completion.actual.group(:day, :challenge).count.sort_by(&:first).to_h
-    @users_per_star = (@stars_per_day.map(&:last).max / 40.0).ceil # AoC formula for how many users per star
+    stars_per_challenge = Completion.actual.group(:day, :challenge).count.sort_by(&:first).to_h
+    @stars_per_day = stars_per_challenge.group_by {|key,_l| key.first }.transform_values { |star_counts| star_counts.map(&:last) }
+    # AoC formula for how many users per star
+    @users_per_star = (stars_per_challenge.map(&:last).max / 40.0).ceil
   end
 
   def status

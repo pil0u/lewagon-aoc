@@ -49,7 +49,7 @@
 
   <div class="mx-auto text-lg text-right leading-tight flex flex-col">
     <% @stars_per_day.reverse_each do |day, stars| %>
-      <%= link_to "https://adventofcode.com/2021/day/#{day}", target: :blank, class: "flex space-x-5 -justify-end hover:bg-aoc-gray hover:bg-opacity-10 px-3" do %>
+      <%= link_to "https://adventofcode.com/2021/day/#{day}", target: :blank, class: "flex space-x-5 hover:bg-aoc-gray hover:bg-opacity-10 px-3" do %>
         <span class="w-6"><%= day %></span>
         <span class="w-10 text-aoc-gold"><%= gold = stars[1] %></span>
         <span class="w-10 text-aoc-silver"><%= silver = stars[0] - stars[1] %></span>

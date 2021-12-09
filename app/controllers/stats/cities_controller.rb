@@ -13,7 +13,7 @@ module Stats
     private
 
     def set_city
-      @city = City.find_by(slug: params[:slug])
+      @city = City.find_by_slug(params[:slug]) # rubocop:disable Rails/DynamicFindBy
     end
   end
 end

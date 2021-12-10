@@ -35,12 +35,12 @@ module ApplicationHelper
     }
   end
 
-  def publication_datetime(day)
-    DateTime.new(ENV["EVENT_YEAR"].to_i, 12, day, 0, 0, 0, "UTC-5")
+  def publication_time(day)
+    Time.new(ENV["EVENT_YEAR"].to_i, 12, day, 0, 0, 0, "-05:00")
   end
 
   def duration_as_chrono(date, since:)
-    date = Time.zone.at(date, in: "+00:00") if date.is_a?(String) || date.is_a?(Numeric)
+    date = Time.zone.at(date) if date.is_a?(String) || date.is_a?(Numeric)
     duration = ActiveSupport::Duration.build(date - since)
     if duration < 1.day
       parts = duration.parts

@@ -85,7 +85,7 @@
         <th class="font-light"><%= day %></th>
 
         <% if challenge_1 = @completions[[day, 1]] %>
-          <td><%= duration_as_chrono(challenge_1[:timestamp], since: publication_datetime(day)) %></td>
+          <td><%= duration_as_chrono(challenge_1[:timestamp], since: publication_time(day)) %></td>
           <td><%= challenge_1[:rank] %></td>
           <td><%= challenge_1[:score] %></td>
         <% else %>
@@ -95,7 +95,7 @@
         <% end %>
 
         <% if challenge_2 = @completions[[day, 2]] %>
-          <td><%= duration_as_chrono(challenge_2[:timestamp], since: publication_datetime(day)) %></td>
+          <td><%= duration_as_chrono(challenge_2[:timestamp], since: publication_time(day)) %></td>
           <td><%= challenge_2[:rank] %></td>
           <td><%= challenge_2[:score] %></td>
         <% else %>

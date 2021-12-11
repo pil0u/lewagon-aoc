@@ -118,6 +118,9 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     ffi (1.15.4)
+    fx (0.6.2)
+      activerecord (>= 4.0.0)
+      railties (>= 4.0.0)
     globalid (0.5.2)
       activesupport (>= 5.0)
     hashie (4.1.0)
@@ -300,6 +303,7 @@ DEPENDENCIES
   devise (~> 4.8)
   dotenv-rails
   erb_lint (~> 0.1.1)
+  fx (~> 0.6)
   humanize (~> 2.5)
   jbuilder (~> 2.7)
   listen (~> 3.3)
@@ -313,7 +317,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.11)
   rubocop-rails (~> 2.12)
   sass-rails (>= 6)
-  scenic
+  scenic (~> 1.5)
   spring
   turbolinks (~> 5)
   web-console (>= 4.1.0)

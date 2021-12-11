@@ -5,7 +5,8 @@
     </h2>
 
     <div class="my-4 mx-auto max-w-4xl">
-      <p class="paragraph">This board represents the scores <span class="strong">as if batch #<%= @batch.number %> was running its own leaderboard</span>, excluding everybody else. As a consequence, in this local scope, the maximum number of points you can earn from a challenge is <span class="strong"><%= @batch_mates.count %></span>.</p>
+      <p class="paragraph">The <span class="strong">Local score</span> is the score as if batch #<%= @batch.number %> was running its own leaderboard, <em>ignoring everybody else</em>. In this local scope, the first player to solve a challenge earns <span class="strong"><%= pluralize(@batch_mates.count, "point") %></span>.
+      The <span class="strong">Contribution</span> is the amount of points each player has contributed to the global batch score, which is currently <span class="text-aoc-atmospheric text-shadow-atmospheric"><%= @batch.batch_score.in_contest.to_i %> points</span>.</p>
     </div>
 
     <table class="my-8 max-w-4xl w-full mx-auto">
@@ -15,8 +16,9 @@
           <th class="w-3/12 font-normal"></th>
           <th class="w-2/12 font-normal">City</th>
           <th class="w-2/12 font-normal">Local score</th>
+          <th class="w-1/12 font-normal">Contribution</th>
           <th class="w-2/12 font-normal">Score 🌐</th>
-          <th class="w-2/12 font-normal">Rank 🌐</th>
+          <th class="w-1/12 font-normal">Rank 🌐</th>
         </tr>
       </thead>
       <tbody class="text-center">
@@ -46,6 +48,12 @@
             <td class="strong text-lg">
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
                 <%= user.score.in_batch.to_i %>
+              <% end %>
+            </td>
+
+            <td>
+              <%= link_to stats_user_path(user), class: "flex justify-center" do %>
+                <%= user.batch_contributions.sum(:points).to_i %>
               <% end %>
             </td>
 

@@ -4,13 +4,17 @@
       Batch #<%= @batch.number %>
     </h2>
 
+    <div class="my-4 mx-auto max-w-4xl">
+      <p class="paragraph">This board represents the scores <span class="strong">as if batch #<%= @batch.number %> was running its own leaderboard</span>, excluding everybody else. As a consequence, in this local scope, the maximum number of points you can earn from a challenge is <span class="strong"><%= @batch_mates.count %></span>.</p>
+    </div>
+
     <table class="my-8 max-w-4xl w-full mx-auto">
       <thead>
         <tr class="text-aoc-gray border-b border-aoc-gray-darker">
           <th class="w-1/12 font-normal"></th>
           <th class="w-3/12 font-normal"></th>
           <th class="w-2/12 font-normal">City</th>
-          <th class="w-2/12 font-normal">Score<sup>*</sup></th>
+          <th class="w-2/12 font-normal">Local score</th>
           <th class="w-2/12 font-normal">Score 🌐</th>
           <th class="w-2/12 font-normal">Rank 🌐</th>
         </tr>
@@ -62,7 +66,5 @@
         <% end %>
       </tbody>
     </table>
-
-    <p class="paragraph text-sm text-center"><sup>*</sup> Simulates the score you would have if there was a private leaderboard only for your batch.</p>
   </div>
 </div>

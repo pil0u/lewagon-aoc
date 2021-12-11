@@ -39,7 +39,7 @@
 
             <td>
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
-                <%= "##{user.batch&.number}" || "–" %>
+                <%= user.batch&.number ? "##{user.batch&.number}" : "–" %>
               <% end %>
             </td>
 

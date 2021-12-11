@@ -6,7 +6,7 @@
 
 <% if @user_status == "OK" %>
 
-  <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex justify-center">
+  <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex justify-center divide-x">
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <h2 class="text-lg strong">Today's puzzle</h2>
@@ -23,14 +23,19 @@
 
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
-        <h2 class="text-lg strong text-center"><%= current_user.username %></h2>
+        <h2 class="text-lg strong text-center">
+          <%= link_to current_user.username, stats_user_path(current_user), class: "link" %>
+        </h2>
       </div>
 
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <span class="text-2xl">
           <%= @user_score[:rank] %><sup class="text-sm"><%= @user_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_users %><span class="absolute"><sup>*</sup></span></span>
         </span>
-        <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score] %> pts</span></span>
+
+        <%= link_to scoreboard_path(anchor: "user-rank"), data: { turbolinks: false }, class: "hover:text-shadow-atmospheric" do %>
+          <span class="text-xl text-aoc-atmospheric"><%= @user_score[:score] %> pts</span></span>
+        <% end %>
       </div>
 
       <span class="text-sm text-aoc-gray-dark">* synced users</span>
@@ -39,7 +44,9 @@
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <% if @user_batch %>
-          <h2 class="text-lg strong text-center">Batch #<%= @user_batch.number %></h2>
+          <h2 class="text-lg strong text-center">
+            <%= link_to "Batch ##{@user_batch.number}", stats_batch_path(@user_batch.number), class: "link" %>
+          </h2>
         <% else %>
           <h2 class="text-lg strong text-center">My batch rank</h2>
         <% end %>
@@ -48,9 +55,12 @@
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <% if @user_batch %>
           <span class="text-2xl"><%= @user_batch_score[:rank] || 0 %><sup class="text-sm"><%= @user_batch_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_batches %></span></span>
-          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_batch_score[:score] %> pts</span></span>
+
+          <%= link_to scoreboard_path(anchor: "user-batch-rank"), data: { turbolinks: false }, class: "hover:text-shadow-atmospheric" do %>
+            <span class="text-xl text-aoc-atmospheric"><%= @user_batch_score[:score] %> pts</span></span>
+          <% end %>
         <% else %>
-          <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "link" %></span>
+          <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "link-gold" %></span>
         <% end %>
       </div>
     </div>
@@ -58,7 +68,9 @@
     <div class="dashboard-tile flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <% if @user_city %>
-          <h2 class="text-lg strong text-center"><%= @user_city.name %></h2>
+          <h2 class="text-lg strong text-center">
+            <%= link_to @user_city.name, stats_city_path(@user_city.slug), class: "link" %>
+          </h2>
         <% else %>
           <h2 class="text-lg strong text-center">My city rank</h2>
         <% end %>
@@ -67,36 +79,17 @@
       <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
         <% if @user_city %>
           <span class="text-2xl"><%= @user_city_score[:rank] %><sup class="text-sm"><%= @user_city_score[:rank].ordinal %></sup><span class="text-aoc-gray-dark">/<%= @total_cities %></span></span>
-          <span class="text-xl text-aoc-atmospheric text-shadow-atmospheric"><%= @user_city_score[:score] %> pts</span></span>
+
+          <%= link_to scoreboard_path(anchor: "user-city-rank"), data: { turbolinks: false }, class: "hover:text-shadow-atmospheric" do %>
+            <span class="text-xl text-aoc-atmospheric"><%= @user_city_score[:score] %> pts</span></span>
+          <% end %>
         <% else %>
-          <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "link" %></span>
+          <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "link-gold" %></span>
         <% end %>
       </div>
     </div>
 
     <div class="dashboard-tile flex flex-col items-center">
-      <div class="h-1/3 flex items-center">
-        <h2 class="text-lg strong text-center">My contribution</h2>
-      </div>
-
-      <div class="h-1/2 flex flex-col items-center justify-center gap-y-2">
-        <% if @user_batch %>
-          <div class="flex flex-col items-center leading-snug">
-            <span>to batch #<%= @user_batch.number %></span>
-            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score_in_batch] %> pts</span>
-          </div>
-        <% end %>
-
-        <% if @user_city %>
-          <div class="flex flex-col items-center leading-snug">
-            <span>to <%= @user_city.name %></span>
-            <span class="text-lg text-aoc-atmospheric text-shadow-atmospheric"><%= @user_score[:score_in_city] %> pts</span>
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="dashboard-tile border-r flex flex-col items-center">
       <div class="h-1/3 flex items-center">
         <h2 class="text-lg strong">Next puzzle in</h2>
       </div>
@@ -123,7 +116,7 @@
             <%= link_to "https://adventofcode.com/#{@year}/day/#{advent_day.day}", target: :blank, class: "w-full h-full flex items-center justify-center rounded-3xl" do %>
               <h2 class="<%= class_names(day_css(@now, advent_day)) %> text-5xl"><%= advent_day.day %></h2>
 
-              <div data-action="click->modal#open" class="h-9 w-9 absolute right-0 bottom-0 flex items-center justify-center hover:bg-aoc-atmospheric rounded-br-3xl rounded-tl-2xl text-aoc-gray-darker">
+              <div data-action="click->modal#open" class="hidden h-9 w-9 absolute right-0 bottom-0 ---flex items-center justify-center hover:bg-aoc-atmospheric rounded-br-3xl rounded-tl-2xl text-aoc-gray-darker">
                 <i class="fas fa-plus"></i>
               </div>
             <% end %>
@@ -153,7 +146,7 @@
       <span>If you are still <em>pending</em> <u>after</u> a refresh, start the process over, wait for the next refresh and you should be good.</span>
     </div>
 
-    <p class="paragraph">To make sure your name reaches our <%= link_to "custom scoreboards", scoreboard_path, class: "link" %>, you need to follow these steps:</p>
+    <p class="paragraph">To make sure your name reaches our <%= link_to "custom scoreboards", scoreboard_path, class: "link-gold" %>, you need to follow these steps:</p>
 
     <ol class="my-4 mx-14 list-decimal flex flex-col gap-y-1.5">
       <li class="paragraph"><%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any other OAuth option</li>
@@ -167,7 +160,7 @@
       <% end %>
 
       <li class="paragraph">On Advent of Code, go to <%= link_to "your settings page", "https://adventofcode.com/settings", target: :blank, class: "link-external" %> and copy the number next to "anonymous user #<span class="strong">0000000</span>"</li>
-      <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "link" %>, next to <span class="strong">Advent of Code ID</span></li>
+      <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "link-gold" %>, next to <span class="strong">Advent of Code ID</span></li>
       <li class="paragraph">Save</li>
     </ol>
 

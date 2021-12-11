@@ -6,48 +6,71 @@
   </div>
 <% end %>
 
-<div class="relative my-12 flex items-start justify-center space-x-24">
+<div class="relative my-12 mx-auto flex items-start justify-center lg:space-x-24 max-w-screen-2xl">
   <div class="hidden lg:block sticky top-6">
     <%= render "shared/navigation_sidebar", anchors: @anchors %>
   </div>
 
-  <div class="mx-4 lg:mx-0 max-w-3xl flex flex-col gap-y-12">
+  <div class="mx-4 lg:mx-0 md:w-2/3 flex flex-col gap-y-12">
     <div>
       <h2 id="cities-scoreboard" class="text-aoc-atmospheric text-shadow-atmospheric">
         Cities scoreboard
       </h2>
 
-      <p class="my-4 text-center text-sm">
+      <p class="my-4 text-sm">
         Each score is currently computed from city's <span class="strong">top <%= @max_city_contributors %></span> <%= "contributor".pluralize(@max_city_contributors) %> <em>for each challenge</em>
       </p>
 
-      <div class="mx-auto w-full max-w-xl">
-        <table class="w-full">
-          <thead>
-            <tr class="text-aoc-gray border-b border-aoc-gray-darker">
-              <th class="w-2/12 font-light"></th>
-              <th class="w-3/12 font-light">City</th>
-              <th class="w-2/12 font-light"># Coders</th>
-              <th class="w-5/12 font-light">Score</th>
-            </tr>
-          </thead>
-          <tbody class="text-center">
-            <% [{}, *@ranked_cities].each_cons(2) do |(previous_city, city)| %>
-              <tr id="<%= "user-city-rank" if city[:city_name] == current_user.city&.name %>"
-                  class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if city[:city_name] == current_user.city&.name %>">
-                <td class="py-1 <%= class_names(ranking_css(city[:city_rank], rank_col: true)) %>">
+      <table class="max-w-3xl w-full mx-auto">
+        <thead>
+          <tr class="text-aoc-gray border-b border-aoc-gray-darker">
+            <th class="w-2/12 font-light"></th>
+            <th class="w-3/12 font-light"></th>
+            <th class="w-2/12 font-light"># Coders</th>
+            <th class="w-2/12 font-light">Avg. score</th>
+            <th class="w-3/12 font-light">Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% [{}, *@ranked_cities].each_cons(2) do |(previous_city, city)| %>
+
+            <tr id="<%= "user-city-rank" if city[:city_name] == current_user.city&.name %>" class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if city[:city_name] == current_user.city&.name %>">
+
+              <td class="py-1 <%= class_names(ranking_css(city[:city_rank], rank_col: true)) %>">
+                <%= link_to stats_city_path(City.slugify(city[:city_name])), class: "flex justify-center" do %>
                   <%= city[:city_rank] unless previous_city[:city_rank] == city[:city_rank] %>
-                </td>
-                <td class="<%= class_names(ranking_css(city[:city_rank])) %>">
+                <% end %>
+              </td>
+
+              <td class="<%= class_names(ranking_css(city[:city_rank])) %>">
+                <%= link_to stats_city_path(City.slugify(city[:city_name])), class: "flex justify-center" do %>
                   <%= city[:city_name] %>
-                </td>
-                <td><%= city[:city_n_users] %></td>
-                <td class="py-1 strong text-lg"><%= city[:city_score] %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+                <% end %>
+              </td>
+
+              <td>
+                <%= link_to stats_city_path(City.slugify(city[:city_name])), class: "flex justify-center" do %>
+                  <%= city[:city_n_users] %>
+                <% end %>
+              </td>
+
+              <td class="text-lg">
+                <%= link_to stats_city_path(City.slugify(city[:city_name])), class: "flex justify-center" do %>
+                  <%= city[:score_average] %>
+                <% end %>
+              </td>
+
+              <td class="strong text-lg">
+                <%= link_to stats_city_path(City.slugify(city[:city_name])), class: "flex justify-center" do %>
+                  <%= city[:city_score] %>
+                <% end %>
+              </td>
+
+            </tr>
+
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
     <div>
@@ -55,37 +78,60 @@
         Batches scoreboard
       </h2>
 
-      <p class="my-4 text-center text-sm">
+      <p class="my-4 text-sm">
         Each score is currently computed from batch's <span class="strong">top <%= @max_batch_contributors %></span> <%= "contributor".pluralize(@max_batch_contributors) %> <em>for each challenge</em>
       </p>
 
-      <div class="mx-auto w-full max-w-xl">
-        <table class="w-full">
-          <thead>
-            <tr class="text-aoc-gray border-b border-aoc-gray-darker">
-              <th class="w-2/12 font-light"></th>
-              <th class="w-3/12 font-light">Batch</th>
-              <th class="w-2/12 font-light"># Coders</th>
-              <th class="w-5/12 font-light">Score</th>
-            </tr>
-          </thead>
-          <tbody class="text-center">
-            <% [{}, *@ranked_batches].each_cons(2) do |(previous_batch, batch)| %>
-              <tr id="<%= "user-batch-rank" if batch[:batch_number] == current_user.batch&.number %>"
-                  class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if batch[:batch_number] == current_user.batch&.number %>">
-                <td class="py-1 <%= class_names(ranking_css(batch[:batch_rank], rank_col: true)) %>">
+      <table class="max-w-3xl w-full mx-auto">
+        <thead>
+          <tr class="text-aoc-gray border-b border-aoc-gray-darker">
+            <th class="w-2/12 font-light"></th>
+            <th class="w-3/12 font-light"></th>
+            <th class="w-2/12 font-light"># Coders</th>
+            <th class="w-2/12 font-light">Avg. score</th>
+            <th class="w-3/12 font-light">Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% [{}, *@ranked_batches].each_cons(2) do |(previous_batch, batch)| %>
+
+            <tr id="<%= "user-batch-rank" if batch[:batch_number] == current_user.batch&.number %>" class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if batch[:batch_number] == current_user.batch&.number %>">
+
+              <td class="py-1 <%= class_names(ranking_css(batch[:batch_rank], rank_col: true)) %>">
+                <%= link_to stats_batch_path(batch[:batch_number]), class: "flex justify-center" do %>
                   <%= batch[:batch_rank] unless previous_batch[:batch_rank] == batch[:batch_rank] %>
-                </td>
-                <td class="<%= class_names(ranking_css(batch[:batch_rank])) %>">
+                <% end %>
+              </td>
+
+              <td class="<%= class_names(ranking_css(batch[:batch_rank])) %>">
+                <%= link_to stats_batch_path(batch[:batch_number]), class: "flex justify-center" do %>
                   #<%= batch[:batch_number] %>
-                </td>
-                <td><%= batch[:batch_n_users] %></td>
-                <td class="py-1 strong text-lg"><%= batch[:batch_score] %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+              <% end %>
+              </td>
+
+              <td>
+                <%= link_to stats_batch_path(batch[:batch_number]), class: "flex justify-center" do %>
+                  <%= batch[:batch_n_users] %>
+                <% end %>
+              </td>
+
+              <td class="text-lg">
+                <%= link_to stats_batch_path(batch[:batch_number]), class: "flex justify-center" do %>
+                  <%= batch[:score_average] %>
+                <% end %>
+              </td>
+
+              <td class="strong text-lg">
+                <%= link_to stats_batch_path(batch[:batch_number]), class: "flex justify-center" do %>
+                  <%= batch[:batch_score] %>
+                <% end %>
+              </td>
+
+            </tr>
+
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
     <div>
@@ -93,38 +139,71 @@
         Solo scoreboard
       </h2>
 
-      <div class="mx-auto my-4 w-full max-w-3xl">
-        <table class="w-full">
-          <thead>
-            <tr class="text-aoc-gray border-b border-aoc-gray-darker">
-              <th class="w-2/12 font-light"></th>
-              <th class="w-2/12 font-light">Username</th>
-              <th class="w-2/12 font-light">Batch</th>
-              <th class="w-3/12 font-light">City</th>
-              <th class="w-3/12 font-light">Score</th>
-            </tr>
-          </thead>
-          <tbody class="text-center">
-            <% [{}, *@ranked_users].each_cons(2) do |(previous_user, user)| %>
-              <tr id="<%= "user-rank" if user[:uid] == current_user.uid %>"
-                  class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[:uid] == current_user.uid %>">
-                <td class="py-1 <%= class_names(ranking_css(user[:rank], rank_col: true)) %>">
+      <p class="my-4"></p>
+
+      <table class="max-w-4xl w-full mx-auto">
+        <thead>
+          <tr class="text-aoc-gray border-b border-aoc-gray-darker">
+            <th class="w-1/12 font-light"></th>
+            <th class="w-3/12 font-light"></th>
+            <th class="w-1/12 font-light">Batch</th>
+            <th class="w-3/12 font-light">City</th>
+            <th class="w-2/12 font-light">Stars</th>
+            <th class="w-2/12 font-light">Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% [{}, *@ranked_users].each_cons(2) do |(previous_user, user)| %>
+
+            <tr id="<%= "user-rank" if user[:uid] == current_user.uid %>" class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[:uid] == current_user.uid %>">
+
+              <td class="py-1 <%= class_names(ranking_css(user[:rank], rank_col: true)) %>">
+                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
                   <%= user[:rank] unless user[:rank] == previous_user[:rank] %>
-                </td>
-                <td class="<%= class_names(ranking_css(user[:rank])) %>">
-                  <div class="flex justify-center">
+                <% end %>
+              </td>
+
+              <td class="<%= class_names(ranking_css(user[:rank])) %>">
+                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                  <div class="flex">
                     <%= user[:username] %>
-                    <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid].in? @contributor_ids %>
+                    <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid].in? contributor_ids %>
                   </div>
-                </td>
-                <td><%= "##{user[:batch]}" if user[:batch] %></td>
-                <td><%= user[:city] %></td>
-                <td class="py-1 strong text-lg"><%= user[:score_solo] %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+                <% end %>
+              </td>
+
+              <td>
+                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                  <%= "##{user[:batch]}" if user[:batch] %>
+                <% end %>
+              </td>
+
+              <td>
+                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                  <%= user[:city] || "–" %>
+                <% end %>
+              </td>
+
+              <td class="text-lg">
+                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                  <% if user[:silver_stars] - user[:gold_stars] > 0 %>
+                    <span class="text-aoc-silver"><%= user[:silver_stars] - user[:gold_stars] %>*</span>
+                  <% end %>
+                  <span class="text-aoc-gold"><%= user[:gold_stars] %>*</span>
+                <% end %>
+              </td>
+
+              <td class="strong text-lg">
+                <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
+                  <%= user[:score_solo] %>
+                <% end %>
+              </td>
+
+            </tr>
+
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

@@ -1,0 +1,68 @@
+<div class="my-12 mx-4 sm:mx-auto max-w-screen-2xl flex flex-col gap-y-12">
+  <div>
+    <h2 class="text-center text-lg text-aoc-atmospheric text-shadow-atmospheric">
+      Batch #<%= @batch.number %>
+    </h2>
+
+    <table class="my-8 max-w-4xl w-full mx-auto">
+      <thead>
+        <tr class="text-aoc-gray border-b border-aoc-gray-darker">
+          <th class="w-1/12 font-normal"></th>
+          <th class="w-3/12 font-normal"></th>
+          <th class="w-2/12 font-normal">City</th>
+          <th class="w-2/12 font-normal">Score<sup>*</sup></th>
+          <th class="w-2/12 font-normal">Score 🌐</th>
+          <th class="w-2/12 font-normal">Rank 🌐</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <% [nil, *@batch_mates].each_cons(2) do |(previous_user, user)| %>
+
+          <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[:username] == current_user.username %>">
+
+            <td class="py-1 <%= class_names(ranking_css(user.rank.in_batch, rank_col: true)) %>">
+              <%= user.rank.in_batch unless user.rank.in_batch == previous_user&.rank&.in_batch %>
+            </td>
+
+            <td class="<%= class_names(ranking_css(user.rank.in_batch)) %>">
+              <%= link_to stats_user_path(user), class: "flex justify-center" do %>
+                <div class="flex">
+                  <%= user.username %>
+                  <%= image_pack_tag("parrot.gif", class: "w-5 h-5 ml-2") if user.uid.in? contributor_ids %>
+                </div>
+              <% end %>
+            </td>
+
+            <td>
+              <%= link_to stats_user_path(user), class: "flex justify-center" do %>
+                <%= user.city&.name || "–" %>
+              <% end %>
+            </td>
+
+            <td class="strong text-lg">
+              <%= link_to stats_user_path(user), class: "flex justify-center" do %>
+                <%= user.score.in_batch.to_i %>
+              <% end %>
+            </td>
+
+            <td>
+              <%= link_to stats_user_path(user), class: "flex justify-center" do %>
+                <%= user.score.in_contest.to_i %>
+              <% end %>
+            </td>
+
+            <td>
+              <%= link_to stats_user_path(user), class: "flex justify-center" do %>
+                <%= user.rank.in_contest %>
+              <% end %>
+            </td>
+
+          </tr>
+
+        <% end %>
+      </tbody>
+    </table>
+
+    <p class="paragraph text-sm text-center"><sup>*</sup> Simulates the score you would have if there was a private leaderboard only for your batch.</p>
+  </div>
+</div>

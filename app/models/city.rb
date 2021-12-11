@@ -15,4 +15,16 @@ class City < ApplicationRecord
   def self.max_contributors
     [MINIMUM_CONTRIBUTORS, Help.median(User.synced.group(:city_id).count.except(nil).values) || 1].max
   end
+
+  def self.find_by_slug(slug)
+    find_by("REPLACE(LOWER(name), ' ', '_') = ?", slug)
+  end
+
+  def self.slugify(name)
+    name.tr(" ", "_").downcase
+  end
+
+  def slug
+    self.class.slugify(name)
+  end
 end

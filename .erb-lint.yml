@@ -2,6 +2,7 @@
 EnableDefaultLinters: true
 exclude:
   - '**/vendor/**/*'
+  - '**/app/views/stats/days/show.html.erb' # TODO
 
 HardcodedString:
   enabled: false

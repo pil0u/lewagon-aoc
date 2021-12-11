@@ -20,31 +20,7 @@
   }
 
   .dashboard-tile {
-    @apply w-48 h-48 border-l border-aoc-gray-darker hover:bg-aoc-gray-darker cursor-default;
-  }
-
-  #header-links {
-    #dashboard:before {
-      content: "dshbrd_";
-    }
-    #scoreboard:before {
-      content: "scrbrd_";
-    }
-    #settings:before {
-      content: "sttngs_";
-    }
-
-    &:hover {
-      #dashboard:before {
-        content: "dashboard";
-      }
-      #scoreboard:before {
-        content: "scoreboard";
-      }
-      #settings:before {
-        content: "settings";
-      }
-    }
+    @apply w-48 h-48 border-aoc-gray-darker cursor-default;
   }
 
   input[type=number] {
@@ -61,6 +37,10 @@
   }
 
   .link {
+    @apply hover:text-aoc-gold hover:text-shadow-gold;
+  }
+
+  .link-gold {
     @apply text-aoc-gold hover:text-shadow-gold;
   }
 

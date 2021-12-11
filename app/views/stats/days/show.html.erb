@@ -1,0 +1,48 @@
+<%= link_to "Exercise", "https://adventofcode.code/#{ENV['EVENT_YEAR']}/day/#{@number}" %><br />
+<hr>
+<h3>Individuel</h3>
+<h4>Challenge 1</h4>
+- Rank: <%= @completion_1&.completion_rank&.in_contest %><br />
+- Score: <%= @completion_1&.point_value&.in_contest %><br />
+<% if @completion_1 %>
+  - Duration: <%= duration_as_chrono(@completion_1.completion_unix_time, since: publication_datetime(@number)) %><br />
+<% else %>
+  - Maximum gettable points: <%= @remaining_points_1.to_i %><br \>
+<% end %>
+<h4>Challenge 2</h4>
+- Rank: <%= @completion_2&.completion_rank&.in_contest %><br />
+- Score: <%= @completion_2&.point_value&.in_contest %><br />
+<% if @completion_1 %>
+  - Duration: <%= duration_as_chrono(@completion_2.completion_unix_time, since: publication_datetime(@number)) %><br />
+<% else %>
+  - Maximum gettable points: <%= @remaining_points_2.to_i %><br \>
+<% end %>
+<hr>
+
+<% if @batch %>
+  <h3>Batch<h3>
+  <h4>Challenge 1</h4>
+  <%#HACK: Need to rework view instead of handling nil values like that %>
+  - Rank: <%= @batch_score_1&.rank || BatchPoint.where(day: @number, challenge: 1).maximum(:rank) + 1%><br />
+  - Score: <%= @batch_score_1&.points.to_i %><br />
+  - Contributeurs: <%= @batch_score_1&.participating_users.to_i %>/<%= @max_batch_contributors %>
+  <h4>Challenge 2</h4>
+  - Rank: <%= @batch_score_2&.rank || BatchPoint.where(day: @number, challenge: 2).maximum(:rank) + 1%><br />
+  - Score: <%= @batch_score_2&.points.to_i %><br />
+  - Contributeurs: <%= @batch_score_2&.participating_users.to_i %>/<%= @max_batch_contributors %>
+  <hr>
+<% end %>
+
+<% if @city %>
+  <h3>City<h3>
+  <h4>Challenge 1</h4>
+  <%#HACK: Need to rework view instead of handling nil values like that %>
+  - Rank: <%= @city_score_1&.rank || CityPoint.where(day: @number, challenge: 1).maximum(:rank) + 1%><br />
+  - Score: <%= @city_score_1&.points.to_i %><br />
+  - Contributeurs: <%= @city_score_2&.participating_users.to_i %>/<%= @max_city_contributors %>
+  <h4>Challenge 2</h4>
+  - Rank: <%= @city_score_2&.rank || CityPoint.where(day: @number, challenge: 2).maximum(:rank) + 1%><br />
+  - Score: <%= @city_score_2&.points.to_i %><br />
+  - Contributeurs: <%= @city_score_2&.participating_users.to_i %>/<%= @max_city_contributors %>
+  <hr>
+<% end %>

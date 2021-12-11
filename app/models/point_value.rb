@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PointValue < ApplicationRecord
+  belongs_to :user
   belongs_to :completion
 
   def self.refresh

@@ -11,7 +11,7 @@ module Help
   end
 
   def self.refresh_views!
-    Rank.refresh
+    Score.refresh
     CityScore.refresh
     BatchScore.refresh
   end

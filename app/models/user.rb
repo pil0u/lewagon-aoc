@@ -8,10 +8,13 @@ class User < ApplicationRecord
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
   has_many :completions, dependent: :destroy
-  has_one :score # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
-  has_one :rank # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
-  has_many :city_contributions, through: :completions
-  has_many :batch_contributions, through: :completions
+
+  # These are SQL views
+  has_one :score # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :points, class_name: 'UserPoint' # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :city_contributions # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :batch_contributions # rubocop:disable Rails/HasManyOrHasOneDependent
+  ####
 
   scope :synced, -> { where(synced: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS) }

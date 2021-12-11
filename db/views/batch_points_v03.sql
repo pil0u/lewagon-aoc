@@ -1,0 +1,13 @@
+SELECT
+  batch_id,
+  day,
+  challenge,
+
+  SUM(bc.in_contest) AS in_contest,
+  dense_rank() OVER (PARTITION BY day, challenge ORDER BY SUM(in_contest) DESC) AS rank_in_contest,
+
+  COUNT(*) FILTER (WHERE participated) AS participating_users,
+  COUNT(*) FILTER (WHERE participated) >= (VALUES (max_allowed_contributors_in_batch())) AS complete
+
+FROM batch_contributions AS bc
+GROUP BY batch_id, day, challenge;

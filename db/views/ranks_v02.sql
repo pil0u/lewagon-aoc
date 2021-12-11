@@ -10,4 +10,4 @@ LEFT JOIN batches b
 ON u.batch_id = b.id
 LEFT JOIN cities ci
 ON u.city_id = ci.id
-ORDER BY S.in_contest DESC;
+ORDER BY s.in_contest DESC;

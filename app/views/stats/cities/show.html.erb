@@ -10,7 +10,7 @@
           <th class="w-1/12 font-normal"></th>
           <th class="w-3/12 font-normal"></th>
           <th class="w-2/12 font-normal">Batch</th>
-          <th class="w-2/12 font-normal">Contribution</th>
+          <th class="w-2/12 font-normal">Score<sup>*</sup></th>
           <th class="w-2/12 font-normal">Score 🌐</th>
           <th class="w-2/12 font-normal">Rank 🌐</th>
         </tr>
@@ -35,16 +35,22 @@
 
             <td>
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
-                <%= "##{user.batch&.number}" || "–" %></td>
+                <%= "##{user.batch&.number}" || "–" %>
               <% end %>
+            </td>
+
             <td class="strong text-lg">
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
-                <%= user.score.in_city.to_i %></td>
+                <%= user.score.in_city.to_i %>
               <% end %>
+            </td>
+
             <td>
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
-                <%= user.score.in_contest.to_i %></td>
+                <%= user.score.in_contest.to_i %>
               <% end %>
+            </td>
+
             <td>
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
                 <%= user.rank.in_contest %>
@@ -56,5 +62,7 @@
         <% end %>
       </tbody>
     </table>
+
+    <p class="paragraph text-sm text-center"><sup>*</sup> Simulates the score you would have if there was a private leaderboard only for your city.</p>
   </div>
 </div>

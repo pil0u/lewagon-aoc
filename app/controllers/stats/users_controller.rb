@@ -8,32 +8,32 @@ module Stats
       @gold_stars = @user.completions.actual.where(challenge: 2).count
       @silver_stars = @user.completions.actual.where(challenge: 1).count - @gold_stars
 
-      @score = @user.score.in_contest.to_i
-      @rank = @user.rank.in_contest
+      @score = @user.score.in_contest
+      @rank = @user.score.rank_in_contest
       @total_users = User.synced.count
 
       if @user.batch
-        @batch_score = @user.batch.batch_score.in_contest.to_i
-        @batch_rank = @user.batch.batch_score.rank
+        @batch_score = @user.batch.score.in_contest
+        @batch_rank = @user.batch.score.rank_in_contest
         @total_batches = BatchScore.count
-        @batch_contribution = @user.batch_contributions.sum(:points).to_i
+        @batch_contribution = @user.batch_contributions.sum(:in_contest)
       end
 
       if @user.city
-        @city_score = @user.city.city_score.in_contest.to_i
-        @city_rank = @user.city.city_score.rank
+        @city_score = @user.city.score.in_contest
+        @city_rank = @user.city.score.rank_in_contest
         @total_cities = CityScore.count
-        @city_contribution = @user.city_contributions.sum(:points).to_i
+        @city_contribution = @user.city_contributions.sum(:in_contest)
       end
 
       @latest_day = Aoc.in_progress? ? Time.now.getlocal("-05:00").day : 25
 
-      @completions = @user.completions.actual.left_joins(:point_value, :completion_rank)
+      @completions = @user.points.completed.left_joins(:completion)
                           .select(
                             :day,
                             :challenge,
-                            "completion_ranks.in_contest AS rank",
-                            "point_values.in_contest AS score",
+                            "rank_in_contest AS rank",
+                            "in_contest AS score",
                             "completion_unix_time AS timestamp"
                           )
                           .map(&:attributes).map(&:symbolize_keys)

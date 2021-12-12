@@ -209,12 +209,12 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       (up.completion_id IS NOT NULL) AS participated,
       up.user_id,
           CASE
-              WHEN (up.rank_in_batch <= ( VALUES (max_allowed_contributors_in_city()))) THEN up.in_contest
+              WHEN (up.rank_in_city <= ( VALUES (max_allowed_contributors_in_city()))) THEN up.in_contest
               ELSE (0)::bigint
           END AS in_contest,
       up.batch_id,
           CASE
-              WHEN (up.rank_in_batch <= ( VALUES (max_allowed_contributors_in_city()))) THEN up.in_batch
+              WHEN (up.rank_in_city <= ( VALUES (max_allowed_contributors_in_city()))) THEN up.in_batch
               ELSE (0)::bigint
           END AS in_batch
      FROM user_points up;

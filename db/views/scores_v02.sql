@@ -1,15 +1,15 @@
 SELECT
   user_id,
   score       AS in_contest,
-  dense_rank() OVER (                       ORDER BY score DESC)       AS rank_in_contest,
+  rank() OVER (                       ORDER BY score DESC)       AS rank_in_contest,
 
   batch_id,
   batch_score AS in_batch,
-  dense_rank() OVER (PARTITION BY batch_id  ORDER BY batch_score DESC) AS rank_in_batch,
+  rank() OVER (PARTITION BY batch_id  ORDER BY batch_score DESC) AS rank_in_batch,
 
   city_id,
   city_score  AS in_city,
-  dense_rank() OVER (PARTITION BY city_id   ORDER BY city_score DESC)  AS rank_in_city
+  rank() OVER (PARTITION BY city_id   ORDER BY city_score DESC)  AS rank_in_city
 
 FROM (
   SELECT

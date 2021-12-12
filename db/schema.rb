@@ -139,13 +139,13 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       point_values.completion_id,
       point_values.user_id,
       point_values.in_contest,
-      dense_rank() OVER (ORDER BY point_values.in_contest DESC NULLS LAST) AS rank_in_contest,
+      rank() OVER (ORDER BY point_values.in_contest DESC NULLS LAST) AS rank_in_contest,
       point_values.batch_id,
       point_values.in_batch,
-      dense_rank() OVER (PARTITION BY point_values.batch_id ORDER BY point_values.in_batch DESC NULLS LAST) AS rank_in_batch,
+      rank() OVER (PARTITION BY point_values.batch_id ORDER BY point_values.in_batch DESC NULLS LAST) AS rank_in_batch,
       point_values.city_id,
       point_values.in_city,
-      dense_rank() OVER (PARTITION BY point_values.city_id ORDER BY point_values.in_city DESC NULLS LAST) AS rank_in_city
+      rank() OVER (PARTITION BY point_values.city_id ORDER BY point_values.in_city DESC NULLS LAST) AS rank_in_city
      FROM point_values;
   SQL
   add_index "user_points", ["batch_id"], name: "index_user_points_on_batch_id"
@@ -158,13 +158,13 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
   create_view "scores", materialized: true, sql_definition: <<-SQL
       SELECT scores.user_id,
       scores.score AS in_contest,
-      dense_rank() OVER (ORDER BY scores.score DESC) AS rank_in_contest,
+      rank() OVER (ORDER BY scores.score DESC) AS rank_in_contest,
       scores.batch_id,
       scores.batch_score AS in_batch,
-      dense_rank() OVER (PARTITION BY scores.batch_id ORDER BY scores.batch_score DESC) AS rank_in_batch,
+      rank() OVER (PARTITION BY scores.batch_id ORDER BY scores.batch_score DESC) AS rank_in_batch,
       scores.city_id,
       scores.city_score AS in_city,
-      dense_rank() OVER (PARTITION BY scores.city_id ORDER BY scores.city_score DESC) AS rank_in_city
+      rank() OVER (PARTITION BY scores.city_id ORDER BY scores.city_score DESC) AS rank_in_city
      FROM ( SELECT user_points.user_id,
               (sum(user_points.in_contest))::integer AS score,
               user_points.batch_id,
@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       bc.day,
       bc.challenge,
       (sum(bc.in_contest))::integer AS in_contest,
-      dense_rank() OVER (PARTITION BY bc.day, bc.challenge ORDER BY (sum(bc.in_contest)) DESC) AS rank_in_contest,
+      rank() OVER (PARTITION BY bc.day, bc.challenge ORDER BY (sum(bc.in_contest)) DESC) AS rank_in_contest,
       count(*) FILTER (WHERE bc.participated) AS participating_users,
       (count(*) FILTER (WHERE bc.participated) >= ( VALUES (max_allowed_contributors_in_batch()))) AS complete
      FROM batch_contributions bc
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
   create_view "batch_scores", materialized: true, sql_definition: <<-SQL
       SELECT batches.id AS batch_id,
       COALESCE(scores.in_contest, (0)::bigint) AS in_contest,
-      dense_rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
+      rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
      FROM (batches
        LEFT JOIN ( SELECT batch_points.batch_id,
               sum(batch_points.in_contest) AS in_contest
@@ -253,7 +253,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       cc.day,
       cc.challenge,
       (sum(cc.in_contest))::integer AS in_contest,
-      dense_rank() OVER (PARTITION BY cc.day, cc.challenge ORDER BY (sum(cc.in_contest)) DESC) AS rank_in_contest,
+      rank() OVER (PARTITION BY cc.day, cc.challenge ORDER BY (sum(cc.in_contest)) DESC) AS rank_in_contest,
       count(*) FILTER (WHERE cc.participated) AS participating_users,
       (count(*) FILTER (WHERE cc.participated) >= ( VALUES (max_allowed_contributors_in_batch()))) AS complete
      FROM city_contributions cc
@@ -264,7 +264,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
   create_view "city_scores", materialized: true, sql_definition: <<-SQL
       SELECT cities.id AS city_id,
       COALESCE(scores.in_contest, (0)::bigint) AS in_contest,
-      dense_rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
+      rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
      FROM (cities
        LEFT JOIN ( SELECT city_points.city_id,
               sum(city_points.in_contest) AS in_contest

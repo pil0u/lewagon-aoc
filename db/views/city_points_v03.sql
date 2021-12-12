@@ -3,7 +3,7 @@ SELECT
   day,
   challenge,
 
-  SUM(cc.in_contest) AS in_contest,
+  SUM(cc.in_contest)::integer AS in_contest,
   dense_rank() OVER (PARTITION BY day, challenge ORDER BY SUM(in_contest) DESC) AS rank_in_contest,
 
   COUNT(*) FILTER (WHERE participated) AS participating_users,

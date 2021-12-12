@@ -1,6 +1,6 @@
 SELECT
   cities.id AS city_id,
-  COALESCE(in_contest, 0),
+  COALESCE(in_contest, 0) AS in_contest,
   dense_rank() OVER (ORDER BY in_contest DESC NULLS LAST) AS rank_in_contest
 FROM cities
 LEFT JOIN (

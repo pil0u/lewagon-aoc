@@ -166,11 +166,11 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       scores.city_score AS in_city,
       dense_rank() OVER (PARTITION BY scores.city_id ORDER BY scores.city_score DESC) AS rank_in_city
      FROM ( SELECT user_points.user_id,
-              sum(user_points.in_contest) AS score,
+              (sum(user_points.in_contest))::integer AS score,
               user_points.batch_id,
-              sum(user_points.in_batch) AS batch_score,
+              (sum(user_points.in_batch))::integer AS batch_score,
               user_points.city_id,
-              sum(user_points.in_city) AS city_score
+              (sum(user_points.in_city))::integer AS city_score
              FROM user_points
             GROUP BY user_points.user_id, user_points.batch_id, user_points.city_id) scores;
   SQL
@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       SELECT bc.batch_id,
       bc.day,
       bc.challenge,
-      sum(bc.in_contest) AS in_contest,
+      (sum(bc.in_contest))::integer AS in_contest,
       dense_rank() OVER (PARTITION BY bc.day, bc.challenge ORDER BY (sum(bc.in_contest)) DESC) AS rank_in_contest,
       count(*) FILTER (WHERE bc.participated) AS participating_users,
       (count(*) FILTER (WHERE bc.participated) >= ( VALUES (max_allowed_contributors_in_batch()))) AS complete
@@ -238,7 +238,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
 
   create_view "batch_scores", materialized: true, sql_definition: <<-SQL
       SELECT batches.id AS batch_id,
-      COALESCE(scores.in_contest, (0)::numeric) AS "coalesce",
+      COALESCE(scores.in_contest, (0)::bigint) AS in_contest,
       dense_rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
      FROM (batches
        LEFT JOIN ( SELECT batch_points.batch_id,
@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       SELECT cc.city_id,
       cc.day,
       cc.challenge,
-      sum(cc.in_contest) AS in_contest,
+      (sum(cc.in_contest))::integer AS in_contest,
       dense_rank() OVER (PARTITION BY cc.day, cc.challenge ORDER BY (sum(cc.in_contest)) DESC) AS rank_in_contest,
       count(*) FILTER (WHERE cc.participated) AS participating_users,
       (count(*) FILTER (WHERE cc.participated) >= ( VALUES (max_allowed_contributors_in_batch()))) AS complete
@@ -263,7 +263,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
 
   create_view "city_scores", materialized: true, sql_definition: <<-SQL
       SELECT cities.id AS city_id,
-      COALESCE(scores.in_contest, (0)::numeric) AS "coalesce",
+      COALESCE(scores.in_contest, (0)::bigint) AS in_contest,
       dense_rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
      FROM (cities
        LEFT JOIN ( SELECT city_points.city_id,

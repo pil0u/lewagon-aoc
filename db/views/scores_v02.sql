@@ -14,11 +14,11 @@ SELECT
 FROM (
   SELECT
   user_id,
-  SUM(in_contest) AS score,
+  SUM(in_contest)::integer AS score,
   batch_id,
-  SUM(in_batch) AS batch_score,
+  SUM(in_batch)::integer AS batch_score,
   city_id,
-  SUM(in_city) AS city_score
+  SUM(in_city)::integer AS city_score
 
   FROM user_points
   GROUP BY user_id, batch_id, city_id

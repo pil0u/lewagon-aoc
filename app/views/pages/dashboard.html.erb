@@ -8,17 +8,37 @@
 
   <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex justify-center divide-x">
     <div class="dashboard-tile flex flex-col items-center">
-      <div class="h-1/3 flex items-center">
-        <h2 class="text-lg strong">Today's puzzle</h2>
-      </div>
 
-      <div class="h-1/2 flex items-center">
-        <% if @aoc_in_progress %>
-          <%= link_to "> here <", "https://adventofcode.com/#{@year}/day/#{@now.day}", target: :blank, class: "link-external text-2xl" %>
-        <% else %>
-          <span class="text-xl">None 🤷</span>
-        <% end %>
-      </div>
+      <% if @aoc_in_progress %>
+
+        <div class="h-1/3 flex items-center">
+          <h2 class="text-lg strong">
+              <%= link_to "Today's puzzle", "https://adventofcode.com/#{@year}/day/#{@now.day}", target: :blank, class: "hover:link-external" %>
+          </h2>
+        </div>
+
+        <div class="h-1/2 flex flex-col justify-center">
+          <div class="flex items-center space-x-4 leading-snug">
+            <span>Part 1:</span>
+            <span class="text-lg <%= @today_challenges[1][0] ? "text-aoc-green text-shadow-green" : "text-wagon-red text-shadow-red" %>"><%= @today_challenges[1][1] %> pts</span>
+          </div>
+
+          <div class="flex items-center space-x-4 leading-snug">
+            <span>Part 2:</span>
+            <span class="text-lg <%= @today_challenges[2][0] ? "text-aoc-green text-shadow-green" : "text-wagon-red text-shadow-red" %>"><%= @today_challenges[2][1] %> pts</span>
+          </div>
+        </div>
+
+      <% else %>
+
+        <div class="h-1/3 flex items-center">
+          <h2 class="text-lg strong">
+            No puzzle today
+          </h2>
+        </div>
+
+      <% end %>
+
     </div>
 
     <div class="dashboard-tile flex flex-col items-center">

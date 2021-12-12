@@ -90,6 +90,23 @@ class PagesController < ApplicationController
 
     # Calendar
     @advent_days = MAGIC_DAYS.map { |advent_day| Time.new(2021, 12, advent_day, 0, 0, 0, "-05:00") }
+
+    # Today
+    @today_challenges = {}
+
+    [1, 2].each do |challenge|
+      user_solved = current_user.completions.find_by(day: @now.day, challenge: challenge)
+
+      if user_solved
+        @today_challenges[challenge] = [true, user_solved.score_solo]
+      else
+        last_solved = Completion.actual.where(day: @now.day, challenge: challenge)
+                                .order(:rank_solo).last
+
+        challenge_score = last_solved ? last_solved.score_solo - 1 : User.synced.count
+        @today_challenges[challenge] = [false, challenge_score]
+      end
+    end
   end
 
   def scoreboard

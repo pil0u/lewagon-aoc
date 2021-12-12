@@ -6,8 +6,9 @@ module Stats
 
     def show
       @batch_mates = @batch.users
-                           .left_joins(:city).joins(:score, :rank).preload(:score, :rank, :city)
-                           .order("ranks.in_batch")
+                           .left_joins(:city).joins(:batch_contributions, :score)
+                           .preload(:score, :city, :batch_contributions)
+                           .order("rank_in_batch").uniq
     end
 
     private

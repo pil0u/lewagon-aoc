@@ -20,11 +20,11 @@
 
           <tr class="hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-opacity-10 bg-aoc-green-flash" if user[:username] == current_user.username %>">
 
-            <td class="py-1 <%= class_names(ranking_css(user.rank.in_batch, rank_col: true)) %>">
-              <%= user.rank.in_batch unless user.rank.in_batch == previous_user&.rank&.in_batch %>
+            <td class="py-1 <%= class_names(ranking_css(user.score.rank_in_batch, rank_col: true)) %>">
+              <%= user.score.rank_in_batch unless user.score.rank_in_batch == previous_user&.score&.rank_in_batch %>
             </td>
 
-            <td class="<%= class_names(ranking_css(user.rank.in_batch)) %>">
+            <td class="<%= class_names(ranking_css(user.score.rank_in_batch)) %>">
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
                 <div class="flex">
                   <%= user.username %>
@@ -53,7 +53,7 @@
 
             <td>
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
-                <%= user.rank.in_contest %>
+                <%= user.score.rank_in_contest %>
               <% end %>
             </td>
 

@@ -1,4 +1,5 @@
 SELECT
+  day,
   user_id,
   score       AS in_contest,
   rank() OVER (                       ORDER BY score DESC)       AS rank_in_contest,
@@ -13,6 +14,7 @@ SELECT
 
 FROM (
   SELECT
+  day,
   user_id,
   SUM(in_contest)::integer AS score,
   batch_id,
@@ -21,5 +23,5 @@ FROM (
   SUM(in_city)::integer AS city_score
 
   FROM user_points
-  GROUP BY user_id, batch_id, city_id -- batch/city only here so we can SELECT them they're constant across single user_id
+  GROUP BY user_id, batch_id, city_id, day
 ) AS scores;

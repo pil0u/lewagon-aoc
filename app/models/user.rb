@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   # These are SQL views
   has_one :score # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :day_scores # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :points, class_name: 'UserPoint' # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :city_contributions # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :batch_contributions # rubocop:disable Rails/HasManyOrHasOneDependent

@@ -8,6 +8,7 @@ class City < ApplicationRecord
   # These are SQL views
   has_one :score, class_name: 'CityScore' # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :points, class_name: 'CityPoint' # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :day_scores, class_name: 'CityDayScores' # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :contributions, class_name: 'CityContribution' # rubocop:disable Rails/HasManyOrHasOneDependent
   ###
 

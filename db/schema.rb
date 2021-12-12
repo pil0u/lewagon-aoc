@@ -274,6 +274,57 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
   SQL
   add_index "city_scores", ["city_id"], name: "index_city_scores_on_city_id", unique: true
 
+  create_view "day_scores", materialized: true, sql_definition: <<-SQL
+      SELECT scores.day,
+      scores.user_id,
+      scores.score AS in_contest,
+      rank() OVER (ORDER BY scores.score DESC) AS rank_in_contest,
+      scores.batch_id,
+      scores.batch_score AS in_batch,
+      rank() OVER (PARTITION BY scores.batch_id ORDER BY scores.batch_score DESC) AS rank_in_batch,
+      scores.city_id,
+      scores.city_score AS in_city,
+      rank() OVER (PARTITION BY scores.city_id ORDER BY scores.city_score DESC) AS rank_in_city
+     FROM ( SELECT user_points.day,
+              user_points.user_id,
+              (sum(user_points.in_contest))::integer AS score,
+              user_points.batch_id,
+              (sum(user_points.in_batch))::integer AS batch_score,
+              user_points.city_id,
+              (sum(user_points.in_city))::integer AS city_score
+             FROM user_points
+            GROUP BY user_points.user_id, user_points.batch_id, user_points.city_id, user_points.day) scores;
+  SQL
+  add_index "day_scores", ["user_id", "day"], name: "index_day_scores_on_user_id_and_day", unique: true
+
+  create_view "batch_day_scores", materialized: true, sql_definition: <<-SQL
+      SELECT scores.day,
+      batches.id AS batch_id,
+      COALESCE(scores.in_contest, (0)::bigint) AS in_contest,
+      rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
+     FROM (batches
+       LEFT JOIN ( SELECT batch_points.day,
+              batch_points.batch_id,
+              sum(batch_points.in_contest) AS in_contest
+             FROM batch_points
+            GROUP BY batch_points.batch_id, batch_points.day) scores ON ((batches.id = scores.batch_id)));
+  SQL
+  add_index "batch_day_scores", ["batch_id", "day"], name: "index_batch_day_scores_on_batch_id_and_day", unique: true
+
+  create_view "city_day_scores", materialized: true, sql_definition: <<-SQL
+      SELECT scores.day,
+      cities.id AS city_id,
+      COALESCE(scores.in_contest, (0)::bigint) AS in_contest,
+      rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
+     FROM (cities
+       LEFT JOIN ( SELECT city_points.day,
+              city_points.city_id,
+              sum(city_points.in_contest) AS in_contest
+             FROM city_points
+            GROUP BY city_points.city_id, city_points.day) scores ON ((cities.id = scores.city_id)));
+  SQL
+  add_index "city_day_scores", ["city_id", "day"], name: "index_city_day_scores_on_city_id_and_day", unique: true
+
   create_function :max_allowed_contributors_in_batch, sql_definition: <<-SQL
       CREATE OR REPLACE FUNCTION public.max_allowed_contributors_in_batch()
        RETURNS integer

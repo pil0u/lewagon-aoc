@@ -7,7 +7,7 @@
 <% if @user_status == "OK" %>
 
   <div class="my-8 mx-4 sm:mx-auto max-w-6xl flex justify-center divide-x">
-    <div class="dashboard-tile flex flex-col items-center">
+    <div class="dashboard-tile flex flex-col items-center group">
 
       <% if @aoc_in_progress %>
 
@@ -17,17 +17,19 @@
           </h2>
         </div>
 
-        <div class="h-1/2 flex flex-col justify-center">
+        <div class="h-1/2 flex flex-col justify-center gap-y-2">
           <div class="flex items-center space-x-4 leading-snug">
             <span>Part 1:</span>
-            <span class="text-lg <%= @today_challenges[1][0] ? "text-aoc-green text-shadow-green" : "text-wagon-red text-shadow-red" %>"><%= @today_challenges[1][1] %> pts</span>
+            <span class="text-lg <%= @today_challenges[1][0] ? "text-aoc-atmospheric" : "text-shadow-red" %>"><%= @today_challenges[1][1] %> pts</span>
           </div>
 
           <div class="flex items-center space-x-4 leading-snug">
             <span>Part 2:</span>
-            <span class="text-lg <%= @today_challenges[2][0] ? "text-aoc-green text-shadow-green" : "text-wagon-red text-shadow-red" %>"><%= @today_challenges[2][1] %> pts</span>
+            <span class="text-lg <%= @today_challenges[2][0] ? "text-aoc-atmospheric" : "text-shadow-red" %>"><%= @today_challenges[2][1] %> pts</span>
           </div>
         </div>
+
+        <span class="hidden group-hover:inline text-sm"><span class="text-aoc-atmospheric">acquired</span> / <span class="text-shadow-red">available</span></span>
 
       <% else %>
 

@@ -137,15 +137,16 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       SELECT point_values.day,
       point_values.challenge,
       point_values.completion_id,
+      (point_values.completion_id IS NOT NULL) AS completed,
       point_values.user_id,
       point_values.in_contest,
-      rank() OVER (ORDER BY point_values.in_contest DESC NULLS LAST) AS rank_in_contest,
+      rank() OVER (PARTITION BY point_values.day, point_values.challenge ORDER BY point_values.in_contest DESC NULLS LAST) AS rank_in_contest,
       point_values.batch_id,
       point_values.in_batch,
-      rank() OVER (PARTITION BY point_values.batch_id ORDER BY point_values.in_batch DESC NULLS LAST) AS rank_in_batch,
+      rank() OVER (PARTITION BY point_values.day, point_values.challenge, point_values.batch_id ORDER BY point_values.in_batch DESC NULLS LAST) AS rank_in_batch,
       point_values.city_id,
       point_values.in_city,
-      rank() OVER (PARTITION BY point_values.city_id ORDER BY point_values.in_city DESC NULLS LAST) AS rank_in_city
+      rank() OVER (PARTITION BY point_values.day, point_values.challenge, point_values.city_id ORDER BY point_values.in_city DESC NULLS LAST) AS rank_in_city
      FROM point_values;
   SQL
   add_index "user_points", ["batch_id"], name: "index_user_points_on_batch_id"

@@ -65,10 +65,8 @@ class PagesController < ApplicationController
 
     ## Individual rank & score
     @user_score = {
-      rank: current_user.rank.in_contest,
       score: current_user.score.in_contest.to_i,
-      score_in_batch: current_user.batch_contributions.sum(:points),
-      score_in_city: current_user.city_contributions.sum(:points)
+      rank: current_user.score.rank_in_contest.to_i,
     }
     @total_users = User.synced.count
 
@@ -76,7 +74,7 @@ class PagesController < ApplicationController
     @user_batch = current_user.batch
 
     if @user_batch
-      @user_batch_score = { score: @user_batch.batch_score.in_contest.to_i, rank: @user_batch.batch_score.rank }
+      @user_batch_score = { score: @user_batch.score.in_contest, rank: @user_batch.score.rank_in_contest }
       @total_batches = BatchScore.count
     end
 
@@ -84,7 +82,7 @@ class PagesController < ApplicationController
     @user_city = current_user.city
 
     if @user_city
-      @user_city_score = { score: @user_city.city_score.in_contest.to_i, rank: @user_city.city_score.rank }
+      @user_city_score = { score: @user_city.score.in_contest, rank: @user_city.score.rank_in_contest }
       @total_cities = CityScore.count
     end
 
@@ -103,38 +101,36 @@ class PagesController < ApplicationController
     }.compact
 
     @ranked_cities = CityScore.joins(:city).left_joins(city: { users: :score }).where("users.synced")
-                              .order(:rank, "cities.name").distinct
+                              .order(:rank_in_contest, "cities.name").distinct
                               .select("cities.name AS city_name",
                                       Arel.sql("COUNT(*) OVER (PARTITION BY cities.id) AS city_n_users"),
                                       Arel.sql("AVG(scores.in_contest) OVER (PARTITION BY cities.id) AS score_average"),
                                       "city_scores.in_contest AS city_score",
-                                      "city_scores.rank AS city_rank")
+                                      "city_scores.rank_in_contest AS city_rank")
                               .map { |row| row.attributes.symbolize_keys }
                               .reject { |h| h[:city_name].nil? }
-                              .each { |h| h[:city_score] = h[:city_score].to_i }
                               .each { |h| h[:score_average] = h[:score_average].ceil }
     @max_city_contributors = City.max_contributors
 
     @ranked_batches = BatchScore.joins(:batch).left_joins(batch: { users: :score }).where("users.synced")
-                                .order(:rank, "batches.number": :desc).distinct
+                                .order(:rank_in_contest, "batches.number": :desc).distinct
                                 .select("batches.number AS batch_number",
                                         Arel.sql("COUNT(*) OVER (PARTITION BY batches.id) AS batch_n_users"),
                                         Arel.sql("AVG(scores.in_contest) OVER (PARTITION BY batches.id) AS score_average"),
                                         "batch_scores.in_contest AS batch_score",
-                                        "batch_scores.rank AS batch_rank")
+                                        "batch_scores.rank_in_contest AS batch_rank")
                                 .map { |row| row.attributes.symbolize_keys }
                                 .reject { |h| h[:batch_number].nil? }
-                                .each { |h| h[:batch_score] = h[:batch_score].to_i }
                                 .each { |h| h[:score_average] = h[:score_average].ceil }
     @max_batch_contributors = Batch.max_contributors
 
-    @ranked_users = Score.joins(user: :rank).left_joins(user: %i[batch city]).where("users.synced")
-                         .order("ranks.in_contest, users.id DESC")
+    @ranked_users = Score.joins(:user).left_joins(:batch, :city).where("users.synced")
+                         .order("rank_in_contest, users.id DESC")
                          .select("users.uid AS uid",
                                  "users.id AS id",
                                  "users.username AS username",
                                  "batches.number AS batch",
-                                 "cities.name AS city", "scores.in_contest AS score_solo", "ranks.in_contest AS rank",
+                                 "cities.name AS city", "scores.in_contest AS score_solo", "rank_in_contest AS rank",
                                  "(SELECT COUNT(*) FROM completions co WHERE co.user_id = users.id AND co.challenge = 1) AS silver_stars",
                                  "(SELECT COUNT(*) FROM completions co WHERE co.user_id = users.id  AND co.challenge = 2) AS gold_stars")
                          .map { |row| row.attributes.symbolize_keys }

@@ -90,6 +90,23 @@ class PagesController < ApplicationController
 
     # Calendar
     @advent_days = MAGIC_DAYS.map { |advent_day| Time.new(2021, 12, advent_day, 0, 0, 0, "-05:00") }
+
+    # Today
+    @today_challenges = {}
+
+    [1, 2].each do |challenge|
+      user_solved = current_user.completions.find_by(day: @now.day, challenge: challenge)
+
+      if user_solved
+        @today_challenges[challenge] = [true, user_solved.score_solo]
+      else
+        last_solved = Completion.actual.where(day: @now.day, challenge: challenge)
+                                .order(:rank_solo).last
+
+        challenge_score = last_solved ? last_solved.score_solo - 1 : User.synced.count
+        @today_challenges[challenge] = [false, challenge_score]
+      end
+    end
   end
 
   def scoreboard
@@ -149,7 +166,7 @@ class PagesController < ApplicationController
     @total_participating_users = User.distinct(:id).joins(:completions).merge(Completion.actual).count
 
     stars_per_challenge = Completion.actual.group(:day, :challenge).count.sort_by(&:first).to_h
-    @stars_per_day = stars_per_challenge.group_by { |key, _l| key.first }.transform_values { |star_counts| star_counts.map(&:last) }
+    @stars_per_day = stars_per_challenge.group_by { |key, _l| key.first }.transform_values { |star_counts| star_counts.sort_by(&:first).map(&:last) }
     # AoC formula for how many users per star
     @users_per_star = (stars_per_challenge.map(&:last).max / 40.0).ceil
   end

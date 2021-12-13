@@ -4,15 +4,41 @@
       <%= @city.name %>
     </h2>
 
-    <table class="my-8 max-w-4xl w-full mx-auto">
+    <div class="my-4 mx-auto max-w-4xl">
+      <p class="paragraph">Synthesis of your city contributors per challenge.</p>
+    </div>
+
+    <div class="my-4 w-full max-w-max mx-auto text-lg text-right leading-tight flex flex-col">
+      <div class="mb-2 flex space-x-5 px-3">
+        <span class="w-6">Day</span>
+        <span class="w-24 text-aoc-silver">Part 1</span>
+        <span class="w-24 text-aoc-gold">Part 2</span>
+      </div>
+
+      <% 1.upto(@latest_day).reverse_each do |day| %>
+        <%= link_to "https://adventofcode.com/2021/day/#{day}", target: :blank, class: "flex space-x-5 hover:bg-aoc-gray hover:bg-opacity-10 px-3" do %>
+          <span class="w-6"><%= day %></span>
+          <span class="w-24 <%= "text-wagon-red text-shadow-red" if (@daily_contributors.dig(day, 0) || 0) < @max_contributors %>"><%= @daily_contributors.dig(day, 0) || 0 %>/<%= @max_contributors %></span>
+          <span class="w-24 <%= "text-wagon-red text-shadow-red" if (@daily_contributors.dig(day, 1) || 0) < @max_contributors %>"><%= @daily_contributors.dig(day, 1) || 0 %>/<%= @max_contributors %></span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="my-4 mx-auto max-w-4xl">
+      <p class="paragraph">The <span class="strong">Local score</span> is the score as if <%= @city.name %> was running its own leaderboard, <em>ignoring everybody else</em>. In this local scope, the first player to solve a challenge earns <span class="strong"><%= pluralize(@city_mates.count, "point") %></span>.
+      The <span class="strong">Contribution</span> is the amount of points each player has contributed to the global city score, which is currently <span class="text-aoc-atmospheric text-shadow-atmospheric"><%= @city.city_score.in_contest.to_i %> points</span>.</p>
+    </div>
+
+    <table class="my-4 max-w-4xl w-full mx-auto">
       <thead>
         <tr class="text-aoc-gray border-b border-aoc-gray-darker">
           <th class="w-1/12 font-normal"></th>
           <th class="w-3/12 font-normal"></th>
           <th class="w-2/12 font-normal">Batch</th>
-          <th class="w-2/12 font-normal">Score<sup>*</sup></th>
+          <th class="w-2/12 font-normal">Local score</th>
+          <th class="w-1/12 font-normal">Contribution</th>
           <th class="w-2/12 font-normal">Score 🌐</th>
-          <th class="w-2/12 font-normal">Rank 🌐</th>
+          <th class="w-1/12 font-normal">Rank 🌐</th>
         </tr>
       </thead>
       <tbody class="text-center">
@@ -35,13 +61,19 @@
 
             <td>
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
-                <%= "##{user.batch&.number}" || "–" %>
+                <%= user.batch&.number ? "##{user.batch&.number}" : "–" %>
               <% end %>
             </td>
 
             <td class="strong text-lg">
               <%= link_to stats_user_path(user), class: "flex justify-center" do %>
                 <%= user.score.in_city.to_i %>
+              <% end %>
+            </td>
+
+            <td>
+              <%= link_to stats_user_path(user), class: "flex justify-center" do %>
+                <%= user.city_contributions.sum(:points).to_i %>
               <% end %>
             </td>
 
@@ -62,7 +94,5 @@
         <% end %>
       </tbody>
     </table>
-
-    <p class="paragraph text-sm text-center"><sup>*</sup> Simulates the score you would have if there was a private leaderboard only for your city.</p>
   </div>
 </div>

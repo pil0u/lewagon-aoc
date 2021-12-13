@@ -17,7 +17,7 @@ class City < ApplicationRecord
   end
 
   def self.find_by_slug(slug)
-    find_by("REPLACE(LOWER(name), ' ', '_') = ?", slug)
+    find_by!("REPLACE(LOWER(name), ' ', '_') = ?", slug)
   end
 
   def self.slugify(name)

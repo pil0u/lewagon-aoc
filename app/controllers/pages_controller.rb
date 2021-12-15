@@ -98,12 +98,12 @@ class PagesController < ApplicationController
       user_solved = current_user.completions.find_by(day: @now.day, challenge: challenge)
 
       if user_solved
-        @today_challenges[challenge] = [true, user_solved.score_solo]
+        @today_challenges[challenge] = [true, user_solved.point_value.in_contest]
       else
         last_solved = Completion.actual.where(day: @now.day, challenge: challenge)
                                 .order(:rank_solo).last
 
-        challenge_score = last_solved ? last_solved.score_solo - 1 : User.synced.count
+        challenge_score = last_solved ? last_solved.point_value.in_contest - 1 : User.synced.count
         @today_challenges[challenge] = [false, challenge_score]
       end
     end

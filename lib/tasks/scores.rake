@@ -7,6 +7,13 @@ namespace :scores do
   desc "Main task to call from Heroku Scheduler"
   task update: %i[introduction refresh compute_ranks compute_scores conclusion]
 
+  desc "Wraps the refresh in a postgres transaction"
+  task safe_update: :environment do
+    ActiveRecord::Base.transaction do
+      Rake::Task['scores:update'].invoke
+    end
+  end
+
   desc "Update last_api_fetch_start"
   task introduction: :environment do
     state = State.first

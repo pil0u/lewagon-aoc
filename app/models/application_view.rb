@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Parent for SQL view-backed models — see also [Scenic](https://github.com/scenic-views/scenic/)
-class ApplicationView < ActiveRecord::Base
+class ApplicationView < ApplicationRecord
   self.abstract_class = true
 
   def self.refresh

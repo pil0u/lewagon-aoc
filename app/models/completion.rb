@@ -6,6 +6,7 @@ class Completion < ApplicationRecord
   has_one :point_value # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
   has_one :completion_rank # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
 
+  has_one :user_point # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
   has_one :city_contribution # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
   has_one :batch_contribution # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
 

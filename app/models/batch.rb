@@ -8,8 +8,8 @@ class Batch < ApplicationRecord
   # These are SQL views
   has_one :score, class_name: 'BatchScore' # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :points, class_name: 'BatchPoint' # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :day_scores, class_name: 'BatchDayScores' # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :contributions, class_name: 'BatchContribution' # rubocop:disable Rails/HasManyOrHasOneDependent
-  has_many :batch_day_scores, class_name: 'BatchDayScores' # rubocop:disable Rails/HasManyOrHasOneDependent
   ###
 
   MINIMUM_CONTRIBUTORS = 3

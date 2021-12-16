@@ -231,7 +231,8 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       (sum(bc.in_contest))::integer AS in_contest,
       rank() OVER (PARTITION BY bc.day, bc.challenge ORDER BY (sum(bc.in_contest)) DESC) AS rank_in_contest,
       count(*) FILTER (WHERE bc.participated) AS participating_users,
-      (count(*) FILTER (WHERE bc.participated) >= ( VALUES (max_allowed_contributors_in_batch()))) AS complete
+      (count(*) FILTER (WHERE bc.participated) >= ( VALUES (max_allowed_contributors_in_batch()))) AS complete,
+      (( VALUES (max_allowed_contributors_in_batch())) - count(*) FILTER (WHERE bc.participated)) AS remaining_contributions
      FROM batch_contributions bc
     GROUP BY bc.batch_id, bc.day, bc.challenge;
   SQL
@@ -256,7 +257,8 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       (sum(cc.in_contest))::integer AS in_contest,
       rank() OVER (PARTITION BY cc.day, cc.challenge ORDER BY (sum(cc.in_contest)) DESC) AS rank_in_contest,
       count(*) FILTER (WHERE cc.participated) AS participating_users,
-      (count(*) FILTER (WHERE cc.participated) >= ( VALUES (max_allowed_contributors_in_batch()))) AS complete
+      (count(*) FILTER (WHERE cc.participated) >= ( VALUES (max_allowed_contributors_in_city()))) AS complete,
+      (( VALUES (max_allowed_contributors_in_city())) - count(*) FILTER (WHERE cc.participated)) AS remaining_contributions
      FROM city_contributions cc
     GROUP BY cc.city_id, cc.day, cc.challenge;
   SQL

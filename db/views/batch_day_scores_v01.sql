@@ -2,7 +2,7 @@ SELECT
   day,
   batches.id AS batch_id,
   COALESCE(in_contest, 0) AS in_contest,
-  rank() OVER (ORDER BY in_contest DESC NULLS LAST) AS rank_in_contest
+  rank() OVER (PARTITION BY scores.day ORDER BY in_contest DESC NULLS LAST) AS rank_in_contest
 FROM batches
 LEFT JOIN (
   SELECT

@@ -276,16 +276,18 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
 
   create_view "day_scores", materialized: true, sql_definition: <<-SQL
       SELECT scores.day,
+      part_one.completion_id AS first_completion_id,
+      part_two.completion_id AS second_completion_id,
       scores.user_id,
       scores.score AS in_contest,
-      rank() OVER (ORDER BY scores.score DESC) AS rank_in_contest,
+      rank() OVER (PARTITION BY scores.day ORDER BY scores.score DESC) AS rank_in_contest,
       scores.batch_id,
       scores.batch_score AS in_batch,
-      rank() OVER (PARTITION BY scores.batch_id ORDER BY scores.batch_score DESC) AS rank_in_batch,
+      rank() OVER (PARTITION BY scores.day, scores.batch_id ORDER BY scores.batch_score DESC) AS rank_in_batch,
       scores.city_id,
       scores.city_score AS in_city,
-      rank() OVER (PARTITION BY scores.city_id ORDER BY scores.city_score DESC) AS rank_in_city
-     FROM ( SELECT user_points.day,
+      rank() OVER (PARTITION BY scores.day, scores.city_id ORDER BY scores.city_score DESC) AS rank_in_city
+     FROM ((( SELECT user_points.day,
               user_points.user_id,
               (sum(user_points.in_contest))::integer AS score,
               user_points.batch_id,
@@ -293,7 +295,9 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
               user_points.city_id,
               (sum(user_points.in_city))::integer AS city_score
              FROM user_points
-            GROUP BY user_points.user_id, user_points.batch_id, user_points.city_id, user_points.day) scores;
+            GROUP BY user_points.user_id, user_points.batch_id, user_points.city_id, user_points.day) scores
+       LEFT JOIN user_points part_one ON (((part_one.day = scores.day) AND (part_one.user_id = scores.user_id) AND (part_one.challenge = 1))))
+       LEFT JOIN user_points part_two ON (((part_two.day = scores.day) AND (part_two.user_id = scores.user_id) AND (part_two.challenge = 2))));
   SQL
   add_index "day_scores", ["user_id", "day"], name: "index_day_scores_on_user_id_and_day", unique: true
 
@@ -301,7 +305,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       SELECT scores.day,
       batches.id AS batch_id,
       COALESCE(scores.in_contest, (0)::bigint) AS in_contest,
-      rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
+      rank() OVER (PARTITION BY scores.day ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
      FROM (batches
        LEFT JOIN ( SELECT batch_points.day,
               batch_points.batch_id,
@@ -315,7 +319,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
       SELECT scores.day,
       cities.id AS city_id,
       COALESCE(scores.in_contest, (0)::bigint) AS in_contest,
-      rank() OVER (ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
+      rank() OVER (PARTITION BY scores.day ORDER BY scores.in_contest DESC NULLS LAST) AS rank_in_contest
      FROM (cities
        LEFT JOIN ( SELECT city_points.day,
               city_points.city_id,

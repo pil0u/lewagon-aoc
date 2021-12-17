@@ -10,7 +10,7 @@ namespace :scores do
   desc "Wraps the update in a PostgreSQL transaction"
   task update: :environment do
     ActiveRecord::Base.transaction do
-      Rake::Task['scores:unsafe_update'].invoke
+      Rake::Task["scores:unsafe_update"].invoke
     end
   end
 

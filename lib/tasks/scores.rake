@@ -5,7 +5,14 @@ require "help"
 
 namespace :scores do
   desc "Main task to call from Heroku Scheduler"
-  task update: %i[introduction refresh compute_ranks compute_scores conclusion]
+  task unsafe_update: %i[introduction refresh compute_ranks compute_scores conclusion]
+
+  desc "Wraps the update in a PostgreSQL transaction"
+  task update: :environment do
+    ActiveRecord::Base.transaction do
+      Rake::Task["scores:unsafe_update"].invoke
+    end
+  end
 
   desc "Update last_api_fetch_start"
   task introduction: :environment do

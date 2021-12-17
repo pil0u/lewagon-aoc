@@ -17,7 +17,7 @@ class User < ApplicationRecord
   scope :contributors, -> { where(uid: CONTRIBUTORS) }
 
   after_save do
-    Help.refresh_views!
+    Help.refresh_views! if saved_changes.include? "batch_id"
   end
 
   def self.from_kitt(auth)

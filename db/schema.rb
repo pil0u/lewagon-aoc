@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 2021_12_21_072305) do
        CROSS JOIN generate_series(1, 2) challenges(challenge))
     ORDER BY days.day, challenges.challenge;
   SQL
+  add_index "exercises", ["day", "challenge"], name: "index_exercises_on_day_and_challenge", unique: true
+
   create_view "completion_ranks", materialized: true, sql_definition: <<-SQL
       SELECT e.day,
       e.challenge,

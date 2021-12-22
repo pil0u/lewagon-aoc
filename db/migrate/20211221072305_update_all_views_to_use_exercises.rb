@@ -29,6 +29,7 @@ class UpdateAllViewsToUseExercises < ActiveRecord::Migration[6.1]
     create_view :batch_day_scores,    version: 1, materialized: true
     create_view :city_day_scores,     version: 1, materialized: true
 
+    add_index :exercises,           %i[day challenge],         unique: true
     add_index :completion_ranks,    %i[user_id day challenge],  unique: true
     add_index :point_values,        %i[user_id day challenge],  unique: true
     add_index :point_values,        :in_contest

@@ -7,6 +7,10 @@ class UsersController < ApplicationController
 
   def update
     batch_number = user_params[:batch_number]&.gsub(/[^\d]/, "")
+    if batch_number.to_i > 2**31 - 1 # max value of a 4-bytes integer column in a database
+      redirect_to settings_path, notice: "Please enter a valid batch number"
+      return
+    end
     batch = Batch.find_or_create_by(number: batch_number) if batch_number.present?
 
     city = City.find(user_params[:city_id]) if user_params[:city_id].present?

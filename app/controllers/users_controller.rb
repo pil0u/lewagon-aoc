@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def update
     batch_number = user_params[:batch_number]&.gsub(/[^\d]/, "")
-    if batch_number.to_i > 2**31 - 1 # max value of a 4-bytes integer column in a database
+    if batch_number.to_i > (2**31) - 1 # The batch number is stored as a 4-bytes integer in the database
       redirect_to settings_path, notice: "Please enter a valid batch number"
       return
     end

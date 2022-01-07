@@ -1,11 +1,3 @@
-<% if ENV["ANNOUNCEMENT"].present? %>
-  <div id="announcement" class="my-12 flex justify-center bg-aoc-gray">
-    <p class="max-w-6xl paragraph text-dark text-center tracking-tighter"><span class="font-semibold"><%= ENV["ANNOUNCEMENT"] %></span>
-    To discuss the puzzles and get event-related information, <%= link_to "join the #aoc Slack channel", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "font-semibold text-aoc-gray-dark hover:text-aoc-gray-darker" %>.
-    </p>
-  </div>
-<% end %>
-
 <div class="relative my-12 mx-auto flex items-start justify-center lg:space-x-24 max-w-screen-2xl">
   <div class="hidden lg:block sticky top-6">
     <%= render "shared/navigation_sidebar", anchors: @anchors %>

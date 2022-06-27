@@ -68,3 +68,6 @@ yarn-debug.log*
 
 /config/credentials/development.key
 /config/credentials/production.key
+
+# Ignore Pilou's drafts
+_*.*

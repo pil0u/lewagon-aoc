@@ -14,7 +14,7 @@
   </p>
 </div>
 
-<%= link_to user_kitt_omniauth_authorize_path, method: :post, data: { controller: "disable-link", action: "disable-link#now" }, class: "my-8 mx-auto p-2 max-w-md flex justify-around border border-aoc-gray-darker link" do %>
+<%= button_to user_kitt_omniauth_authorize_path, data: { turbo: false, controller: "disable-link", action: "disable-link#now" }, class: "my-8 mx-auto p-2 max-w-md flex justify-around border border-aoc-gray-darker link" do %>
   <span>Sign in with Kitt</span>
 <% end %>
 

@@ -1,8 +1,8 @@
 ![Le Wagon x Advent of Code](public/thumbnail.png)
 
 ```
-Ruby    2.7.4  
-Rails   6.1.4.1
+Ruby    3.1.2  
+Rails   7.0.3
 ```
 
 ## Advent of Code API
@@ -25,6 +25,9 @@ If you want to help me fix a bug or implement a new requested feature:
 2. Fork the project
 3. Code changes on your fork
 4. Create a Pull Request here from your fork
+
+> **Note**
+> Instead of overmind, you can use foreman by running `bin/dev` locally.
 
 ### Overmind
 

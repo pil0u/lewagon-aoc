@@ -2,22 +2,14 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   content: [
-    './app/views/**/*.html.erb',
+    './app/assets/stylesheets/*.css',
     './app/helpers/**/*.rb',
-    './app/javascript/**/*.js'
+    './app/javascript/**/*.js',
+    './app/views/**/*.html.erb'
   ],
-  // mode: 'jit',
-  // purge: {
-  //   enabled: true,
-  //   content: [
-  //     './app/**/*.html.erb',
-  //     './app/helpers/**/*.rb',
-  //     './app/javascript/**/*.js'
-  //   ],
-  //   safelist: [
-  //     'underline'
-  //   ]
-  // },
+  safelist: [
+    'underline'
+  ],
   theme: {
     extend: {
       colors: {

@@ -25,8 +25,6 @@ gem "turbo-rails", "~> 1.0"
 group :development, :test do
   gem "brakeman", "~> 5.1.1"
   gem "bundler-audit", "~> 0.9.0"
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "erb_lint", "~> 0.1.1", require: false
   gem "rubocop", "~> 1.22", require: false
   gem "rubocop-performance", "~> 1.11", require: false
@@ -34,6 +32,8 @@ group :development, :test do
 end
 
 group :development do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
   gem "listen", "~> 3.3"
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

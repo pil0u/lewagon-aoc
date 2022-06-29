@@ -27,7 +27,7 @@
       <%= link_to "scoreboards", scoreboard_path, class: "link" %>
       <%= link_to "stats", stats_path, class: "link" %>
       <%= link_to "settings", settings_path, class: "link" %>
-      <%= link_to destroy_user_session_path, method: :delete, class: "hover:text-wagon-red" do %>
+      <%= button_to destroy_user_session_path, method: :delete, class: "hover:text-wagon-red" do %>
         <i class="fas fa-power-off"></i>
       <% end %>
     </div>

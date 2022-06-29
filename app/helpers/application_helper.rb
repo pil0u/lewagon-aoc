@@ -36,7 +36,7 @@ module ApplicationHelper
   end
 
   def publication_time(day)
-    Time.new(ENV["EVENT_YEAR"].to_i, 12, day, 0, 0, 0, "-05:00")
+    Time.new(ENV.fetch("EVENT_YEAR", Time.now.getlocal("-05:00").year).to_i, 12, day, 0, 0, 0, "-05:00")
   end
 
   def duration_as_chrono(date, since:)

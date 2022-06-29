@@ -26,12 +26,12 @@ namespace :scores do
   desc "Fetch completion timestamps from AoC API and insert them in completions table"
   task refresh: :environment do
     # Retrieve AoC leaderboard IDs to call the API
-    leaderboard_ids = ENV["AOC_ROOMS"].split(",").map { |id| id.split("-").first }
+    leaderboard_ids = ENV.fetch("AOC_ROOMS").split(",").map { |id| id.split("-").first }
 
     # Merge members timestamps from all AoC leaderboards
     members = {}
     leaderboard_ids.each do |room_id|
-      members_to_merge = Aoc.fetch_json(ENV.fetch("EVENT_YEAR", 2021), room_id, ENV.fetch("SESSION_COOKIE"))["members"]
+      members_to_merge = Aoc.fetch_json(ENV.fetch("EVENT_YEAR", Time.now.getlocal("-05:00").year), room_id, ENV.fetch("SESSION_COOKIE"))["members"]
 
       members.deep_merge!(members_to_merge)
     end

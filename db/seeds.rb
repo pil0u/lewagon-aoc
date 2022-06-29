@@ -19,6 +19,7 @@ cities = [
   "Bordeaux",
   "Brussels",
   "Buenos Aires",
+  "Cape Town",
   "Casablanca",
   "Cologne",
   "Dubai",
@@ -39,8 +40,11 @@ cities = [
   "Munich",
   "Nantes",
   "Nice",
+  "Online >_",
   "Oslo",
   "Paris",
+  "Playa del Carmen",
+  "Porto",
   "Rennes",
   "Rio de Janeiro",
   "Santiago",
@@ -50,7 +54,8 @@ cities = [
   "Stockholm",
   "São Paulo",
   "Tel Aviv",
-  "Tokyo"
+  "Tokyo",
+  "Zurich"
 ].map do |city|
   { name: city }
 end

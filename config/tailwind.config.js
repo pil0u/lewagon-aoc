@@ -5,7 +5,7 @@ module.exports = {
     './app/assets/stylesheets/*.css',
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
-    './app/views/**/*.html.erb'
+    './app/views/**/*.html.erb',
   ],
   safelist: [
     'underline'
@@ -50,5 +50,9 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/typography'),
+  ],
 }

@@ -1,0 +1,23 @@
+/* Replace font sourcing from Google (https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;600&display=swap) with a local copy of the font. Source: https://google-webfonts-helper.herokuapp.com/fonts/source-code-pro?subsets=latin */
+
+@layer base {
+  /* source-code-pro-300 - latin */
+  @font-face {
+    font-family: 'Source Code Pro';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Source Code Pro'),
+        url('source-code-pro-v21-latin-300.woff2') format('woff2'),
+        url('source-code-pro-v21-latin-300.woff') format('woff')
+  }
+
+  /* source-code-pro-600 - latin */
+  @font-face {
+    font-family: 'Source Code Pro';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Source Code Pro'),
+        url('source-code-pro-v21-latin-600.woff2') format('woff2'),
+        url('source-code-pro-v21-latin-600.woff') format('woff')
+  }
+}

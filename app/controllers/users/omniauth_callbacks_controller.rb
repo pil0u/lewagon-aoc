@@ -18,7 +18,7 @@ module Users
         flash.alert = "For an unknown reason, we couldn't store your information in our database. Please #{@contact_me}."
       end
 
-      def failure
+      def failure # rubocop:disable Lint/NestedMethodDefinition
         reason = request.env["omniauth.auth"]&.error_description
         redirect_to root_path
         flash.alert = "Failed to sign in with Kitt (Reason: #{reason || 'Unknown'}). If it persists, please #{@contact_me}."

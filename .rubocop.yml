@@ -8,9 +8,6 @@ AllCops:
 Layout/LineLength:
   Enabled: false
 
-Lint/NestedMethodDefinition:
-  Enabled: false
-
 Metrics/AbcSize:
   Enabled: false
 
@@ -38,13 +35,7 @@ Rails/I18nLocaleTexts:
 Rails/BulkChangeTable:
   Enabled: false
 
-Rails/CreateTableWithTimestamps:
-  Enabled: false
-
 Rails/SkipsModelValidations:
-  Enabled: false
-
-Rails/WhereEquals:
   Enabled: false
 
 Style/Documentation:

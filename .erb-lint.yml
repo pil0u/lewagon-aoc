@@ -4,10 +4,17 @@ exclude:
   - '**/vendor/**/*'
   - '**/app/views/stats/days/show.html.erb' # TODO
 
-HardcodedString:
-  enabled: false
-
 linters:
+  # TODO
+  ErbSafety:
+    exclude:
+      - '**/app/views/shared/_flashes.html.erb'
+
+  # Disable "String not translated" errors while passing the --enable-all-linters flag
+  HardCodedString:
+    exclude:
+      - '**/app/views/**/*'
+
   Rubocop:
     enabled: true
     rubocop_config:

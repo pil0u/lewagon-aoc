@@ -57,7 +57,7 @@ class PagesController < ApplicationController
 
     # Event
     @aoc_in_progress = Aoc.in_progress?
-    @year = ENV["EVENT_YEAR"] || Time.zone.today.year
+    @year = ENV.fetch("EVENT_YEAR", Time.zone.today.year)
     @current_open_room = ENV["AOC_ROOMS"].split(",").last
     @user_status = current_user.status
 
@@ -95,12 +95,12 @@ class PagesController < ApplicationController
     @today_challenges = {}
 
     [1, 2].each do |challenge|
-      user_solved = current_user.completions.find_by(day: @now.day, challenge: challenge)
+      user_solved = current_user.completions.find_by(day: @now.day, challenge:)
 
       if user_solved
         @today_challenges[challenge] = [true, user_solved.point_value.in_contest]
       else
-        last_solved = Completion.actual.where(day: @now.day, challenge: challenge)
+        last_solved = Completion.actual.where(day: @now.day, challenge:)
                                 .order(:rank_solo).last
 
         challenge_score = last_solved ? last_solved.point_value.in_contest - 1 : User.synced.count

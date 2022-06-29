@@ -18,8 +18,8 @@ class UsersController < ApplicationController
     @user.attributes = {
       username: user_params[:username],
       aoc_id: user_params[:aoc_id],
-      batch: batch,
-      city: city
+      batch:,
+      city:
     }
 
     if @user.save

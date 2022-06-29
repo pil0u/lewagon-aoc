@@ -32,6 +32,9 @@ Metrics/PerceivedComplexity:
 Naming/VariableNumber:
   EnforcedStyle: snake_case
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 Rails/BulkChangeTable:
   Enabled: false
 

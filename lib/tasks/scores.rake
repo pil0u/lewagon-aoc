@@ -31,7 +31,7 @@ namespace :scores do
     # Merge members timestamps from all AoC leaderboards
     members = {}
     leaderboard_ids.each do |room_id|
-      members_to_merge = Aoc.fetch_json(ENV["EVENT_YEAR"] || 2021, room_id, ENV["SESSION_COOKIE"])["members"]
+      members_to_merge = Aoc.fetch_json(ENV.fetch("EVENT_YEAR", 2021), room_id, ENV.fetch("SESSION_COOKIE"))["members"]
 
       members.deep_merge!(members_to_merge)
     end
@@ -90,7 +90,7 @@ namespace :scores do
     # This is required to properly display stats and scoreboards in that specific case (i.e. all Users before the event)
     synced_users_without_score = User.synced.pluck(:id) - Completion.distinct.pluck(:user_id)
     score_fillers = synced_users_without_score.map do |user_id|
-      { user_id: user_id, score_solo: 0, score_in_batch: 0, score_in_city: 0, updated_at: Time.now.utc }
+      { user_id:, score_solo: 0, score_in_batch: 0, score_in_city: 0, updated_at: Time.now.utc }
     end
 
     Completion.insert_all(score_fillers) unless score_fillers.empty?

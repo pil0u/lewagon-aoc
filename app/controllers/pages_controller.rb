@@ -57,7 +57,7 @@ class PagesController < ApplicationController
 
     # Event
     @aoc_in_progress = Aoc.in_progress?
-    @year = ENV.fetch("EVENT_YEAR", Time.now.getlocal("-05:00").year)
+    @year = ENV.fetch("EVENT_YEAR")
     @current_open_room = ENV.fetch("AOC_ROOMS").split(",").last
     @user_status = current_user.status
 

@@ -31,7 +31,7 @@ namespace :scores do
     # Merge members timestamps from all AoC leaderboards
     members = {}
     leaderboard_ids.each do |room_id|
-      members_to_merge = Aoc.fetch_json(ENV.fetch("EVENT_YEAR", Time.now.getlocal("-05:00").year), room_id, ENV.fetch("SESSION_COOKIE"))["members"]
+      members_to_merge = Aoc.fetch_json(ENV.fetch("EVENT_YEAR"), room_id, ENV.fetch("SESSION_COOKIE"))["members"]
 
       members.deep_merge!(members_to_merge)
     end

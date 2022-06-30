@@ -168,7 +168,7 @@ class PagesController < ApplicationController
     stars_per_challenge = Completion.actual.group(:day, :challenge).count.sort_by(&:first).to_h
     @stars_per_day = stars_per_challenge.group_by { |key, _l| key.first }.transform_values { |star_counts| star_counts.sort_by(&:first).map(&:last) }
     # AoC formula for how many users per star
-    @users_per_star = (stars_per_challenge.map(&:last).max / 40.0).ceil
+    @users_per_star = (stars_per_challenge.map(&:last).max.to_f / 40).ceil
   end
 
   def status

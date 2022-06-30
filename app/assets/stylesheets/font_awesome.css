@@ -81,7 +81,7 @@
 
   /* --- Used icons --- */
 
-  .fa-github:before {
+  .fa-github::before {
     content: '\f09b';
   }
 

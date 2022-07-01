@@ -1,0 +1,44 @@
+---
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  rubocop:
+    # Ruby static code analyzer and formatter
+    # https://github.com/rubocop/rubocop
+
+    name: RuboCop
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
+
+  erb-lint:
+    # ERB & HTML static code analyzer and formatter
+    # https://github.com/Shopify/erb-lint
+
+    name: ERB Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run ERB Lint
+        run: bundle exec erblint --lint-all --enable-all-linters

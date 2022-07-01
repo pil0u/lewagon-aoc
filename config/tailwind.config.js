@@ -1,18 +1,15 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  mode: 'jit',
-  purge: {
-    enabled: true,
-    content: [
-      './app/**/*.html.erb',
-      './app/helpers/**/*.rb',
-      './app/javascript/**/*.js'
-    ],
-    safelist: [
-      'underline'
-    ]
-  },
+  content: [
+    './app/assets/stylesheets/*.css',
+    './app/helpers/**/*.rb',
+    './app/javascript/**/*.js',
+    './app/views/**/*.html.erb',
+  ],
+  safelist: [
+    'underline'
+  ],
   theme: {
     extend: {
       colors: {
@@ -53,5 +50,9 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/typography'),
+  ],
 }

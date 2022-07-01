@@ -8,9 +8,6 @@ AllCops:
 Layout/LineLength:
   Enabled: false
 
-Lint/NestedMethodDefinition:
-  Enabled: false
-
 Metrics/AbcSize:
   Enabled: false
 
@@ -32,16 +29,13 @@ Metrics/PerceivedComplexity:
 Naming/VariableNumber:
   EnforcedStyle: snake_case
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 Rails/BulkChangeTable:
   Enabled: false
 
-Rails/CreateTableWithTimestamps:
-  Enabled: false
-
 Rails/SkipsModelValidations:
-  Enabled: false
-
-Rails/WhereEquals:
   Enabled: false
 
 Style/Documentation:

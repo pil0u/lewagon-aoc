@@ -8,13 +8,13 @@
 
     <div data-controller="countdown" data-countdown-refresh-interval-value="23" class="hidden my-4 text-2xl text-aoc-atmospheric">
       <div class="flex items-center justify-center gap-x-3">
-        <%= image_pack_tag("parrot.gif", class: "hidden w-5 h-5", data: { "countdown-target": "party" }) %>
+        <%= image_tag("parrot.gif", class: "hidden w-5 h-5", data: { "countdown-target": "party" }) %>
 
         <div>
           <span data-countdown-target="hours"></span>:<span data-countdown-target="minutes"></span>:<span data-countdown-target="seconds"></span>.<span data-countdown-target="milliseconds"></span>
         </div>
 
-        <%= image_pack_tag("parrot.gif", class: "hidden w-5 h-5", data: { "countdown-target": "party" }) %>
+        <%= image_tag("parrot.gif", class: "hidden w-5 h-5", data: { "countdown-target": "party" }) %>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
       <%= link_to "scoreboards", scoreboard_path, class: "link" %>
       <%= link_to "stats", stats_path, class: "link" %>
       <%= link_to "settings", settings_path, class: "link" %>
-      <%= link_to destroy_user_session_path, method: :delete, class: "hover:text-wagon-red" do %>
+      <%= button_to destroy_user_session_path, method: :delete, class: "hover:text-wagon-red" do %>
         <i class="fas fa-power-off"></i>
       <% end %>
     </div>

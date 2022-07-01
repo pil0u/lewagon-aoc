@@ -1,0 +1,44 @@
+---
+name: Security
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  bundler-audit:
+    # Patch-level verifications for Bundler
+    # https://github.com/rubysec/bundler-audit
+
+    name: bundler-audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run bundler-audit
+        run: bundle exec bundler-audit --update
+
+  brakeman:
+    # Static analysis security vulnerability scanner for Ruby on Rails
+    # https://github.com/presidentbeef/brakeman
+
+    name: brakeman
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Run bundler-audit
+        run: bundle exec brakeman -q

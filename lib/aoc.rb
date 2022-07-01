@@ -29,7 +29,7 @@ module Aoc
       results["completion_day_level"].each do |day, challenges|
         challenges.each do |challenge, value|
           completion = {
-            user_id: user_id,
+            user_id:,
             day: day.to_i,
             challenge: challenge.to_i,
             completion_unix_time: value["get_star_ts"],

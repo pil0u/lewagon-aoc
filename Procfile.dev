@@ -1,2 +1,2 @@
-web: bundle exec rails s
-webpack: TAILWIND_MODE=watch bin/webpack-dev-server
+web: bin/rails server -p 3000
+css: bin/rails tailwindcss:watch

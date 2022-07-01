@@ -9,7 +9,7 @@ module Stats
                          .left_joins(:batch).joins(:score, :rank).preload(:score, :rank, :batch)
                          .order("ranks.in_city")
 
-      contributors_per_challenge = Completion.actual.left_joins(user: :city).where("city_id = ?", @city.id).group(:day, :challenge).count.to_h
+      contributors_per_challenge = Completion.actual.left_joins(user: :city).where("city_id = ?", @city.id).group(:day, :challenge).count.to_h # rubocop:disable Rails/WhereEquals
       @daily_contributors = contributors_per_challenge.group_by { |key, _l| key.first }.transform_values { |contributors_counts| contributors_counts.sort_by(&:first).map(&:last) }
 
       @latest_day = Aoc.in_progress? ? Time.now.getlocal("-05:00").day : 25

@@ -17,15 +17,6 @@
     <%= render "shared/header" %>
 
     <main>
-      <%# if ENV["ANNOUNCEMENT"].present? %>
-        <div id="announcement" class="my-12 flex justify-center bg-aoc-gray">
-          <p class="max-w-6xl paragraph text-dark text-center tracking-tighter"><span>The 2021 event is now over, congratulations to every puzzle solver out there!</span>
-          <span class="">You can help improve the event by <%= link_to "sharing your feedback and ideas", "https://docs.google.com/forms/d/e/1FAIpQLSeAXNOVWRBzAAdL6_p1Uu0abji9Bb3eI2cHNk5ILgeSxP5E5w/viewform", class: "font-semibold hover:text-aoc-gray-dark" %> 📣, I read every single comment.</span>
-          <span>Finally, stay tuned via <%= link_to "the #aoc Slack channel", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "font-semibold hover:text-aoc-gray-dark" %> 🔥</span>
-          </p>
-        </div>
-      <%# end %>
-
       <%= yield %>
     </main>
 

@@ -9,10 +9,16 @@ Rails.application.routes.draw do
     delete "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
   end
 
-  unauthenticated { root to: "pages#home", as: :unauth_root }
-  authenticated { root to: "pages#dashboard" }
+  unauthenticated do
+    root "pages#welcome", as: :unauth_root
+  end
 
-  get "/about", to: "pages#about"
+  authenticated do
+    root "pages#calendar", constraints: SyncedConstraint.new, as: :synced_root
+    root "pages#setup", as: :unsynced_root
+  end
+
+  get "/faq", to: "pages#faq"
   get "/scoreboard", to: "pages#scoreboard"
   get "/settings", to: "users#edit"
   patch "/settings", to: "users#update"

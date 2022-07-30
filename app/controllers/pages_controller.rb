@@ -3,13 +3,17 @@
 require "aoc"
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[home]
+  skip_before_action :authenticate_user!, only: %i[faq welcome]
 
-  MAGIC_DAYS = [17, 24, 1, 8, 15, 23, 5, 7, 14, 16, 4, 6, 13, 20, 22, 10, 12, 19, 21, 3, 11, 18, 25, 2, 9].freeze
+  def calendar; end
+  def faq; end
+  def setup; end
 
-  def home
+  def welcome
     @total_sign_ins = User.count
   end
+
+  MAGIC_DAYS = [17, 24, 1, 8, 15, 23, 5, 7, 14, 16, 4, 6, 13, 20, 22, 10, 12, 19, 21, 3, 11, 18, 25, 2, 9].freeze
 
   def about
     @ranking_example = [

@@ -48,4 +48,8 @@ class User < ApplicationRecord
 
     synced ? "OK" : "pending"
   end
+
+  def synced?
+    aoc_id.present? && synced
+  end
 end

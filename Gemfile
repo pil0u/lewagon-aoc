@@ -6,8 +6,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.1.2"
 gem "rails", "~> 7.0.3"
 
-# Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
+gem "blazer", "~> 2.6"
+gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
 gem "devise", "~> 4.8"
 gem "humanize", "~> 2.5"
 gem "importmap-rails", "~> 1.0"
@@ -32,13 +32,13 @@ group :development, :test do
 end
 
 group :development do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
   gem "listen", "~> 3.7"
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem "web-console", "~> 4.2"
+
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem "rack-mini-profiler", "~> 2.0"
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem "web-console", "~> 4.2"
 end

@@ -1,0 +1,3 @@
+<%= link_to_unless_current @link[:name], @link[:path], class: "link" do %>
+  <span class="selected-link"><%= @link[:name] %></span>
+<% end %>

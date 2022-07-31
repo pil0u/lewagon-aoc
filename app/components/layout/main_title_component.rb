@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Layout
-  class TitleComponent < ApplicationComponent
+  class MainTitleComponent < ApplicationComponent
   end
 end

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get "/scores", to: "pages#scores"
   get "/settings", to: "users#edit"
   patch "/settings", to: "users#update"
+  get "/the-wall", to: "pages#the_wall"
 
   get "/stats", to: "pages#stats"
   namespace "stats" do

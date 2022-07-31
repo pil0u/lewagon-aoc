@@ -49,6 +49,10 @@ class User < ApplicationRecord
     synced ? "OK" : "pending"
   end
 
+  def blazer?
+    uid.in?({ pilou: "6788", aquaj: "449" }.values)
+  end
+
   def synced?
     aoc_id.present? && synced
   end

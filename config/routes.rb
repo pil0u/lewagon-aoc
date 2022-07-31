@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount Blazer::Engine, at: "blazer"
-
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   devise_scope :user do
@@ -14,17 +12,27 @@ Rails.application.routes.draw do
   end
 
   authenticated do
-    root "pages#calendar", constraints: SyncedConstraint.new, as: :calendar
+    constraints(SyncedConstraint.new) do
+      root "pages#calendar", as: :calendar
+      get "/scores", to: "pages#scores"
+      get "/settings", to: "users#edit"
+      patch "/settings", to: "users#update"
+      get "/the-wall", to: "pages#the_wall"
+    end
+
     root "pages#setup", as: :setup
+    patch "/", to: "users#update"
+
+    mount Blazer::Engine, at: "blazer", constraints: BlazerConstraint.new
   end
 
   get "/faq", to: "pages#faq"
-  get "/scores", to: "pages#scores"
-  get "/settings", to: "users#edit"
-  patch "/settings", to: "users#update"
-  get "/the-wall", to: "pages#the_wall"
-
   get "/stats", to: "pages#stats"
+
+  #                 #
+  #  To be deleted  #
+  # vvvvvvvvvvvvvvv #
+
   namespace "stats" do
     resources :users, only: [:show]
     # resources :days, only: [:show], param: :number

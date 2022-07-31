@@ -21,6 +21,7 @@ gem "sprockets-rails", "~> 3.0"
 gem "stimulus-rails", "~> 1.0"
 gem "tailwindcss-rails", "~> 2.0"
 gem "turbo-rails", "~> 1.0"
+gem "view_component", "~> 2.62"
 
 group :development, :test do
   gem "brakeman", "~> 5.2"

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Layout
-  class MainNavigationComponent < ApplicationComponent
+module Header
+  class NavComponent < ApplicationComponent
     def initialize(user:)
       @user = user
     end

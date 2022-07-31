@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Layout
-  class NavigationLinkComponent < ApplicationComponent
+module Header
+  class NavTabComponent < ApplicationComponent
     def initialize(link:)
       @link = link
     end

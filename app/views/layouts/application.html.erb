@@ -14,9 +14,13 @@
 
   <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
     <%= render "shared/flashes" %>
-    <%= render "shared/header" %>
 
-    <main>
+    <header class="flex flex-col mx-auto">
+      <%= render Layout::TitleComponent.new %>
+      <%= render Layout::NavigationComponent.new(user: current_user) %>
+    </header>
+
+    <main class="container mx-auto my-4 lg:my-6 px-4">
       <%= yield %>
     </main>
 

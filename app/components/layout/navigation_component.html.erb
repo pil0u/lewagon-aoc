@@ -1,0 +1,33 @@
+<nav class="flex items-center w-fit mx-auto px-3 pb-2 gap-x-6 lg:gap-x-9 border-b border-aoc-gray-darker">
+
+  <% if @user.synced? %>
+
+    <%= link_to_unless_current "calendar", calendar_path, class: "link" do %>
+      <span class="selected-link">calendar</span>
+    <% end %>
+    <%= link_to_unless_current "scores", scores_path, class: "link" do %>
+      <span class="selected-link">scores</span>
+    <% end %>
+    <%= link_to_unless_current "the wall", "#", class: "link" do %>
+      <span class="selected-link">the wall</span>
+    <% end %>
+    <%= link_to_unless_current raw("<i class=\"fas fa-gear\"></i>"), settings_path, class: "link" do %>
+      <i class="fas fa-gear selected-link"></i>
+    <% end %>
+  
+  <% else %>
+
+    <%= link_to_unless_current "faq", faq_path, class: "link" do %>
+      <span class="selected-link">faq</span>
+    <% end %>
+    <%= link_to_unless_current "setup", setup_path, class: "link" do %>
+      <span class="selected-link">setup</span>
+    <% end %>
+
+  <% end %>
+
+  <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "hover:text-wagon-red" do %>
+    <i class="fas fa-power-off"></i>
+  <% end %>
+
+</nav>

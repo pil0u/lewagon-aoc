@@ -48,6 +48,10 @@
     @apply text-justify whitespace-pre-line;
   }
 
+  .selected-link {
+    @apply text-aoc-gold text-shadow-gold;
+  }
+
   .strong {
     @apply text-white text-shadow-white;
   }

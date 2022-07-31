@@ -14,12 +14,12 @@ Rails.application.routes.draw do
   end
 
   authenticated do
-    root "pages#calendar", constraints: SyncedConstraint.new, as: :synced_root
-    root "pages#setup", as: :unsynced_root
+    root "pages#calendar", constraints: SyncedConstraint.new, as: :calendar
+    root "pages#setup", as: :setup
   end
 
   get "/faq", to: "pages#faq"
-  get "/scoreboard", to: "pages#scoreboard"
+  get "/scores", to: "pages#scores"
   get "/settings", to: "users#edit"
   patch "/settings", to: "users#update"
 

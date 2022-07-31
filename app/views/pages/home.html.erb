@@ -1,0 +1,21 @@
+<div class="my-8 mx-4 sm:mx-auto max-w-prose">
+  <p class="paragraph"><%= link_to "Advent of Code", "https://adventofcode.com/", target: :blank, class: "link-external" %> is an Advent calendar of small programming puzzles that can be solved in any programming language you like.
+  Every day, from <span class="strong">December 1st</span> to <span class="strong">December 25th</span>, a new challenge pops up with some fictional Christmas backstory 🎄
+
+  You don't need a computer science background to participate - just a little programming knowledge and some problem solving skills will get you pretty far.
+
+  Solving any puzzle earns you points 💎, not only for you, but also for <span class="strong">your batch & your campus city</span> @ <span class="text-wagon-red text-shadow-red">Le Wagon</span>.</p>
+
+  <p class="whitespace-pre-line text-center">
+    Which Alumni batch is the strongest?
+    Which city has crafted the best talents?
+
+    <em>There can be only one</em>.
+  </p>
+</div>
+
+<%= button_to user_kitt_omniauth_authorize_path, data: { turbo: false, controller: "disable-link", action: "disable-link#now" }, class: "my-8 mx-auto p-2 max-w-md flex justify-around border border-aoc-gray-darker link" do %>
+  <span>Sign in with Kitt</span>
+<% end %>
+
+<span class="block max-w-md mx-auto text-right text-sm">Already <span class="strong"><%= @total_sign_ins.humanize %></span> <%= "player".pluralize(@total_sign_ins) %> engaged.</span>

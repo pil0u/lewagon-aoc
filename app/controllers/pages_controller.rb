@@ -8,6 +8,7 @@ class PagesController < ApplicationController
   def calendar; end
   def faq; end
   def setup; end
+  def scores; end
 
   def welcome
     @total_sign_ins = User.count

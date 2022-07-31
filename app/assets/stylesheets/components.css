@@ -36,12 +36,16 @@
     @apply hover:text-aoc-gold hover:text-shadow-gold;
   }
 
-  .link-gold {
-    @apply text-aoc-gold hover:text-shadow-gold;
-  }
-
   .link-external {
     @apply text-aoc-green-flash hover:text-shadow-green;
+  }
+
+  .link-footer {
+    @apply underline decoration-dotted hover:decoration-solid underline-offset-4;
+  }
+
+  .link-gold {
+    @apply text-aoc-gold hover:text-shadow-gold;
   }
 
   .paragraph {

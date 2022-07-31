@@ -8,9 +8,7 @@ module.exports = {
     './app/javascript/**/*.js',
     './app/views/**/*.html.erb',
   ],
-  safelist: [
-    'underline'
-  ],
+  safelist: [],
   theme: {
     extend: {
       colors: {

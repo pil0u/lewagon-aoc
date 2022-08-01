@@ -2,6 +2,7 @@
 EnableDefaultLinters: true
 exclude:
   - '**/vendor/**/*'
+  - '**/_*.html.erb'
   - '**/app/views/stats/days/show.html.erb' # TODO
 
 linters:
@@ -9,10 +10,13 @@ linters:
   ErbSafety:
     exclude:
       - '**/app/views/shared/_flashes.html.erb'
+      - '**/app/components/header/nav_component.html.erb'
 
   # Disable "String not translated" errors while passing the --enable-all-linters flag
   HardCodedString:
     exclude:
+      - '**/app/components/**/*'
+      - '**/app/components/*'
       - '**/app/views/**/*'
 
   Rubocop:

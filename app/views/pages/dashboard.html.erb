@@ -13,7 +13,7 @@
 
         <div class="h-1/3 flex items-center">
           <h2 class="text-lg strong">
-              <%= link_to "Today's puzzle", "https://adventofcode.com/#{@year}/day/#{@now.day}", target: :blank, class: "hover:link-external" %>
+              <%= link_to "Today's puzzle", "https://adventofcode.com/#{@year}/day/#{@now.day}", target: :blank, class: "" %>
           </h2>
         </div>
 
@@ -82,7 +82,7 @@
             <span class="text-xl text-aoc-atmospheric"><%= @user_batch_score[:score] %> pts</span></span>
           <% end %>
         <% else %>
-          <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "link-gold" %></span>
+          <span class="text-xl text-center">Add your Batch in <%= link_to "settings", settings_path, class: "text-gold" %></span>
         <% end %>
       </div>
     </div>
@@ -106,7 +106,7 @@
             <span class="text-xl text-aoc-atmospheric"><%= @user_city_score[:score] %> pts</span></span>
           <% end %>
         <% else %>
-          <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "link-gold" %></span>
+          <span class="text-xl text-center">Add your City in <%= link_to "settings", settings_path, class: "text-gold" %></span>
         <% end %>
       </div>
     </div>
@@ -168,21 +168,21 @@
       <span>If you are still <em>pending</em> <u>after</u> a refresh, start the process over, wait for the next refresh and you should be good.</span>
     </div>
 
-    <p class="paragraph">To make sure your name reaches our <%= link_to "custom scoreboards", scoreboard_path, class: "link-gold" %>, you need to follow these steps:</p>
+    <p class="paragraph">To make sure your name reaches our <%= link_to "custom scoreboards", scoreboard_path, class: "text-gold" %>, you need to follow these steps:</p>
 
     <ol class="my-4 mx-14 list-decimal flex flex-col gap-y-1.5">
-      <li class="paragraph"><%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", target: :blank, class: "link-external" %>, via GitHub or any other OAuth option</li>
+      <li class="paragraph"><%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", target: :blank, class: "text-green" %>, via GitHub or any other OAuth option</li>
 
       <%= form_with url: "https://adventofcode.com/#{@year}/leaderboard/private/join", authenticity_token: false, html: { target: :blank } do |f| %>
         <%= f.hidden_field :join_key, value: @current_open_room %>
-        <li class="paragraph">Once logged in, <%= f.submit "click here", class: "link-external bg-transparent cursor-pointer" %> to join our leaderboard on the external platform. You should be prompted:
+        <li class="paragraph">Once logged in, <%= f.submit "click here", class: "text-green bg-transparent cursor-pointer" %> to join our leaderboard on the external platform. You should be prompted:
         <code>You have joined that private leaderboard.</code>
-        If not, go to <%= link_to "that page instead", "https://adventofcode.com/2021/leaderboard/private", target: :blank, class: "link-external" %> and enter the code:
+        If not, go to <%= link_to "that page instead", "https://adventofcode.com/2021/leaderboard/private", target: :blank, class: "text-green" %> and enter the code:
         <code class="strong"><%= @current_open_room %></code></li>
       <% end %>
 
-      <li class="paragraph">On Advent of Code, go to <%= link_to "your settings page", "https://adventofcode.com/settings", target: :blank, class: "link-external" %> and copy the number next to "anonymous user #<span class="strong">0000000</span>"</li>
-      <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "link-gold" %>, next to <span class="strong">Advent of Code ID</span></li>
+      <li class="paragraph">On Advent of Code, go to <%= link_to "your settings page", "https://adventofcode.com/settings", target: :blank, class: "text-green" %> and copy the number next to "anonymous user #<span class="strong">0000000</span>"</li>
+      <li class="paragraph">Paste that number <%= link_to "here", settings_path, class: "text-gold" %>, next to <span class="strong">Advent of Code ID</span></li>
       <li class="paragraph">Save</li>
     </ol>
 

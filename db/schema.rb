@@ -100,8 +100,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_30_080054) do
   end
 
   create_table "states", force: :cascade do |t|
-    t.datetime "last_api_fetch_start", precision: nil
-    t.datetime "last_api_fetch_end", precision: nil
+    t.datetime "last_api_fetch_start"
+    t.datetime "last_api_fetch_end"
   end
 
   create_table "users", force: :cascade do |t|
@@ -155,6 +155,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_30_080054) do
   SQL
   add_index "point_values", ["completion_id"], name: "index_point_values_on_completion_id", unique: true
 
+  create_view "scores", materialized: true, sql_definition: <<-SQL
+      SELECT u.id AS user_id,
+      COALESCE(sum(pv.in_contest), (0)::numeric) AS in_contest,
+      COALESCE(sum(pv.in_batch), (0)::numeric) AS in_batch,
+      COALESCE(sum(pv.in_city), (0)::numeric) AS in_city
+     FROM ((users u
+       LEFT JOIN completions co ON ((co.user_id = u.id)))
+       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
+    GROUP BY u.id;
+  SQL
+  add_index "scores", ["user_id"], name: "index_scores_on_user_id", unique: true
+
+  create_view "ranks", materialized: true, sql_definition: <<-SQL
+      SELECT u.id AS user_id,
+      rank() OVER (ORDER BY s.in_contest DESC) AS in_contest,
+      rank() OVER (PARTITION BY b.id ORDER BY s.in_batch DESC) AS in_batch,
+      rank() OVER (PARTITION BY ci.id ORDER BY s.in_city DESC) AS in_city
+     FROM (((users u
+       LEFT JOIN scores s ON ((s.user_id = u.id)))
+       LEFT JOIN batches b ON ((u.batch_id = b.id)))
+       LEFT JOIN cities ci ON ((u.city_id = ci.id)))
+    ORDER BY s.in_contest DESC;
+  SQL
+  add_index "ranks", ["user_id"], name: "index_ranks_on_user_id", unique: true
+
   create_view "batch_contributions", materialized: true, sql_definition: <<-SQL
       WITH synced_user_numbers AS (
            SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
@@ -175,6 +200,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_30_080054) do
        LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)));
   SQL
   add_index "batch_contributions", ["completion_id"], name: "index_batch_contributions_on_completion_id", unique: true
+
+  create_view "city_contributions", materialized: true, sql_definition: <<-SQL
+      WITH synced_user_numbers AS (
+           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
+             FROM ( SELECT count(u.*) AS value
+                     FROM (cities
+                       LEFT JOIN users u ON ((u.city_id = cities.id)))
+                    WHERE u.synced
+                    GROUP BY cities.id) synced_user_counts
+          )
+   SELECT co.id AS completion_id,
+          CASE
+              WHEN (cr.in_city <= ( SELECT synced_user_numbers.median
+                 FROM synced_user_numbers)) THEN pv.in_contest
+              ELSE (0)::bigint
+          END AS points
+     FROM ((completions co
+       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
+       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)));
+  SQL
+  add_index "city_contributions", ["completion_id"], name: "index_city_contributions_on_completion_id", unique: true
 
   create_view "batch_points", materialized: true, sql_definition: <<-SQL
       WITH synced_user_numbers AS (
@@ -213,27 +259,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_30_080054) do
   SQL
   add_index "batch_scores", ["batch_id"], name: "index_batch_scores_on_batch_id", unique: true
 
-  create_view "city_contributions", materialized: true, sql_definition: <<-SQL
-      WITH synced_user_numbers AS (
-           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
-             FROM ( SELECT count(u.*) AS value
-                     FROM (cities
-                       LEFT JOIN users u ON ((u.city_id = cities.id)))
-                    WHERE u.synced
-                    GROUP BY cities.id) synced_user_counts
-          )
-   SELECT co.id AS completion_id,
-          CASE
-              WHEN (cr.in_city <= ( SELECT synced_user_numbers.median
-                 FROM synced_user_numbers)) THEN pv.in_contest
-              ELSE (0)::bigint
-          END AS points
-     FROM ((completions co
-       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
-       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)));
-  SQL
-  add_index "city_contributions", ["completion_id"], name: "index_city_contributions_on_completion_id", unique: true
-
   create_view "city_points", materialized: true, sql_definition: <<-SQL
       WITH synced_user_numbers AS (
            SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
@@ -270,30 +295,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_30_080054) do
             GROUP BY city_points.city_id) scores;
   SQL
   add_index "city_scores", ["city_id"], name: "index_city_scores_on_city_id", unique: true
-
-  create_view "scores", materialized: true, sql_definition: <<-SQL
-      SELECT u.id AS user_id,
-      COALESCE(sum(pv.in_contest), (0)::numeric) AS in_contest,
-      COALESCE(sum(pv.in_batch), (0)::numeric) AS in_batch,
-      COALESCE(sum(pv.in_city), (0)::numeric) AS in_city
-     FROM ((users u
-       LEFT JOIN completions co ON ((co.user_id = u.id)))
-       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
-    GROUP BY u.id;
-  SQL
-  add_index "scores", ["user_id"], name: "index_scores_on_user_id", unique: true
-
-  create_view "ranks", materialized: true, sql_definition: <<-SQL
-      SELECT u.id AS user_id,
-      rank() OVER (ORDER BY s.in_contest DESC) AS in_contest,
-      rank() OVER (PARTITION BY b.id ORDER BY s.in_batch DESC) AS in_batch,
-      rank() OVER (PARTITION BY ci.id ORDER BY s.in_city DESC) AS in_city
-     FROM (((users u
-       LEFT JOIN scores s ON ((s.user_id = u.id)))
-       LEFT JOIN batches b ON ((u.batch_id = b.id)))
-       LEFT JOIN cities ci ON ((u.city_id = ci.id)))
-    ORDER BY s.in_contest DESC;
-  SQL
-  add_index "ranks", ["user_id"], name: "index_ranks_on_user_id", unique: true
 
 end

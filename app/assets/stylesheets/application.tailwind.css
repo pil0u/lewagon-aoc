@@ -7,8 +7,16 @@
 @layer components {
   /* Used in revamped components */
 
-  .explicit-link {
+  .link-explicit {
     @apply underline decoration-dotted underline-offset-4 hover:decoration-solid;
+  }
+
+  .link-external {
+    @apply text-aoc-green hover:text-aoc-green-flash
+  }
+
+  .link-slack {
+    @apply text-aoc-atmospheric hover:text-shadow-atmospheric
   }
 
   .strong {
@@ -21,17 +29,12 @@
     text-shadow: 0 0 5px #FFFF66;
   }
 
-  .text-red {
-    @apply text-wagon-red;
-    text-shadow: 0 0 2px #FD1015, 0 0 5px #FD1015;
-  }
-
   .text-shadow-green {
     text-shadow: 0 0 2px #00CC00, 0 0 5px #00CC00;
   }
 
-  .to-slack {
-    @apply text-aoc-atmospheric hover:text-shadow-atmospheric
+  .text-shadow-red {
+    text-shadow: 0 0 2px #FD1015, 0 0 5px #FD1015;
   }
 
 

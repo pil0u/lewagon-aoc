@@ -3,6 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
   now () {
-    this.element.classList.add("pointer-events-none", "cursor-not-allowed")
+    this.element.classList.add("pointer-events-none")
   }
 }

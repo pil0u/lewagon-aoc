@@ -1,5 +1,35 @@
-<h1>Welcome</h1>
+<div class="text-justify max-w-prose mx-auto">
+  <p>
+    <%= link_to "Advent of Code", "https://adventofcode.com/", target: :blank, class: "link-explicit link-external" %>
+    is an Advent calendar of small programming puzzles that can be solved in any programming language you like.
+  </p>
+  <br>
+  <p>
+    Every day, from <span class="strong">December 1st</span> to <span class="strong">December 25th</span>, a new
+    programming challenge is released, wrapped into a fictional Christmas backstory 🎄
+  </p>
+  <br>
+  <p>
+    You don't need a computer science background to participate - just a little programming knowledge and some
+    problem solving skills will get you pretty far.
+  </p>
+  <br>
+  <p>
+    Solving any puzzle, <em>at any time</em>, earns you points 💎. Not only for you, but also for
+    <span class="strong">your campus city</span> from <span class="text-wagon-red">Le Wagon</span> or your dream
+    <span class="strong">squad of 4 players</span>.
+  </p>
+  <br>
+  <p class="italic text-right">
+    A year from now, you will wish you had started today.
+  </p>
+</div>
 
-<%= button_to user_kitt_omniauth_authorize_path, data: { turbo: false, controller: "disable-link", action: "disable-link#now" }, class: "my-8 mx-auto p-2 max-w-md flex justify-around border border-aoc-gray-darker link" do %>
-  <span>Sign in with Kitt</span>
-<% end %>
+<div class="my-8 flex flex-col justify-center items-center gap-y-4">
+  <%= button_to user_kitt_omniauth_authorize_path, data: { turbo: false, controller: "disable-link", action: "disable-link#now" }, class: "button" do %>
+    Sign in with Kitt
+  <% end %>
+
+  <span class="text-xs">Already <span class="strong"><%= @total_users.humanize %></span> <%= "player".pluralize(@total_users) %> engaged.</span>
+</div>
+

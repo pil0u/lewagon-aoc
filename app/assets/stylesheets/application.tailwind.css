@@ -7,6 +7,10 @@
 @layer components {
   /* Used in revamped components */
 
+  .button {
+    @apply px-3 py-2 border border-aoc-gray-darker hover:text-gold
+  }
+
   .link-explicit {
     @apply underline decoration-dotted underline-offset-4 hover:decoration-solid;
   }

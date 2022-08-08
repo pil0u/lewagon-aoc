@@ -12,7 +12,7 @@ class PagesController < ApplicationController
   def the_wall; end
 
   def welcome
-    @total_sign_ins = User.count
+    @total_users = User.count
   end
 
   ### old

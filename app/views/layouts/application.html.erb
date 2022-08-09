@@ -13,7 +13,7 @@
   </head>
 
   <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
-    <%= render "shared/flashes" %>
+    <%= render FlashComponent.new(flash:) %>
 
     <header class="flex flex-col mx-auto">
       <%= render Header::TitleComponent.new %>

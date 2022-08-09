@@ -17,14 +17,6 @@ module ApplicationHelper
     }
   end
 
-  def status_css(status)
-    {
-      "text-wagon-red-light": status == "KO",
-      "text-aoc-atmospheric": status == "pending",
-      "text-aoc-green": status == "OK"
-    }
-  end
-
   def ranking_css(rank, rank_col: false)
     {
       "text-gold": rank == 1,

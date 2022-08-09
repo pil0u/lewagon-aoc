@@ -7,12 +7,35 @@ class PagesController < ApplicationController
 
   def calendar; end
   def faq; end
-  def setup; end
+
+  def setup
+    set_time_since_last_api_fetch
+    set_sync_status_css_class
+  end
+
   def scores; end
   def the_wall; end
 
   def welcome
     @total_users = User.count
+  end
+
+  private
+
+  def set_sync_status_css_class
+    css_class = {
+      "KO" => "text-wagon-red",
+      "Pending" => "text-aoc-atmospheric"
+    }
+
+    @sync_status_css_class = css_class[current_user.friendly_status]
+  end
+
+  def set_time_since_last_api_fetch
+    now_utc = Time.now.utc
+    last_api_fetch_utc = State.first.last_api_fetch_end
+
+    @time_since_last_api_fetch = helpers.distance_of_time_in_words(last_api_fetch_utc, now_utc)
   end
 
   ### old

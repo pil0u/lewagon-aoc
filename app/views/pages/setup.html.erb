@@ -1,1 +1,68 @@
-<h1>Setup</h1>
+<%= render PageTitleComponent.new(title: "Setup") %>
+
+<div class="my-4 flex flex-col gap-y-4">
+  <div class="flex justify-center gap-x-3">
+    <div class="text-right">
+      <p>Authenticated as:</p>
+      <p>Sync status:</p>
+      <p>Data updated:</p>
+    </div>
+
+    <div>
+      <p><span class="strong"><%= current_user.username %></span></p>
+      <p><span class="<%= @sync_status_css_class %>"><%= current_user.friendly_status %></span></p>
+      <p><%= @time_since_last_api_fetch %> ago</p>
+    </div>
+  </div>
+
+  <p class="text-justify">
+    This platform is a wrapper around Advent of Code's puzzles, with additional, spicy features
+    designed for Le Wagon community. To access these custom features, you need to sync your account
+    <em>on Advent of Code</em> with your account <em>here</em>.
+  </p>
+
+  <ol class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
+    <li>
+      <%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", class: "link-explicit link-external" %>,
+      via GitHub or any other OAuth option.
+    </li>
+    <li>
+      <div class="flex flex-col gap-y-2">
+        <p>
+          Once logged in, you need to join our private leaderboards there. The code to our private leaderboard is
+          <code class="strong">123456-abcdef</code>. User it <%= link_to "on this page", "https://adventofcode.com/leaderboard/private", class: "link-explicit link-external" %>,
+          then click [Join].
+        </p>
+        <p>
+          You should be prompted: <code>You have joined that private leaderboard.</code>
+        </p>
+        <p>
+          If the leaderboard is already full, refresh this page to get a new code and start over.
+        </p>
+      </div>
+    </li>
+    <li>
+      We need to know your Advent of Code ID. You can find it in your <%= link_to "settings", "https://adventofcode.com/settings", class: "link-explicit link-external" %>,
+      the number next to <code>anonymous user #<span class="strong">1234567</span></code>.
+    </li>
+    <li>
+      <div class="flex flex-col gap-y-2">
+        <p>Paste that number here and hit "Save":</p>
+        <input type="text">
+        <p>
+          Your sync status at the top of this page should then switch to <span class="text-aoc-atmospheric">Pending</span>.
+        </p>
+      </div>
+    </li>
+    <li>
+      Just wait for the next update of the data (every ~10 minutes). This page will magically disappear to make room
+      for the real thing ✨
+    </li>
+  </ol>
+</div>
+
+<p class="italic text-sm opacity-80">
+  If you carefully followed each one of these steps and your status remains <span class="not-italic text-aoc-atmospheric">Pending</span>
+  after an update of the data, send me a message <%= link_to "on Slack", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>
+  with these: <code class="not-italic strong">id:<%= current_user.id %>;aoc_id:<%= current_user.aoc_id %></code>
+</p>

@@ -9,7 +9,7 @@ linters:
   # TODO
   ErbSafety:
     exclude:
-      - '**/app/views/shared/_flashes.html.erb'
+      - '**/app/components/flash_component.html.erb'
       - '**/app/components/header/nav_component.html.erb'
 
   # Disable "String not translated" errors while passing the --enable-all-linters flag

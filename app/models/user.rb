@@ -43,10 +43,10 @@ class User < ApplicationRecord
     end
   end
 
-  def status
+  def friendly_status
     return "KO" if aoc_id.nil?
 
-    synced ? "OK" : "pending"
+    synced ? "OK" : "Pending"
   end
 
   def blazer?

@@ -20,13 +20,13 @@
       <%= render Header::NavComponent.new(user: current_user) %>
     </header>
 
-    <main class="max-w-4xl w-11/12 mx-auto my-4 lg:my-6 px-4">
+    <main class="max-w-4xl w-5/6 mx-auto my-4 lg:my-6">
       <%= yield %>
     </main>
 
     <footer class="flex flex-col gap-y-1 mx-auto mt-auto mb-2 text-sm text-center opacity-60">
       <%= render Footer::NavComponent.new %>
-      <%= render LastDataRefreshComponent.new %>
+      <%= render LastDataUpdateComponent.new %>
       <%= render Footer::CopyrightComponent.new %>
     </footer>
   </body>

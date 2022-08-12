@@ -48,15 +48,26 @@
     <li>
       <div class="flex flex-col gap-y-2">
         <p>Paste that number here and hit "Save":</p>
-        <input type="text">
+        <%= form_with model: current_user, url: setup_path, class: "flex items-center justify-center gap-x-2" do |f| %>
+          <%= f.number_field :aoc_id, value: current_user.aoc_id, min: 1, class: "input", placeholder: "ID" %>
+
+          <%= f.submit "Save", class: "button cursor-pointer" %>
+        <% end %>
         <p>
           Your sync status at the top of this page should then switch to <span class="text-aoc-atmospheric">Pending</span>.
         </p>
       </div>
     </li>
     <li>
-      Just wait for the next update of the data (every ~10 minutes). This page will magically disappear to make room
-      for the real thing ✨
+      <div class="flex flex-col gap-y-2">
+        <p>
+          Just wait for the next update of the data (every ~10 minutes). This page will magically
+          disappear to make room for the real thing ✨
+        </p>
+        <p>
+          In the meantime, don't hesitate to have a look at the <%= link_to "FAQ", faq_path, class: "link-explicit link-internal" %>.
+        </p>
+      </div>
     </li>
   </ol>
 </div>

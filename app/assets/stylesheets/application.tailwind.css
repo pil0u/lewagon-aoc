@@ -1,14 +1,35 @@
-@import "tailwindcss/base";
 @import "fonts";
 @import "font_awesome";
 
+@import "tailwindcss/base";
 @import "tailwindcss/components";
 
 @layer components {
   /* Used in revamped components */
 
   .button {
-    @apply px-3 py-2 border border-aoc-gray-darker hover:text-gold
+    @apply form-element hover:text-gold;
+  }
+
+  code {
+    @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
+  }
+
+  .form-element {
+    @apply px-3 py-2 leading-normal border border-aoc-gray-darker
+  }
+
+  .input {
+    @apply form-element w-48 bg-aoc-gray-darkest;
+  }
+
+  /* Hide the spinner for numerical input */
+  input[type=number] {
+    -moz-appearance:textfield;
+  }
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none; 
+    margin: 0;
   }
 
   .link-explicit {
@@ -16,11 +37,15 @@
   }
 
   .link-external {
-    @apply text-aoc-green hover:text-aoc-green-flash
+    @apply text-aoc-green;
+  }
+
+  .link-internal {
+    @apply text-aoc-gold;
   }
 
   .link-slack {
-    @apply text-aoc-atmospheric hover:text-shadow-atmospheric
+    @apply text-aoc-atmospheric hover:text-shadow-atmospheric;
   }
 
   .strong {
@@ -31,6 +56,10 @@
   .text-gold {
     @apply text-aoc-gold;
     text-shadow: 0 0 5px #FFFF66;
+  }
+
+  .text-shadow-atmospheric {
+    text-shadow: 0 0 5px #79A2D8;
   }
 
   .text-shadow-green {
@@ -52,41 +81,12 @@
     }
   }
 
-  code {
-    @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
-  }
-
   .contact-me {
     @apply border-b border-aoc-gray-dark hover:strong hover:border-aoc-gray;
   }
 
   .dashboard-tile {
     @apply w-48 h-48 border-aoc-gray-darker cursor-default;
-  }
-
-  input[type=number] {
-    -moz-appearance:textfield;
-  }
-
-  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none; 
-    margin: 0;
-  }
-
-  .input-field {
-    @apply w-48 px-2 bg-aoc-gray-darker bg-opacity-60;
-  }
-
-  .paragraph {
-    @apply text-justify whitespace-pre-line;
-  }
-
-  .text-green {
-    @apply text-aoc-green-flash hover:text-shadow-green;
-  }
-
-  .text-shadow-atmospheric {
-    text-shadow: 0 0 5px #79A2D8;
   }
 
   .text-shadow-silver {
@@ -96,7 +96,6 @@
   .text-shadow-bronze {
     text-shadow: 0 0 5px #FFCC99;
   }
-
 
   @keyframes wiggle {
     0% { transform: rotate(0deg); }

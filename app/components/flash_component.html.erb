@@ -1,7 +1,7 @@
 <% @flash.each do |type, message| %>
   <div data-controller="flash" data-action="click->flash#close"
-       class="absolute top-1 right-1 flex items-center gap-x-8 px-2 py-1 bg-aoc-gray text-dark rounded-sm cursor-pointer">
-    <p class="text-sm font-semibold"><%= message.html_safe %></p>
+       class="absolute top-1 right-1 flex items-center gap-x-8 px-2 py-1 <%= @flash_type_css_class[type] %> rounded-sm cursor-pointer">
+    <p class="text-sm font-semibold"><%= message %></p>
     <i class="fas fa-times"></i>
   </div>
 <% end %>

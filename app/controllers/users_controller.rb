@@ -1,31 +1,18 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_current_user, only: %i[edit update]
-
-  def edit; end
+  def edit
+    set_current_user
+  end
 
   def update
-    batch_number = user_params[:batch_number]&.gsub(/[^\d]/, "")
-    if batch_number.to_i > (2**31) - 1 # The batch number is stored as a 4-bytes integer in the database
-      redirect_to settings_path, notice: "Please enter a valid batch number"
-      return
-    end
-    batch = Batch.find_or_create_by(number: batch_number) if batch_number.present?
+    set_current_user
+    set_updated_params
 
-    city = City.find(user_params[:city_id]) if user_params[:city_id].present?
-
-    @user.attributes = {
-      username: user_params[:username],
-      aoc_id: user_params[:aoc_id],
-      batch:,
-      city:
-    }
-
-    if @user.save
-      redirect_to settings_path, notice: "Your information was updated"
+    if @user.update(@params)
+      redirect_back(fallback_location: "/", notice: "Your information was updated")
     else
-      render :edit
+      redirect_back(fallback_location: "/", alert: "Error: #{@user.errors.full_messages[0]}")
     end
   end
 
@@ -35,7 +22,24 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
-  def user_params
+  def set_updated_params
+    # Notice the .to_i[0..30] notation for integer params.
+    #
+    # Integers are stored on 4 bytes by default on our PostgreSQL database, so any
+    # number greater than or equal to 2**31 cannot be stored and throws an error.
+    # To mitigate this, we transform any integer we receive to its truncated form to
+    # the 31th bit, enforcing any number (even negative) to stay limited to 4 bytes.
+    #             (2**31)[0..30] => 0            -1[0..30] => 2**31 - 1
+
+    @params = {
+      username: form_params[:username],
+      aoc_id: form_params[:aoc_id],
+      batch: Batch.find_or_create_by(number: form_params[:batch_number].to_i[0..30]),
+      city: City.find_by(id: form_params[:city_id])
+    }.compact
+  end
+
+  def form_params
     params.require(:user).permit(:username, :aoc_id, :batch_number, :city_id)
   end
 end

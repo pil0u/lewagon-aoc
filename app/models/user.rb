@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :city_contributions, through: :completions
   has_many :batch_contributions, through: :completions
 
-  validates :aoc_id, numericality: { in: 1...2**31, message: "should be between 1 and 2^31" }
+  validates :aoc_id, numericality: { in: 1...2**31, message: "should be between 1 and 2^31" }, allow_nil: true
 
   scope :synced, -> { where(synced: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS) }

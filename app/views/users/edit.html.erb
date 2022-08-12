@@ -20,7 +20,7 @@
       <%= f.label :city_name, "City", class: "strong" %>
       <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: @user.city_id }, class: "h-7 input-field") %>
     </div>
-    <span class="text-sm tracking-tight">Your city is not here? <%= link_to "Ping me", "slack://user?team=T02NE0241&id=URZ0F4TEF", class: "contact-me" %></span>
+    <span class="text-sm tracking-tight">Your city is not here? <%= link_to "Ping me", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "contact-me" %></span>
 
     <%= f.submit "SAVE", class: "bg-transparent cursor-pointer my-8 px-6 py-2 border border-aoc-gray-darker link" %>
   <% end %>

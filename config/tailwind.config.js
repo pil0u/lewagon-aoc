@@ -25,8 +25,7 @@ module.exports = {
           },
           green: {
             DEFAULT: '#009900',
-            light: '#99FF99',
-            flash: '#00CC00'
+            light: '#99FF99'
           },
           gold: {
             DEFAULT: '#FFFF66',
@@ -39,7 +38,7 @@ module.exports = {
         wagon: {
           red: {
             DEFAULT: '#FD1015',
-            light: '#FE9092'
+            light: '#FE9092'      // unused
           }
         }
       },

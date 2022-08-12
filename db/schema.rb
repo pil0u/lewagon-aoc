@@ -10,111 +10,112 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_03_191647) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_12_220753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "batches", force: :cascade do |t|
-    t.integer "number"
     t.datetime "created_at", null: false
+    t.integer "number"
     t.datetime "updated_at", null: false
   end
 
   create_table "blazer_audits", force: :cascade do |t|
-    t.bigint "user_id"
+    t.datetime "created_at"
+    t.string "data_source"
     t.bigint "query_id"
     t.text "statement"
-    t.string "data_source"
-    t.datetime "created_at"
+    t.bigint "user_id"
     t.index ["query_id"], name: "index_blazer_audits_on_query_id"
     t.index ["user_id"], name: "index_blazer_audits_on_user_id"
   end
 
   create_table "blazer_checks", force: :cascade do |t|
-    t.bigint "creator_id"
-    t.bigint "query_id"
-    t.string "state"
-    t.string "schedule"
-    t.text "emails"
-    t.text "slack_channels"
     t.string "check_type"
-    t.text "message"
-    t.datetime "last_run_at"
     t.datetime "created_at", null: false
+    t.bigint "creator_id"
+    t.text "emails"
+    t.datetime "last_run_at"
+    t.text "message"
+    t.bigint "query_id"
+    t.string "schedule"
+    t.text "slack_channels"
+    t.string "state"
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_checks_on_creator_id"
     t.index ["query_id"], name: "index_blazer_checks_on_query_id"
   end
 
   create_table "blazer_dashboard_queries", force: :cascade do |t|
-    t.bigint "dashboard_id"
-    t.bigint "query_id"
-    t.integer "position"
     t.datetime "created_at", null: false
+    t.bigint "dashboard_id"
+    t.integer "position"
+    t.bigint "query_id"
     t.datetime "updated_at", null: false
     t.index ["dashboard_id"], name: "index_blazer_dashboard_queries_on_dashboard_id"
     t.index ["query_id"], name: "index_blazer_dashboard_queries_on_query_id"
   end
 
   create_table "blazer_dashboards", force: :cascade do |t|
+    t.datetime "created_at", null: false
     t.bigint "creator_id"
     t.string "name"
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_dashboards_on_creator_id"
   end
 
   create_table "blazer_queries", force: :cascade do |t|
-    t.bigint "creator_id"
-    t.string "name"
-    t.text "description"
-    t.text "statement"
-    t.string "data_source"
-    t.string "status"
     t.datetime "created_at", null: false
+    t.bigint "creator_id"
+    t.string "data_source"
+    t.text "description"
+    t.string "name"
+    t.text "statement"
+    t.string "status"
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
   end
 
   create_table "cities", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "name"
     t.integer "size"
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
   create_table "completions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "day", limit: 2
     t.integer "challenge", limit: 2
     t.bigint "completion_unix_time"
-    t.datetime "updated_at", null: false
-    t.integer "rank_solo"
+    t.integer "day", limit: 2
     t.integer "rank_in_batch"
     t.integer "rank_in_city"
-    t.integer "score_solo"
+    t.integer "rank_solo"
     t.integer "score_in_batch"
     t.integer "score_in_city"
+    t.integer "score_solo"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["user_id", "day", "challenge"], name: "index_completions_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_completions_on_user_id"
   end
 
   create_table "states", force: :cascade do |t|
-    t.datetime "last_api_fetch_start"
     t.datetime "last_api_fetch_end"
+    t.datetime "last_api_fetch_start"
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "provider"
-    t.string "uid"
-    t.string "username"
     t.integer "aoc_id"
-    t.boolean "synced", default: false
     t.bigint "batch_id"
     t.bigint "city_id"
+    t.datetime "created_at", null: false
+    t.string "github_username"
+    t.string "provider"
+    t.boolean "synced", default: false
+    t.string "uid"
+    t.datetime "updated_at", null: false
+    t.string "username"
     t.index ["aoc_id"], name: "index_users_on_aoc_id"
     t.index ["batch_id"], name: "index_users_on_batch_id"
     t.index ["city_id"], name: "index_users_on_city_id"

@@ -43,13 +43,13 @@
         <%= form_with model: current_user, url: setup_path, data: { controller: "unlock" }, class: "flex flex-col items-center gap-y-2" do |f| %>
           <div class="flex items-center gap-x-2">
             <%= f.number_field :aoc_id, value: current_user.aoc_id, min: 1, class: "input", placeholder: "ID" %>
-            <%= f.submit "Save", class: "button", data: { "unlock-target" => "button" }, disabled: true %>
+            <%= f.submit "Save", class: "button", data: { "unlock-target" => "button" } %>
           </div>
           <div class="flex items-center gap-x-3">
-            <%= f.label :accepted_coc, class: "text-sm" do
+            <%= f.label :accepted_terms, class: "text-sm" do
               "I have read and I agree with the #{link_to("Code of Conduct", terms_path, target: :_blank, class: "link-explicit link-internal")}".html_safe
             end %>
-            <%= f.check_box :accepted_coc, data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" }, class: "focus:no-ring" %>
+            <%= f.check_box :accepted_terms, data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" }, class: "focus:no-ring" %>
           </div>
         <% end %>
         <p>

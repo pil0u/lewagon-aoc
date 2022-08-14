@@ -32,14 +32,15 @@ class UsersController < ApplicationController
     #             (2**31)[0..30] => 0            -1[0..30] => 2**31 - 1
 
     @params = {
-      username: form_params[:username],
+      accepted_terms: form_params[:accepted_terms],
       aoc_id: form_params[:aoc_id],
       batch: Batch.find_or_create_by(number: form_params[:batch_number].to_i[0..30]),
-      city: City.find_by(id: form_params[:city_id])
+      city: City.find_by(id: form_params[:city_id]),
+      username: form_params[:username]
     }.compact
   end
 
   def form_params
-    params.require(:user).permit(:username, :aoc_id, :batch_number, :city_id)
+    params.require(:user).permit(:accepted_terms, :aoc_id, :batch_number, :city_id, :username)
   end
 end

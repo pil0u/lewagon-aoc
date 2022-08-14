@@ -3,7 +3,7 @@
 require "aoc"
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[faq welcome]
+  skip_before_action :authenticate_user!, only: %i[faq terms welcome]
 
   def calendar; end
   def faq; end
@@ -14,6 +14,9 @@ class PagesController < ApplicationController
   end
 
   def scores; end
+
+  def terms; end
+
   def the_wall; end
 
   def welcome

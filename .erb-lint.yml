@@ -10,6 +10,7 @@ linters:
   ErbSafety:
     exclude:
       - '**/app/components/header/nav_component.html.erb'
+      - '**/app/views/pages/setup.html.erb'
 
   # Disable "String not translated" errors while passing the --enable-all-linters flag
   HardCodedString:

@@ -8,7 +8,7 @@
   /* Used in revamped components */
 
   .button {
-    @apply form-element hover:text-gold;
+    @apply form-element cursor-pointer hover:text-gold disabled:pointer-events-none disabled:bg-aoc-gray-darker disabled:text-aoc-gray-dark;
   }
 
   code {
@@ -27,6 +27,7 @@
   input[type=number] {
     -moz-appearance:textfield;
   }
+
   input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none; 
     margin: 0;
@@ -46,6 +47,10 @@
 
   .link-slack {
     @apply text-aoc-atmospheric hover:text-shadow-atmospheric;
+  }
+
+  .no-ring {
+    @apply ring-transparent ring-offset-transparent;
   }
 
   .strong {

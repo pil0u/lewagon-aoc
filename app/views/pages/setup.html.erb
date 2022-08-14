@@ -15,14 +15,14 @@
 
   <ol class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
     <li>
-      <%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", class: "link-explicit link-external" %>,
+      <%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", target: :ext, class: "link-explicit link-external" %>,
       via GitHub or any other OAuth option.
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
           Once logged in, you need to join our private leaderboards there. The code to our private leaderboard is
-          <code class="strong">123456-abcdef</code>. User it <%= link_to "on this page", "https://adventofcode.com/leaderboard/private", class: "link-explicit link-external" %>,
+          <code class="strong">123456-abcdef</code>. User it <%= link_to "on this page", "https://adventofcode.com/leaderboard/private", target: :ext, class: "link-explicit link-external" %>,
           then click [Join].
         </p>
         <p>
@@ -34,16 +34,23 @@
       </div>
     </li>
     <li>
-      We need to know your Advent of Code ID. You can find it in your <%= link_to "settings", "https://adventofcode.com/settings", class: "link-explicit link-external" %>,
+      We need to know your Advent of Code ID. You can find it in your <%= link_to "settings", "https://adventofcode.com/settings", target: :ext, class: "link-explicit link-external" %>,
       the number next to <code>anonymous user #<span class="strong">1234567</span></code>.
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
         <p>Paste that number here and hit "Save":</p>
-        <%= form_with model: current_user, url: setup_path, class: "flex items-center justify-center gap-x-2" do |f| %>
-          <%= f.number_field :aoc_id, value: current_user.aoc_id, min: 1, class: "input", placeholder: "ID" %>
-
-          <%= f.submit "Save", class: "button cursor-pointer" %>
+        <%= form_with model: current_user, url: setup_path, data: { controller: "unlock" }, class: "flex flex-col items-center gap-y-2" do |f| %>
+          <div class="flex items-center gap-x-2">
+            <%= f.number_field :aoc_id, value: current_user.aoc_id, min: 1, class: "input", placeholder: "ID" %>
+            <%= f.submit "Save", class: "button", data: { "unlock-target" => "button" }, disabled: true %>
+          </div>
+          <div class="flex items-center gap-x-3">
+            <%= f.label :accepted_coc, class: "text-sm" do
+              "I have read and I agree with the #{link_to("Code of Conduct", terms_path, target: :_blank, class: "link-explicit link-internal")}".html_safe
+            end %>
+            <%= f.check_box :accepted_coc, data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" }, class: "focus:no-ring" %>
+          </div>
         <% end %>
         <p>
           Your sync status at the top of this page should then switch to <span class="text-aoc-atmospheric">Pending</span>.

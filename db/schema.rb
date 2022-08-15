@@ -101,8 +101,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_14_164516) do
   end
 
   create_table "states", force: :cascade do |t|
-    t.datetime "last_api_fetch_end"
-    t.datetime "last_api_fetch_start"
+    t.datetime "last_api_fetch_end", precision: nil
+    t.datetime "last_api_fetch_start", precision: nil
   end
 
   create_table "users", force: :cascade do |t|

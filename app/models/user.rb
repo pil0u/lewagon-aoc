@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :city_contributions, through: :completions
   has_many :batch_contributions, through: :completions
 
+  validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
+
   scope :synced, -> { where(synced: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS) }
 
@@ -21,13 +23,14 @@ class User < ApplicationRecord
   end
 
   def self.from_kitt(auth)
-    batch_from_oauth = auth.info.last_batch_slug&.gsub(/[^\d]/, "")
-    batch = Batch.find_or_create_by(number: batch_from_oauth) if batch_from_oauth.present?
-
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.username = auth.info.github_nickname
-      user.batch = batch
+    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
+      u.username = auth.info.github_nickname
+      u.github_username = auth.info.github_nickname
+      u.batch = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i)
     end
+
+    user.update(github_username: auth.info.github_nickname)
+    user
   end
 
   def self.update_sync_status_from(members)
@@ -43,9 +46,17 @@ class User < ApplicationRecord
     end
   end
 
-  def status
+  def friendly_status
     return "KO" if aoc_id.nil?
 
-    synced ? "OK" : "pending"
+    synced ? "OK" : "Pending"
+  end
+
+  def blazer?
+    uid.in?({ pilou: "6788", aquaj: "449" }.values)
+  end
+
+  def synced?
+    aoc_id.present? && synced
   end
 end

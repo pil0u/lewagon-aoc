@@ -1,8 +1,121 @@
-@import "tailwindcss/base";
 @import "fonts";
 @import "font_awesome";
 
+@import "tailwindcss/base";
 @import "tailwindcss/components";
-@import "components";
+
+@layer components {
+  /* Used in revamped components */
+
+  .button {
+    @apply form-element cursor-pointer hover:text-gold disabled:pointer-events-none disabled:bg-aoc-gray-darker disabled:text-aoc-gray-dark;
+  }
+
+  code {
+    @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
+  }
+
+  .form-element {
+    @apply px-3 py-2 leading-normal border border-aoc-gray-darker
+  }
+
+  .input {
+    @apply form-element w-48 bg-aoc-gray-darkest;
+  }
+
+  /* Hide the spinner for numerical input */
+  input[type=number] {
+    -moz-appearance:textfield;
+  }
+
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none; 
+    margin: 0;
+  }
+
+  .link-explicit {
+    @apply underline decoration-dotted underline-offset-4 hover:decoration-solid;
+  }
+
+  .link-external {
+    @apply text-aoc-green;
+  }
+
+  .link-internal {
+    @apply text-aoc-gold;
+  }
+
+  .link-slack {
+    @apply text-aoc-atmospheric hover:text-shadow-atmospheric;
+  }
+
+  .no-ring {
+    @apply ring-transparent ring-offset-transparent;
+  }
+
+  .strong {
+    @apply text-white;
+    text-shadow: 0 0 5px #FFFFFF;
+  }
+
+  .text-gold {
+    @apply text-aoc-gold;
+    text-shadow: 0 0 5px #FFFF66;
+  }
+
+  .text-shadow-atmospheric {
+    text-shadow: 0 0 5px #79A2D8;
+  }
+
+  .text-shadow-green {
+    text-shadow: 0 0 2px #00CC00, 0 0 5px #00CC00;
+  }
+
+  .text-shadow-red {
+    text-shadow: 0 0 2px #FD1015, 0 0 5px #FD1015;
+  }
+
+
+  /* Legacy */
+
+  .calendar-tile {
+    @apply w-32 h-32 border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40 rounded-3xl select-none;
+
+    &:hover h2 {
+      @apply strong;
+    }
+  }
+
+  .contact-me {
+    @apply border-b border-aoc-gray-dark hover:strong hover:border-aoc-gray;
+  }
+
+  .dashboard-tile {
+    @apply w-48 h-48 border-aoc-gray-darker cursor-default;
+  }
+
+  .text-shadow-silver {
+    text-shadow: 0 0 5px #9999CC;
+  }
+
+  .text-shadow-bronze {
+    text-shadow: 0 0 5px #FFCC99;
+  }
+
+  @keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    70% { transform: rotate(0deg); }
+    75% { transform: rotate(2.5deg); }
+    80% { transform: rotate(-5deg); }
+    85% { transform: rotate(7.5deg); }
+    90% { transform: rotate(-7.5deg); }
+    95% { transform: rotate(5deg); }
+    100% { transform: rotate(-2.5deg); }
+  }
+
+  .wiggle {
+    animation: wiggle 3s infinite;
+  }
+}
 
 @import "tailwindcss/utilities";

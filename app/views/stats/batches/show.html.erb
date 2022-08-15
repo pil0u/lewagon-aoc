@@ -18,8 +18,8 @@
       <% 1.upto(@latest_day).reverse_each do |day| %>
         <%= link_to "https://adventofcode.com/2021/day/#{day}", target: :blank, class: "flex space-x-5 hover:bg-aoc-gray hover:bg-opacity-10 px-3" do %>
           <span class="w-6"><%= day %></span>
-          <span class="w-24 <%= "text-wagon-red text-shadow-red" if (@daily_contributors.dig(day, 0) || 0) < @max_contributors %>"><%= @daily_contributors.dig(day, 0) || 0 %>/<%= @max_contributors %></span>
-          <span class="w-24 <%= "text-wagon-red text-shadow-red" if (@daily_contributors.dig(day, 1) || 0) < @max_contributors %>"><%= @daily_contributors.dig(day, 1) || 0 %>/<%= @max_contributors %></span>
+          <span class="w-24 <%= "text-red" if (@daily_contributors.dig(day, 0) || 0) < @max_contributors %>"><%= @daily_contributors.dig(day, 0) || 0 %>/<%= @max_contributors %></span>
+          <span class="w-24 <%= "text-red" if (@daily_contributors.dig(day, 1) || 0) < @max_contributors %>"><%= @daily_contributors.dig(day, 1) || 0 %>/<%= @max_contributors %></span>
         <% end %>
       <% end %>
     </div>

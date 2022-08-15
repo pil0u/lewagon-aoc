@@ -13,22 +13,21 @@
   </head>
 
   <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
-    <%= render "shared/flashes" %>
-    <%= render "shared/header" %>
+    <%= render FlashComponent.new(flash:) %>
 
-    <main>
-      <%# if ENV["ANNOUNCEMENT"].present? %>
-        <div id="announcement" class="my-12 flex justify-center bg-aoc-gray">
-          <p class="max-w-6xl paragraph text-dark text-center tracking-tighter"><span>The 2021 event is now over, congratulations to every puzzle solver out there!</span>
-          <span class="">You can help improve the event by <%= link_to "sharing your feedback and ideas", "https://docs.google.com/forms/d/e/1FAIpQLSeAXNOVWRBzAAdL6_p1Uu0abji9Bb3eI2cHNk5ILgeSxP5E5w/viewform", class: "font-semibold hover:text-aoc-gray-dark" %> 📣, I read every single comment.</span>
-          <span>Finally, stay tuned via <%= link_to "the #aoc Slack channel", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "font-semibold hover:text-aoc-gray-dark" %> 🔥</span>
-          </p>
-        </div>
-      <%# end %>
+    <header class="flex flex-col mx-auto">
+      <%= render Header::TitleComponent.new %>
+      <%= render Header::NavComponent.new(user: current_user) %>
+    </header>
 
+    <main class="max-w-4xl w-5/6 mx-auto my-4 lg:my-6">
       <%= yield %>
     </main>
 
-    <%= render "shared/footer" %>
+    <footer class="flex flex-col gap-y-1 mx-auto mt-auto mb-2 text-sm text-center opacity-60">
+      <%= render Footer::NavComponent.new %>
+      <%= render LastDataUpdateComponent.new %>
+      <%= render Footer::CopyrightComponent.new %>
+    </footer>
   </body>
 </html>

@@ -1,0 +1,78 @@
+<%= render PageTitleComponent.new(title: "Setup") %>
+
+<div class="my-4 flex flex-col gap-y-4">
+  <div class="mx-auto text-center flex flex-col">
+    <p>Welcome, <span class="strong"><%= current_user.username %></span></p>
+    <p>Sync status: <span class="<%= @sync_status_css_class %>"><%= current_user.friendly_status %></p>
+    <%= render LastDataUpdateComponent.new %>
+  </div>
+
+  <p class="text-justify">
+    This platform is a wrapper around Advent of Code's puzzles, with additional, spicy features
+    designed for Le Wagon community. To access these custom features, you need to sync your account
+    <em>on Advent of Code</em> with your account <em>here</em>.
+  </p>
+
+  <ol class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
+    <li>
+      <%= link_to "Log in to Advent of Code", "https://adventofcode.com/auth/login", target: :ext, class: "link-explicit link-external" %>,
+      via GitHub or any other OAuth option.
+    </li>
+    <li>
+      <div class="flex flex-col gap-y-2">
+        <p>
+          Once logged in, you need to join our private leaderboards there. The code to our private leaderboard is
+          <code class="strong">123456-abcdef</code>. User it <%= link_to "on this page", "https://adventofcode.com/leaderboard/private", target: :ext, class: "link-explicit link-external" %>,
+          then click [Join].
+        </p>
+        <p>
+          You should be prompted: <code>You have joined that private leaderboard.</code>
+        </p>
+        <p>
+          If the leaderboard is already full, refresh this page to get a new code and start over.
+        </p>
+      </div>
+    </li>
+    <li>
+      We need to know your Advent of Code ID. You can find it in your <%= link_to "settings", "https://adventofcode.com/settings", target: :ext, class: "link-explicit link-external" %>,
+      the number next to <code>anonymous user #<span class="strong">1234567</span></code>.
+    </li>
+    <li>
+      <div class="flex flex-col gap-y-2">
+        <p>Paste that number here and hit "Save":</p>
+        <%= form_with model: current_user, url: setup_path, data: { controller: "unlock" }, class: "flex flex-col items-center gap-y-2" do |f| %>
+          <div class="flex items-center gap-x-2">
+            <%= f.number_field :aoc_id, value: current_user.aoc_id, min: 1, class: "input", placeholder: "ID" %>
+            <%= f.submit "Save", class: "button", data: { "unlock-target" => "button" } %>
+          </div>
+          <div class="flex items-center gap-x-3">
+            <%= f.label :accepted_terms, class: "text-sm" do
+                  "I have read and I will comply with the #{link_to('Code of Conduct', terms_path, target: :_blank, rel: :noopener, class: 'link-explicit link-internal')}".html_safe
+                end %>
+            <%= f.check_box :accepted_terms, data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" }, class: "focus:no-ring" %>
+          </div>
+        <% end %>
+        <p>
+          Your sync status at the top of this page should then switch to <span class="text-aoc-atmospheric">Pending</span>.
+        </p>
+      </div>
+    </li>
+    <li>
+      <div class="flex flex-col gap-y-2">
+        <p>
+          Just wait for the next update of the data. This page will magically disappear to make room
+          for the real thing ✨
+        </p>
+        <p>
+          In the meantime, don't hesitate to have a look at the <%= link_to "FAQ", faq_path, class: "link-explicit link-internal" %>.
+        </p>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<p class="italic text-sm opacity-80">
+  If you carefully followed each one of these steps and your status remains <span class="not-italic text-aoc-atmospheric">Pending</span>
+  after an update of the data, send me a message <%= link_to "on Slack", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>
+  with these: <code class="not-italic strong">id:<%= current_user.id %>;aoc_id:<%= current_user.aoc_id %></code>
+</p>

@@ -8,6 +8,10 @@ AllCops:
 Layout/LineLength:
   Enabled: false
 
+Lint/MissingSuper:
+  Exclude:
+    - "**/app/components/**/*"
+
 Metrics/AbcSize:
   Enabled: false
 

@@ -3,13 +3,39 @@
 require "aoc"
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[home]
+  skip_before_action :authenticate_user!, only: %i[faq terms welcome]
+
+  def calendar; end
+  def faq; end
+
+  def setup
+    set_sync_status_css_class
+  end
+
+  def scores; end
+
+  def terms; end
+
+  def the_wall; end
+
+  def welcome
+    @total_users = User.count
+  end
+
+  private
+
+  def set_sync_status_css_class
+    css_class = {
+      "KO" => "text-wagon-red",
+      "Pending" => "text-aoc-atmospheric"
+    }
+
+    @sync_status_css_class = css_class[current_user.friendly_status]
+  end
+
+  ### old
 
   MAGIC_DAYS = [17, 24, 1, 8, 15, 23, 5, 7, 14, 16, 4, 6, 13, 20, 22, 10, 12, 19, 21, 3, 11, 18, 25, 2, 9].freeze
-
-  def home
-    @total_sign_ins = User.count
-  end
 
   def about
     @ranking_example = [

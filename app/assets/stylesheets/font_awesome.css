@@ -81,6 +81,10 @@
 
   /* --- Used icons --- */
 
+  .fa-gear::before {
+    content: "\f013";
+  }
+
   .fa-github::before {
     content: '\f09b';
   }
@@ -91,5 +95,9 @@
 
   .fa-power-off::before {
     content: '\f011';
+  }
+
+  .fa-times::before {
+    content: '\f00d';
   }
 }

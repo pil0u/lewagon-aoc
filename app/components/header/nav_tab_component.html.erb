@@ -1,0 +1,3 @@
+<%= link_to_unless_current @link[:name], @link[:path], class: "hover:text-gold" do %>
+  <span class="text-gold"><%= @link[:name] %></span>
+<% end %>

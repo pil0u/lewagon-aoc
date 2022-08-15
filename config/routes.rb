@@ -1,23 +1,39 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount Blazer::Engine, at: "blazer"
-
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   devise_scope :user do
-    delete "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
+    get "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
   end
 
-  unauthenticated { root to: "pages#home", as: :unauth_root }
-  authenticated { root to: "pages#dashboard" }
+  unauthenticated do
+    root "pages#welcome", as: :unauth_root
+  end
 
-  get "/about", to: "pages#about"
-  get "/scoreboard", to: "pages#scoreboard"
-  get "/settings", to: "users#edit"
-  patch "/settings", to: "users#update"
+  authenticated do
+    constraints(SyncedConstraint.new) do
+      root "pages#calendar", as: :calendar
+      get "/scores", to: "pages#scores"
+      get "/settings", to: "users#edit"
+      patch "/settings", to: "users#update"
+      get "/the-wall", to: "pages#the_wall"
+    end
 
+    root "pages#setup", as: :setup
+    patch "/", to: "users#update"
+
+    mount Blazer::Engine, at: "blazer", constraints: BlazerConstraint.new
+  end
+
+  get "/faq", to: "pages#faq"
+  get "/terms", to: "pages#terms"
   get "/stats", to: "pages#stats"
+
+  #                 #
+  #  To be deleted  #
+  # vvvvvvvvvvvvvvv #
+
   namespace "stats" do
     resources :users, only: [:show]
     # resources :days, only: [:show], param: :number

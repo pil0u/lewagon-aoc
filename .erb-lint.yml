@@ -2,7 +2,6 @@
 EnableDefaultLinters: true
 exclude:
   - '**/vendor/**/*'
-  - '**/_*.html.erb'
   - '**/app/views/stats/days/show.html.erb' # TODO
 
 linters:

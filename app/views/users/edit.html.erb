@@ -1,27 +1,26 @@
-<div class="my-12 mx-4 sm:mx-auto max-w-sm">
-  <%= form_with model: @user, url: settings_path, class: "flex flex-col items-end gap-y-3" do |f| %>
+<%= render PageTitleComponent.new(title: "Settings") %>
 
-    <div>
-      <%= f.label :username, class: "strong" %>
-      <%= f.text_field :username, value: @user.username, class: "input-field" %>
-    </div>
+<%= form_with model: @user, url: settings_path, class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
 
-    <div>
-      <%= f.label :aoc_id, "Advent of Code ID", class: "strong" %>
-      <%= f.number_field :aoc_id, value: @user.aoc_id, min: 0, class: "input-field" %>
-    </div>
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :username %>
+    <%= f.text_field :username, value: @user.username, class: "input" %>
+  </div>
 
-    <div>
-      <%= f.label :batch_number, "Batch #", class: "strong" %>
-      <%= f.number_field :batch_number, value: @user.batch&.number, min: 0, class: "input-field" %>
-    </div>
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :aoc_id %>
+    <%= f.number_field :aoc_id, value: @user.aoc_id, min: 1, class: "input", disabled: true %>
+  </div>
 
-    <div>
-      <%= f.label :city_name, "City", class: "strong" %>
-      <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: @user.city_id }, class: "h-7 input-field") %>
-    </div>
-    <span class="text-sm tracking-tight">Your city is not here? <%= link_to "Ping me", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "contact-me" %></span>
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :batch_number, "Batch #" %>
+    <%= f.number_field :batch_number, value: @user.batch&.number, min: 1, class: "input" %>
+  </div>
 
-    <%= f.submit "SAVE", class: "bg-transparent cursor-pointer my-8 px-6 py-2 border border-aoc-gray-darker link" %>
-  <% end %>
-</div>
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :city_name, "City" %>
+    <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: @user.city_id }, class: "input") %>
+  </div>
+
+  <%= f.submit "Save", class: "button" %>
+<% end %>

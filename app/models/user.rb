@@ -26,7 +26,7 @@ class User < ApplicationRecord
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
       u.username = auth.info.github_nickname
       u.github_username = auth.info.github_nickname
-      u.batch = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i)
+      u.batch_id = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i).id
     end
 
     user.update(github_username: auth.info.github_nickname)

@@ -22,5 +22,15 @@
     <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: @user.city_id }, class: "input") %>
   </div>
 
+  <div class="flex items-center gap-x-3">
+    <%= f.label :entered_hardcore, "Join the Ladder of Insanity" %>
+    <%= f.check_box :entered_hardcore, class: "focus:no-ring", data: {
+          controller: "check-alert",
+          check_alert_target: "checkbox",
+          action: "change->check-alert#ping",
+          check_alert_message_value: "Are you sure?"
+        } %>
+  </div>
+
   <%= f.submit "Save", class: "button" %>
 <% end %>

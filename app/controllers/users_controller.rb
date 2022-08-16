@@ -30,11 +30,12 @@ class UsersController < ApplicationController
       # find_or_create_by always returns an instance of Batch, even if it failed to create. If creation
       # did fail (from validation), then the id of that instance is nil, which disappears with .compact
       city: City.find_by(id: form_params[:city_id]),
+      entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username]
     }.compact
   end
 
   def form_params
-    params.require(:user).permit(:accepted_terms, :aoc_id, :batch_number, :city_id, :username)
+    params.require(:user).permit(:accepted_terms, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username)
   end
 end

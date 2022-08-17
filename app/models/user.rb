@@ -47,16 +47,17 @@ class User < ApplicationRecord
   end
 
   def friendly_status
-    return "KO" if aoc_id.nil?
+    return "KO" if aoc_id.nil? || !accepted_terms
+    return "Pending" unless synced
 
-    synced ? "OK" : "Pending"
+    "OK"
   end
 
   def blazer?
     uid.in?({ pilou: "6788", aquaj: "449" }.values)
   end
 
-  def synced?
-    aoc_id.present? && synced
+  def confirmed?
+    aoc_id.present? && accepted_terms && synced
   end
 end

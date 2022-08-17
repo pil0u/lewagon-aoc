@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   authenticated do
-    constraints(SyncedConstraint.new) do
+    constraints(ConfirmedConstraint.new) do
       root "pages#calendar", as: :calendar
       get "/scores", to: "pages#scores"
       get "/settings", to: "users#edit"

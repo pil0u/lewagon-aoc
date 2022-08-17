@@ -1,4 +1,4 @@
-<%= render PageTitleComponent.new(title: "Settings") %>
+<%= render PageTitleComponent.new(title: "Account settings") %>
 
 <%= form_with model: @user, url: settings_path, class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
 
@@ -34,3 +34,7 @@
 
   <%= f.submit "Save", class: "button" %>
 <% end %>
+
+<hr class="my-4 border-aoc-gray-darker">
+
+<%= render PageTitleComponent.new(title: "Squad settings") %>

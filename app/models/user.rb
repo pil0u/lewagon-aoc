@@ -15,8 +15,9 @@ class User < ApplicationRecord
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
 
-  scope :synced, -> { where(synced: true) }
+  score :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :organisers, -> { where(uid: ORGANISERS) }
+  scope :synced, -> { where(synced: true) }
 
   after_save do
     Help.refresh_views! if saved_changes.include? "batch_id"

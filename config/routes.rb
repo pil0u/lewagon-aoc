@@ -26,8 +26,8 @@ Rails.application.routes.draw do
     mount Blazer::Engine, at: "blazer", constraints: BlazerConstraint.new
   end
 
+  get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/faq", to: "pages#faq"
-  get "/terms", to: "pages#terms"
   get "/stats", to: "pages#stats"
 
   #                 #

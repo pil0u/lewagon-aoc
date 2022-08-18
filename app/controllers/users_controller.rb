@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def set_updated_params
     @params = {
-      accepted_terms: form_params[:accepted_terms],
+      accepted_coc: form_params[:accepted_coc],
       aoc_id: form_params[:aoc_id],
       batch_id: Batch.find_or_create_by(number: form_params[:batch_number].to_i).id,
       # find_or_create_by always returns an instance of Batch, even if it failed to create. If creation
@@ -36,6 +36,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_terms, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username)
   end
 end

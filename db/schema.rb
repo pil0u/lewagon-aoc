@@ -106,7 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_211501) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.boolean "accepted_terms", default: false
+    t.boolean "accepted_coc", default: false
     t.integer "aoc_id"
     t.bigint "batch_id"
     t.bigint "city_id"

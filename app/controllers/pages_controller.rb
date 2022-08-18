@@ -3,18 +3,16 @@
 require "aoc"
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[faq terms welcome]
+  skip_before_action :authenticate_user!, only: %i[code_of_conduct faq welcome]
 
   def calendar; end
+  def code_of_conduct; end
   def faq; end
+  def scores; end
 
   def setup
     set_sync_status_css_class
   end
-
-  def scores; end
-
-  def terms; end
 
   def the_wall; end
 

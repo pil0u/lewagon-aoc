@@ -195,24 +195,4 @@ class PagesController < ApplicationController
     # AoC formula for how many users per star
     @users_per_star = (stars_per_challenge.map(&:last).max.to_f / 40).ceil
   end
-
-  def status
-    @total_completions = Completion.count
-    @total_users = User.count
-    @total_rows = Batch.count + City.count + State.count + @total_completions + @total_users
-    @total_rows_color = if @total_rows < 8000
-                          "text-aoc-green-light"
-                        else
-                          @total_rows < 9000 ? "text-aoc-gold" : "text-wagon-red"
-                        end
-
-    now = Time.now.getlocal("-05:00")
-    elapsed_time_seconds = now - Aoc.start_time
-    event_duration_seconds = Aoc.end_time - Aoc.start_time
-    # event_duration_seconds = Time.new(2022, 1, 7, 10, 0, 0, "UTC") - Aoc.start_time
-
-    # Basic linear projection
-    @projected_completions = @total_completions * event_duration_seconds / elapsed_time_seconds
-    @projected_total = @total_rows - @total_completions + @projected_completions
-  end
 end

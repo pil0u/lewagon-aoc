@@ -27,7 +27,8 @@ class PagesController < ApplicationController
   def set_sync_status_css_class
     css_class = {
       "KO" => "text-wagon-red",
-      "Pending" => "text-aoc-atmospheric"
+      "Pending" => "text-aoc-atmospheric",
+      "OK" => "text-aoc-green"
     }
 
     @sync_status_css_class = css_class[current_user.friendly_status]

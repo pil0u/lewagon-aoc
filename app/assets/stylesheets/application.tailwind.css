@@ -8,15 +8,19 @@
   /* Used in revamped components */
 
   .button {
-    @apply form-element cursor-pointer hover:text-gold disabled:pointer-events-none disabled:bg-aoc-gray-darker disabled:text-aoc-gray-dark;
+    @apply form-element cursor-pointer hover:text-gold ;
   }
 
   code {
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
   }
 
+  .disabled {
+    @apply pointer-events-none bg-aoc-gray-darker text-aoc-gray-dark;
+  }
+
   .form-element {
-    @apply px-3 py-2 leading-normal border border-aoc-gray-darker
+    @apply px-3 py-2 leading-normal border border-aoc-gray-darker disabled:disabled;
   }
 
   .input {

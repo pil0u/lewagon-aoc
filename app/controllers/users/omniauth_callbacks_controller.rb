@@ -9,14 +9,15 @@ module Users
         sign_in_and_redirect @user, event: :authentication
         flash.notice = "Successfully signed in with Kitt!"
       else
-        redirect_to root_path
-        flash.alert = "For an unknown reason, we couldn't store your information in our database."
+        redirect_back(fallback_location: "/",
+                      alert: "For an unknown reason, we couldn't store your information in our database.")
       end
 
       def failure # rubocop:disable Lint/NestedMethodDefinition
         reason = request.env["omniauth.auth"]&.error_description
-        redirect_to root_path
-        flash.alert = "Failed to sign in with Kitt (Reason: #{reason || 'Unknown'})."
+
+        redirect_back(fallback_location: "/",
+                      alert: "Failed to sign in with Kitt (Reason: #{reason || 'Unknown'}).")
       end
     end
   end

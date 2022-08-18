@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_14_164516) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_16_211501) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -111,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_14_164516) do
     t.bigint "batch_id"
     t.bigint "city_id"
     t.datetime "created_at", null: false
+    t.boolean "entered_hardcore", default: false
     t.string "github_username"
     t.string "provider"
     t.boolean "synced", default: false

@@ -26,7 +26,7 @@ class User < ApplicationRecord
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
       u.username = auth.info.github_nickname
       u.github_username = auth.info.github_nickname
-      u.batch = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i)
+      u.batch_id = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i).id
     end
 
     user.update(github_username: auth.info.github_nickname)
@@ -47,16 +47,17 @@ class User < ApplicationRecord
   end
 
   def friendly_status
-    return "KO" if aoc_id.nil?
+    return "KO" if aoc_id.nil? || !accepted_terms
+    return "Pending" unless synced
 
-    synced ? "OK" : "Pending"
+    "OK"
   end
 
   def blazer?
     uid.in?({ pilou: "6788", aquaj: "449" }.values)
   end
 
-  def synced?
-    aoc_id.present? && synced
+  def confirmed?
+    aoc_id.present? && accepted_terms && synced
   end
 end

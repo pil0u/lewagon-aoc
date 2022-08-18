@@ -47,7 +47,7 @@ class User < ApplicationRecord
   end
 
   def friendly_status
-    return "KO" if aoc_id.nil? || !accepted_terms
+    return "KO" if aoc_id.nil? || !accepted_coc
     return "Pending" unless synced
 
     "OK"
@@ -58,6 +58,6 @@ class User < ApplicationRecord
   end
 
   def confirmed?
-    aoc_id.present? && accepted_terms && synced
+    aoc_id.present? && accepted_coc && synced
   end
 end

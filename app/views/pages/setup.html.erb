@@ -46,10 +46,10 @@
             <%= f.submit "Save", class: "button", data: { "unlock-target" => "button" } %>
           </div>
           <div class="flex items-center gap-x-3">
-            <%= f.label :accepted_terms, class: "text-sm" do
+            <%= f.label :accepted_coc, class: "text-sm" do
                   "I have read and I will comply with the #{link_to('Code of Conduct', code_of_conduct_path, target: :_blank, rel: :noopener, class: 'link-explicit link-internal')}".html_safe
                 end %>
-            <%= f.check_box :accepted_terms, data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" }, class: "focus:no-ring" %>
+            <%= f.check_box :accepted_coc, data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" }, class: "focus:no-ring" %>
           </div>
         <% end %>
         <p>

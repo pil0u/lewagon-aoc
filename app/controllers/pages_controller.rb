@@ -8,12 +8,12 @@ class PagesController < ApplicationController
   def calendar; end
   def code_of_conduct; end
   def faq; end
+  def scores; end
 
   def setup
     set_sync_status_css_class
   end
 
-  def scores; end
   def the_wall; end
 
   def welcome

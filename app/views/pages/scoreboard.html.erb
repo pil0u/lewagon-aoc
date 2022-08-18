@@ -159,7 +159,7 @@
                 <%= link_to stats_user_path(user[:id]), class: "flex justify-center" do %>
                   <div class="flex">
                     <%= user[:username] %>
-                    <%= image_tag("parrot.gif", class: "w-5 h-5 ml-2") if user[:uid].in? User::ORGANISERS %>
+                    <%= image_tag("aoc.gif", class: "w-5 h-5 ml-2") if user[:uid].in? User::ORGANISERS %>
                   </div>
                 <% end %>
               </td>

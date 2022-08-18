@@ -61,4 +61,8 @@ class User < ApplicationRecord
   def confirmed?
     aoc_id.present? && accepted_coc && synced
   end
+
+  def organiser?
+    uid.in?(ORGANISERS)
+  end
 end

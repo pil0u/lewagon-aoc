@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
 
-  score :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
+  scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :organisers, -> { where(uid: ORGANISERS) }
   scope :synced, -> { where(synced: true) }
 

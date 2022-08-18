@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   end
 
   get "/faq", to: "pages#faq"
-  get "/terms", to: "pages#terms"
+  get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/stats", to: "pages#stats"
 
   #                 #

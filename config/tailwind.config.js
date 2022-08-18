@@ -27,6 +27,7 @@ module.exports = {
             DEFAULT: '#009900',
             light: '#99FF99'
           },
+          red: '#FFAAAA',
           gold: {
             DEFAULT: '#FFFF66',
             light: '#FFFFCC'
@@ -36,10 +37,7 @@ module.exports = {
         },
         dark: '#0F0F23',
         wagon: {
-          red: {
-            DEFAULT: '#FD1015',
-            light: '#FE9092'      // unused
-          }
+          red: '#FD1015'
         }
       },
       fontFamily: {

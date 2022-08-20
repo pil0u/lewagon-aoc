@@ -1,9 +1,20 @@
+---
 version: "2"
+
 plugins:
+  duplication:
+    enabled: false
   eslint:
     enabled: true
     channel: "eslint-8"
-  duplication:
-    enabled: false
+  # reek:
+  #   enabled: true
+  # rubocop:
+  #   enabled: true
+  #   channel: "beta"
   structure:
     enabled: false
+  stylelint:
+    enabled: true
+    exclude_patterns:
+      - "**/app/assets/builds/**/*"

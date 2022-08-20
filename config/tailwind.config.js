@@ -41,6 +41,9 @@ module.exports = {
           silver: "#9999CC"
         },
         dark: "#0F0F23",
+        other: {
+          green: "#00CC00"
+        },
         wagon: {
           red: "#FD1015"
         }

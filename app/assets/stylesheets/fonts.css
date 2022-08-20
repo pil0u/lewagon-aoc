@@ -7,9 +7,10 @@
     font-style: normal;
     font-weight: 300;
     font-display: swap;
-    src: local('Source Code Pro'),
-        url('source-code-pro-v21-latin-300.woff2') format('woff2'),
-        url('source-code-pro-v21-latin-300.woff') format('woff');
+    src:
+      local('Source Code Pro'),
+      url('source-code-pro-v21-latin-300.woff2') format('woff2'),
+      url('source-code-pro-v21-latin-300.woff') format('woff');
   }
 
   /* source-code-pro-600 - latin */
@@ -18,8 +19,9 @@
     font-style: normal;
     font-weight: 600;
     font-display: swap;
-    src: local('Source Code Pro'),
-        url('source-code-pro-v21-latin-600.woff2') format('woff2'),
-        url('source-code-pro-v21-latin-600.woff') format('woff');
+    src:
+      local('Source Code Pro'),
+      url('source-code-pro-v21-latin-600.woff2') format('woff2'),
+      url('source-code-pro-v21-latin-600.woff') format('woff');
   }
 }

@@ -5,7 +5,9 @@ export default class extends Controller {
     return ["hours", "minutes", "seconds", "milliseconds", "party"]
   }
 
-  static values = { refreshInterval: Number }
+  static get values () {
+    return { refreshInterval: Number }
+  }
 
   connect () {
     const now = new Date()

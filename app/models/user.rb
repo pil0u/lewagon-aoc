@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i[kitt]
 
-  CONTRIBUTORS = %w[6788 449 5083 6888].freeze
+  ORGANISERS = %w[6788 449].freeze
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
@@ -15,8 +15,9 @@ class User < ApplicationRecord
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
 
+  scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
+  scope :organisers, -> { where(uid: ORGANISERS) }
   scope :synced, -> { where(synced: true) }
-  scope :contributors, -> { where(uid: CONTRIBUTORS) }
 
   after_save do
     Help.refresh_views! if saved_changes.include? "batch_id"
@@ -59,5 +60,9 @@ class User < ApplicationRecord
 
   def confirmed?
     aoc_id.present? && accepted_coc && synced
+  end
+
+  def organiser?
+    uid.in?(ORGANISERS)
   end
 end

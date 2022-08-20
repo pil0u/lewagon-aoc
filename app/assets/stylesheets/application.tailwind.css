@@ -1,6 +1,5 @@
 @import "fonts";
 @import "font_awesome";
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
@@ -29,11 +28,12 @@
 
   /* Hide the spinner for numerical input */
   input[type=number] {
-    -moz-appearance:textfield;
+    -moz-appearance: textfield;
   }
 
-  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none; 
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
     margin: 0;
   }
 
@@ -59,26 +59,27 @@
 
   .strong {
     @apply text-white;
-    text-shadow: 0 0 5px #FFFFFF;
+
+    text-shadow: 0 0 5px #fff;
   }
 
   .text-gold {
     @apply text-aoc-gold;
-    text-shadow: 0 0 5px #FFFF66;
+
+    text-shadow: 0 0 5px #ff6;
   }
 
   .text-shadow-atmospheric {
-    text-shadow: 0 0 5px #79A2D8;
+    text-shadow: 0 0 5px #79a2d8;
   }
 
   .text-shadow-green {
-    text-shadow: 0 0 2px #00CC00, 0 0 5px #00CC00;
+    text-shadow: 0 0 2px #0c0, 0 0 5px #0c0;
   }
 
   .text-shadow-red {
-    text-shadow: 0 0 2px #FD1015, 0 0 5px #FD1015;
+    text-shadow: 0 0 2px #fd1015, 0 0 5px #fd1015;
   }
-
 
   /* Legacy */
 
@@ -99,11 +100,11 @@
   }
 
   .text-shadow-silver {
-    text-shadow: 0 0 5px #9999CC;
+    text-shadow: 0 0 5px #99c;
   }
 
   .text-shadow-bronze {
-    text-shadow: 0 0 5px #FFCC99;
+    text-shadow: 0 0 5px #fc9;
   }
 
   @keyframes wiggle {

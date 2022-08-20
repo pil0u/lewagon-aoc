@@ -40,6 +40,4 @@ Rails.application.routes.draw do
     resources :batches, only: [:show], param: :number
     resources :cities, only: [:show], param: :slug
   end
-
-  get "/status", to: "pages#status"
 end

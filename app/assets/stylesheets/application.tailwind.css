@@ -63,6 +63,10 @@
     text-shadow: 0 0 5px #fff;
   }
 
+  summary {
+    list-style: none;
+  }
+
   .text-gold {
     @apply text-aoc-gold;
 

@@ -1,1 +1,94 @@
 <%= render PageTitleComponent.new(title: "FAQ") %>
+
+<div class="max-w-prose my-4 mx-auto flex flex-col">
+
+  <details open>
+    <%= render DetailsSummaryComponent.new(title: "TL;DR") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>Solve puzzles 🧠 Earn points 💎 Win prizes 🎁</p>
+      <p>Every single challenge you solve <em>at any time</em> will earn you, your city and your squad, points.</p>
+      <p>
+        The <%= link_to "calendar", "/", class: "link-explicit link-internal" %> starts on December 1st, and the
+        winners in all categories will be determined by the standings on December 31st.
+      </p>
+      <p>Good luck!</p>
+    </div>
+  </details>
+
+  <details open>
+    <%= render DetailsSummaryComponent.new(title: "What is Advent of Code?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        <%= link_to "Advent of Code", "https://adventofcode.com/", target: :ext, class: "link-explicit link-external" %>
+        is an Advent calendar of small programming puzzles that can be solved in any programming language.
+      </p>
+      <p>
+        Every day at midnight EST/UTC-5, from <span class="strong">December 1st</span> to <span class="strong">December 25th</span>,
+        a new puzzle pops up with some fictional Christmas backstory 🎄
+      </p>
+      <p>
+        Solving any puzzle earns you points 💎, not only for you, but also for <span class="strong">your campus city</span>
+        @ <span class="text-wagon-red">Le Wagon</span> and your custom <span class="strong">squad of 4</span>.
+      </p>
+    </div>
+  </details>
+
+  <details open>
+    <%= render DetailsSummaryComponent.new(title: "What does a puzzle look like?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        A puzzle is a problem defined in plain English terms, for which the answer can only be found using programming. For a given
+        <span class="strong">input</span>, you need to compute the corresponding <span class="strong">output</span>, usually a number.
+      </p>
+      <p>A puzzle is made of two parts, two <em>challenges</em>: you access the second one only <span class="strong">if you solved the first one</span>.</p>
+      <p>
+        If you want to take a closer look, puzzles from previous editions are available
+        <%= link_to "here", "https://adventofcode.com/events", target: :ext, class: "link-explicit link-external" %>.
+      </p>
+    </div>
+  </details>
+
+  <details open>
+    <%= render DetailsSummaryComponent.new(title: "I'm not sure about my coding skills...") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        The difficulty of a puzzle varies from day to day. The first part of each puzzle is <span class="strong">largely accessible to a Wagoner, student or Alumni</span>.
+        The second part is usually harder, but still accessible to more or less experienced profiles.
+      </p>
+      <p>
+        Although the author of the puzzles attempts to <span class="strong">increase the difficulty over time, in reality it's not the case and pretty random</span>.
+        You may find puzzle #20 much easier than #5. The notion of difficulty is very relative to your personal skill set and past experience with problem solving in general.
+      </p>
+      <p>
+        If you get stuck on a puzzle, talk about it! This event with <span class="text-wagon-red">Le Wagon</span> is, above all, a great opportunity
+        <span class="strong">for sharing, learning and helping each other, regardless of your initial skill level</span>. It's also a perfect moment to reconnect with your city/batch 🤙
+      </p>
+    </div>
+  </details>
+
+  <details open>
+    <%= render DetailsSummaryComponent.new(title: "Why are there two different platforms?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>The Advent of Code platform is where you find and solve the puzzles.</p>
+      <p>
+        Because @ <span class="text-wagon-red">Le Wagon</span> we like things spicy, we wanted to build scoreboards <span class="strong">by campus city ⚔️</span>
+        The leaderboard system on adventofcode.com is not flexible enough for that. We built this platform to create a link between Kitt and Advent of Code,
+        so we can build <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %>.</p>
+      </p>
+    </div>
+  </details>
+
+  <details open>
+    <%= render DetailsSummaryComponent.new(title: "Title") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p></p>
+    </div>
+  </details>
+
+</div>

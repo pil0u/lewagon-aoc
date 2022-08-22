@@ -16,7 +16,7 @@
     </div>
   </details>
 
-  <details open>
+  <details>
     <%= render DetailsSummaryComponent.new(title: "What is Advent of Code?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
@@ -35,7 +35,7 @@
     </div>
   </details>
 
-  <details open>
+  <details>
     <%= render DetailsSummaryComponent.new(title: "What does a puzzle look like?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
@@ -51,7 +51,7 @@
     </div>
   </details>
 
-  <details open>
+  <details>
     <%= render DetailsSummaryComponent.new(title: "I'm not sure about my coding skills...") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
@@ -64,26 +64,132 @@
         You may find puzzle #20 much easier than #5. The notion of difficulty is very relative to your personal skill set and past experience with problem solving in general.
       </p>
       <p>
-        If you get stuck on a puzzle, talk about it! This event with <span class="text-wagon-red">Le Wagon</span> is, above all, a great opportunity
+        If you get stuck on a puzzle, you can always <%= link_to "discuss it", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>
+        with others! This event with <span class="text-wagon-red">Le Wagon</span> is, above all, a great opportunity
         <span class="strong">for sharing, learning and helping each other, regardless of your initial skill level</span>. It's also a perfect moment to reconnect with your city/batch 🤙
       </p>
     </div>
   </details>
 
-  <details open>
+  <details>
+    <%= render DetailsSummaryComponent.new(title: "When does the contest end?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p></p>
+    </div>
+  </details>
+
+  <details>
     <%= render DetailsSummaryComponent.new(title: "Why are there two different platforms?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>The Advent of Code platform is where you find and solve the puzzles.</p>
       <p>
-        Because @ <span class="text-wagon-red">Le Wagon</span> we like things spicy, we wanted to build scoreboards <span class="strong">by campus city ⚔️</span>
-        The leaderboard system on adventofcode.com is not flexible enough for that. We built this platform to create a link between Kitt and Advent of Code,
-        so we can build <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %>.</p>
+        Because @ <span class="text-wagon-red">Le Wagon</span> we like things spicy, we wanted to build scoreboards <span class="strong">by campus city</span>.
+        The leaderboard system on adventofcode.com is not flexible enough for that.
+      </p>
+      <p>
+        We built this platform to create a link between Kitt and Advent of Code, so we can build
+        <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %>.</p>
       </p>
     </div>
   </details>
 
-  <details open>
+  <details>
+    <%= render DetailsSummaryComponent.new(title: "How do I earn points? 💎") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        In a nutshell, you have 24 hours to get the maximum points available for a daily puzzle.
+        After that, points slightly decrease over time.
+      </p>
+
+      <span class="text-center underline">Individual scores</span>
+
+      <p>
+        There are <code>50</code> <em>challenges</em> (25 days * 2 challenges per day).
+        For each one of them:
+        <ul class="list-disc list-inside">
+          <li>if you solve it within 24 hours of release, you get <code class="strong">50</code> points</li>
+          <li>after 24 hours, the number of points decreases by <code class="strong">1</code> every hour</li>
+          <li>it won't decrease below <code class="strong">25</code> points</li>
+        </ul>
+      </p>
+      <p>To be clear, even if you solve a challenge 2 weeks from its release, you still get <code class="strong">25</code> points.</p>
+      <p>Your individual score is <span class="strong">the sum of the score for every challenge solved</span>.</p>
+      <p>
+        Tiebreakers:
+        <ul class="list-disc list-inside">
+          <li>Score</li>
+          <li>Total number of challenges solved in less than 24 hours</li>
+          <li>Total number of challenges solved in less than 48 hours</li>
+        </ul>
+      </p>
+
+      <span class="text-center underline">City scores</span>
+
+      <p>Ranking cities is hard, because the number of Alumni per campus is very different.</p>
+      <p>
+        For <em>each challenge</em>, only the scores of your city's top contributors is taken into account.
+        The number of top contributors is determined by your <span class="strong">city's size</span>: it's either
+        <code class="strong">3%</code> of your city's size, or <code class="strong">10</code> contributors, whatever the <em>greatest</em>.
+      </p>
+      <p>
+        Examples:
+        <ul class="list-disc list-inside">
+          <li>
+            Stockholm's campus has graduated <code>51</code> Alumni. 3% of 51 is 1.53 (ceiled to <code>2</code>), thus the number of
+            top contributors will be <code class="strong">10</code>.
+          </li>
+          <li>
+            Berlin's campus has graduated <code>1839</code> Alumni. 3% of 1839 is 55.17 (ceiled to <code>56</code>), thus the number of
+            top contributors will be <code class="strong">56</code>.
+          </li>
+        </ul>
+      </p>
+      <p>The score of the city is <span class="strong">the average of the individual scores from its top contributors</span>.</p>
+      <p></p>
+      <p>
+        Tiebreakers:
+        <ul class="list-disc list-inside">
+          <li>Score</li>
+          <li>Total number of challenges solved in less than 24 hours by their top contributors</li>
+          <li>Total number of challenges solved in less than 48 hours by their top contributors</li>
+        </ul>
+      </p>
+
+      <span class="text-center underline">Batch scores</span>
+
+      <p>50% of batches in 2021 had... 1 participating member. 78% had 3 or less.</p>
+      <p>Batch scores have disappeared in 2022, giving birth to a brand new feature: squads.</p>
+    </div>
+  </details>
+
+  <details>
+    <%= render DetailsSummaryComponent.new(title: "What are squads?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p></p>
+    </div>
+  </details>
+
+  <details>
+    <%= render DetailsSummaryComponent.new(title: "What are the prizes? 🎁") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p></p>
+    </div>
+  </details>
+
+  <details>
+    <%= render DetailsSummaryComponent.new(title: "Title") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p></p>
+    </div>
+  </details>
+
+  <details>
     <%= render DetailsSummaryComponent.new(title: "Title") %>
 
     <div class="flex flex-col gap-y-2 text-justify">

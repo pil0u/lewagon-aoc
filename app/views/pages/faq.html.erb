@@ -7,12 +7,25 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>Solve puzzles 🧠 Earn points 💎 Win prizes 🎁</p>
-      <p>Every single challenge you solve <em>at any time</em> will earn you, your city and your squad, points.</p>
+      <p>Every single challenge you solve <em>at any time</em> will give you, your city and your squad, points.</p>
       <p>
-        The <%= link_to "calendar", "/", class: "link-explicit link-internal" %> starts on December 1st, and the
+        The <%= link_to "calendar", calendar_path, class: "link-explicit link-internal" %><sup>(*)</sup> starts on December 1st, and the
         winners in all categories will be determined by the standings on December 31st.
       </p>
-      <p>Good luck!</p>
+
+      <% if user_signed_in? %>
+
+        <p>Good luck!</p>
+
+      <% else %>
+
+        <div class="my-2">
+          <%= button_to user_kitt_omniauth_authorize_path, data: { turbo: false, controller: "disable-link", action: "disable-link#now" }, class: "button" do %>
+            Sign in with Kitt
+          <% end %>
+        </div>
+
+      <% end %>
     </div>
   </details>
 
@@ -75,7 +88,10 @@
     <%= render DetailsSummaryComponent.new(title: "When does the contest end?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
-      <p></p>
+      <p>
+        You have until <span class="strong">December 31st 10:00 UTC</span> to solve the puzzles 🏁
+        From that moment, all scores will freeze to determine and announce the results.
+      </p>
     </div>
   </details>
 
@@ -90,18 +106,18 @@
       </p>
       <p>
         We built this platform to create a link between Kitt and Advent of Code, so we can build
-        <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %>.</p>
+        <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %><sup>(*)</sup>.</p>
       </p>
     </div>
   </details>
 
   <details>
-    <%= render DetailsSummaryComponent.new(title: "How do I earn points? 💎") %>
+    <%= render DetailsSummaryComponent.new(title: "How do I earn points?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
         In a nutshell, you have 24 hours to get the maximum points available for a daily puzzle.
-        After that, points slightly decrease over time.
+        After that, points you can get slightly decrease over time.
       </p>
 
       <span class="text-center underline">Individual scores</span>
@@ -110,20 +126,20 @@
         There are <code>50</code> <em>challenges</em> (25 days * 2 challenges per day).
         For each one of them:
         <ul class="list-disc list-inside">
-          <li>if you solve it within 24 hours of release, you get <code class="strong">50</code> points</li>
+          <li>if you solve it within 24 hours, you get <code class="strong">50</code> points</li>
           <li>after 24 hours, the number of points decreases by <code class="strong">1</code> every hour</li>
           <li>it won't decrease below <code class="strong">25</code> points</li>
         </ul>
       </p>
       <p>To be clear, even if you solve a challenge 2 weeks from its release, you still get <code class="strong">25</code> points.</p>
-      <p>Your individual score is <span class="strong">the sum of the score for every challenge solved</span>.</p>
+      <p>Your individual score is <span class="strong">the sum of the score for every challenge you solved</span>.</p>
       <p>
         Tiebreakers:
-        <ul class="list-disc list-inside">
+        <ol class="list-decimal list-inside">
           <li>Score</li>
           <li>Total number of challenges solved in less than 24 hours</li>
           <li>Total number of challenges solved in less than 48 hours</li>
-        </ul>
+        </ol>
       </p>
 
       <span class="text-center underline">City scores</span>
@@ -147,34 +163,68 @@
           </li>
         </ul>
       </p>
+      <p>
+        The number of top contributors will be set according to the number of Alumni per city ~ a week before December,
+        and will stay the same until the end of the event.
+      </p>
       <p>The score of the city is <span class="strong">the average of the individual scores from its top contributors</span>.</p>
-      <p></p>
+      <p>
+        Examples:
+        <ul class="list-disc list-inside">
+          <li>
+            Stockholm's top contributors is set to <code>10</code>. 12 people from Stockholm take part in the event with these scores:
+            <br><code>[200, 190, 170, 150, 150, 120, 110, 90, 70, 70, 50, 30]</code><br>
+            Stockholm's score is the average of the 10 participants with the highest scores among the 15, so <code class="strong">132</code>.
+          </li>
+          <li>
+            Berlin's top contributors is set to <code>56</code>. Only 12 people from Berlin take part in the event with these scores:
+            <br><code>[200, 190, 170, 150, 150, 120, 110, 90, 70, 70, 50, 30]</code><br>
+            Berlin's score is <code class="strong">25</code>.
+          </li>
+        </ul>
+      </p>
       <p>
         Tiebreakers:
-        <ul class="list-disc list-inside">
+        <ol class="list-decimal list-inside">
           <li>Score</li>
           <li>Total number of challenges solved in less than 24 hours by their top contributors</li>
           <li>Total number of challenges solved in less than 48 hours by their top contributors</li>
-        </ul>
+        </ol>
       </p>
 
       <span class="text-center underline">Batch scores</span>
 
-      <p>50% of batches in 2021 had... 1 participating member. 78% had 3 or less.</p>
-      <p>Batch scores have disappeared in 2022, giving birth to a brand new feature: squads.</p>
+      <p>50% of batches in 2021 had... 1 participating member.<br>78% had 3 or less.</p>
+      <p>Batch grouping did not make much sense for most participants.</p>
+      <p>Batch scores will disappear in 2022, giving birth to a brand new feature: <span class="strong">squads</span>.</p>
     </div>
   </details>
 
   <details>
-    <%= render DetailsSummaryComponent.new(title: "What are squads?") %>
+    <%= render DetailsSummaryComponent.new(title: "What is a squad?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
-      <p></p>
+      <p>A squad is a group of up to <span class="strong">4</span> participants.<br>A participant can belong to 0 or 1 squad.</p>
+      <p>
+        You are responsible for building your squad: assemble your dream team (you can find people <%= link_to "on Slack", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>),
+        then materialize it in a squad in your <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup>.
+      </p>
+      <p>Squads have their own scoreboards. The score of a squad is simply <span class="strong">the sum of its members' scores</span>.</p>
     </div>
   </details>
 
   <details>
-    <%= render DetailsSummaryComponent.new(title: "What are the prizes? 🎁") %>
+    <%= render DetailsSummaryComponent.new(title: "What are the prizes?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        To be announced.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <%= render DetailsSummaryComponent.new(title: "The Ladder of Insanity?!") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p></p>
@@ -189,12 +239,6 @@
     </div>
   </details>
 
-  <details>
-    <%= render DetailsSummaryComponent.new(title: "Title") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p></p>
-    </div>
-  </details>
+  <p class="text-xs"><sup>(*)</sup> accessible only when your account is setup</p>
 
 </div>

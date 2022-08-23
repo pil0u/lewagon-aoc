@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
 
   unauthenticated do
-    root "pages#welcome", as: :unauth_root
+    root "pages#welcome"
   end
 
   authenticated do

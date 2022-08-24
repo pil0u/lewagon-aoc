@@ -89,7 +89,7 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        You have until <span class="strong">December 31st 10:00 UTC</span> to solve the puzzles 🏁
+        You have until <span class="strong">December 31st 11:30 UTC</span> to solve the puzzles 🏁
         From that moment, all scores will freeze to determine and announce the results.
       </p>
     </div>
@@ -117,7 +117,7 @@
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
         In a nutshell, you have 24 hours to get the maximum points available for a daily puzzle.
-        After that, points you can get slightly decrease over time.
+        After that, points you can earn slightly decrease over time.
       </p>
 
       <span class="text-center underline">Individual scores</span>
@@ -132,7 +132,7 @@
         </ul>
       </p>
       <p>To be clear, even if you solve a challenge 2 weeks from its release, you still get <code class="strong">25</code> points.</p>
-      <p>Your individual score is <span class="strong">the sum of the score for every challenge you solved</span>.</p>
+      <p>Your individual score is <span class="strong">the sum of scores for every challenge you solved</span>.</p>
       <p>
         Tiebreakers:
         <ol class="list-decimal list-inside">
@@ -172,13 +172,15 @@
         Examples:
         <ul class="list-disc list-inside">
           <li>
-            Stockholm's top contributors is set to <code>10</code>. 12 people from Stockholm take part in the event with these scores:
-            <br><code>[200, 190, 170, 150, 150, 120, 110, 90, 70, 70, 50, 30]</code><br>
+            Stockholm's number of top contributors is set to <code>10</code>.<br>
+            12 people from Stockholm joined the event with these scores:<br>
+            <code>[200, 190, 170, 150, 150, 120, 110, 90, 70, 70, 50, 30]</code><br>
             Stockholm's score is the average of the 10 participants with the highest scores among the 15, so <code class="strong">132</code>.
           </li>
           <li>
-            Berlin's top contributors is set to <code>56</code>. Only 12 people from Berlin take part in the event with these scores:
-            <br><code>[200, 190, 170, 150, 150, 120, 110, 90, 70, 70, 50, 30]</code><br>
+            Berlin's number of top contributors is set to <code>56</code>.<br>
+            Only 12 people from Berlin joined the event with these scores:<br>
+            <code>[200, 190, 170, 150, 150, 120, 110, 90, 70, 70, 50, 30]</code><br>
             Berlin's score is <code class="strong">25</code>.
           </li>
         </ul>
@@ -210,6 +212,144 @@
         then materialize it in a squad in your <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup>.
       </p>
       <p>Squads have their own scoreboards. The score of a squad is simply <span class="strong">the sum of its members' scores</span>.</p>
+      <p>
+        ⚠️ Squads will be <span class="strong">locked</span> on December 8th 11:30 UTC.
+        From that moment, you will not be able to create, join or leave a squad.
+      </p>
+      <p>
+        In case of late registration or exceptional situation after lock time, please <%= link_to "contact us", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>.
+      </p>
+    </div>
+  </details>
+
+  <details open>
+    <%= render DetailsSummaryComponent.new(title: "The Ladder of Insanity?!") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        In 2021, the amount of points you could earn depended on your rank/time to solve a challenge <em>from its release</em>.
+        The puzzles release at midnight EST/UTC-5, which is also 5:00/6:00 in Western Europe or 12:00/13:00 in Asia.
+      </p>
+      <p>Some people woke up right before 6:00 to be start coding upon release, every day, during 25 days.</p>
+      <p>This is insane.</p>
+      <p>
+        However, I don't want to prevent people from getting new morning habits and solve puzzles before sunrise.
+        So I decided to keep this scoring system as an opt-in (being insane myself had nothing to do with that decision).
+      </p>
+      <p>It is now called <span class="strong">The Ladder of Insanity</span>.</p>
+
+      <span class="text-center underline">I am insane, how can I join?</span>
+
+      <p>Go to your <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup> and tick the checkbox.</p>
+      <p>
+        If you decide to join, you will appear in the specific ranking and be eligible to its rewards.
+        However, while you will still appear in the casual individual ranking, you will lose eligibility to its rewards.
+      </p>
+      <p>
+        ⚠️ The Ladder of Insanity will be <span class="strong">locked</span> on December 8th 11:30 UTC.
+        From that moment, you will not be able to join or leave it.
+      </p>
+      <p>
+        In case of late registration or exceptional situation after lock time, please <%= link_to "contact us", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>.
+      </p>
+
+      <span class="text-center underline">How the ranking works</span>
+
+      <p>Let <code>N</code> be the number of total participants in the event.</p>
+      <p>
+        For each <em>challenge</em>, participants are ranked by their time to solve it. The first participant to find the correct answer
+        to a puzzle wins <code>N</code> points, the second one wins <code>N-1</code> points, the third one <code>N-2</code> points and so on.
+        Example:
+      </p>
+
+      <table class="w-full text-center">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Day</th>
+            <th>Challenge</th>
+            <th>Time to complete</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center text-xl">
+            <tr>
+              <td class="text-sm">alpha</td>
+              <td>1</td>
+              <td>1</td>
+              <td class="text-sm">1 minute</td>
+              <td class="strong">5</td>
+            </tr>
+            <tr>
+              <td class="text-sm">bravo</td>
+              <td>1</td>
+              <td>1</td>
+              <td class="text-sm">1 minute 1 second</td>
+              <td class="strong">4</td>
+            </tr>
+            <tr>
+              <td class="text-sm">charlie</td>
+              <td>1</td>
+              <td>1</td>
+              <td class="text-sm">1 hour</td>
+              <td class="strong">3</td>
+            </tr>
+            <tr>
+              <td class="text-sm">delta</td>
+              <td>1</td>
+              <td>1</td>
+              <td class="text-sm">2 hours</td>
+              <td class="strong">2</td>
+            </tr>
+            <tr>
+              <td class="text-sm">echo</td>
+              <td>1</td>
+              <td>1</td>
+              <td class="text-sm">5 days</td>
+              <td class="strong">1</td>
+            </tr>
+            <tr>
+              <td class="text-sm">alpha</td>
+              <td>1</td>
+              <td>2</td>
+              <td class="text-sm">never</td>
+              <td class="strong">0</td>
+            </tr>
+            <tr>
+              <td class="text-sm">bravo</td>
+              <td>1</td>
+              <td>2</td>
+              <td class="text-sm">6 hours</td>
+              <td class="strong">4</td>
+            </tr>
+            <tr>
+              <td class="text-sm">charlie</td>
+              <td>1</td>
+              <td>2</td>
+              <td class="text-sm">6 days</td>
+              <td class="strong">2</td>
+            </tr>
+            <tr>
+              <td class="text-sm">delta</td>
+              <td>1</td>
+              <td>2</td>
+              <td class="text-sm">3 hours</td>
+              <td class="strong">5</td>
+            </tr>
+            <tr>
+              <td class="text-sm">echo</td>
+              <td>1</td>
+              <td>2</td>
+              <td class="text-sm">5 days 2 hours</td>
+              <td class="strong">3</td>
+            </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Scores are dynamically adjusted as new participants enter the competition.
+        Your score of Insanity is <span class="strong">the sum of scores for every challenge you solved</span>.
+      </p>
     </div>
   </details>
 
@@ -223,22 +363,6 @@
     </div>
   </details>
 
-  <details>
-    <%= render DetailsSummaryComponent.new(title: "The Ladder of Insanity?!") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p></p>
-    </div>
-  </details>
-
-  <details>
-    <%= render DetailsSummaryComponent.new(title: "Title") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p></p>
-    </div>
-  </details>
-
-  <p class="text-xs"><sup>(*)</sup> accessible only when your account is setup</p>
+  <p class="mt-4 text-xs"><sup>(*)</sup> accessible only when your account is setup</p>
 
 </div>

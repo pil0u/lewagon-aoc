@@ -19,7 +19,7 @@ cities = [
   ["Berlin",          1839],
   ["Bordeaux",        577],
   ["Brasilia",        116],
-  ["Brussels ⭐",     546],
+  ["Brussels ⭐", 546],
   ["Buenos Aires",    236],
   ["Casablanca",      80],
   ["Chengdu",         64],

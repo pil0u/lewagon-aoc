@@ -17,4 +17,4 @@ plugins:
   stylelint:
     enabled: true
     exclude_patterns:
-      - "**/app/assets/builds/**/*"
+      - "**/app/assets/builds/tailwind.css"

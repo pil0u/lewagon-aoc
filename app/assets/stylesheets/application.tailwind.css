@@ -7,7 +7,7 @@
   /* Used in revamped components */
 
   .button {
-    @apply form-element cursor-pointer hover:text-gold ;
+    @apply form-element cursor-pointer hover:text-gold;
   }
 
   code {

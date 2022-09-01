@@ -22,13 +22,13 @@ Rails.application.routes.draw do
 
     root "pages#setup", as: :setup
     patch "/", to: "users#update"
-
-    mount Blazer::Engine, at: "blazer", constraints: BlazerConstraint.new
   end
 
   get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/faq", to: "pages#faq"
   get "/stats", to: "pages#stats"
+
+  mount Blazer::Engine, at: "blazer", constraints: BlazerConstraint.new
 
   #                 #
   #  To be deleted  #

@@ -2,6 +2,6 @@
 
 class BlazerConstraint
   def matches?(request)
-    request.env["warden"].user.blazer?
+    request.env["warden"].user&.blazer?
   end
 end

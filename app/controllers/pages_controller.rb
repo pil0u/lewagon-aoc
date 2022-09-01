@@ -11,7 +11,7 @@ class PagesController < ApplicationController
   def scores; end
 
   def setup
-    set_sync_status_css_class
+    @sync_status_css_class = current_user.sync_status_css_class
   end
 
   def the_wall; end
@@ -21,16 +21,6 @@ class PagesController < ApplicationController
   end
 
   private
-
-  def set_sync_status_css_class
-    css_class = {
-      "KO" => "text-wagon-red",
-      "Pending" => "text-aoc-atmospheric",
-      "OK" => "text-aoc-green"
-    }
-
-    @sync_status_css_class = css_class[current_user.friendly_status]
-  end
 
   ### old
 

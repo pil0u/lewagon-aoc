@@ -47,11 +47,21 @@ class User < ApplicationRecord
     end
   end
 
-  def friendly_status
+  def sync_status
     return "KO" if aoc_id.nil? || !accepted_coc
     return "Pending" unless synced
 
     "OK"
+  end
+
+  def sync_status_css_class
+    css_class = {
+      "KO" => "text-wagon-red",
+      "Pending" => "text-aoc-atmospheric",
+      "OK" => "text-aoc-green"
+    }
+
+    css_class[sync_status]
   end
 
   def blazer?

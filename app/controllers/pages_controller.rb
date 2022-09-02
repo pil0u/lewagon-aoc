@@ -7,11 +7,7 @@ class PagesController < ApplicationController
   def code_of_conduct; end
   def faq; end
   def scores; end
-
-  def setup
-    @sync_status_css_class = current_user.sync_status_css_class
-  end
-
+  def setup; end
   def the_wall; end
 
   def welcome

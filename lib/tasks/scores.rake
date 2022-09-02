@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "aoc"
-require "help"
-
 namespace :scores do
   desc "Main task to call from Heroku Scheduler"
   task unsafe_update: %i[introduction refresh compute_ranks compute_scores conclusion]

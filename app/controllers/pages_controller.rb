@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "aoc"
-
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[code_of_conduct faq welcome]
 

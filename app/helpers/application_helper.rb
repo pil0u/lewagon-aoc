@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "aoc"
-
 module ApplicationHelper
   def day_css(now, advent_day)
     unlocked = now >= Aoc.start_time && advent_day <= now

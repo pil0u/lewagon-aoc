@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "help"
-
 class Batch < ApplicationRecord
   has_many :users, dependent: :nullify
   has_many :completions, through: :users

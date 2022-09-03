@@ -89,7 +89,7 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        You have until <span class="strong">December 31st 11:30 UTC</span> to solve the puzzles 🏁
+        You have until <span class="strong"><%= "#{Aoc.end_time.to_fs(:long_ordinal)} #{Aoc.end_time.zone}" %></span> to solve the puzzles 🏁
         From that moment, all scores will freeze to determine and announce the results.
       </p>
     </div>
@@ -213,7 +213,7 @@
       </p>
       <p>Squads have their own scoreboards. The score of a squad is simply <span class="strong">the sum of its members' scores</span>.</p>
       <p>
-        ⚠️ Squads will be <span class="strong">locked</span> on December 8th 11:30 UTC.
+        ⚠️ Squads will be <span class="strong">locked</span> on <%= "#{Aoc.lock_time.to_fs(:long_ordinal)} #{Aoc.lock_time.zone}" %>.
         From that moment, you will not be able to create, join or leave a squad.
       </p>
       <p>
@@ -247,7 +247,7 @@
         It's either casual or insane, you have to choose.
       </p>
       <p>
-        ⚠️ The Ladder of Insanity will be <span class="strong">locked</span> on December 8th 11:30 UTC.
+        ⚠️ The Ladder of Insanity will be <span class="strong">locked</span> on <%= "#{Aoc.lock_time.to_fs(:long_ordinal)} #{Aoc.lock_time.zone}" %>.
         From that moment, you will not be able to join or leave it.
       </p>
       <p>

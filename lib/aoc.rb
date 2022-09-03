@@ -1,6 +1,35 @@
 # frozen_string_literal: true
 
-module Aoc
+class Aoc
+  def self.begin_time
+    Time.new(2022, 12, 1, 0, 0, 0, "-05:00")
+  end
+
+  def self.end_time
+    Time.new(2022, 12, 31, 11, 30, 0, "UTC")
+  end
+
+  def self.in_progress?
+    now = Time.now.getlocal("-05:00")
+
+    now >= begin_time && now < end_time
+  end
+
+  def self.lock_time
+    Time.new(2022, 12, 8, 11, 30, 0, "UTC")
+  end
+
+  def self.next_puzzle_time
+    now = Time.now.getlocal("-05:00")
+
+    return begin_time if now < begin_time
+    return begin_time + 1.year if now >= end_time
+
+    (now + 1.day).midnight
+  end
+
+  # old
+
   def self.fetch_json(event_year, id, session_cookie)
     Rails.logger.info "Fetching data from leaderboard #{id}..."
     url = URI("https://adventofcode.com/#{event_year}/leaderboard/private/view/#{id}.json")
@@ -42,26 +71,5 @@ module Aoc
     end
 
     completions
-  end
-
-  def self.in_progress?
-    now = Time.now.getlocal("-05:00")
-
-    now >= start_time && now < end_time
-  end
-
-  def self.next_puzzle_time_from(time)
-    return start_time if time < start_time
-    return start_time + 1.year if time >= end_time
-
-    (time + 1.day).midnight
-  end
-
-  def self.start_time
-    Time.new(2021, 12, 1, 0, 0, 0, "-05:00")
-  end
-
-  def self.end_time
-    Time.new(2021, 12, 25, 0, 0, 0, "-05:00")
   end
 end

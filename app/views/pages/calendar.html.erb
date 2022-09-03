@@ -1,1 +1,7 @@
 <p class="text-lg">Welcome, <span class="strong"><%= current_user.username %></span></p>
+
+<div class="mx-auto my-4 w-max grid grid-cols-5 gap-2 lg:gap-3">
+  <%= render Calendar::AdventDayComponent.with_collection(@advent_days, now: @now) %>
+</div>
+
+<p class="text-center">Next puzzle in <%= distance_of_time_in_words(@now, @next_puzzle_time) %></p>

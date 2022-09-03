@@ -1,19 +1,31 @@
 # frozen_string_literal: true
 
-require "aoc"
-
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[code_of_conduct faq welcome]
 
-  def calendar; end
+  def calendar
+    user_completions = current_user.completions.group(:day).count
+    @advent_days = [
+      2,  23, 19, 15, 6,
+      14, 10, 1,  22, 18,
+      21, 17, 13, 9,  5,
+      8,  4,  25, 16, 12,
+      20, 11, 7,  3,  24
+    ].map do |day|
+      {
+        parts_solved: user_completions[day] || 0,
+        release_time: Time.new(2022, 12, day, 0, 0, 0, "-05:00")
+      }
+    end
+
+    @next_puzzle_time = Aoc.next_puzzle_time
+    @now = Time.now.getlocal("-05:00")
+  end
+
   def code_of_conduct; end
   def faq; end
   def scores; end
-
-  def setup
-    set_sync_status_css_class
-  end
-
+  def setup; end
   def the_wall; end
 
   def welcome
@@ -21,16 +33,6 @@ class PagesController < ApplicationController
   end
 
   private
-
-  def set_sync_status_css_class
-    css_class = {
-      "KO" => "text-wagon-red",
-      "Pending" => "text-aoc-atmospheric",
-      "OK" => "text-aoc-green"
-    }
-
-    @sync_status_css_class = css_class[current_user.friendly_status]
-  end
 
   ### old
 

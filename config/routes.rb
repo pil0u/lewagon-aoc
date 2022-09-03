@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   authenticated do
     constraints(ConfirmedConstraint.new) do
       root "pages#calendar", as: :calendar
+
+      get "/day/:number", to: "days#show", as: :day, number: /[1-9]|1\d|2[0-5]/
       get "/scores", to: "pages#scores"
       get "/settings", to: "users#edit"
       patch "/settings", to: "users#update"
@@ -22,13 +24,13 @@ Rails.application.routes.draw do
 
     root "pages#setup", as: :setup
     patch "/", to: "users#update"
-
-    mount Blazer::Engine, at: "blazer", constraints: BlazerConstraint.new
   end
 
   get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/faq", to: "pages#faq"
   get "/stats", to: "pages#stats"
+
+  mount Blazer::Engine, at: "blazer", constraints: BlazerConstraint.new
 
   #                 #
   #  To be deleted  #

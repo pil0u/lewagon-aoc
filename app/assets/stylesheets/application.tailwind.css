@@ -7,7 +7,11 @@
   /* Used in revamped components */
 
   .button {
-    @apply form-element cursor-pointer hover:text-gold ;
+    @apply form-element cursor-pointer hover:text-gold;
+  }
+
+  .calendar-tile {
+    @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40;
   }
 
   code {
@@ -85,32 +89,6 @@
     text-shadow: 0 0 2px #fd1015, 0 0 5px #fd1015;
   }
 
-  /* Legacy */
-
-  .calendar-tile {
-    @apply w-32 h-32 border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40 rounded-3xl select-none;
-
-    &:hover h2 {
-      @apply strong;
-    }
-  }
-
-  .contact-me {
-    @apply border-b border-aoc-gray-dark hover:strong hover:border-aoc-gray;
-  }
-
-  .dashboard-tile {
-    @apply w-48 h-48 border-aoc-gray-darker cursor-default;
-  }
-
-  .text-shadow-silver {
-    text-shadow: 0 0 5px #99c;
-  }
-
-  .text-shadow-bronze {
-    text-shadow: 0 0 5px #fc9;
-  }
-
   @keyframes wiggle {
     0% { transform: rotate(0deg); }
     70% { transform: rotate(0deg); }
@@ -124,6 +102,20 @@
 
   .wiggle {
     animation: wiggle 3s infinite;
+  }
+
+  /* Legacy */
+
+  .dashboard-tile {
+    @apply w-48 h-48 border-aoc-gray-darker cursor-default;
+  }
+
+  .text-shadow-silver {
+    text-shadow: 0 0 5px #99c;
+  }
+
+  .text-shadow-bronze {
+    text-shadow: 0 0 5px #fc9;
   }
 }
 

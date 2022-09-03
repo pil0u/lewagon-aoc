@@ -7,8 +7,7 @@ module.exports = {
   extends: "eslint:all",
   ignorePatterns: [
     "**/app/assets/config/manifest.js",
-    "**/app/javascript/controllers/countdown_controller.js",
-    "**/app/javascript/controllers/modal_controller.js"
+    "**/app/javascript/controllers/countdown_controller.js"
   ],
   parserOptions: {
     sourceType: "module"

@@ -1,6 +1,7 @@
 # fly.toml file generated for lewagon-aoc on 2022-08-28T17:00:43+02:00
 
-app = "lewagon-aoc"
+# app = "lewagon-aoc"     # for staging
+# app = "lewagon-aoc-pr"  # for open PR
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :fly do
-  # task build: 'assets:precompile'
+  # task build: "assets:precompile"
   # task release: "db:migrate"
 
   namespace :pr do
@@ -14,13 +14,13 @@ namespace :fly do
     end
 
     task deploy: :environment do
-      sh 'fly deploy -a lewagon-aoc-pr'
+      sh "fly deploy -a lewagon-aoc-pr"
     end
-  
+
     task printenv: :environment do
       sh 'fly ssh console -C "printenv" -a lewagon-aoc-pr'
     end
-  
+
     task ssh: :environment do
       sh "fly ssh console -a lewagon-aoc-pr"
     end
@@ -36,13 +36,13 @@ namespace :fly do
     end
 
     task deploy: :environment do
-      sh 'fly deploy -a lewagon-aoc'
+      sh "fly deploy -a lewagon-aoc"
     end
-  
+
     task printenv: :environment do
       sh 'fly ssh console -C "printenv" -a lewagon-aoc'
     end
-  
+
     task ssh: :environment do
       sh "fly ssh console -a lewagon-aoc"
     end

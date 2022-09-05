@@ -9,7 +9,7 @@ env:
 
 jobs:
   deploy:
-    # Deploy the main branch to https://lewagon-aoc.fly.dev/
+    # Deploy any push on any Pull Request to https://lewagon-aoc-pr.fly.dev/
 
       name: Deploy app
       runs-on: ubuntu-latest

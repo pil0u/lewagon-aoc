@@ -17,7 +17,7 @@ jobs:
       steps:
         - uses: actions/checkout@v3
         - uses: superfly/flyctl-actions/setup-flyctl@master
-        - run: fly apps destroy lewagon-aoc-pr -y
+        - run: flyctl apps destroy lewagon-aoc-pr -y
             # fly deploy                                  --app lewagon-aoc-pr
             # fly apps destroy lewagon-aoc-pr -y
             # fly apps create lewagon-aoc-pr

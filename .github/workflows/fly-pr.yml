@@ -18,7 +18,8 @@ jobs:
         - uses: actions/checkout@v3
         - uses: superfly/flyctl-actions/setup-flyctl@master
         - run: |
-            flyctl apps destroy lewagon-aoc-pr -y
+            fly deploy                                  --app lewagon-aoc-pr
+            fly apps destroy lewagon-aoc-pr -y
             fly apps create lewagon-aoc-pr
             fly secrets set AAARGHH_THIS_IS_STAGING=1   --app lewagon-aoc-pr
             fly postgres attach lewagon-aoc-db          --app lewagon-aoc-pr

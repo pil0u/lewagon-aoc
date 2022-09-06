@@ -59,6 +59,7 @@ COPY --from=gems /app /app
 ENV SECRET_KEY_BASE 1
 
 COPY . .
+RUN sed -i '/^#!/aDir.chdir File.expand_path("..", __dir__)' /app/bin/*
 
 RUN bundle exec rails assets:precompile
 

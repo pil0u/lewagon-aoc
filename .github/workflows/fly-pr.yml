@@ -20,7 +20,7 @@ jobs:
         - run: |
             flyctl apps destroy lewagon-aoc-pr --yes
             flyctl apps create --name lewagon-aoc-pr
-            flyctl secrets set AAARGHH_THIS_IS_STAGING=1   --app lewagon-aoc-pr
+            flyctl secrets set AAARGHH_THIS_IS_STAGING=1   --app lewagon-aoc-pr --detach
             flyctl postgres attach lewagon-aoc-db          --app lewagon-aoc-pr
             flyctl deploy                                  --app lewagon-aoc-pr
             flyctl scale memory 512                        --app lewagon-aoc-pr

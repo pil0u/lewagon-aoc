@@ -18,10 +18,10 @@ jobs:
         - uses: actions/checkout@v3
         - uses: superfly/flyctl-actions/setup-flyctl@master
         - run: |
-            fly apps destroy lewagon-aoc-pr -y
-            fly apps create lewagon-aoc-pr -y
-            fly secrets set AAARGHH_THIS_IS_STAGING=1   --app lewagon-aoc-pr
-            fly postgres attach lewagon-aoc-db          --app lewagon-aoc-pr
-            fly deploy                                  --app lewagon-aoc-pr
-            fly scale memory 512                        --app lewagon-aoc-pr
-            fly ssh console -C "app/bin/rails db:seed"  --app lewagon-aoc-pr
+            flyctl apps destroy lewagon-aoc-pr -y
+            flyctl apps create lewagon-aoc-pr -y
+            flyctl secrets set AAARGHH_THIS_IS_STAGING=1   --app lewagon-aoc-pr
+            flyctl postgres attach lewagon-aoc-db          --app lewagon-aoc-pr
+            flyctl deploy                                  --app lewagon-aoc-pr
+            flyctl scale memory 512                        --app lewagon-aoc-pr
+            flyctl ssh console -C "app/bin/rails db:seed"  --app lewagon-aoc-pr

@@ -24,5 +24,5 @@ jobs:
         - run: flyctl scale memory 512                                                              --app lewagon-aoc-pr
         - run: flyctl postgres attach lewagon-aoc-db --database-user=Z$(uuidgen | tr -d -) --force  --app lewagon-aoc-pr
         - run: flyctl secrets set AAARGHH_THIS_IS_STAGING=1                                         --app lewagon-aoc-pr
-        - run: flyctl deploy                                                                        --app lewagon-aoc-pr
+        - run: flyctl deploy --remote-only                                                          --app lewagon-aoc-pr
         - run: flyctl ssh console -C "app/bin/rails db:seed"                                        --app lewagon-aoc-pr

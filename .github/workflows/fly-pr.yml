@@ -17,10 +17,10 @@ jobs:
       steps:
         - uses: actions/checkout@v3
         - uses: superfly/flyctl-actions/setup-flyctl@master
-        - run: flyctl postgres detach lewagon-aoc-db          --app lewagon-aoc-pr  --verbose
-        - run: flyctl apps destroy lewagon-aoc-pr --yes                             --verbose
-        - run: flyctl apps create --name lewagon-aoc-pr                             --verbose
-        - run: flyctl postgres attach lewagon-aoc-db --force  --app lewagon-aoc-pr  --verbose
-        - run: flyctl deploy --env AAARGHH_THIS_IS_STAGING=1  --app lewagon-aoc-pr  --verbose
-        - run: flyctl scale memory 512                        --app lewagon-aoc-pr  --verbose
-        - run: flyctl ssh console -C "app/bin/rails db:seed"  --app lewagon-aoc-pr  --verbose
+        - run: flyctl postgres detach lewagon-aoc-db                                    --app lewagon-aoc-pr  --verbose
+        - run: flyctl apps destroy lewagon-aoc-pr --yes                                                       --verbose
+        - run: flyctl apps create --name lewagon-aoc-pr                                                       --verbose
+        - run: flyctl postgres attach lewagon-aoc-db --database-user=$(uuidgen) --force --app lewagon-aoc-pr  --verbose
+        - run: flyctl deploy --env AAARGHH_THIS_IS_STAGING=1                            --app lewagon-aoc-pr  --verbose
+        - run: flyctl scale memory 512                                                  --app lewagon-aoc-pr  --verbose
+        - run: flyctl ssh console -C "app/bin/rails db:seed"                            --app lewagon-aoc-pr  --verbose

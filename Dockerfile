@@ -57,14 +57,16 @@ RUN --mount=type=cache,id=prod-apt-cache,sharing=locked,target=/var/cache/apt \
 COPY --from=gems /app /app
 
 ENV SECRET_KEY_BASE 1
-
 COPY . .
-RUN sed -i '/^#!/aDir.chdir File.expand_path("..", __dir__)' /app/bin/*
 
-RUN bundle exec rails assets:precompile
+RUN chmod +x /app/bin/* && \
+    sed -i 's/ruby.exe/ruby/' /app/bin/* && \
+    sed -i '/^#!/aDir.chdir File.expand_path("..", __dir__)' /app/bin/*
+
+RUN bin/rails fly:build
 
 ENV PORT 8080
 
-ARG SERVER_COMMAND="bundle exec puma"
+ARG SERVER_COMMAND="bin/rails fly:server"
 ENV SERVER_COMMAND ${SERVER_COMMAND}
 CMD ${SERVER_COMMAND}

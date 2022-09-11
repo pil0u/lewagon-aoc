@@ -12,11 +12,11 @@ processes = []
     RUBY_VERSION = "3.1.2"
 
 [deploy]
-  release_command = "bundle exec rails --trace db:migrate"
+  release_command = "bin/rails --trace fly:release"
 
 [env]
   PORT = "8080"
-  SERVER_COMMAND = "bundle exec puma"
+  SERVER_COMMAND = "bin/rails fly:server"
 
 [experimental]
   allowed_public_ports = []

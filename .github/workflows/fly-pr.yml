@@ -6,6 +6,7 @@ on:
 
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  DOCKER_BUILDKIT: 1
 
 jobs:
   deploy:
@@ -17,11 +18,11 @@ jobs:
       steps:
         - uses: actions/checkout@v3
         - uses: superfly/flyctl-actions/setup-flyctl@master
-        # - run: flyctl postgres detach lewagon-aoc-db                                              --app lewagon-aoc-pr || true
-        - run: flyctl apps destroy lewagon-aoc-pr --yes                                                                || true
+        - run: flyctl postgres detach lewagon-aoc-db                                                --app lewagon-aoc-pr || true
+        - run: flyctl apps destroy lewagon-aoc-pr --yes                                                                  || true
         - run: flyctl apps create --name lewagon-aoc-pr                                                               
-        - run: flyctl postgres attach lewagon-aoc-db --database-user=Z$(uuidgen | tr -d -) --force --app lewagon-aoc-pr
-        - run: flyctl secrets set AAARGHH_THIS_IS_STAGING=1                                       --app lewagon-aoc-pr
-        - run: flyctl deploy                                                                      --app lewagon-aoc-pr
-        - run: flyctl scale memory 512                                                            --app lewagon-aoc-pr
-        - run: flyctl ssh console -C "app/bin/rails db:seed"                                      --app lewagon-aoc-pr
+        - run: flyctl postgres attach lewagon-aoc-db --database-user=Z$(uuidgen | tr -d -) --force  --app lewagon-aoc-pr
+        - run: flyctl secrets set AAARGHH_THIS_IS_STAGING=1                                         --app lewagon-aoc-pr
+        - run: flyctl deploy                                                                        --app lewagon-aoc-pr
+        - run: flyctl scale memory 512                                                              --app lewagon-aoc-pr
+        - run: flyctl ssh console -C "app/bin/rails db:seed"                                        --app lewagon-aoc-pr

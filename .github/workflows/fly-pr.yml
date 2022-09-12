@@ -17,14 +17,21 @@ jobs:
       steps:
         - uses: actions/checkout@v3
         - uses: superfly/flyctl-actions/setup-flyctl@master
-        # - run: flyctl postgres detach lewagon-aoc-db --app lewagon-aoc-pr      # not working in a non interactive way
+
+        # Destroy and rebuild app + PostgreSQL cluster
         - run: flyctl apps destroy lewagon-aoc-pr --yes
+        - run: flyctl apps destroy lewagon-aoc-pr-db --yes
+        - run: flyctl postgres create --name=lewagon-aoc-pr-db --region=cdg --vm-size=shared-cpu-1x --volume-size=1 --initial-cluster-size=1
         - run: flyctl apps create --name lewagon-aoc-pr
+        - run: flyctl postgres attach lewagon-aoc-pr-db --app lewagon-aoc-pr
+
+        # Scale app and set environment variables before deployment
         - run: flyctl scale memory 512 --app lewagon-aoc-pr
-        - run: flyctl postgres attach lewagon-aoc-db --database-user=Z$(uuidgen | tr -d -) --force --app lewagon-aoc-pr
         - run: > 
             flyctl secrets set --app lewagon-aoc-pr
             THIS_IS_STAGING=1
             RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }} 
+
+        # Deploy and seed data
         - run: flyctl deploy --remote-only --app lewagon-aoc-pr
         - run: flyctl ssh console -C "app/bin/rails db:seed" --app lewagon-aoc-pr

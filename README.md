@@ -23,21 +23,14 @@ If you want to help me fix a bug or implement a new requested feature:
 3. Create a `.env` root file and add these keys with their [appropriate values](#env-variables): `AOC_ROOMS`, `EVENT_YEAR`, `SESSION_COOKIE`
 4. Run `bin/dev`
 
-### `ENV` variables
+### Required `ENV` variables
 
 > **Warning**  
 The `.env` file is used for development purposes only. It is _not_ versioned and never should.
 
-#### Required
-
 - `AOC_ROOMS` is a comma-separated list of [private leaderboard](https://adventofcode.com/leaderboard/private) IDs that _you belong_ to (e.g. `9999999-a0b1c2d3,7777777-e4f56789`)
 - `EVENT_YEAR` can take any [existing event](https://adventofcode.com/events) value (e.g. `2021`)
 - `SESSION_COOKIE` is your own Advent of Code session cookie (valid ~ 1 month). You need to [log in](https://adventofcode.com/2021/auth/login) to the platform, then retrieve the value of the `session` cookie (e.g. `436088a93cbdba07668e76df6d26c0dcb4ef3cbd5728069ffb647678ad38`)
-
-#### Optional
-
-- `ANNOUNCEMENT` is a short text to display in a fixed banner across the website (e.g. `ANNOUNCEMENT=We are aware of an issue regarding XXX. Work is in progress.`)
-- `OVERMIND_PORT` and `OVERMIND_PROCFILE` if you use [overmind](#overmind)
 
 ### Overmind
 
@@ -53,11 +46,11 @@ OVERMIND_PORT=3000
 OVERMIND_PROCFILE=Procfile.dev
 ```
 
-Then, instead of the usual `bin/dev`, you can run `overmind s`.
+Then, instead of the usual `bin/dev`, you have to run `overmind s`.
 
 ## Advent of Code API hacking
 
-On `adventofcode.com`, a user can create one (and only one) private leaderboard. Up to 200 other users can join it using the generated code. A first room was already generated from the generic account `lewagon-aoc`.  
+On `adventofcode.com`, a user can create one (and only one) private leaderboard. Up to 200 users can join it using the generated code. A first room was already generated from the generic account `lewagon-aoc`.  
 
 A JSON object containing scores can be fetched from a `GET` request that needs a session cookie to succeed. This session cookie is stored in the `SESSION_COOKIE` environment variable (valid ~ 1 month).
 

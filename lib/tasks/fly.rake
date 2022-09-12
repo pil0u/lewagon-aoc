@@ -38,6 +38,10 @@ namespace :fly do
     sh 'fly ssh console -C "printenv" -a lewagon-aoc'
   end
 
+  task seed: :environment do
+    sh 'fly ssh console -C "app/bin/rails db:seed" -a lewagon-aoc'
+  end
+
   task ssh: :environment do
     sh "fly ssh console -a lewagon-aoc"
   end
@@ -57,6 +61,10 @@ namespace :fly do
 
     task printenv: :environment do
       sh 'fly ssh console -C "printenv" -a lewagon-aoc-pr'
+    end
+
+    task seed: :environment do
+      sh 'fly ssh console -C "app/bin/rails db:seed" -a lewagon-aoc-pr'
     end
 
     task ssh: :environment do

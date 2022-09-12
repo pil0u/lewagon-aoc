@@ -33,5 +33,5 @@ jobs:
             RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }} 
 
         # Deploy and seed data
-        - run: flyctl deploy --remote-only --app lewagon-aoc-pr
+        - run: env GODEBUG=http2debug=2 flyctl deploy --remote-only --app lewagon-aoc-pr
         - run: flyctl ssh console -C "app/bin/rails db:seed" --app lewagon-aoc-pr

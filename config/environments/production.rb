@@ -6,7 +6,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Heroku runs in RAILS_ENV=production mode. In staging, we want the Kitt credentials to be the same as the development ones.
-  config.credentials.content_path = config.root.join("config/credentials.yml.enc") if ENV["AAARGHH_THIS_IS_STAGING"]
+  config.credentials.content_path = config.root.join("config/credentials.yml.enc") if ENV["THIS_IS_STAGING"]
 
   # Code is not reloaded between requests.
   config.cache_classes = true

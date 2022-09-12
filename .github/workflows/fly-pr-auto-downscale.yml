@@ -4,6 +4,7 @@ name: Scale down Fly PR app
 # This GitHub Action scales down to 256MB every two hours (Free Tier)
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 */2 * * *'
 

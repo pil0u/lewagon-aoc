@@ -22,7 +22,7 @@ Upon Pull Requests (open, push), CI scripts are automatically run:
 - linters (RuboCop, ERBLint)
 - security tools (brakeman, bundler-audit)
 - tests (soon™)
-- auto-deploy ephemeral app
+- auto-deploy ephemeral app (in ~ 8 minutes)
 
 Your PR should pass the linters, the security checks and the tests (soon™) to be merged.  
 The app is automatically deployed in a production-like environment with a fresh database where you can double-check your changes.

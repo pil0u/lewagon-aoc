@@ -1,5 +1,5 @@
 ---
-name: Fly Deploy (PR)
+name: Prepare Fly PR app for deployment
 
 on:
   pull_request:
@@ -9,18 +9,21 @@ env:
   DOCKER_BUILDKIT: 1
 
 jobs:
-  deploy:
-    # Deploy any push on any Pull Request to https://lewagon-aoc-pr.fly.dev/
+  prepare:
+    # Prepare Fly app to be deployed upon any push on any Pull Request to https://lewagon-aoc-pr.fly.dev/
 
-      name: Deploy app
+      name: Prepare Fly PR app for deployment
       runs-on: ubuntu-latest
 
       steps:
         - uses: actions/checkout@v3
         - uses: superfly/flyctl-actions/setup-flyctl@master
-        # - run: flyctl postgres detach lewagon-aoc-db --app lewagon-aoc-pr # not working in a non interactive way
+        # - run: flyctl postgres detach lewagon-aoc-db --app lewagon-aoc-pr      # not working in a non interactive way
         - run: flyctl apps destroy lewagon-aoc-pr --yes
         - run: flyctl apps create --name lewagon-aoc-pr
         - run: flyctl scale memory 512 --app lewagon-aoc-pr
         - run: flyctl postgres attach lewagon-aoc-db --database-user=Z$(uuidgen | tr -d -) --force --app lewagon-aoc-pr
-        - run: flyctl secrets set THIS_IS_STAGING=1 RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }} --app lewagon-aoc-pr
+        - run: > 
+            flyctl secrets set --app lewagon-aoc-pr
+            THIS_IS_STAGING=1
+            RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }} 

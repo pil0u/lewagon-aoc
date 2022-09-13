@@ -29,8 +29,8 @@ jobs:
         - run: flyctl scale memory 512 --app lewagon-aoc-pr
         - run: > 
             flyctl secrets set --app lewagon-aoc-pr
+            RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }}
             THIS_IS_STAGING=1
-            RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }} 
 
         # Deploy and seed data
         - run: flyctl deploy --remote-only --app lewagon-aoc-pr

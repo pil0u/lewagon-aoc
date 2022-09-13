@@ -1,0 +1,22 @@
+---
+name: Scale down Fly PR app
+# Fly PR app is initially deployed with 512MB of RAM for usability.
+# This GitHub Action scales down to 256MB every two hours (Free Tier)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */2 * * *'
+
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+jobs:
+  scale:
+      name: Scale down Fly PR app
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v3
+        - uses: superfly/flyctl-actions/setup-flyctl@master
+        - run: flyctl scale memory 256 --app lewagon-aoc-pr

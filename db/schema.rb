@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_16_211501) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_13_211331) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
 
   create_table "batches", force: :cascade do |t|
@@ -98,6 +99,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_211501) do
     t.bigint "user_id", null: false
     t.index ["user_id", "day", "challenge"], name: "index_completions_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_completions_on_user_id"
+  end
+
+  create_table "squads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "join_id"
+    t.citext "name"
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_squads_on_name", unique: true
   end
 
   create_table "states", force: :cascade do |t|

@@ -7,7 +7,9 @@ class User < ApplicationRecord
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
+  belongs_to :squad, optional: true
   has_many :completions, dependent: :destroy
+
   has_one :score # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
   has_one :rank # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
   has_many :city_contributions, through: :completions

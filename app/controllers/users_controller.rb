@@ -2,25 +2,20 @@
 
 class UsersController < ApplicationController
   def edit
-    set_current_user
+    @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
   end
 
   def update
-    set_current_user
     set_updated_params
 
-    if @user.update(@params)
-      redirect_back(fallback_location: "/", notice: "Your information was updated")
+    if current_user.update(@params)
+      redirect_back(fallback_location: "/settings", notice: "Your user information was updated")
     else
-      redirect_back(fallback_location: "/", alert: "Error: #{@user.errors.full_messages[0]}")
+      redirect_back(fallback_location: "/settings", alert: "Error: #{current_user.errors.full_messages[0]}")
     end
   end
 
   private
-
-  def set_current_user
-    @user = current_user
-  end
 
   def set_updated_params
     @params = {

@@ -1,25 +1,25 @@
 <%= render PageTitleComponent.new(title: "Account settings") %>
 
-<%= form_with model: @user, url: settings_path, class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
+<%= form_with model: current_user, url: settings_path, class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :username %>
-    <%= f.text_field :username, value: @user.username, class: "input" %>
+    <%= f.text_field :username, value: current_user.username, class: "input" %>
   </div>
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :aoc_id %>
-    <%= f.number_field :aoc_id, value: @user.aoc_id, min: 1, class: "input", disabled: true %>
+    <%= f.number_field :aoc_id, value: current_user.aoc_id, min: 1, class: "input", disabled: true %>
   </div>
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :batch_number, "Batch #" %>
-    <%= f.number_field :batch_number, value: @user.batch&.number, min: 1, class: "input" %>
+    <%= f.number_field :batch_number, value: current_user.batch&.number, min: 1, class: "input" %>
   </div>
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :city_name, "City" %>
-    <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: @user.city_id }, class: "input") %>
+    <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: current_user.city_id }, class: "input") %>
   </div>
 
   <div class="flex items-center gap-x-3 w-48 sm:w-fit">
@@ -38,3 +38,37 @@
 <hr class="my-4 border-aoc-gray-darker">
 
 <%= render PageTitleComponent.new(title: "Squad settings") %>
+
+<% if current_user.squad_id.nil? %>
+
+  <%= form_with model: @squad, url: join_squad_path, class: "my-4 flex w-max mx-auto items-end gap-x-2" do |f| %>
+    <%= f.number_field :secret_id, placeholder: "Secret ID", class: "input w-32" %>
+
+    <%= f.submit "Join squad", class: "button" %>
+  <% end %>
+
+  <%= form_with model: @squad, url: create_squad_path, class: "my-4 w-max mx-auto" do |f| %>
+    <%= f.submit "Create new squad", class: "button w-64" %>
+  <% end %>
+
+<% else %>
+
+  <p class="my-4">Members: <%= @squad.users.pluck(:username).join(", ") %></p>
+
+  <%= form_with model: @squad, method: :patch, class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
+    <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+      <%= f.label :secret_id %>
+      <%= f.number_field :secret_id, value: @squad.secret_id, class: "input", disabled: true %>
+    </div>
+
+    <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+      <%= f.label :name %>
+      <%= f.text_field :name, value: @squad.name, class: "input" %>
+    </div>
+
+    <%= f.submit "Save", class: "button" %>
+  <% end %>
+
+  <%= button_to "Leave squad", leave_squad_path, method: :delete, data: { turbo: false }, class: "my-4 flex w-max mx-auto button-red" %>
+
+<% end %>

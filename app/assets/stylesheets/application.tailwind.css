@@ -10,6 +10,10 @@
     @apply form-element cursor-pointer hover:text-gold;
   }
 
+  .button-red {
+    @apply form-element cursor-pointer hover:text-wagon-red;
+  }
+
   .calendar-tile {
     @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40;
   }

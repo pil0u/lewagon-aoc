@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       post    "/squad",       to: "squads#create",  as: :create_squad
       post    "/squad/join",  to: "squads#join",    as: :join_squad
       delete  "/squad/leave", to: "squads#leave",   as: :leave_squad
-      patch   "/squad/:id",   to: "squads#update"
+      patch   "/squad/:id",   to: "squads#update",  as: :update_squad
     end
 
     root "pages#setup", as: :setup

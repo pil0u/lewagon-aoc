@@ -55,7 +55,7 @@
 
   <p class="my-4">Members: <%= @squad.users.pluck(:username).join(", ") %></p>
 
-  <%= form_with model: @squad, method: :patch, class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
+  <%= form_with model: @squad, url: update_squad_path(@squad), class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
     <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
       <%= f.label :secret_id %>
       <%= f.number_field :secret_id, value: @squad.secret_id, class: "input", disabled: true %>

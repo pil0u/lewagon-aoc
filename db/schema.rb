@@ -103,8 +103,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_211331) do
 
   create_table "squads", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.integer "join_id"
     t.citext "name"
+    t.integer "secret_id"
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_squads_on_name", unique: true
   end

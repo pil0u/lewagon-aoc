@@ -6,7 +6,7 @@ class CreateSquads < ActiveRecord::Migration[7.0]
 
     create_table :squads do |t|
       t.citext :name
-      t.integer :join_id
+      t.integer :secret_id
 
       t.timestamps
     end

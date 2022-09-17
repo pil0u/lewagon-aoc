@@ -5,11 +5,11 @@ class Squad < ApplicationRecord
 
   validates :name, uniqueness: { case_sensitive: false }
 
-  before_create :generate_join_id
+  before_create :generate_secret_id
 
   private
 
-  def generate_join_id
-    self.join_id = rand(100_000..999_999) while Squad.exists?(join_id:)
+  def generate_secret_id
+    self.secret_id = rand(100_000..999_999) while Squad.exists?(secret_id:)
   end
 end

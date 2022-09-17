@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   authenticated do
     constraints(ConfirmedConstraint.new) do
-      root  "pages#calendar",                   as: :calendar
+      root  "pages#calendar", as: :calendar
       get   "/scores",    to: "pages#scores"
       get   "/the-wall",  to: "pages#the_wall"
 

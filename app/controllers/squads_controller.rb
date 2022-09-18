@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SquadsController < ApplicationController
+  before_action :restrict_after_lock, only: %i[create join leave]
+
   def create
     squad = Squad.create!
     current_user.update(squad_id: squad.id)
@@ -45,6 +47,10 @@ class SquadsController < ApplicationController
   end
 
   private
+
+  def restrict_after_lock
+    redirect_to settings_path, alert: "You cannot #{action_name} Squads since #{Aoc.lock_time.to_fs(:long_ordinal)}." if Time.now.utc > Aoc.lock_time
+  end
 
   def squad_params
     params.require(:squad).permit(:name, :secret_id)

@@ -4,7 +4,7 @@
 
     <%= render Header::NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
     <%= render Header::NavTabComponent.new(link: { name: "scores", path: scores_path }) %>
-    <%= render Header::NavTabComponent.new(link: { name: "the wall", path: the_wall_path }) %>
+    <%= render Header::NavTabComponent.new(link: { name: "the wall", path: messages_path }) %>
     <%= render Header::NavTabComponent.new(link: { name: "<i class=\"fas fa-gear\"></i>".html_safe, path: settings_path }) %>
 
   <% else %>

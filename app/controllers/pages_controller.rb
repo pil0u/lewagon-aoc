@@ -26,7 +26,6 @@ class PagesController < ApplicationController
   def faq; end
   def scores; end
   def setup; end
-  def the_wall; end
 
   def welcome
     @total_users = User.count

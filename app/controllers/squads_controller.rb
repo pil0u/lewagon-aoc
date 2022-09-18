@@ -5,16 +5,16 @@ class SquadsController < ApplicationController
     squad = Squad.create!
     current_user.update(squad_id: squad.id)
 
-    redirect_to settings_path
+    redirect_to settings_path, notice: "Squad successfully created!"
   end
 
   def update
     @squad = Squad.find(params[:id])
 
     if @squad.update(name: squad_params[:name])
-      redirect_back(fallback_location: "/settings", notice: "Your squad information was updated")
+      redirect_to settings_path, notice: "Your squad information was updated"
     else
-      redirect_back(fallback_location: "/settings", alert: "Error: #{@squad.errors.full_messages[0]}")
+      redirect_to settings_path, alert: "Error: #{@squad.errors.full_messages[0]}"
     end
   end
 
@@ -32,7 +32,7 @@ class SquadsController < ApplicationController
     end
 
     current_user.update(squad_id: @squad.id)
-    redirect_to settings_path
+    redirect_to settings_path, notice: "Squad successfully joined!"
   end
 
   def leave
@@ -41,7 +41,7 @@ class SquadsController < ApplicationController
     current_user.update(squad_id: nil)
     squad.destroy! if squad.users.count == 0
 
-    redirect_to settings_path
+    redirect_to settings_path, notice: "Squad successfully left."
   end
 
   private

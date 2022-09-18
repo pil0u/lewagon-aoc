@@ -9,9 +9,9 @@ class UsersController < ApplicationController
     set_updated_params
 
     if current_user.update(@params)
-      redirect_back(fallback_location: "/settings", notice: "Your user information was updated")
+      redirect_to settings_path, notice: "Your user information was updated"
     else
-      redirect_back(fallback_location: "/settings", alert: "Error: #{current_user.errors.full_messages[0]}")
+      redirect_to settings_path, alert: "Error: #{current_user.errors.full_messages[0]}"
     end
   end
 

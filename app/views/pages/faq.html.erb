@@ -85,17 +85,6 @@
   </details>
 
   <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "When does the contest end?") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p>
-        You have until <span class="strong"><%= "#{Aoc.end_time.to_fs(:long_ordinal)} #{Aoc.end_time.zone}" %></span> to solve the puzzles 🏁
-        From that moment, all scores will freeze to determine and announce the results.
-      </p>
-    </div>
-  </details>
-
-  <details>
     <%= render Faq::DetailsSummaryComponent.new(title: "Why are there two different platforms?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
@@ -106,7 +95,28 @@
       </p>
       <p>
         We built this platform to create a link between Kitt and Advent of Code, so we can build
-        <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %><sup>(*)</sup>.</p>
+        <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %><sup>(*)</sup>.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <%= render Faq::DetailsSummaryComponent.new(title: "Why are leaderboards different on adventofcode.com and on aoc.lewagon.community?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        When you pass the setup process, you actually join a private leaderboard on adventofcode.com.
+        These private leaderboards are capped to 200 members and you are definitely more than 200 to participate :-)
+      </p>
+      <p>
+        To overcome this issue and build a global leaderboard with everybody,
+        <span class="strong">we create multiple private leaderboards on adventofcode.com behind the scenes</span>:
+        each participant is assigned to one. Once a private leaderboard is full, we create a new one.
+      </p>
+      <p>
+        Bottom line is that the private leaderboard you appear on adventofcode.com does not make a lot of sense, because you belong to a group
+        of 200 people that is pretty random. You should look at the <%= link_to "scoreboards", scores_path, class: "link-explicit link-internal" %><sup>(*)</sup>
+        on our own platform that includes everybody from all of our private leaderboards.
       </p>
     </div>
   </details>
@@ -350,6 +360,17 @@
       <p>
         Scores are dynamically adjusted as new participants enter the competition.
         Your score of Insanity is <span class="strong">the sum of scores for every challenge you solved</span>.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <%= render Faq::DetailsSummaryComponent.new(title: "When does the contest end?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        You have until <span class="strong"><%= "#{Aoc.end_time.to_fs(:long_ordinal)} #{Aoc.end_time.zone}" %></span> to solve the puzzles 🏁
+        From that moment, all scores will freeze to determine and announce the results.
       </p>
     </div>
   </details>

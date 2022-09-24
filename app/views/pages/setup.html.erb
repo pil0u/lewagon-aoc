@@ -73,6 +73,6 @@
 
 <p class="italic text-sm opacity-80">
   If you carefully followed each one of these steps and your status remains <span class="not-italic text-aoc-atmospheric">Pending</span>
-  after an update of the data, send me a message <%= link_to "on Slack", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>
+  after an update of the data, send me a message <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %>
   with these: <code class="not-italic strong">id:<%= current_user.id %>;aoc_id:<%= current_user.aoc_id %></code>
 </p>

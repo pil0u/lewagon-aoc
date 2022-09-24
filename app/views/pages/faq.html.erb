@@ -93,7 +93,7 @@
       </p>
       <p>
         If you get stuck on a puzzle, you can always
-        <%= link_to "discuss it", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>
+        <%= link_to "discuss it", Aoc.slack_channel, class: "link-explicit link-slack" %>
         with others! This event with <span class="text-wagon-red">Le Wagon</span> is, above all, a great opportunity
         <span class="strong">for sharing, learning and helping each other, regardless of your initial skill level</span>.
         It's also a perfect moment to reconnect with your city/batch 🤙
@@ -261,9 +261,8 @@
       </p>
       <p>
         You are responsible for building your squad: assemble your dream team (you can find people
-        <%= link_to "on Slack", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>),
-        then materialize it in a squad in your
-        <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup>.
+        <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %>), then materialize it in a squad
+        in your <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup>.
       </p>
       <p>
         Squads have their own scoreboards. The score of a squad is simply
@@ -276,7 +275,7 @@
       </p>
       <p>
         In case of late registration or exceptional situation after lock time, please
-        <%= link_to "contact us", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>.
+        <%= link_to "contact us", Aoc.slack_channel, class: "link-explicit link-slack" %>.
       </p>
     </div>
   </details>
@@ -322,7 +321,7 @@
       </p>
       <p>
         In case of late registration or exceptional situation after lock time, please
-        <%= link_to "contact us", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "link-explicit link-slack" %>.
+        <%= link_to "contact us", Aoc.slack_channel, class: "link-explicit link-slack" %>.
       </p>
 
       <span class="text-center underline">How the ranking works</span>

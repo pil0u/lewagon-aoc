@@ -28,6 +28,10 @@ class Aoc
     (now + 1.day).midnight
   end
 
+  def self.slack_channel
+    "slack://channel?team=T02NE0241&id=C02PN711H09"
+  end
+
   # old
 
   def self.fetch_json(event_year, id, session_cookie)

@@ -189,7 +189,7 @@
     <p class="paragraph">At this point, your status should have switched to <span class="text-aoc-atmospheric">pending</span>.
     It should switch to <span class="text-aoc-green">OK</span> in <span class="strong"><%= @estimated_next_api_fetch %></span>.
 
-    <em class="text-sm">If your status remains <span class="text-aoc-atmospheric">pending</span> after a data refresh while you carefully followed each one of these steps, <%= link_to "contact me on Slack", "slack://channel?team=T02NE0241&id=C02PN711H09", class: "contact-me" %>.</em></p>
+    <em class="text-sm">If your status remains <span class="text-aoc-atmospheric">pending</span> after a data refresh while you carefully followed each one of these steps, <%= link_to "contact me on Slack", Aoc.slack_channel, class: "contact-me" %>.</em></p>
   </div>
 
 <% end %>

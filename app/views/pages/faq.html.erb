@@ -256,13 +256,17 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        A squad is a group of up to <span class="strong">4</span> participants.<br>A participant can belong to 0 or
+        A squad is a group of <span class="strong">up to 4</span> participants.<br>A participant can belong to 0 or
         1 squad.
       </p>
       <p>
         You are responsible for building your squad: assemble your dream team (you can find people
         <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %>), then materialize it in a squad
         in your <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup>.
+      </p>
+      <p>
+        Create a squad in 1 click and share the <span class="strong">generated secret ID</span> of your squad to your
+        peers: they will need it to join you.
       </p>
       <p>
         Squads have their own scoreboards. The score of a squad is simply

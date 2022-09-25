@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_17_103435) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_25_171910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -88,14 +88,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_17_103435) do
   create_table "completions", force: :cascade do |t|
     t.integer "challenge", limit: 2
     t.bigint "completion_unix_time"
+    t.datetime "created_at", null: false
     t.integer "day", limit: 2
-    t.integer "rank_in_batch"
-    t.integer "rank_in_city"
-    t.integer "rank_solo"
-    t.integer "score_in_batch"
-    t.integer "score_in_city"
-    t.integer "score_solo"
-    t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id", "day", "challenge"], name: "index_completions_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_completions_on_user_id"

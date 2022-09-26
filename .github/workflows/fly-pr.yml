@@ -25,8 +25,8 @@ jobs:
         - run: flyctl apps create --name lewagon-aoc-pr
         - run: flyctl postgres attach lewagon-aoc-pr-db --app lewagon-aoc-pr
 
-        # # Scale memory
-        # - run: flyctl scale memory 512 --app lewagon-aoc-pr
+        # Scale memory
+        - run: flyctl scale memory 512 --app lewagon-aoc-pr
 
         # Set environment variables before deployment
         - run: > 

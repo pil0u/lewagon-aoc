@@ -9,6 +9,7 @@ gem "rails", "~> 7.0.3"
 gem "blazer", "~> 2.6"
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
 gem "devise", "~> 4.8"
+gem "good_job", "~> 3.4"
 gem "humanize", "~> 2.5"
 gem "importmap-rails", "~> 1.0"
 gem "jbuilder", "~> 2.11"

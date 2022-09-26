@@ -8,7 +8,7 @@ Rails.application.configure do
     enable_cron: true,
     cron: {
       refresh_completions: {
-        cron: "every minute",
+        cron: "every 10 minutes",
         class: "InsertNewCompletionsJob"
       }
     }

@@ -79,9 +79,7 @@ class InsertNewCompletionsJob < ApplicationJob
           }
 
           # This helps limit the size of the INSERT query in spite of the default ON CONFLICT DO NOTHING
-          unless [aoc_id, day, challenge].map(&:to_i).in?(stored_completions)
-            @completions << completion
-          end
+          @completions << completion unless [aoc_id, day, challenge].map(&:to_i).in?(stored_completions)
         end
       end
     end

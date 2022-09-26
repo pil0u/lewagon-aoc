@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class InsertNewCompletionsJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
+  def perform
     @completions_from_api = {}
     @completions = []
     @state = State.first
@@ -13,7 +15,7 @@ class InsertNewCompletionsJob < ApplicationJob
     insert_new_completions
     update_last_api_fetch_end
 
-    return
+    nil
   end
 
   private
@@ -43,7 +45,7 @@ class InsertNewCompletionsJob < ApplicationJob
     https.use_ssl = true
 
     request = Net::HTTP::Get.new(url)
-    request["Cookie"] = "session=#{ENV.fetch("SESSION_COOKIE")}"
+    request["Cookie"] = "session=#{ENV.fetch('SESSION_COOKIE')}"
     response = https.request(request)
     Rails.logger.info "\t#{response.code} #{response.message}"
 
@@ -69,7 +71,7 @@ class InsertNewCompletionsJob < ApplicationJob
       results["completion_day_level"].each do |day, challenges|
         challenges.each do |challenge, value|
           completion = {
-            user_id: user_id,
+            user_id:,
             day: day.to_i,
             challenge: challenge.to_i,
             completion_unix_time: value["get_star_ts"],

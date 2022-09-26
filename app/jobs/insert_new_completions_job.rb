@@ -90,7 +90,7 @@ class InsertNewCompletionsJob < ApplicationJob
   def insert_new_completions
     if @completions.any?
       Completion.insert_all(@completions)
-      Rails.logger.info "✔ New completions inserted"
+      Rails.logger.info "✔ #{@completions.size} new completions inserted"
     else
       Rails.logger.info "🤷 No completions to insert"
     end

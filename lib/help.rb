@@ -13,6 +13,5 @@ module Help
   def self.refresh_views!
     Rank.refresh
     CityScore.refresh
-    BatchScore.refresh
   end
 end

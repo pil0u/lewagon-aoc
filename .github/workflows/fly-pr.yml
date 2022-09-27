@@ -22,7 +22,7 @@ jobs:
         - run: flyctl apps destroy lewagon-aoc-pr --yes
         - run: flyctl apps destroy lewagon-aoc-pr-db --yes
         - run: flyctl postgres create --name=lewagon-aoc-pr-db --region=cdg --vm-size=shared-cpu-1x --volume-size=1 --initial-cluster-size=1
-        - run: flyctl apps create --name=lewagon-aoc-pr --region=cdg
+        - run: flyctl apps create --name=lewagon-aoc-pr
         - run: flyctl postgres attach lewagon-aoc-pr-db --app=lewagon-aoc-pr
 
         # Scale memory
@@ -37,5 +37,5 @@ jobs:
             THIS_IS_STAGING=1
 
         # Deploy and seed data
-        - run: flyctl deploy --remote-only --app=lewagon-aoc-pr
+        - run: flyctl deploy --remote-only --app=lewagon-aoc-pr --region=cdg
         - run: flyctl ssh console --command="app/bin/rails db:seed" --app=lewagon-aoc-pr

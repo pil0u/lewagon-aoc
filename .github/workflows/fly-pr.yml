@@ -37,5 +37,5 @@ jobs:
             THIS_IS_STAGING=1
 
         # Deploy and seed data
-        - run: flyctl deploy --remote-only --app=lewagon-aoc-pr --region=cdg
+        - run: flyctl deploy --remote-only --region=cdg --app=lewagon-aoc-pr
         - run: flyctl ssh console --command="app/bin/rails db:seed" --app=lewagon-aoc-pr

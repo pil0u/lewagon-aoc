@@ -2,7 +2,7 @@
 
 Rails.application.configure do
   config.good_job = {
-    execution_mode: :async,
+    execution_mode: :external,
     max_threads: 5,
     shutdown_timeout: 30,
     enable_cron: true,

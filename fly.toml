@@ -4,7 +4,10 @@
 # app = "lewagon-aoc-pr"  # for open PR
 kill_signal = "SIGINT"
 kill_timeout = 5
-processes = []
+
+[processes]
+  web = "bin/rails fly:server"
+  worker = "bundle exec good_job start"
 
 [build]
   [build.args]
@@ -24,7 +27,7 @@ processes = []
 [[services]]
   http_checks = []
   internal_port = 8080
-  processes = ["app"]
+  processes = ["web"]
   protocol = "tcp"
   script_checks = []
   [services.concurrency]

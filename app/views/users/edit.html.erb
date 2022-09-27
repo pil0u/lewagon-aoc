@@ -24,7 +24,7 @@
 
   <div class="flex items-center gap-x-3 w-48 sm:w-fit">
     <%= f.label :entered_hardcore, "Join the Ladder of Insanity" %>
-    <%= f.check_box :entered_hardcore, class: "focus:no-ring", data: {
+    <%= f.check_box :entered_hardcore, checked: current_user.entered_hardcore, class: "focus:no-ring", data: {
           controller: "check-alert",
           check_alert_target: "checkbox",
           action: "change->check-alert#ping",

@@ -30,9 +30,8 @@ jobs:
         - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=worker
 
         # Scale memory
-        - run: flyctl scale count web=1 worker=1 --app=lewagon-aoc-pr
-        - run: flyctl scale memory 512 --app=lewagon-aoc-pr --group=web
-        - run: flyctl scale memory 256 --app=lewagon-aoc-pr --group=worker
+        - run: flyctl scale vm shared-cpu-1x --memory=512 --app=lewagon-aoc-pr --group=web
+        - run: flyctl scale vm shared-cpu-1x --memory=256 --app=lewagon-aoc-pr --group=worker
 
         # Set environment variables before deployment
         - run: > 

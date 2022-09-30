@@ -8,12 +8,14 @@ class InsertNewCompletionsJob < ApplicationJob
     @completions = []
     @state = State.first
 
-    update_last_api_fetch_start
-    fetch_completions_from_aoc_api
-    update_users_sync_status
-    transform_completions_for_database
-    insert_new_completions
-    update_last_api_fetch_end
+    ActiveRecord::Base.transaction do
+      update_last_api_fetch_start
+      fetch_completions_from_aoc_api
+      update_users_sync_status
+      transform_completions_for_database
+      insert_new_completions
+      update_last_api_fetch_end
+    end
 
     nil
   end

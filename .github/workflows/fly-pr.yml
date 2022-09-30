@@ -29,6 +29,10 @@ jobs:
         - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=web
         - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=worker
 
+        # Scale memory
+        - run: flyctl scale memory 512 --app=lewagon-aoc-pr --group=web
+        - run: flyctl scale memory 512 --app=lewagon-aoc-pr --group=worker
+
         # Set environment variables before deployment
         - run: > 
             flyctl secrets set --app=lewagon-aoc-pr
@@ -37,10 +41,8 @@ jobs:
             SESSION_COOKIE=${{ secrets.SESSION_COOKIE }}
             THIS_IS_STAGING=1
 
-        # Deploy and scale memory
+        # Deploy
         - run: flyctl deploy --remote-only --app=lewagon-aoc-pr
-        - run: flyctl scale vm shared-cpu-1x --memory=512 --app=lewagon-aoc-pr --group=web
-        - run: flyctl scale vm shared-cpu-1x --memory=512 --app=lewagon-aoc-pr --group=worker
 
         # Seed data
         - run: flyctl ssh console --command="app/bin/rails db:seed" --app=lewagon-aoc-pr

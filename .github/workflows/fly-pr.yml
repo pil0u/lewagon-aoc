@@ -25,8 +25,14 @@ jobs:
         - run: flyctl apps create --name=lewagon-aoc-pr
         - run: flyctl postgres attach lewagon-aoc-pr-db --app=lewagon-aoc-pr
 
+        # Set regions
+        - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=web
+        - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=worker
+
         # Scale memory
-        - run: flyctl scale memory 512 --app=lewagon-aoc-pr
+        - run: flyctl scale count web=1 worker=1 --app=lewagon-aoc-pr
+        - run: flyctl scale memory 512 --app=lewagon-aoc-pr --group=web
+        - run: flyctl scale memory 256 --app=lewagon-aoc-pr --group=worker
 
         # Set environment variables before deployment
         - run: > 
@@ -37,5 +43,5 @@ jobs:
             THIS_IS_STAGING=1
 
         # Deploy and seed data
-        - run: flyctl deploy --remote-only --region=cdg --app=lewagon-aoc-pr
+        - run: flyctl deploy --remote-only --app=lewagon-aoc-pr
         - run: flyctl ssh console --command="app/bin/rails db:seed" --app=lewagon-aoc-pr

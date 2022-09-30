@@ -9,9 +9,9 @@ class UsersController < ApplicationController
     set_updated_params
 
     if current_user.update(@params)
-      redirect_to settings_path, notice: "Your user information was updated"
+      redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
-      redirect_to settings_path, alert: "Error: #{current_user.errors.full_messages[0]}"
+      redirect_back fallback_location: "/", alert: "Error: #{current_user.errors.full_messages[0]}"
     end
   end
 
@@ -22,8 +22,8 @@ class UsersController < ApplicationController
       accepted_coc: form_params[:accepted_coc],
       aoc_id: form_params[:aoc_id],
       batch_id: Batch.find_or_create_by(number: form_params[:batch_number].to_i).id,
-      # find_or_create_by always returns an instance of Batch, even if it failed to create. If creation
-      # did fail (from validation), then the id of that instance is nil, which disappears with .compact
+      # find_or_create_by always returns an instance of Batch, even if it failed to create. If creation did fail (from
+      # validation), then the id of that instance is nil, which disappears with .compact below
       city: City.find_by(id: form_params[:city_id]),
       entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username]

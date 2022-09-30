@@ -80,6 +80,7 @@
                 end %>
             <%= f.check_box(
                   :accepted_coc,
+                  checked: current_user.accepted_coc,
                   data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" },
                   class: "focus:no-ring"
                 ) %>

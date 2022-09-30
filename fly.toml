@@ -1,22 +1,24 @@
-# fly.toml file generated for lewagon-aoc on 2022-08-28T17:00:43+02:00
+# fly.toml file updated for lewagon-aoc on 2022-09-26T16:58:43+02:00
 
 # app = "lewagon-aoc"     # for staging
 # app = "lewagon-aoc-pr"  # for open PR
 kill_signal = "SIGINT"
 kill_timeout = 5
-processes = []
+
+[processes]
+  web = "bin/rails fly:server"
+  worker = "bundle exec good_job start"
 
 [build]
   [build.args]
-    BUNDLER_VERSION = "2.3.21"
-    RUBY_VERSION = "3.1.2"
+    BUILD_COMMAND = "bin/rails fly:build"
+    SERVER_COMMAND = "bin/rails fly:server"
 
 [deploy]
   release_command = "bin/rails --trace fly:release"
 
 [env]
   PORT = "8080"
-  SERVER_COMMAND = "bin/rails fly:server"
 
 [experimental]
   allowed_public_ports = []
@@ -25,7 +27,7 @@ processes = []
 [[services]]
   http_checks = []
   internal_port = 8080
-  processes = ["app"]
+  processes = ["web"]
   protocol = "tcp"
   script_checks = []
   [services.concurrency]

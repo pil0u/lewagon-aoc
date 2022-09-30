@@ -3,7 +3,8 @@
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i[kitt]
 
-  ORGANISERS = %w[6788 449].freeze
+  ADMINS = { pilou: "6788", aquaj: "449" }.freeze
+  MODERATORS = { pilou: "6788", aquaj: "449" }.freeze
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
@@ -16,8 +17,9 @@ class User < ApplicationRecord
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
 
+  scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
-  scope :organisers, -> { where(uid: ORGANISERS) }
+  scope :moderators, -> { where(uid: MODERATORS.values) }
   scope :synced, -> { where(synced: true) }
 
   after_save do
@@ -65,15 +67,15 @@ class User < ApplicationRecord
     css_class[sync_status]
   end
 
-  def blazer?
-    uid.in?({ pilou: "6788", aquaj: "449" }.values)
+  def admin?
+    uid.in?(ADMINS.values)
+  end
+
+  def moderator?
+    uid.in?(MODERATORS.values)
   end
 
   def confirmed?
     aoc_id.present? && accepted_coc && synced
-  end
-
-  def organiser?
-    uid.in?(ORGANISERS)
   end
 end

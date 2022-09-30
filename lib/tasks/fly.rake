@@ -22,6 +22,20 @@ namespace :fly do
     sh "bin/rails server"
   end
 
+  # optional SWAPFILE task:
+  #  - adjust fallocate size as needed
+  #  - performance critical applications should scale memory to the
+  #    point where swap is rarely used.  'fly scale help' for details.
+  #  - disable by removing dependency on the :server task, thus:
+  #        task :server do
+  task swapfile: :environment do
+    sh "fallocate -l 512M /swapfile"
+    sh "chmod 0600 /swapfile"
+    sh "mkswap /swapfile"
+    sh "echo 10 > /proc/sys/vm/swappiness"
+    sh "swapon /swapfile"
+  end
+
   task console: :environment do
     sh 'fly ssh console -C "app/bin/rails console" -a lewagon-aoc'
   end

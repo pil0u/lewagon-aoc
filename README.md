@@ -2,7 +2,7 @@
 
 ```
 Ruby    3.1.2  
-Rails   7.0.3
+Rails   7.0.4
 ```
 
 Found a bug? Do not hesitate to [open an Issue](/../../issues/new).  

@@ -6,15 +6,16 @@ class InsertNewCompletionsJob < ApplicationJob
   def perform
     @completions_from_api = {}
     @completions = []
-    @state = State.first
 
     ActiveRecord::Base.transaction do
-      update_last_api_fetch_start
+      @state = State.create
+
+      update_fetch_api_begin
       fetch_completions_from_aoc_api
       update_users_sync_status
       transform_completions_for_database
       insert_new_completions
-      update_last_api_fetch_end
+      update_fetch_api_end
     end
 
     nil
@@ -22,10 +23,10 @@ class InsertNewCompletionsJob < ApplicationJob
 
   private
 
-  def update_last_api_fetch_start
+  def update_fetch_api_begin
     now = Time.now.utc
 
-    @state.update(last_api_fetch_start: now)
+    @state.update(fetch_api_begin: now)
     Rails.logger.info "🤖 Completions update started at #{now}"
   end
 
@@ -96,10 +97,10 @@ class InsertNewCompletionsJob < ApplicationJob
     end
   end
 
-  def update_last_api_fetch_end
+  def update_fetch_api_end
     now = Time.now.utc
 
-    @state.update(last_api_fetch_end: now)
+    @state.update(fetch_api_end: now)
     Rails.logger.info "🏁 Completions update finished at #{now}"
   end
 end

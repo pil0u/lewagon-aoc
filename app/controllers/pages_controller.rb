@@ -42,7 +42,7 @@ class PagesController < ApplicationController
     @now = Time.now.getlocal("-05:00")
 
     now_utc = Time.now.utc
-    last_api_fetch_utc = State.first.last_api_fetch_end
+    last_api_fetch_utc = State.last.fetch_api_end.utc
     @time_since_last_api_fetch = helpers.distance_of_time_in_words(last_api_fetch_utc, now_utc)
 
     @estimated_next_api_fetch = if now_utc < last_api_fetch_utc + 10.minutes

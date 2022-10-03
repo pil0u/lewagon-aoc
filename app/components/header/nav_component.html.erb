@@ -2,15 +2,15 @@
 
   <% if @user.confirmed? %>
 
-    <%= render Header::NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
-    <%= render Header::NavTabComponent.new(link: { name: "scores", path: scores_path }) %>
-    <%= render Header::NavTabComponent.new(link: { name: "the wall", path: messages_path }) %>
-    <%= render Header::NavTabComponent.new(link: { name: "<i class=\"fas fa-gear\"></i>".html_safe, path: settings_path }) %>
+    <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
+    <%= render NavTabComponent.new(link: { name: "scores", path: scores_path }) %>
+    <%= render NavTabComponent.new(link: { name: "the wall", path: messages_path }) %>
+    <%= render NavTabComponent.new(link: { name: "<i class=\"fas fa-gear\"></i>".html_safe, path: settings_path }) %>
 
   <% else %>
 
-    <%= render Header::NavTabComponent.new(link: { name: "faq", path: faq_path }) %>
-    <%= render Header::NavTabComponent.new(link: { name: "setup", path: setup_path }) %>
+    <%= render NavTabComponent.new(link: { name: "faq", path: faq_path }) %>
+    <%= render NavTabComponent.new(link: { name: "setup", path: setup_path }) %>
 
   <% end %>
 

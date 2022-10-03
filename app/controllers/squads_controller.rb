@@ -21,7 +21,7 @@ class SquadsController < ApplicationController
   end
 
   def join
-    @squad = Squad.find_by(secret_id: squad_params[:secret_id])
+    @squad = Squad.find_by(pin: squad_params[:pin])
 
     if @squad.nil?
       redirect_to settings_path, alert: "This squad does not exist"
@@ -53,6 +53,6 @@ class SquadsController < ApplicationController
   end
 
   def squad_params
-    params.require(:squad).permit(:name, :secret_id)
+    params.require(:squad).permit(:name, :pin)
   end
 end

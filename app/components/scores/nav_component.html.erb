@@ -1,0 +1,6 @@
+<nav class="text-sm flex mb-8 mx-auto px-2 pb-2 gap-x-4 lg:gap-x-6 border-b border-aoc-gray-darker">
+  <%= render NavTabComponent.new(link: { name: "squads", path: squads_scores_path }) %>
+  <%= render NavTabComponent.new(link: { name: "cities", path: cities_scores_path }) %>
+  <%= render NavTabComponent.new(link: { name: "solo", path: solo_scores_path }) %>
+  <%= render NavTabComponent.new(link: { name: "insanity", path: insanity_scores_path }) %>
+</nav>

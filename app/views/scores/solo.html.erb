@@ -1,0 +1,8 @@
+<%= render Scores::NavComponent.new %>
+
+<%= render PageTitleComponent.new(title: "Solo scoreboard") %>
+
+<p class="my-4">
+  You earn between <code class="strong">25</code> and <code class="strong">50</code> points for each <em>challenge</em>
+  you solve. <%= link_to "More info", faq_path, class: "link-explicit link-internal" %>.
+</p>

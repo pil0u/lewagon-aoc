@@ -1,0 +1,8 @@
+<%= render Scores::NavComponent.new %>
+
+<%= render PageTitleComponent.new(title: "Cities scoreboard") %>
+
+<p class="my-4">
+  For each <em>challenge</em>, we compute the average score of the top contributors. The score of the city is the sum of
+  these averages. <%= link_to "More info", faq_path, class: "link-explicit link-internal" %>.
+</p>

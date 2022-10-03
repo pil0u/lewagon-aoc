@@ -24,7 +24,6 @@ class PagesController < ApplicationController
 
   def code_of_conduct; end
   def faq; end
-  def scores; end
   def setup; end
 
   def welcome

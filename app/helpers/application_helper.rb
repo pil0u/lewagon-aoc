@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def scores_path
+    "/scores/#{session[:last_score_page] ||= 'squads'}"
+  end
+
+### old
+
   def ranking_css(rank, rank_col: false)
     {
       "text-gold": rank == 1,

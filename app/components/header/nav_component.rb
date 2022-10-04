@@ -2,6 +2,8 @@
 
 module Header
   class NavComponent < ApplicationComponent
+    include ApplicationHelper
+
     def initialize(user:)
       @user = user
     end

@@ -3,7 +3,7 @@
   <% if @user.confirmed? %>
 
     <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
-    <%= render NavTabComponent.new(link: { name: "scores", path: "/scores/#{session[:last_score_page] ||= 'squads'}" }) %>
+    <%= render NavTabComponent.new(link: { name: "scores", path: scores_path }) %>
     <%= render NavTabComponent.new(link: { name: "the wall", path: messages_path }) %>
     <%= render NavTabComponent.new(link: { name: "<i class=\"fas fa-gear\"></i>".html_safe, path: settings_path }) %>
 

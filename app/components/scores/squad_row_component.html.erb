@@ -1,0 +1,29 @@
+<%# The scale-100 trick is to make the last td absolute, relative to the tr  %>
+
+<tr class="scale-100 hover:bg-aoc-gray hover:bg-opacity-10 <%= "bg-aoc-green bg-opacity-20" if @squad[:id] == @user.squad_id %>">
+  <td class="<%= class_names(rank_css(@squad[:rank])) %>">
+    <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
+    <%= @squad[:rank] if @squad[:display_rank] %>
+    <% end %>
+  </td>
+
+  <td>
+    <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
+    <%= @squad[:name] %>
+    <% end %>
+  </td>
+
+  <td>
+    <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
+    <%= @squad[:n_coders] %>
+    <% end %>
+  </td>
+
+  <td class="py-1 strong text-lg">
+    <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
+    <%= @squad[:score] %>
+    <% end %>
+  </td>
+
+  <td class="absolute left-1 top-3 lg:top-1 text-[0.5rem]"><%= @rank_diff %></td>
+</tr>

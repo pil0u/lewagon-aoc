@@ -5,3 +5,18 @@
 <p class="my-4">
   The score of a squad is the sum of its members' scores.
 </p>
+
+<table class="block overflow-x-auto whitespace-nowrap w-full max-w-xl mx-auto">
+  <thead>
+    <tr class="border-b border-aoc-gray-darker">
+      <th class="font-light min-w-[3rem] lg:min-w-[5rem]"></th>
+      <th class="font-light w-full"></th>
+      <th class="font-light min-w-[5rem]">Members</th>
+      <th class="font-light min-w-[5rem]">Score</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render Scores::SquadRowComponent.with_collection(@squads, user: current_user) %>
+  </tbody>
+</table>

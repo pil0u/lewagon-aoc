@@ -88,6 +88,18 @@
 
   /* --- Used icons --- */
 
+  .fa-angles-down::before {
+    content: "\f103";
+  }
+
+  .fa-angles-up::before {
+    content: "\f102";
+  }
+
+  .fa-equals::before {
+    content: "\3d";
+  }
+
   .fa-gear::before {
     content: "\f013";
   }

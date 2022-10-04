@@ -10,6 +10,10 @@ class SquadsController < ApplicationController
     redirect_to settings_path, notice: "Squad successfully created!"
   end
 
+  def show
+    @squad = Squad.find(params[:id])
+  end
+
   def update
     @squad = Squad.find(params[:id])
 

@@ -39,7 +39,7 @@ class ScoresController < ApplicationController
         n_coders: 4,
         old_rank: 2,
         rank: 2,
-        score: 25*2*50*4
+        score: 25 * 2 * 50 * 4
       },
       {
         id: 6,

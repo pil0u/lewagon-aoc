@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-
-### old
+  ### old
 
   def publication_time(day)
     Time.new(ENV.fetch("EVENT_YEAR").to_i, 12, day, 0, 0, 0, "-05:00")

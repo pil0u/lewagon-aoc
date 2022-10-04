@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ScoresHelper
   def rank_css(rank)
     {

@@ -2,7 +2,7 @@
 
 module Header
   class NavComponent < ApplicationComponent
-    include ApplicationHelper
+    include ScoresHelper
 
     def initialize(user:)
       @user = user

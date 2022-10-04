@@ -1,21 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def scores_path
-    "/scores/#{session[:last_score_page] ||= 'squads'}"
-  end
 
 ### old
-
-  def ranking_css(rank, rank_col: false)
-    {
-      "text-gold": rank == 1,
-      "text-aoc-silver text-shadow-silver": rank == 2,
-      "text-aoc-bronze text-shadow-bronze": rank == 3,
-      "text-xl": rank <= 3 && rank_col,
-      strong: rank > 3 && rank_col
-    }
-  end
 
   def publication_time(day)
     Time.new(ENV.fetch("EVENT_YEAR").to_i, 12, day, 0, 0, 0, "-05:00")

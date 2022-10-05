@@ -16,11 +16,11 @@ module Scores
     private
 
     def set_rank_diff
-      @rank_diff = if @squad[:old_rank] < @squad[:rank]
+      @rank_diff = if @squad[:previous_rank] < @squad[:rank]
                      "<i class=\"rank-down\"></i>".html_safe
-                   elsif @squad[:old_rank] == @squad[:rank]
+                   elsif @squad[:previous_rank] == @squad[:rank]
                      "<i class=\"rank-equal\"></i>".html_safe
-                   elsif @squad[:old_rank] > @squad[:rank]
+                   elsif @squad[:previous_rank] > @squad[:rank]
                      "<i class=\"rank-up\"></i>".html_safe
                    end
     end

@@ -20,8 +20,8 @@ class ScoresController < ApplicationController
       {
         id: 43,
         name: "The Squad 1",
-        n_coders: 3,
-        old_rank: 1,
+        total_members: 3,
+        previous_rank: 1,
         rank: 1,
         score: 1234,
         daily_score: 200
@@ -29,8 +29,8 @@ class ScoresController < ApplicationController
       {
         id: 23,
         name: "The Squad name is long",
-        n_coders: 4,
-        old_rank: 3,
+        total_members: 4,
+        previous_rank: 3,
         rank: 4,
         score: 1000,
         daily_score: 25
@@ -38,8 +38,8 @@ class ScoresController < ApplicationController
       {
         id: 12,
         name: "This is the maximum lgth",
-        n_coders: 4,
-        old_rank: 2,
+        total_members: 4,
+        previous_rank: 2,
         rank: 2,
         score: 25 * 2 * 50 * 4,
         daily_score: 150
@@ -47,8 +47,8 @@ class ScoresController < ApplicationController
       {
         id: 6,
         name: "Yolo squad",
-        n_coders: 4,
-        old_rank: 4,
+        total_members: 4,
+        previous_rank: 4,
         rank: 2,
         score: 1200,
         daily_score: 124
@@ -56,17 +56,23 @@ class ScoresController < ApplicationController
       {
         id: 5,
         name: "Yolo squad 3",
-        n_coders: 4,
-        old_rank: 6,
+        total_members: 4,
+        previous_rank: 6,
         rank: 5,
         score: 1200,
         daily_score: 32
       }
     ].sort_by! { |squad| squad[:rank] }
 
-    # For each squad, add the information to display its rank or not in case of tie
-    [{}, *@squads].each_cons(2).map do |squad_a, squad_b|
-      squad_b[:display_rank] = (squad_a[:rank] != squad_b[:rank])
+    add_display_rank(@squads)
+  end
+
+  private
+
+  # This method adds a :display_rank boolean attribute to determine whether the rank should be hidden because of a tie.
+  def add_display_rank(array)
+    [{}, *array].each_cons(2).map do |elem_a, elem_b|
+      elem_b[:display_rank] = (elem_a[:rank] != elem_b[:rank])
     end
   end
 end

@@ -15,11 +15,11 @@ class City < ApplicationRecord
   end
 
   def self.find_by_slug(slug)
-    find_by!("REPLACE(LOWER(name), ' ', '_') = ?", slug)
+    find_by!("REPLACE(LOWER(name), ' ', '-') = ?", slug)
   end
 
   def self.slugify(name)
-    name.tr(" ", "_").downcase
+    name.tr(" ", "-").downcase
   end
 
   def slug

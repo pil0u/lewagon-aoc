@@ -31,5 +31,7 @@
     <% end %>
   </td>
 
-  <td class="absolute left-1 top-3 lg:top-1 text-[0.5rem]"><%= @rank_diff %></td>
+  <td class="absolute left-1 top-3 lg:top-1 text-[0.5rem]">
+    <i class="<%= class_names(rank_evolution_css(@squad[:previous_rank], @squad[:rank])) %>"></i>
+  </td>
 </tr>

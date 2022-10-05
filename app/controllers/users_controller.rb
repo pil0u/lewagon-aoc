@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     if current_user.update(@params)
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
-      redirect_back fallback_location: "/", alert: "Error: #{current_user.errors.full_messages[0]}"
+      redirect_back fallback_location: "/", alert: "#{current_user.errors.full_messages[0]}"
     end
   end
 

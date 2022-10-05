@@ -3,7 +3,7 @@
 class Squad < ApplicationRecord
   has_many :users, dependent: :nullify
 
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }, length: { in: 3..24 }
 
   before_validation :generate_pin, on: :create
 

@@ -23,7 +23,8 @@ class ScoresController < ApplicationController
         n_coders: 3,
         old_rank: 1,
         rank: 1,
-        score: 1234
+        score: 1234,
+        daily_score: 200
       },
       {
         id: 23,
@@ -31,7 +32,8 @@ class ScoresController < ApplicationController
         n_coders: 4,
         old_rank: 3,
         rank: 4,
-        score: 1000
+        score: 1000,
+        daily_score: 25
       },
       {
         id: 12,
@@ -39,7 +41,8 @@ class ScoresController < ApplicationController
         n_coders: 4,
         old_rank: 2,
         rank: 2,
-        score: 25 * 2 * 50 * 4
+        score: 25 * 2 * 50 * 4,
+        daily_score: 150
       },
       {
         id: 6,
@@ -47,7 +50,8 @@ class ScoresController < ApplicationController
         n_coders: 4,
         old_rank: 4,
         rank: 2,
-        score: 1200
+        score: 1200,
+        daily_score: 124
       },
       {
         id: 5,
@@ -55,7 +59,8 @@ class ScoresController < ApplicationController
         n_coders: 4,
         old_rank: 6,
         rank: 5,
-        score: 1200
+        score: 1200,
+        daily_score: 32
       }
     ].sort_by! { |squad| squad[:rank] }
 

@@ -13,15 +13,21 @@
     <% end %>
   </td>
 
+  <td class="py-1 strong text-lg">
+    <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
+    <%= @squad[:score] %>
+    <% end %>
+  </td>
+
   <td>
     <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
     <%= @squad[:n_coders] %>
     <% end %>
   </td>
 
-  <td class="py-1 strong text-lg">
+  <td>
     <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
-    <%= @squad[:score] %>
+    <%= @squad[:daily_score] %>
     <% end %>
   </td>
 

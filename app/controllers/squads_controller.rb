@@ -20,7 +20,7 @@ class SquadsController < ApplicationController
     if @squad.update(name: squad_params[:name])
       redirect_to settings_path, notice: "Your squad information was updated"
     else
-      redirect_to settings_path, alert: "#{@squad.errors.full_messages[0]}"
+      redirect_to settings_path, alert: @squad.errors.full_messages[0].to_s
     end
   end
 

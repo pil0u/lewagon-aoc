@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class Scores::CityRowComponent < ApplicationComponent
+module Scores
+  class CityRowComponent < ApplicationComponent
     include ScoresHelper
 
     with_collection_parameter :city
@@ -9,4 +10,5 @@ class Scores::CityRowComponent < ApplicationComponent
       @city = city
       @user = user
     end
+  end
 end

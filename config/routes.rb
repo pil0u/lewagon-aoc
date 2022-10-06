@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   authenticated :user, ->(user) { user.confirmed? } do
     get     "/",                to: "pages#calendar",   as: :calendar
-    # get     "/city/:slug",      to: "cities#show",      as: :city
+    get     "/city/:slug",      to: "cities#show",      as: :city
     get     "/day/:number",     to: "days#show",        as: :day, number: /[1-9]|1\d|2[0-5]/
     get     "/the-wall",        to: "messages#index",   as: :messages
     get     "/scores/cities",   to: "scores#cities",    as: :cities_scores

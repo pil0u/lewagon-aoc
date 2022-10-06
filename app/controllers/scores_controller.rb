@@ -3,6 +3,35 @@
 class ScoresController < ApplicationController
   def cities
     session[:last_score_page] = "cities"
+
+    @cities = [
+      {
+        id: 4,
+        slug: "rio-de-janeiro",
+        name: "Rio de Janeiro",
+        total_members: 25,
+        previous_rank: 3,
+        rank: 1,
+        score: 1235,
+        daily_contributors_part_1: 23,
+        daily_contributors_part_2: 23,
+        top_contributors: 12
+      },
+      {
+        id: 9,
+        slug: "brussels-⭐",
+        name: "Brussels ⭐",
+        total_members: 42,
+        previous_rank: 1,
+        rank: 2,
+        score: 1245,
+        daily_contributors_part_1: 8,
+        daily_contributors_part_2: 6,
+        top_contributors: 17
+      }
+    ]
+
+    add_display_rank(@cities)
   end
 
   def insanity
@@ -69,7 +98,8 @@ class ScoresController < ApplicationController
 
   private
 
-  # This method adds a :display_rank boolean attribute to determine whether the rank should be hidden because of a tie.
+  # This method adds a :display_rank boolean attribute which tells whether the
+  # rank should be displayed or hidden because of a tie with the previous entity
   def add_display_rank(array)
     [{}, *array].each_cons(2).map do |elem_a, elem_b|
       elem_b[:display_rank] = (elem_a[:rank] != elem_b[:rank])

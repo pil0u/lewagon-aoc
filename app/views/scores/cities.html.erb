@@ -6,3 +6,19 @@
   For each <em>challenge</em>, we compute the average score of the top contributors. The score of the city is the sum of
   these averages. <%= link_to "More info", faq_path, class: "link-explicit link-internal" %>.
 </p>
+
+<table class="block overflow-x-auto whitespace-nowrap w-full max-w-2xl mx-auto">
+  <thead>
+    <tr class="border-b border-aoc-gray-darker">
+      <th class="font-light min-w-[3rem] lg:min-w-[4rem]"></th>
+      <th class="font-light w-full"></th>
+      <th class="font-light min-w-[6rem]">Score</th>
+      <th class="font-light min-w-[6rem]">Members</th>
+      <th class="font-light min-w-[7rem]">Daily contr.</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render Scores::CityRowComponent.with_collection(@cities, user: current_user) %>
+  </tbody>
+</table>

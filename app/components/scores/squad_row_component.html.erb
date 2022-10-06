@@ -31,7 +31,5 @@
     <% end %>
   </td>
 
-  <td class="absolute left-1 top-3 lg:top-1 text-[0.5rem]">
-    <i class="<%= class_names(rank_evolution_css(@squad[:previous_rank], @squad[:rank])) %>"></i>
-  </td>
+  <%= render Scores::RankEvolutionCellComponent.new(previous_rank: @squad[:previous_rank], current_rank: @squad[:rank]) %>
 </tr>

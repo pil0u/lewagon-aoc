@@ -66,15 +66,15 @@
   }
 
   .rank-down {
-    @apply fas fa-angles-down text-wagon-red text-opacity-40;
+    @apply fas fa-angles-down text-wagon-red text-opacity-50;
   }
 
   .rank-equal {
-    @apply fas fa-equals text-aoc-gray text-opacity-30;
+    @apply fas fa-equals text-aoc-gray-dark text-opacity-50;
   }
 
   .rank-up {
-    @apply fas fa-angles-up text-aoc-green text-opacity-40;
+    @apply fas fa-angles-up text-aoc-green text-opacity-50;
   }
 
   .strong {

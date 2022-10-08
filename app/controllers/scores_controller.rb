@@ -40,6 +40,52 @@ class ScoresController < ApplicationController
 
   def solo
     session[:last_score_page] = "solo"
+
+    @participants = [
+      {
+        uid: 1,
+        rank: 1,
+        previous_rank: 12,
+        entered_hardcore: false,
+        username: "Francisco-Webdeveloper-andMore",
+        city_name: "Rio de Janeiro",
+        batch_number: 1970,
+        squad_name: "This is very long 123456",
+        silver_stars: 10,
+        gold_stars: 15,
+        score: 50 * 2 * 25,
+        daily_score: 100,
+      },
+      {
+        uid: 6788,
+        rank: 2,
+        previous_rank: 2,
+        entered_hardcore: false,
+        username: "pil0u",
+        city_name: "Bordeaux",
+        batch_number: 343,
+        squad_name: "Vuvuzela",
+        silver_stars: 3,
+        gold_stars: 14,
+        score: 1234,
+        daily_score: 50,
+      },
+      {
+        uid: 12,
+        rank: 2,
+        previous_rank: 1,
+        username: "toto",
+        city_name: nil,
+        batch_number: nil,
+        squad_name: nil,
+        silver_stars: 0,
+        gold_stars: 0,
+        score: 0,
+        daily_score: 0,
+      }
+    ]
+
+    add_display_rank(@participants)
   end
 
   def squads

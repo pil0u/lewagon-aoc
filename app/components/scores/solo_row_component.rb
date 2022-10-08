@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class Scores::SoloRowComponent < ApplicationComponent
+module Scores
+  class SoloRowComponent < ApplicationComponent
     include ScoresHelper
 
     with_collection_parameter :participant
@@ -9,4 +10,5 @@ class Scores::SoloRowComponent < ApplicationComponent
       @participant = participant
       @user = user
     end
+  end
 end

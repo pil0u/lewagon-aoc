@@ -54,7 +54,7 @@ class ScoresController < ApplicationController
         silver_stars: 10,
         gold_stars: 15,
         score: 50 * 2 * 25,
-        daily_score: 100,
+        daily_score: 100
       },
       {
         uid: 6788,
@@ -68,7 +68,7 @@ class ScoresController < ApplicationController
         silver_stars: 3,
         gold_stars: 14,
         score: 1234,
-        daily_score: 50,
+        daily_score: 50
       },
       {
         uid: 12,
@@ -81,7 +81,7 @@ class ScoresController < ApplicationController
         silver_stars: 0,
         gold_stars: 0,
         score: 0,
-        daily_score: 0,
+        daily_score: 0
       }
     ]
 

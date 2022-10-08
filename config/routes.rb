@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     patch   "/squad/:id",       to: "squads#update",    as: :update_squad
     get     "/settings",        to: "users#edit"
     patch   "/settings",        to: "users#update"
-    get     "/profile/:uid",    to: "users#show",       as: :profile
+    get     "/profile/:uid",    to: "users#show", as: :profile
   end
 
   authenticated :user, ->(user) { user.admin? } do

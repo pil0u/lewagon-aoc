@@ -11,37 +11,37 @@ jobs:
   deploy:
     # Create and deploy Fly app upon any push on any Pull Request to https://lewagon-aoc-pr.fly.dev/
 
-      name: Deploy PR (Fly)
-      runs-on: ubuntu-latest
+    name: Deploy PR (Fly)
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v3
-        - uses: superfly/flyctl-actions/setup-flyctl@master
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
 
-        # Destroy and rebuild app + PostgreSQL cluster
-        - run: flyctl apps destroy lewagon-aoc-pr --yes
-        - run: flyctl apps destroy lewagon-aoc-pr-db --yes
-        - run: flyctl postgres create --name=lewagon-aoc-pr-db --region=cdg --vm-size=shared-cpu-1x --volume-size=1 --initial-cluster-size=1
-        - run: flyctl apps create --name=lewagon-aoc-pr
-        - run: flyctl postgres attach lewagon-aoc-pr-db --app=lewagon-aoc-pr
+      # Destroy and rebuild app + PostgreSQL cluster
+      - run: flyctl apps destroy lewagon-aoc-pr --yes
+      - run: flyctl apps destroy lewagon-aoc-pr-db --yes
+      - run: flyctl postgres create --name=lewagon-aoc-pr-db --region=cdg --vm-size=shared-cpu-1x --volume-size=1 --initial-cluster-size=1
+      - run: flyctl apps create --name=lewagon-aoc-pr
+      - run: flyctl postgres attach lewagon-aoc-pr-db --app=lewagon-aoc-pr
 
-        # Scale memory
-        - run: flyctl scale memory 512 --app=lewagon-aoc-pr
+      # Scale memory
+      - run: flyctl scale memory 512 --app=lewagon-aoc-pr
 
-        # Set regions
-        - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=web
-        - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=worker
+      # Set regions
+      - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=web
+      - run: flyctl regions set cdg --app=lewagon-aoc-pr --group=worker
 
-        # Set environment variables before deployment
-        - run: > 
-            flyctl secrets set --app=lewagon-aoc-pr
-            AOC_ROOMS=${{ secrets.AOC_ROOMS }}
-            RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }}
-            SESSION_COOKIE=${{ secrets.SESSION_COOKIE }}
-            THIS_IS_STAGING=1
+      # Set environment variables before deployment
+      - run: > 
+          flyctl secrets set --app=lewagon-aoc-pr
+          AOC_ROOMS=${{ secrets.AOC_ROOMS }}
+          RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }}
+          SESSION_COOKIE=${{ secrets.SESSION_COOKIE }}
+          THIS_IS_STAGING=1
 
-        # Deploy
-        - run: flyctl deploy --remote-only --app=lewagon-aoc-pr
+      # Deploy
+      - run: flyctl deploy --remote-only --app=lewagon-aoc-pr
 
-        # Seed data
-        - run: flyctl ssh console --command="app/bin/rails db:seed" --app=lewagon-aoc-pr
+      # Seed data
+      - run: flyctl ssh console --command="app/bin/rails db:seed" --app=lewagon-aoc-pr

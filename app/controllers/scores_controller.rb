@@ -31,7 +31,7 @@ class ScoresController < ApplicationController
       }
     ]
 
-    set_display_rank(@cities)
+    add_display_rank(@cities)
   end
 
   def insanity
@@ -86,7 +86,7 @@ class ScoresController < ApplicationController
       }
     ]
 
-    set_display_rank(@participants)
+    add_display_rank(@participants)
   end
 
   def squads
@@ -140,14 +140,14 @@ class ScoresController < ApplicationController
       }
     ].sort_by! { |squad| squad[:rank] }
 
-    set_display_rank(@squads)
+    add_display_rank(@squads)
   end
 
   private
 
   # This method adds a :display_rank boolean attribute which tells whether the
   # rank should be displayed or hidden because of a tie with the previous entity
-  def set_display_rank(array)
+  def add_display_rank(array)
     [{}, *array].each_cons(2).map do |elem_a, elem_b|
       elem_b[:display_rank] = (elem_a[:rank] != elem_b[:rank])
     end

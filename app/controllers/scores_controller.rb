@@ -74,6 +74,7 @@ class ScoresController < ApplicationController
         uid: 12,
         rank: 2,
         previous_rank: 1,
+        entered_hardcore: true,
         username: "toto",
         city_name: nil,
         batch_number: nil,

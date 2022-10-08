@@ -15,6 +15,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @user = User.find_by(uid: params[:uid])
+  end
+
   private
 
   def set_updated_params

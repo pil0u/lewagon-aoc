@@ -2,10 +2,9 @@
 EnableDefaultLinters: true
 exclude:
   - '**/vendor/**/*'
-  - '**/app/views/stats/days/show.html.erb' # TODO
+  - '**/___*' # TODO
 
 linters:
-  # TODO
   ErbSafety:
     exclude:
       - '**/app/components/header/nav_component.html.erb'

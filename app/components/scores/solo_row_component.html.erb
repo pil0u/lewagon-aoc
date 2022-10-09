@@ -10,8 +10,9 @@
   </td>
 
   <td class="py-1 max-w-[12rem]">
-    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center truncate" do %>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center items-center truncate" do %>
       <%= @participant[:username] %>
+      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-2") if @participant[:uid].in?(User::MODERATORS.values.map(&:to_i)) %>
     <% end %>
   </td>
 

@@ -2,7 +2,7 @@
 
 <tr class="scale-100 hover:bg-aoc-gray hover:bg-opacity-10
           <%= "bg-aoc-green bg-opacity-20" if @participant[:uid] == @user.uid %>
-          <%= "text-aoc-gray-dark" if @participant[:entered_hardcore] %>">
+          <%= "text-aoc-gray-dark" if !@hardcore && @participant[:entered_hardcore] %>">
   <td class="<%= class_names(rank_css(@participant[:rank])) %>">
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
       <%= @participant[:rank] if @participant[:display_rank] %>
@@ -38,6 +38,8 @@
     <% end %>
   </td>
 
+  <% unless @hardcore %>
+
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
       <%= @participant[:squad_name] %>
@@ -55,6 +57,8 @@
       <%= @participant[:batch_number] %>
     <% end %>
   </td>
+
+  <% end %>
 
   <%= render Scores::RankEvolutionCellComponent.new(previous_rank: @participant[:previous_rank], current_rank: @participant[:rank]) %>
 </tr>

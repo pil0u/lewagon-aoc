@@ -6,9 +6,10 @@ module Scores
 
     with_collection_parameter :participant
 
-    def initialize(participant:, user:)
+    def initialize(participant:, user:, hardcore:)
       @participant = participant
       @user = user
+      @hardcore = hardcore
     end
   end
 end

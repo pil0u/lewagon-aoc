@@ -70,7 +70,7 @@
   }
 
   .rank-equal {
-    @apply fas fa-equals text-aoc-gray-dark text-opacity-50;
+    @apply fas fa-equals text-aoc-gray-darker text-opacity-50;
   }
 
   .rank-up {

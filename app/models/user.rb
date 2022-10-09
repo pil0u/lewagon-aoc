@@ -11,10 +11,6 @@ class User < ApplicationRecord
   belongs_to :squad, optional: true
   has_many :completions, dependent: :destroy
 
-  # has_one :score # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
-  # has_one :rank # rubocop:disable Rails/HasManyOrHasOneDependent -- this is an SQL view
-  # has_many :city_contributions, through: :completions
-
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :username, length: { minimum: 1 }
 
@@ -22,10 +18,6 @@ class User < ApplicationRecord
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :moderators, -> { where(uid: MODERATORS.values) }
   scope :synced, -> { where(synced: true) }
-
-  # after_save do
-  #   Help.refresh_views! if saved_changes.include? "batch_id"
-  # end
 
   def self.from_kitt(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|

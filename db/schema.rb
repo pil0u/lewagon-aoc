@@ -91,6 +91,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
     t.bigint "completion_unix_time"
     t.datetime "created_at", null: false
     t.integer "day", limit: 2
+    t.virtual "duration", type: :interval, as: "\nCASE\n    WHEN (completion_unix_time IS NOT NULL) THEN (to_timestamp((completion_unix_time)::double precision) - to_timestamp(((1669870800)::double precision + (((day - 1) * 86400))::double precision)))\n    ELSE NULL::interval\nEND", stored: true
+    t.virtual "release_date", type: :datetime, precision: nil, as: "to_timestamp(((1669870800)::double precision + (((day - 1) * 86400))::double precision))", stored: true
     t.bigint "user_id", null: false
     t.index ["user_id", "day", "challenge"], name: "index_completions_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_completions_on_user_id"
@@ -135,6 +137,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  create_table "solo_points", force: :cascade do |t|
+    t.integer "challenge"
+    t.datetime "created_at", null: false
+    t.integer "day"
+    t.datetime "fetched_at", precision: nil, null: false
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["day", "challenge", "user_id", "fetched_at"], name: "unique_daychalluserfetch_on_solo_points", unique: true
+    t.index ["fetched_at"], name: "index_solo_points_on_fetched_at"
+    t.index ["user_id"], name: "index_solo_points_on_user_id"
+  end
+
+  create_table "solo_scores", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "fetched_at", precision: nil
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["fetched_at"], name: "index_solo_scores_on_fetched_at"
+    t.index ["user_id", "fetched_at"], name: "index_solo_scores_on_user_id_and_fetched_at", unique: true
+    t.index ["user_id"], name: "index_solo_scores_on_user_id"
+  end
+
   create_table "squads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.citext "name"
@@ -170,6 +196,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
   end
 
   add_foreign_key "completions", "users"
+  add_foreign_key "solo_points", "users"
+  add_foreign_key "solo_scores", "users"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"
 

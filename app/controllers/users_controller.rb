@@ -24,12 +24,12 @@ class UsersController < ApplicationController
   private
 
   def restrict_after_lock
-    if Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore
-      redirect_back(
-        fallback_location: "/",
-        alert: "You cannot join or leave the Ladder of Insanity since #{Aoc.lock_time.to_fs(:long_ordinal)} (see FAQ)"
-      )
-    end
+    return unless Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore
+
+    redirect_back(
+      fallback_location: "/",
+      alert: "You cannot join or leave the Ladder of Insanity since #{Aoc.lock_time.to_fs(:long_ordinal)} (see FAQ)"
+    )
   end
 
   def set_updated_params

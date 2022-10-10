@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_25_205906) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_03_170027) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -138,14 +138,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_25_205906) do
   create_table "squads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.citext "name"
-    t.integer "secret_id"
+    t.integer "pin"
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_squads_on_name", unique: true
   end
 
   create_table "states", force: :cascade do |t|
-    t.datetime "last_api_fetch_end", precision: nil
-    t.datetime "last_api_fetch_start", precision: nil
+    t.datetime "fetch_api_begin", precision: nil
+    t.datetime "fetch_api_end", precision: nil
   end
 
   create_table "users", force: :cascade do |t|

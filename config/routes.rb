@@ -21,19 +21,22 @@ Rails.application.routes.draw do
   end
 
   authenticated :user, ->(user) { user.confirmed? } do
-    get     "/",            to: "pages#calendar", as: :calendar
-    # get     "/city/:slug",  to: "cities#show",    as: :city
-    get     "/day/:number", to: "days#show",      as: :day, number: /[1-9]|1\d|2[0-5]/
-    get     "/the-wall",    to: "messages#index", as: :messages
-    get     "/scores",      to: "pages#scores"
-    post    "/squad",       to: "squads#create",  as: :create_squad
-    post    "/squad/join",  to: "squads#join",    as: :join_squad
-    delete  "/squad/leave", to: "squads#leave",   as: :leave_squad
-    patch   "/squad/:id",   to: "squads#update",  as: :update_squad
-    # get     "/squad/:id",   to: "squads#show",    as: :squad
-    get     "/settings",    to: "users#edit"
-    patch   "/settings",    to: "users#update"
-    # get     "/profile/:id", to: "users#show",     as: :profile
+    get     "/",                to: "pages#calendar", as: :calendar
+    get     "/city/:slug",      to: "cities#show",    as: :city
+    get     "/day/:number",     to: "days#show",      as: :day, number: /[1-9]|1\d|2[0-5]/
+    get     "/the-wall",        to: "messages#index", as: :messages
+    get     "/scores/cities",   to: "scores#cities"
+    get     "/scores/insanity", to: "scores#insanity"
+    get     "/scores/solo",     to: "scores#solo"
+    get     "/scores/squads",   to: "scores#squads"
+    get     "/squad/:id",       to: "squads#show",    as: :squad
+    post    "/squad",           to: "squads#create",  as: :create_squad
+    patch   "/squad/:id",       to: "squads#update",  as: :update_squad
+    post    "/squad/join",      to: "squads#join",    as: :join_squad
+    delete  "/squad/leave",     to: "squads#leave",   as: :leave_squad
+    get     "/profile/:uid",    to: "users#show",     as: :profile
+    get     "/settings",        to: "users#edit"
+    patch   "/settings",        to: "users#update"
   end
 
   authenticated :user, ->(user) { user.admin? } do

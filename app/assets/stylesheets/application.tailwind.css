@@ -65,6 +65,18 @@
     @apply ring-transparent ring-offset-transparent;
   }
 
+  .rank-down {
+    @apply fas fa-angles-down text-wagon-red text-opacity-50;
+  }
+
+  .rank-equal {
+    @apply fas fa-equals text-aoc-gray-darker text-opacity-50;
+  }
+
+  .rank-up {
+    @apply fas fa-angles-up text-aoc-green text-opacity-50;
+  }
+
   .strong {
     @apply text-white;
 
@@ -73,6 +85,12 @@
 
   summary {
     list-style: none;
+  }
+
+  .text-bronze {
+    @apply text-aoc-bronze;
+
+    text-shadow: 0 0 5px #fc9;
   }
 
   .text-gold {
@@ -91,6 +109,12 @@
 
   .text-shadow-red {
     text-shadow: 0 0 2px #fd1015, 0 0 5px #fd1015;
+  }
+
+  .text-silver {
+    @apply text-aoc-silver;
+
+    text-shadow: 0 0 5px #99c;
   }
 
   @keyframes wiggle {
@@ -112,14 +136,6 @@
 
   .dashboard-tile {
     @apply w-48 h-48 border-aoc-gray-darker cursor-default;
-  }
-
-  .text-shadow-silver {
-    text-shadow: 0 0 5px #99c;
-  }
-
-  .text-shadow-bronze {
-    text-shadow: 0 0 5px #fc9;
   }
 }
 

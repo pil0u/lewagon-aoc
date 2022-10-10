@@ -2,6 +2,8 @@
 
 module Header
   class NavComponent < ApplicationComponent
+    include ScoresHelper
+
     def initialize(user:)
       @user = user
     end

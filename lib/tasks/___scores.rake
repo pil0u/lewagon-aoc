@@ -1,50 +1,16 @@
 # frozen_string_literal: true
 
+# TODO: remove (legacy)
+
 namespace :scores do
   desc "Main task to call from Heroku Scheduler"
-  task unsafe_update: %i[introduction refresh compute_ranks compute_scores conclusion]
+  task unsafe_update: %i[compute_scores]
 
   desc "Wraps the update in a PostgreSQL transaction"
   task update: :environment do
     ActiveRecord::Base.transaction do
       Rake::Task["scores:unsafe_update"].invoke
     end
-  end
-
-  desc "Update last_api_fetch_start"
-  task introduction: :environment do
-    state = State.first
-    now = Time.now.utc
-
-    state.update(last_api_fetch_start: now)
-    Rails.logger.info "🤖 Completions update started at #{now}"
-  end
-
-  desc "Fetch completion timestamps from AoC API and insert them in completions table"
-  task refresh: :environment do
-    # Retrieve AoC leaderboard IDs to call the API
-    leaderboard_ids = ENV.fetch("AOC_ROOMS").split(",").map { |id| id.split("-").first }
-
-    # Merge members timestamps from all AoC leaderboards
-    members = {}
-    leaderboard_ids.each do |room_id|
-      members_to_merge = Aoc.fetch_json(ENV.fetch("EVENT_YEAR"), room_id, ENV.fetch("SESSION_COOKIE"))["members"]
-
-      members.deep_merge!(members_to_merge)
-    end
-
-    User.update_sync_status_from(members)
-    Rails.logger.info "✔ Users sync status updated"
-
-    completions = Aoc.to_completions_array(members)
-    Completion.replace_all(completions)
-    Rails.logger.info "✔ Individual timestamps updated"
-  end
-
-  desc "Compute individual rank, rank within batch & rank within city for each completion"
-  task compute_ranks: :environment do
-    Completion.compute_ranks
-    Rails.logger.info "✔ Ranks computed"
   end
 
   desc "Compute scores for each level of granularity"
@@ -91,14 +57,5 @@ namespace :scores do
     end
 
     Completion.insert_all(score_fillers) unless score_fillers.empty?
-  end
-
-  desc "Update last_api_fetch_end"
-  task conclusion: :environment do
-    state = State.first
-    now = Time.now.utc
-
-    state.update(last_api_fetch_end: now)
-    Rails.logger.info "🏁 Completions update finished at #{now}"
   end
 end

@@ -3,8 +3,8 @@
 # Initialize unique state row
 State.create!(
   {
-    last_api_fetch_start: Time.at(0).utc,
-    last_api_fetch_end: Time.at(0).utc
+    fetch_api_begin: Time.at(0).utc,
+    fetch_api_end: Time.at(0).utc
   }
 )
 Rails.logger.info "✔ States initialized"

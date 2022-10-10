@@ -1,0 +1,64 @@
+<%# The scale-100 trick is to make the last td absolute, relative to the tr  %>
+
+<tr class="scale-100 hover:bg-aoc-gray hover:bg-opacity-10
+          <%= "bg-aoc-green bg-opacity-20" if @participant[:uid] == @user.uid %>
+          <%= "text-aoc-gray-dark" if !@hardcore && @participant[:entered_hardcore] %>">
+  <td class="<%= class_names(rank_css(@participant[:rank])) %>">
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
+      <%= @participant[:rank] if @participant[:display_rank] %>
+    <% end %>
+  </td>
+
+  <td class="py-1 max-w-[12rem]">
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center items-center truncate" do %>
+      <%= @participant[:username] %>
+      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-2") if @participant[:uid].in?(User::MODERATORS.values.map(&:to_i)) %>
+    <% end %>
+  </td>
+
+  <td class="text-lg strong">
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
+      <%= @participant[:score] %>
+    <% end %>
+  </td>
+
+  <td class="text-lg">
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center gap-x-1" do %>
+      <% if @participant[:silver_stars] > 0 %>
+        <span class="text-aoc-silver"><%= @participant[:silver_stars] %>*</span>
+      <% end %>
+
+      <span class="text-aoc-gold"><%= @participant[:gold_stars] %>*</span>
+    <% end %>
+  </td>
+
+  <td>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
+      <%= @participant[:daily_score] %>
+    <% end %>
+  </td>
+
+  <% unless @hardcore %>
+
+  <td>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
+      <%= @participant[:squad_name] %>
+    <% end %>
+  </td>
+
+  <td>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
+      <%= @participant[:city_name] %>
+    <% end %>
+  </td>
+
+  <td>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
+      <%= @participant[:batch_number] %>
+    <% end %>
+  </td>
+
+  <% end %>
+
+  <%= render Scores::RankEvolutionCellComponent.new(previous_rank: @participant[:previous_rank], current_rank: @participant[:rank]) %>
+</tr>

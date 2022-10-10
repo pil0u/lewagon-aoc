@@ -1,0 +1,27 @@
+<%= render Scores::NavComponent.new %>
+
+<%= render PageTitleComponent.new(title: "Solo scoreboard") %>
+
+<p class="my-4">
+  You earn between <code class="strong">25</code> and <code class="strong">50</code> points for each <em>challenge</em>
+  you solve. <%= link_to "More info", faq_path, class: "link-explicit link-internal" %>.
+</p>
+
+<table class="block overflow-x-auto whitespace-nowrap w-full">
+  <thead>
+    <tr class="border-b border-aoc-gray-darker">
+      <th class="font-light min-w-[3rem] lg:min-w-[4rem]"></th>
+      <th class="font-light w-full"></th>
+      <th class="font-light min-w-[6rem]">Score</th>
+      <th class="font-light min-w-[6rem]">Stars</th>
+      <th class="font-light min-w-[6rem]">Daily score</th>
+      <th class="font-light min-w-[16rem]">Squad</th>
+      <th class="font-light min-w-[9rem]">City</th>
+      <th class="font-light min-w-[6rem]">Batch</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render Scores::SoloRowComponent.with_collection(@participants, user: current_user, hardcore: false) %>
+  </tbody>
+</table>

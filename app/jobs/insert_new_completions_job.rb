@@ -6,15 +6,16 @@ class InsertNewCompletionsJob < ApplicationJob
   def perform
     @completions_from_api = {}
     @completions = []
-    @state = State.first
 
     ActiveRecord::Base.transaction do
-      update_last_api_fetch_start
+      @state = State.create
+
+      update_fetch_api_begin
       fetch_completions_from_aoc_api
       update_users_sync_status
       transform_completions_for_database
       insert_new_completions
-      update_last_api_fetch_end
+      update_fetch_api_end
     end
 
     nil
@@ -22,10 +23,10 @@ class InsertNewCompletionsJob < ApplicationJob
 
   private
 
-  def update_last_api_fetch_start
+  def update_fetch_api_begin
     now = Time.now.utc
+    @state.update(fetch_api_begin: now)
 
-    @state.update(last_api_fetch_start: now)
     Rails.logger.info "🤖 Completions update started at #{now}"
   end
 
@@ -37,6 +38,8 @@ class InsertNewCompletionsJob < ApplicationJob
 
       @completions_from_api.deep_merge!(current_group_completions)
     end
+
+    Rails.logger.info "✔ Completions fetched"
   end
 
   def fetch_completions(id)
@@ -55,16 +58,24 @@ class InsertNewCompletionsJob < ApplicationJob
   end
 
   def update_users_sync_status
-    User.update_sync_status_from(@completions_from_api)
-    Rails.logger.info "✔ Users sync status updated"
+    participant_ids = @completions_from_api.keys.map(&:to_i)
+
+    User.find_each do |user|
+      new_synced = participant_ids.include?(user.aoc_id)
+
+      if user.synced != new_synced
+        user.update(synced: new_synced)
+        Rails.logger.info "\t#{user.id}-#{user.github_username} is now #{new_synced ? '' : 'un'}synced."
+      end
+    end
+
+    Rails.logger.info "✔ Users' sync status updated"
   end
 
   def transform_completions_for_database
-    Rails.logger.info "\tTransforming JSON to match the completions table format..."
-
+    now = Time.now.utc
     users = User.pluck(:aoc_id, :id).to_h.except(nil)
     stored_completions = Completion.joins(:user).pluck(:aoc_id, :day, :challenge)
-    now = Time.now.utc
 
     @completions_from_api.each do |aoc_id, results|
       user_id = users[aoc_id.to_i]
@@ -85,6 +96,8 @@ class InsertNewCompletionsJob < ApplicationJob
         end
       end
     end
+
+    Rails.logger.info "✔ Completions prepared for database import (total: #{@completions.length})"
   end
 
   def insert_new_completions
@@ -96,10 +109,10 @@ class InsertNewCompletionsJob < ApplicationJob
     end
   end
 
-  def update_last_api_fetch_end
+  def update_fetch_api_end
     now = Time.now.utc
+    @state.update(fetch_api_end: now)
 
-    @state.update(last_api_fetch_end: now)
     Rails.logger.info "🏁 Completions update finished at #{now}"
   end
 end

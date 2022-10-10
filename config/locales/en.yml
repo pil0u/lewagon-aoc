@@ -4,4 +4,4 @@ en:
       user:
         aoc_id: "Advent of Code ID"
       squad:
-        secret_id: "Secret ID"
+        pin: "Squad PIN"

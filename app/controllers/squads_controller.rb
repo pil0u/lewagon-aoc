@@ -3,6 +3,10 @@
 class SquadsController < ApplicationController
   before_action :restrict_after_lock, only: %i[create join leave]
 
+  def show
+    @squad = Squad.find(params[:id])
+  end
+
   def create
     squad = Squad.create!
     current_user.update(squad_id: squad.id)
@@ -16,12 +20,12 @@ class SquadsController < ApplicationController
     if @squad.update(name: squad_params[:name])
       redirect_to settings_path, notice: "Your squad information was updated"
     else
-      redirect_to settings_path, alert: "Error: #{@squad.errors.full_messages[0]}"
+      redirect_to settings_path, alert: @squad.errors.full_messages[0].to_s
     end
   end
 
   def join
-    @squad = Squad.find_by(secret_id: squad_params[:secret_id])
+    @squad = Squad.find_by(pin: squad_params[:pin])
 
     if @squad.nil?
       redirect_to settings_path, alert: "This squad does not exist"
@@ -53,6 +57,6 @@ class SquadsController < ApplicationController
   end
 
   def squad_params
-    params.require(:squad).permit(:name, :secret_id)
+    params.require(:squad).permit(:name, :pin)
   end
 end

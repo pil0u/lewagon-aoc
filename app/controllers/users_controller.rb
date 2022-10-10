@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :restrict_after_lock, only: %i[update]
 
   def show
-    @user = User.find_by(uid: params[:uid])
+    @user = User.find_by!(uid: params[:uid])
   end
 
   def edit

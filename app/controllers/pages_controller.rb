@@ -29,7 +29,7 @@ class PagesController < ApplicationController
 
   def welcome
     if Time.now.utc < Aoc.launch_time
-      render 'countdown', layout: false
+      render "countdown", layout: false
       return
     end
 

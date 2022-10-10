@@ -56,7 +56,7 @@ class SquadsController < ApplicationController
     if Time.now.utc > Aoc.lock_time
       redirect_to(
         settings_path,
-        alert: "You cannot #{action_name} Squads since #{Aoc.lock_time.to_fs(:long_ordinal)}."
+        alert: "You cannot #{action_name} Squads since #{Aoc.lock_time.to_fs(:long_ordinal)} (see FAQ)"
       )
     end
   end

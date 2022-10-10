@@ -1,35 +1,16 @@
 module Scores
-  class SoloScores
-    def self.get
-      new.get
-    end
-
+  class SoloScores < CachedComputer
     def get
-      cache { compute }
+      cache(Cache::SoloScore) { compute }
     end
 
     private
 
-    def last_aoc_sync
+    def cache_key
       @key ||= State.order(:last_api_fetch_end).last.last_api_fetch_end
     end
 
-    ATTRIBUTES = [:score, :user_id]
-
-    def cache
-      points = Cache::SoloScore.where(fetched_at: last_aoc_sync)
-      if points.any?
-        return points.pluck(*ATTRIBUTES).map { |p| ATTRIBUTES.zip(p).to_h }
-      else
-        points = yield
-        Cache::SoloScore.insert_all(
-          points.map do |attributes|
-            attributes.merge(fetched_at: last_aoc_sync)
-          end
-        )
-        return points
-      end
-    end
+    RETURNED_ATTRIBUTES = [:score, :user_id]
 
     def compute
       ActiveRecord::Base.transaction do

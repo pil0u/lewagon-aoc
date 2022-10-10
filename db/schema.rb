@@ -138,26 +138,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
   end
 
   create_table "solo_points", force: :cascade do |t|
+    t.datetime "cache_key", precision: nil, null: false
     t.integer "challenge"
     t.datetime "created_at", null: false
     t.integer "day"
-    t.datetime "fetched_at", precision: nil, null: false
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["day", "challenge", "user_id", "fetched_at"], name: "unique_daychalluserfetch_on_solo_points", unique: true
-    t.index ["fetched_at"], name: "index_solo_points_on_fetched_at"
+    t.index ["cache_key"], name: "index_solo_points_on_cache_key"
+    t.index ["day", "challenge", "user_id", "cache_key"], name: "unique_daychalluserfetch_on_solo_points", unique: true
     t.index ["user_id"], name: "index_solo_points_on_user_id"
   end
 
   create_table "solo_scores", force: :cascade do |t|
+    t.datetime "cache_key", precision: nil
     t.datetime "created_at", null: false
-    t.datetime "fetched_at", precision: nil
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["fetched_at"], name: "index_solo_scores_on_fetched_at"
-    t.index ["user_id", "fetched_at"], name: "index_solo_scores_on_user_id_and_fetched_at", unique: true
+    t.index ["cache_key"], name: "index_solo_scores_on_cache_key"
+    t.index ["user_id", "cache_key"], name: "index_solo_scores_on_user_id_and_cache_key", unique: true
     t.index ["user_id"], name: "index_solo_scores_on_user_id"
   end
 

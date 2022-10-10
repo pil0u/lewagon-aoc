@@ -3,6 +3,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+*.swp
 
 # Local environment variables (dotenv)
 .env
@@ -10,7 +11,7 @@
 # Byebug command history file
 .byebug_history
 
-# Secret keys 
+# Secret keys
 /config/credentials/development.key
 /config/credentials/production.key
 config/master.key

@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static get targets () {
-    return ["days", "hours", "minutes", "seconds", "milliseconds"]
+    return ["days", "hours", "minutes", "seconds", "milliseconds", "code"]
   }
 
   static get values () {
@@ -25,6 +25,8 @@ export default class extends Controller {
       this.secondsTarget.innerHTML = this.format(Math.floor((timeDiff / 1000) % 60), 4)
       this.millisecondsTarget.innerHTML = this.format(Math.floor(timeDiff % 1000), 7)
 
+      this.encode()
+
       return
     }
 
@@ -43,5 +45,25 @@ export default class extends Controller {
 
   format (integer, digits) {
     return Number(integer).toString(3).padStart(digits, '0')
+  }
+
+  encode () {
+    const raw_groups = `
+      53454E44205448452053
+      554D204F462054484520
+      46495253542031204D49
+      4C4C494F4E2044454349
+      4D414C53204F46205049
+      20544F2050494C4F5520
+      544F2047455420524557
+      41524420202020202020
+    `.replace(/\s/g, '').match(/.{2}/g)
+
+    const groups = []
+    raw_groups.forEach(e => groups.push(
+      (parseInt(e, 16) * parseInt(this.minutesTarget.innerHTML, 3)).toString(3)
+    ))
+
+    this.codeTarget.innerHTML = groups.join(" ")
   }
 }

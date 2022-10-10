@@ -12,6 +12,8 @@ module Scores
     private
 
     def set_icon_class
+      return unless @previous_rank.present?
+
       @icon_class = "rank-down" if @previous_rank < @current_rank
       @icon_class = "rank-equal" if @previous_rank == @current_rank
       @icon_class = "rank-up" if @previous_rank > @current_rank

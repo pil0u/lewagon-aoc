@@ -19,11 +19,11 @@ export default class extends Controller {
     const timeDiff = Date.parse('November 10 2022 11:30:00 UTC') - (new Date()).getTime()
 
     if (timeDiff > 0) {
-      this.daysTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 2)
-      this.hoursTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60)) % 24), 2)
-      this.minutesTarget.innerHTML = this.format(Math.floor((timeDiff / 1000 / 60) % 60), 2)
-      this.secondsTarget.innerHTML = this.format(Math.floor((timeDiff / 1000) % 60), 2)
-      this.millisecondsTarget.innerHTML = this.format(Math.floor(timeDiff % 1000), 3)
+      this.daysTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 3)
+      this.hoursTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60)) % 24), 3)
+      this.minutesTarget.innerHTML = this.format(Math.floor((timeDiff / 1000 / 60) % 60), 4)
+      this.secondsTarget.innerHTML = this.format(Math.floor((timeDiff / 1000) % 60), 4)
+      this.millisecondsTarget.innerHTML = this.format(Math.floor(timeDiff % 1000), 7)
 
       return
     }
@@ -42,6 +42,6 @@ export default class extends Controller {
   }
 
   format (integer, digits) {
-    return new Intl.NumberFormat("en", { minimumIntegerDigits: digits }).format(integer)
+    return Number(integer).toString(3).padStart(digits, '0')
   }
 }

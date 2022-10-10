@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :restrict_after_lock, only: %i[update]
+
   def show
     @user = User.find_by(uid: params[:uid])
   end
@@ -20,6 +22,15 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def restrict_after_lock
+    if Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore
+      redirect_back(
+        fallback_location: "/",
+        alert: "You cannot join or leave the Ladder of Insanity since #{Aoc.lock_time.to_fs(:long_ordinal)}."
+      )
+    end
+  end
 
   def set_updated_params
     @params = {

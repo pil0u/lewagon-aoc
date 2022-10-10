@@ -3,15 +3,15 @@
 class SquadsController < ApplicationController
   before_action :restrict_after_lock, only: %i[create join leave]
 
+  def show
+    @squad = Squad.find(params[:id])
+  end
+
   def create
     squad = Squad.create!
     current_user.update(squad_id: squad.id)
 
     redirect_to settings_path, notice: "Squad successfully created!"
-  end
-
-  def show
-    @squad = Squad.find(params[:id])
   end
 
   def update

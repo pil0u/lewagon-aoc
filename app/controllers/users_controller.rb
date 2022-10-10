@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  def show
+    @user = User.find_by(uid: params[:uid])
+  end
+
   def edit
     @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
   end
@@ -13,10 +17,6 @@ class UsersController < ApplicationController
     else
       redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s
     end
-  end
-
-  def show
-    @user = User.find_by(uid: params[:uid])
   end
 
   private

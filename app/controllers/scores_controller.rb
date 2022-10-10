@@ -6,16 +6,16 @@ class ScoresController < ApplicationController
 
     @cities = [
       {
-        id: 4,
-        slug: "rio-de-janeiro",
-        name: "Rio de Janeiro",
-        total_members: 25,
-        previous_rank: 3,
-        rank: 1,
-        score: 1235,
-        daily_contributors_part_1: 23,
-        daily_contributors_part_2: 23,
-        top_contributors: 12
+        id: 4,                          # id
+        slug: "rio-de-janeiro",         # REPLACE(LOWER(name), ' ', '-')
+        name: "Rio de Janeiro",         # name
+        total_members: 25,              # size
+        previous_rank: 3,               # TBD
+        rank: 1,                        # TBD
+        score: 1235,                    # TBD
+        daily_contributors_part_1: 23,  # TBD
+        daily_contributors_part_2: 23,  # TBD
+        top_contributors: 12            # MAX(10, CEILING(size * 0.03))
       },
       {
         id: 9,
@@ -39,17 +39,17 @@ class ScoresController < ApplicationController
 
     @participants = [
       {
-        uid: 1,
-        rank: 1,
-        previous_rank: 12,
-        username: "Francisco-Webdeveloper-andMore",
-        city_name: "Rio de Janeiro",
-        batch_number: 1970,
-        squad_name: "This is very long 123456",
-        silver_stars: 10,
-        gold_stars: 15,
-        score: 500 * 2 * 25,
-        daily_score: 124
+        uid: 1,                                     # uid
+        rank: 1,                                    # TBD
+        previous_rank: 12,                          # TBD
+        username: "Francisco-Webdeveloper-andMore", # username
+        city_name: "Rio de Janeiro",                # JOIN cities ON cities.id = users.city_id (cities.name)
+        batch_number: 1970,                         # JOIN batches ON batches.id = users.batch_id (batches.number)
+        squad_name: "This is very long 123456",     # JOIN squads ON squads.id = users.squad_id (squads.name)
+        silver_stars: 10,                           # TBD
+        gold_stars: 15,                             # TBD
+        score: 500 * 2 * 25,                        # TBD
+        daily_score: 124                            # TBD
       },
       {
         uid: 6788,
@@ -90,7 +90,7 @@ class ScoresController < ApplicationController
         uid: 1,
         rank: 1,
         previous_rank: 12,
-        entered_hardcore: false,
+        entered_hardcore: false,                    # entered_harcore (users)
         username: "Francisco-Webdeveloper-andMore",
         city_name: "Rio de Janeiro",
         batch_number: 1970,
@@ -138,13 +138,13 @@ class ScoresController < ApplicationController
 
     @squads = [
       {
-        id: 43,
-        name: "The Squad 1",
-        total_members: 3,
-        previous_rank: 1,
-        rank: 1,
-        score: 1234,
-        daily_score: 200
+        id: 43,               # id
+        name: "The Squad 1",  # name
+        total_members: 3,     # COUNT(distinct username) / JOIN users ON squads.id = users.squad_id
+        previous_rank: 1,     # TBD
+        rank: 1,              # TBD
+        score: 1234,          # TBD
+        daily_score: 200      # TBD
       },
       {
         id: 23,

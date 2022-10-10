@@ -5,11 +5,11 @@ class Squad < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }, length: { in: 3..24 }
 
-  before_validation :generate_pin, on: :create
+  before_validation :generate_pin_and_name, on: :create
 
   private
 
-  def generate_pin
+  def generate_pin_and_name
     pin = rand(100_000..999_999)
     pin = rand(100_000..999_999) while Squad.exists?(pin:)
 

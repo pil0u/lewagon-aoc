@@ -42,7 +42,7 @@
       <type label="Geometry" length="0" sql="GEOMETRY" quote="'" />
     </group>
   </datatypes>
-  <table x="452" y="96" name="users">
+  <table x="401" y="101" name="users">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -106,7 +106,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="808" y="131" name="cities">
+  <table x="751" y="251" name="cities">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -131,7 +131,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="106" y="95" name="completions">
+  <table x="101" y="101" name="completions">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -161,10 +161,10 @@
       <part>id</part>
     </key>
   </table>
-  <table x="50" y="34" name="⬇️ Updated from AoC's JSON API">
+  <table x="51" y="51" name="⬇️ Updated from AoC's JSON API">
     <key type="PRIMARY" name=""></key>
   </table>
-  <table x="109" y="478" name="states">
+  <table x="101" y="301" name="states">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -181,10 +181,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="38" y="439" name="Log latest API request timestamps">
-    <key type="PRIMARY" name=""></key>
-  </table>
-  <table x="637" y="38" name="batches">
+  <table x="701" y="101" name="batches">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -205,7 +202,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="804" y="299" name="squads">
+  <table x="601" y="301" name="squads">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -229,5 +226,29 @@
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
+  </table>
+  <table x="901" y="101" name="blazer_audits">
+    <key type="PRIMARY" name=""></key>
+  </table>
+  <table x="901" y="136" name="blazer_checks">
+    <key type="PRIMARY" name=""></key>
+  </table>
+  <table x="901" y="168" name="blazer_dashboard_queries">
+    <key type="PRIMARY" name=""></key>
+  </table>
+  <table x="901" y="200" name="blazer_dashboards">
+    <key type="PRIMARY" name=""></key>
+  </table>
+  <table x="901" y="231" name="blazer_queries">
+    <key type="PRIMARY" name=""></key>
+  </table>
+  <table x="901" y="301" name="good_job_processes">
+    <key type="PRIMARY" name=""></key>
+  </table>
+  <table x="901" y="335" name="good_job_settings">
+    <key type="PRIMARY" name=""></key>
+  </table>
+  <table x="901" y="370" name="good_jobs">
+    <key type="PRIMARY" name=""></key>
   </table>
 </sql>

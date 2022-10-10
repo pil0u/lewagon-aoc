@@ -9,7 +9,7 @@ class ScoresController < ApplicationController
         id: 4,                          # id
         slug: "rio-de-janeiro",         # REPLACE(LOWER(name), ' ', '-')
         name: "Rio de Janeiro",         # name
-        total_members: 25,              # size
+        total_members: 25,              # size
         previous_rank: 3,               # TBD
         rank: 1,                        # TBD
         score: 1235,                    # TBD
@@ -143,7 +143,7 @@ class ScoresController < ApplicationController
         total_members: 3,     # COUNT(distinct username) / JOIN users ON squads.id = users.squad_id
         previous_rank: 1,     # TBD
         rank: 1,              # TBD
-        score: 1234,          # TBD
+        score: 1234,          # TBD
         daily_score: 200      # TBD
       },
       {

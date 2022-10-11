@@ -10,13 +10,13 @@ export default class extends Controller {
   }
 
   connect () {
-    if (new Date() < Date.parse('October 11 2022 00:07:00 UTC')) {
+    if (new Date() < Date.parse('November 10 2022 11:30:00 UTC')) {
       this.startRefreshing()
     }
   }
 
   updateClock () {
-    const timeDiff = Date.parse('October 11 2022 00:07:00 UTC') - (new Date()).getTime()
+    const timeDiff = Date.parse('November 10 2022 11:30:00 UTC') - (new Date()).getTime()
 
     if (timeDiff > 0) {
       this.daysTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 3)

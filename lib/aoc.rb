@@ -16,7 +16,7 @@ class Aoc
   end
 
   def self.launch_time
-    Time.new(2022, 10, 11, 0, 7, 0, "UTC")
+    Time.new(2022, 11, 10, 11, 30, 0, "UTC")
   end
 
   def self.lock_time

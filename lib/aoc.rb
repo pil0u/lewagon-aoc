@@ -15,6 +15,10 @@ class Aoc
     now >= begin_time && now < end_time
   end
 
+  def self.launch_time
+    Time.new(2022, 11, 10, 11, 30, 0, "UTC")
+  end
+
   def self.lock_time
     Time.new(2022, 12, 8, 11, 30, 0, "UTC")
   end

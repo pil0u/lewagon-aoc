@@ -28,6 +28,11 @@ class PagesController < ApplicationController
   def stats; end
 
   def welcome
+    if Time.now.utc < Aoc.launch_time
+      render "countdown", layout: false
+      return
+    end
+
     @total_users = User.count
   end
 

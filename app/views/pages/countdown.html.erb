@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="GLOBAL RESPONSIVENESS // lg:text-lg">
+  <head>
+    <title>Le Wagon x Advent of Code</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= favicon_link_tag "favicon.png" %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
+    <header class="flex flex-col mx-auto">
+      <h1 class="my-8 text-center text-xl group">
+        <span class="text-wagon-red group-hover:text-shadow-red">Le Wagon</span>
+        <span class="group-hover:strong">x</span>
+        <span class="text-other-green group-hover:text-shadow-green">Advent of Code</span>
+      </h1>
+    </header>
+
+    <main class="m-auto">
+      <div data-controller="countdown"
+           data-countdown-refresh-interval-value="23"
+           class="text-3xl lg:text-6xl h-[30vh] text-center">
+        <span data-countdown-target="days"></span>
+        <span data-countdown-target="hours"></span>
+        <span data-countdown-target="minutes"></span>
+        <span data-countdown-target="seconds"></span>
+        <span data-countdown-target="milliseconds"></span>
+
+        <div data-countdown-target="code"
+             class="mt-[50vh] mb-8 mx-8 text-justify text-xs lg:text-lg">
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

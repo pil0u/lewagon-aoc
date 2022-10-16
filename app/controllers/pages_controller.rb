@@ -2,6 +2,7 @@
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[code_of_conduct faq welcome]
+  before_action :render_countdown_before_launch, only: %i[code_of_conduct faq welcome]
 
   def calendar
     user_completions = current_user.completions.group(:day).count
@@ -28,12 +29,13 @@ class PagesController < ApplicationController
   def stats; end
 
   def welcome
-    if Time.now.utc < Aoc.launch_time
-      render "countdown", layout: false
-      return
-    end
-
     @total_users = User.count
+  end
+
+  private
+
+  def render_countdown_before_launch
+    render "countdown", layout: false if Time.now.utc < Aoc.launch_time
   end
 
   #   ### old

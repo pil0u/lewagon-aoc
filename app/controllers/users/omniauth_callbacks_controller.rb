@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Users
-  class OmniauthCallbacksController < Devise::OmniauthCallbacksController$
-    include Devise::Controllers::Rememberable
+  include Devise::Controllers::Rememberable
 
+  class OmniauthCallbacksController < Devise::OmniauthCallbacksController$
     def kitt
       @user = User.from_kitt(request.env["omniauth.auth"])
 

@@ -22,6 +22,16 @@
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
   }
 
+  details > summary {
+    list-style: none;
+  }
+
+  details > summary::marker,
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  
+
   .disabled {
     @apply pointer-events-none bg-aoc-gray-darker text-aoc-gray-dark;
   }
@@ -81,14 +91,6 @@
     @apply text-white;
 
     text-shadow: 0 0 5px #fff;
-  }
-
-  summary {
-    list-style: none;
-
-    &::-webkit-details-marker, &::marker {
-      display: none;
-    }
   }
 
   .text-bronze {

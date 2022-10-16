@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[bypass code_of_conduct faq stats welcome]
-  before_action :render_countdown_before_launch, only: %i[code_of_conduct faq stats welcome]
-
-  def bypass; end
+  skip_before_action :authenticate_user!, only: %i[code_of_conduct faq stats welcome]
+  # before_action :render_countdown_before_launch, only: %i[code_of_conduct faq stats welcome]
 
   def calendar
     user_completions = current_user.completions.group(:day).count

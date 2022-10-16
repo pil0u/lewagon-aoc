@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/faq",             to: "pages#faq"
   get "/stats",           to: "pages#stats"
-  get "/8yp455",          to: "pages#bypass"
 
   unauthenticated do
     get "/", to: "pages#welcome"

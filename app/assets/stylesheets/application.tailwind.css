@@ -37,7 +37,7 @@
   }
 
   .form-element {
-    @apply px-3 py-2 leading-normal border border-aoc-gray-darker rounded-none disabled:!disabled;
+    @apply px-3 py-2 leading-normal border border-aoc-gray-darker rounded-none disabled:disabled;
   }
 
   .input {

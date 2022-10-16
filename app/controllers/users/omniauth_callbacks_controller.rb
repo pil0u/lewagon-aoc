@@ -2,10 +2,13 @@
 
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+    include Devise::Controllers::Rememberable
+
     def kitt
       @user = User.from_kitt(request.env["omniauth.auth"])
 
       if @user.persisted?
+        remember_me(@user)
         sign_in_and_redirect @user, event: :authentication
         flash.notice = "Successfully signed in with Kitt!"
       else

@@ -85,6 +85,10 @@
 
   summary {
     list-style: none;
+
+    &::-webkit-details-marker, &::marker {
+      display: none;
+    }
   }
 
   .text-bronze {

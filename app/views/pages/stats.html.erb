@@ -1,0 +1,37 @@
+<%= render PageTitleComponent.new(title: "Platform statistics") %>
+
+<div class="my-4 flex flex-wrap justify-center gap-2">
+  <%= render TileStatsComponent.new(title: "Sign in clickers", value: @registered_users) %>
+  <%= render TileStatsComponent.new(title: "Setup completers", value: @confirmed_users) %>
+  <%= render TileStatsComponent.new(title: "Puzzle solvers", value: @participating_users) %>
+</div>
+
+<div class="flex flex-col gap-y-1">
+  <h3 class="strong text-center text-sm lg:text-base">Total stars collected</h3>
+
+  <div class="flex justify-center gap-x-2">
+    <span class="text-aoc-silver text-xl lg:text-2xl"><%= @silver_stars %>*</span>
+    <span class="text-aoc-gold text-xl lg:text-2xl"><%= @gold_stars %>*</span>
+  </div>
+</div>
+
+<p class="my-4 text-justify">
+  <span class="text-aoc-gold">Gold</span> indicates users who have completed both parts of a puzzle,
+  while <span class="text-aoc-silver">silver</span> indicates users who have completed only the first half.
+  Each <span class="text-aoc-gold">*</span> or <span class="text-aoc-silver">*</span> star represents
+  up to <span class="strong"><%= @users_per_star %></span> users.
+</p>
+
+<%# TODO: revamp? %>
+<div class="mx-auto text-lg text-right leading-tight flex flex-col">
+  <% @stars_per_day.reverse_each do |day, stars| %>
+    <%= link_to day_path(day), class: "flex space-x-5 hover:bg-aoc-gray hover:bg-opacity-10 px-3" do %>
+      <span class="w-6"><%= day %></span>
+      <span class="w-10 text-aoc-gold"><%= stars[1] %></span>
+      <span class="w-10 text-aoc-silver"><%= stars[0] - stars[1] %></span>
+      <span>
+        <span class="text-aoc-gold"><%= "*" * (stars[1] / @users_per_star.to_f).ceil %></span><span class="text-aoc-silver"><%= "*" * ((stars[0] - stars[1]) / @users_per_star.to_f).ceil %></span>
+      </span>
+    <% end %>
+  <% end %>
+</div>

@@ -137,12 +137,6 @@
   .wiggle {
     animation: wiggle 3s infinite;
   }
-
-  /* Legacy */
-
-  .dashboard-tile {
-    @apply w-48 h-48 border-aoc-gray-darker cursor-default;
-  }
 }
 
 @import "tailwindcss/utilities";

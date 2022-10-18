@@ -26,7 +26,19 @@ class PagesController < ApplicationController
   def code_of_conduct; end
   def faq; end
   def setup; end
-  def stats; end
+
+  def stats
+    @registered_users = User.count
+    @confirmed_users = User.confirmed.count
+    @participating_users = User.distinct(:id).joins(:completions).merge(Completion.actual).count
+
+    @silver_stars = Completion.where(challenge: 1).count
+    @gold_stars = Completion.where(challenge: 2).count
+
+    stars_per_challenge = Completion.actual.group(:day, :challenge).order(:day, :challenge).count
+    @stars_per_day = stars_per_challenge.group_by { |key, _| key.first }.transform_values { |star_counts| star_counts.sort_by(&:first).map(&:last) }
+    @users_per_star = (stars_per_challenge.map(&:last).max.to_f / 40).ceil
+  end
 
   def welcome
     @total_users = User.count

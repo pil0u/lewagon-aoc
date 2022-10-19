@@ -9,7 +9,6 @@ module Scores
 
     def ranks
       @ranks ||= Squad
-        .where(id: scores_per_squad.keys)
         .includes(:users)
         .map { |squad| { **identity_of(squad), **stats_of(squad) } }
         .sort_by { |squad| squad[:score] * -1 } # * -1 to reverse with no iterating
@@ -29,8 +28,8 @@ module Scores
       }
     end
 
-    def stats_of(squad, at = DateTime.now)
-      score = scores_per_squad[squad.id]
+    def stats_of(squad)
+      score = scores_per_squad[squad.id] || { score: 0 }
       {
         score: score[:score],
         # daily_score: 200      #TODO: Implement

@@ -9,7 +9,6 @@ module Scores
 
     def ranks
       @ranks ||= City
-        .where(id: scores_per_city.keys)
         .includes(:users)
         .map { |city| { **identity_of(city), **stats_of(city) } }
         .sort_by { |city| city[:score] * -1 } # * -1 to reverse with no iterating
@@ -31,7 +30,7 @@ module Scores
     end
 
     def stats_of(city)
-      score = scores_per_city[city.id]
+      score = scores_per_city[city.id] || { score: 0 }
       {
         score: score[:score],
         top_contributors: city.top_contributors

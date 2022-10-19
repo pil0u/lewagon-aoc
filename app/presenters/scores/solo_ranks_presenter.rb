@@ -32,7 +32,7 @@ module Scores
       }
     end
 
-    def stats_of(user, at = DateTime.now)
+    def stats_of(user)
       completions = user.completions
       all = completions.actual.where(challenge: 1).count
       gold = completions.actual.where(challenge: 2).count

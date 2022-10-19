@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_24_014638) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_24_015351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -138,50 +138,50 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_014638) do
   end
 
   create_table "solo_points", force: :cascade do |t|
-    t.datetime "cache_key", precision: nil, null: false
+    t.string "cache_fingerprint", null: false
     t.integer "challenge"
     t.datetime "created_at", null: false
     t.integer "day"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["cache_key"], name: "index_solo_points_on_cache_key"
-    t.index ["day", "challenge", "user_id", "cache_key"], name: "unique_daychalluserfetch_on_solo_points", unique: true
+    t.index ["cache_fingerprint"], name: "index_solo_points_on_cache_fingerprint"
+    t.index ["day", "challenge", "user_id", "cache_fingerprint"], name: "unique_daychalluserfetch_on_solo_points", unique: true
     t.index ["user_id"], name: "index_solo_points_on_user_id"
   end
 
   create_table "solo_scores", force: :cascade do |t|
-    t.datetime "cache_key", precision: nil
+    t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["cache_key"], name: "index_solo_scores_on_cache_key"
-    t.index ["user_id", "cache_key"], name: "index_solo_scores_on_user_id_and_cache_key", unique: true
+    t.index ["cache_fingerprint"], name: "index_solo_scores_on_cache_fingerprint"
+    t.index ["user_id", "cache_fingerprint"], name: "index_solo_scores_on_user_id_and_cache_fingerprint", unique: true
     t.index ["user_id"], name: "index_solo_scores_on_user_id"
   end
 
   create_table "squad_points", force: :cascade do |t|
-    t.datetime "cache_key", precision: nil
+    t.string "cache_fingerprint"
     t.integer "challenge"
     t.datetime "created_at", null: false
     t.integer "day"
     t.integer "score"
     t.bigint "squad_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["cache_key"], name: "index_squad_points_on_cache_key"
-    t.index ["day", "challenge", "squad_id", "cache_key"], name: "unique_daychallsquadcache_on_solo_points", unique: true
+    t.index ["cache_fingerprint"], name: "index_squad_points_on_cache_fingerprint"
+    t.index ["day", "challenge", "squad_id", "cache_fingerprint"], name: "unique_daychallsquadcache_on_solo_points", unique: true
     t.index ["squad_id"], name: "index_squad_points_on_squad_id"
   end
 
   create_table "squad_scores", force: :cascade do |t|
-    t.datetime "cache_key", precision: nil
+    t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "score"
     t.bigint "squad_id", null: false
     t.datetime "updated_at", null: false
-    t.index ["cache_key"], name: "index_squad_scores_on_cache_key"
-    t.index ["squad_id", "cache_key"], name: "index_squad_scores_on_squad_id_and_cache_key", unique: true
+    t.index ["cache_fingerprint"], name: "index_squad_scores_on_cache_fingerprint"
+    t.index ["squad_id", "cache_fingerprint"], name: "index_squad_scores_on_squad_id_and_cache_fingerprint", unique: true
     t.index ["squad_id"], name: "index_squad_scores_on_squad_id"
   end
 

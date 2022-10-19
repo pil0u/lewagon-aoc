@@ -7,7 +7,10 @@ module Scores
     private
 
     def cache_key
-      @key ||= State.order(:fetch_api_end).last.fetch_api_end
+      @key ||= [
+        State.order(:fetch_api_end).last.fetch_api_end,
+        Squad.maximum(:updated_at)
+      ].join('-')
     end
 
     RETURNED_ATTRIBUTES = [:score, :squad_id]

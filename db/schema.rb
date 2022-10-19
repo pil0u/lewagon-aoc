@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_24_013525) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_24_014638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -174,6 +174,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_013525) do
     t.index ["squad_id"], name: "index_squad_points_on_squad_id"
   end
 
+  create_table "squad_scores", force: :cascade do |t|
+    t.datetime "cache_key", precision: nil
+    t.datetime "created_at", null: false
+    t.integer "score"
+    t.bigint "squad_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cache_key"], name: "index_squad_scores_on_cache_key"
+    t.index ["squad_id", "cache_key"], name: "index_squad_scores_on_squad_id_and_cache_key", unique: true
+    t.index ["squad_id"], name: "index_squad_scores_on_squad_id"
+  end
+
   create_table "squads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.citext "name"
@@ -212,6 +223,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_013525) do
   add_foreign_key "solo_points", "users"
   add_foreign_key "solo_scores", "users"
   add_foreign_key "squad_points", "squads"
+  add_foreign_key "squad_scores", "squads"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"
 

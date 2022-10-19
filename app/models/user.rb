@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
-  belongs_to :squad, optional: true
+  belongs_to :squad, optional: true, touch: true
   has_many :completions, dependent: :destroy
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true

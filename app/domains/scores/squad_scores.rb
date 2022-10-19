@@ -20,9 +20,10 @@ module Scores
       points
         .group_by { |p| p[:squad_id] }
         .map do |squad_id, squad_points|
+          next if squad_id.nil?
           total_score = squad_points.sum { |u| u[:score] }
           { squad_id: squad_id, score: total_score  }
-        end
+        end.compact
     end
   end
 end

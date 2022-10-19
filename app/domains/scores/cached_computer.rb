@@ -15,7 +15,7 @@ module Scores
       else
         results = yield
         to_cache = results.map { |attrs| attrs.merge(cache_fingerprint: cache_key.to_s) }
-        model.insert_all(to_cache)
+        model.insert_all(to_cache) if to_cache.any?
         return results
       end
     end

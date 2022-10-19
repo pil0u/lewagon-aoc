@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_025616) do
   end
 
   create_table "city_scores", force: :cascade do |t|
-    t.datetime "cache_fingerprint", precision: nil
+    t.string "cache_fingerprint"
     t.bigint "city_id", null: false
     t.datetime "created_at", null: false
     t.integer "score"

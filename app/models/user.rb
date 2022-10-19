@@ -7,7 +7,7 @@ class User < ApplicationRecord
   MODERATORS = { pilou: "6788", aquaj: "449" }.freeze
 
   belongs_to :batch, optional: true
-  belongs_to :city, optional: true
+  belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
   has_many :completions, dependent: :destroy
 

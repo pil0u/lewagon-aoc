@@ -7,7 +7,7 @@ class CreateNewCityScores < ActiveRecord::Migration[7.0]
     create_table :city_scores do |t|
       t.integer :score
       t.references :city, null: false, foreign_key: true
-      t.timestamp :cache_fingerprint
+      t.string :cache_fingerprint
 
       t.timestamps
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_24_015351) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_24_025616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -84,6 +84,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_015351) do
     t.integer "size"
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_cities_on_name", unique: true
+  end
+
+  create_table "city_scores", force: :cascade do |t|
+    t.datetime "cache_fingerprint", precision: nil
+    t.bigint "city_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.index ["cache_fingerprint"], name: "index_city_scores_on_cache_fingerprint"
+    t.index ["city_id", "cache_fingerprint"], name: "index_city_scores_on_city_id_and_cache_fingerprint", unique: true
+    t.index ["city_id"], name: "index_city_scores_on_city_id"
   end
 
   create_table "completions", force: :cascade do |t|
@@ -219,6 +230,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_015351) do
     t.index ["city_id"], name: "index_users_on_city_id"
   end
 
+  add_foreign_key "city_scores", "cities"
   add_foreign_key "completions", "users"
   add_foreign_key "solo_points", "users"
   add_foreign_key "solo_scores", "users"
@@ -388,16 +400,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_015351) do
     ORDER BY co.day, co.challenge, COALESCE(sum(cc.points), (0)::numeric) DESC;
   SQL
   add_index "city_points", ["city_id", "day", "challenge"], name: "index_city_points_on_city_id_and_day_and_challenge", unique: true
-
-  create_view "city_scores", materialized: true, sql_definition: <<-SQL
-      SELECT scores.city_id,
-      scores.score AS in_contest,
-      rank() OVER (ORDER BY scores.score DESC) AS rank
-     FROM ( SELECT city_points.city_id,
-              sum(city_points.points) AS score
-             FROM city_points
-            GROUP BY city_points.city_id) scores;
-  SQL
-  add_index "city_scores", ["city_id"], name: "index_city_scores_on_city_id", unique: true
 
 end

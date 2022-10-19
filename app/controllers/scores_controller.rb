@@ -4,32 +4,10 @@ class ScoresController < ApplicationController
   def cities
     session[:last_score_page] = "cities"
 
-    @cities = [
-      {
-        id: 4,                          # id
-        slug: "rio-de-janeiro",         # REPLACE(LOWER(name), ' ', '-')
-        name: "Rio de Janeiro",         # name
-        total_members: 25,              # size
-        previous_rank: 3,               # TBD
-        rank: 1,                        # TBD
-        score: 1235,                    # TBD
-        daily_contributors_part_1: 23,  # TBD
-        daily_contributors_part_2: 23,  # TBD
-        top_contributors: 12            # MAX(10, CEILING(size * 0.03))
-      },
-      {
-        id: 9,
-        slug: "brussels-⭐",
-        name: "Brussels ⭐",
-        total_members: 42,
-        previous_rank: 1,
-        rank: 2,
-        score: 1245,
-        daily_contributors_part_1: 8,
-        daily_contributors_part_2: 6,
-        top_contributors: 17
-      }
-    ]
+    scores = Scores::CityScores.get
+    presenter = Scores::CityRanksPresenter.new(scores)
+
+    @cities = presenter.ranks
 
     add_display_rank(@cities)
   end

@@ -3,25 +3,25 @@
 <tr class="scale-100 hover:bg-hover <%= "bg-aoc-green bg-opacity-20" if @city[:id] == @user.city_id %>">
   <td class="<%= class_names(rank_css(@city[:rank])) %>">
     <%= link_to city_path(@city[:slug]), class: "flex justify-center" do %>
-    <%= @city[:rank] if @city[:display_rank] %>
+      <%= @city[:rank] if @city[:display_rank] %>
     <% end %>
   </td>
 
   <td>
     <%= link_to city_path(@city[:slug]), class: "flex justify-center" do %>
-    <%= @city[:name] %>
+      <%= @city[:name] %>
     <% end %>
   </td>
 
   <td class="py-1 strong text-lg">
     <%= link_to city_path(@city[:slug]), class: "flex justify-center" do %>
-    <%= @city[:score] %>
+      <%= @city[:score] %>
     <% end %>
   </td>
 
   <td>
     <%= link_to city_path(@city[:slug]), class: "flex justify-center" do %>
-    <%= @city[:total_members] %>
+      <%= @city[:total_members] %>
     <% end %>
   </td>
 

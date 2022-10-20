@@ -4,7 +4,9 @@
 @import "tailwindcss/components";
 
 @layer components {
-  /* Used in revamped components */
+  .bg-hover {
+    @apply bg-aoc-gray bg-opacity-10;
+  }
 
   .button {
     @apply form-element cursor-pointer hover:text-gold;
@@ -15,7 +17,7 @@
   }
 
   .calendar-tile {
-    @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-aoc-gray-darker hover:bg-opacity-40;
+    @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-hover;
   }
 
   code {

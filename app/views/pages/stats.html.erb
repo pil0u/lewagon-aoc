@@ -25,7 +25,7 @@
 <%# TODO: revamp? %>
 <div class="mx-auto text-lg text-right leading-tight flex flex-col">
   <% @stars_per_day.reverse_each do |day, stars| %>
-    <%= link_to day_path(day), class: "flex space-x-5 hover:bg-aoc-gray hover:bg-opacity-10 px-3" do %>
+    <%= link_to day_path(day), class: "flex space-x-5 hover:bg-hover px-3" do %>
       <span class="w-6"><%= day %></span>
       <span class="w-10 text-aoc-gold"><%= stars[1] %></span>
       <span class="w-10 text-aoc-silver"><%= stars[0] - stars[1] %></span>

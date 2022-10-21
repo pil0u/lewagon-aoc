@@ -2,7 +2,7 @@
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[code_of_conduct faq stats welcome]
-  # before_action :render_countdown_before_launch, only: %i[code_of_conduct faq stats welcome]
+  before_action :render_countdown, only: %i[code_of_conduct faq stats welcome], if: :render_countdown?
 
   def calendar
     user_completions = current_user.completions.group(:day).count
@@ -26,7 +26,27 @@ class PagesController < ApplicationController
   def code_of_conduct; end
   def faq; end
   def setup; end
-  def stats; end
+
+  def stats
+    @registered_users = User.count
+    @confirmed_users = User.confirmed.count
+    @participating_users = User.distinct(:id).joins(:completions).merge(Completion.actual).count
+
+    @silver_stars = Completion.where(challenge: 1).count
+    @gold_stars = Completion.where(challenge: 2).count
+
+    @daily_completers = Completion.actual
+                                  .group(:day, :challenge).order(:day, :challenge).count # { [12, 1]: 5, [12, 2]: 8, ... }
+                                  .group_by { |day_challenge, _| day_challenge.first }   # { 12: [ [[12, 1], 5], [[12, 2], 8] ], ... }
+                                  .map do |day, completers|
+                                    {
+                                      number: day,
+                                      gold_completers: completers[1][1],
+                                      silver_completers: completers[0][1] - completers[1][1]
+                                    }
+                                  end
+    @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil
+  end
 
   def welcome
     @total_users = User.count
@@ -34,8 +54,12 @@ class PagesController < ApplicationController
 
   private
 
-  def render_countdown_before_launch
-    render "countdown", layout: false if Time.now.utc < Aoc.launch_time
+  def render_countdown
+    render "countdown", layout: false
+  end
+
+  def render_countdown?
+    Rails.env.production? && Time.now.utc < Aoc.launch_time
   end
 
   #   ### old

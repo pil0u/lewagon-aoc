@@ -1,6 +1,6 @@
 <%# The scale-100 trick is to make the last td absolute, relative to the tr  %>
 
-<tr class="scale-100 hover:bg-aoc-gray hover:bg-opacity-10
+<tr class="scale-100 hover:bg-hover
           <%= "bg-aoc-green bg-opacity-20" if @participant[:uid] == @user.uid %>
           <%= "text-aoc-gray-dark" if !@hardcore && @participant[:entered_hardcore] %>">
   <td class="<%= class_names(rank_css(@participant[:rank])) %>">

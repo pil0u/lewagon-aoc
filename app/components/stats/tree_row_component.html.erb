@@ -1,0 +1,30 @@
+<tr class="text-lg hover:bg-hover leading-tight">
+  <td class="min-w-[2rem]">
+    <%= link_to day_path(@day[:number]), class: "pl-4 flex justify-end" do %>
+      <%= @day[:number] %>
+    <% end %>
+  </td>
+
+  <td class="min-w-[2rem] text-aoc-gold">
+    <%= link_to day_path(@day[:number]), class: "pl-4 flex justify-end" do %>
+      <%= @day[:gold_completers] %>
+    <% end %>
+  </td>
+
+  <td class="min-w-[2rem] text-aoc-silver">
+    <%= link_to day_path(@day[:number]), class: "pl-4 flex justify-end" do %>
+      <%= @day[:silver_completers] %>
+    <% end %>
+  </td>
+
+  <td class="min-w-[2rem]">
+    <%= link_to day_path(@day[:number]), class: "px-4 flex" do %>
+      <span class="text-aoc-gold">
+        <%= "*" * (@day[:gold_completers] / @users_per_star.to_f).ceil %>
+      </span>
+      <span class="text-aoc-silver">
+        <%= "*" * (@day[:silver_completers] / @users_per_star.to_f).ceil %>
+      </span>
+    <% end %>
+  </td>
+</tr>

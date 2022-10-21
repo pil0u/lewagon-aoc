@@ -1,9 +1,9 @@
 <%= render PageTitleComponent.new(title: "Platform statistics") %>
 
 <div class="my-4 flex flex-wrap justify-center gap-2">
-  <%= render TileStatsComponent.new(title: "Sign in clickers", value: @registered_users) %>
-  <%= render TileStatsComponent.new(title: "Setup completers", value: @confirmed_users) %>
-  <%= render TileStatsComponent.new(title: "Puzzle solvers", value: @participating_users) %>
+  <%= render Stats::TileComponent.new(title: "Sign in clickers", value: @registered_users) %>
+  <%= render Stats::TileComponent.new(title: "Setup completers", value: @confirmed_users) %>
+  <%= render Stats::TileComponent.new(title: "Puzzle solvers", value: @participating_users) %>
 </div>
 
 <div class="flex flex-col gap-y-1">
@@ -22,16 +22,8 @@
   up to <span class="strong"><%= @users_per_star %></span> users.
 </p>
 
-<%# TODO: revamp? %>
-<div class="mx-auto text-lg text-right leading-tight flex flex-col">
-  <% @stars_per_day.reverse_each do |day, stars| %>
-    <%= link_to day_path(day), class: "flex space-x-5 hover:bg-hover px-3" do %>
-      <span class="w-6"><%= day %></span>
-      <span class="w-10 text-aoc-gold"><%= stars[1] %></span>
-      <span class="w-10 text-aoc-silver"><%= stars[0] - stars[1] %></span>
-      <span>
-        <span class="text-aoc-gold"><%= "*" * (stars[1] / @users_per_star.to_f).ceil %></span><span class="text-aoc-silver"><%= "*" * ((stars[0] - stars[1]) / @users_per_star.to_f).ceil %></span>
-      </span>
-    <% end %>
-  <% end %>
-</div>
+<table class="block overflow-x-auto whitespace-nowrap w-full py-2">
+  <tbody>
+    <%= render Stats::TreeRowComponent.with_collection(@daily_completers.reverse, users_per_star: @users_per_star) %>
+  </tbody>
+</table>

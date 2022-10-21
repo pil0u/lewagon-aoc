@@ -35,11 +35,17 @@ class PagesController < ApplicationController
     @silver_stars = Completion.where(challenge: 1).count
     @gold_stars = Completion.where(challenge: 2).count
 
-    @stars_per_day = Completion.actual
-                               .group(:day, :challenge).order(:day, :challenge).count # { [12, 1]: 5, [12, 2]: 8, ... }
-                               .group_by { |key, _| key.first } # { 12: [ [[12, 1], 5], [[12, 2], 8] ], ... }
-                               .transform_values { |star_counts| star_counts.sort_by(&:first).map(&:last) } # { 12: [5, 8], ... }
-    @users_per_star = (@stars_per_day.values.flatten.max.to_f / 40).ceil
+    @daily_completers = Completion.actual
+                                  .group(:day, :challenge).order(:day, :challenge).count # { [12, 1]: 5, [12, 2]: 8, ... }
+                                  .group_by { |day_challenge, _| day_challenge.first }   # { 12: [ [[12, 1], 5], [[12, 2], 8] ], ... }
+                                  .map do |day, completers|
+                                    {
+                                      number: day,
+                                      gold_completers: completers[1][1],
+                                      silver_completers: completers[0][1] - completers[1][1]
+                                    }
+                                  end
+    @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil
   end
 
   def welcome

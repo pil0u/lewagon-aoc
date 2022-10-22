@@ -20,7 +20,7 @@ module Scores
 
       # index for o(1) fetch
       city_for_user = User.where(id: points.pluck(:user_id)).pluck(:id, :city_id).to_h
-      cities = City.all.map { |c| [c.id, c] }
+      cities = City.all.map { |c| [c.id, c] }.to_h
 
       city_users = points.group_by { |user| city_for_user[user[:user_id]] }
       city_users.map do |city_id, user_scores|
@@ -29,10 +29,12 @@ module Scores
 
         countable_scores = user_scores
           .map { |user| user[:score] }
-          .sort
-          .reverse[0...countable_user_count]
+          .sort_by { |score| score * -1 } # * -1 to reverse without another iteration
+          .slice(0, countable_user_count)
 
-        { city_id: city_id, score: countable_scores.sum }
+        average_score = countable_scores.sum.to_f / countable_scores.size
+
+        { city_id: city_id, score: average_score.ceil }
       end.compact
     end
   end

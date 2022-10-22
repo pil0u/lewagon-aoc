@@ -12,10 +12,15 @@ module Scores
         .includes(:users)
         .map { |squad| { **identity_of(squad), **stats_of(squad) } }
         .sort_by { |squad| squad[:score] * -1 } # * -1 to reverse with no iterating
-        .each_with_object({ collection: [], curr_score: -1, curr_rank: 0 }) do |squad, ranks|
-          ranks[:curr_rank] += 1 unless squad[:score] == ranks[:curr_score] # handling equalities
-          ranks[:collection] << squad.merge(rank: ranks[:curr_rank])
-          ranks[:curr_score] = squad[:score]
+        .each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |squad, ranks|
+          if squad[:score] == ranks[:last_score] # handling equalities
+            ranks[:gap] += 1
+          else
+            ranks[:rank] += 1 + ranks[:gap]
+            ranks[:gap] = 0
+          end
+          ranks[:collection] << squad.merge(rank: ranks[:rank])
+          ranks[:last_score] = squad[:score]
           # previous_rank: 12, #TODO: Clarify behavior and implement
         end[:collection]
     end
@@ -24,7 +29,6 @@ module Scores
       {
         id: squad.id,
         name: squad.name,
-        total_members: squad.users.count,
       }
     end
 
@@ -33,6 +37,7 @@ module Scores
       {
         score: score[:score],
         # daily_score: 200      #TODO: Implement
+        total_members: squad.users.count,
       }
     end
   end

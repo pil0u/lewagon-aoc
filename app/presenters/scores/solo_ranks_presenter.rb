@@ -13,10 +13,15 @@ module Scores
         .includes(:city, :squad, :batch, :completions)
         .map { |user| { **identity_of(user), **stats_of(user) } }
         .sort_by { |user| user[:score] * -1 } # * -1 to reverse with no iterating
-        .each_with_object({ collection: [], curr_score: -1, curr_rank: 0 }) do |user, ranks|
-          ranks[:curr_rank] += 1 unless user[:score] == ranks[:curr_score] # handling equalities
-          ranks[:collection] << user.merge(rank: ranks[:curr_rank])
-          ranks[:curr_score] = user[:score]
+        .each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |user, ranks|
+          if user[:score] == ranks[:last_score] # handling equalities
+            ranks[:gap] += 1
+          else
+            ranks[:rank] += 1 + ranks[:gap]
+            ranks[:gap] = 0
+          end
+          ranks[:collection] << user.merge(rank: ranks[:rank])
+          ranks[:last_score] = user[:score]
           # previous_rank: 12, #TODO: Clarify behavior and implement
         end[:collection]
     end

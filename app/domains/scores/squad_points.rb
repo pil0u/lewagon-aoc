@@ -23,10 +23,11 @@ module Scores
 
       points.each_with_object(Hash.new(0)) do |point, squad_points|
         squad_id = squad_for_user[point[:user_id]]
+        next if squad_id.nil?
 
         key = [squad_id, point[:day], point[:challenge]]
         squad_points[key] += point[:score]
-      end.map do |(squad_id, day, challenge), score|
+      end.compact.map do |(squad_id, day, challenge), score|
         { score: score, squad_id: squad_id, day: day, challenge: challenge }
       end
     end

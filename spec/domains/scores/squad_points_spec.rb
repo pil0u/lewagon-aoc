@@ -35,6 +35,23 @@ RSpec.describe Scores::SquadPoints do
     )
   end
 
+  it "doesn't output values for squads with no members" do
+    expect(described_class.get).not_to include(hash_including(squad_id: 3))
+  end
+
+  context "when there are user unaffiliated to any squads" do
+    let!(:user_4) { create(:user, id: 4, squad: nil) }
+    before do
+      solo_points << { score: 50, user_id: 4, day: 1, challenge: 1 }
+    end
+
+    it "does not include their points" do
+      expect(described_class.get).not_to include(
+        { score: 50, squad_id: nil, day: 1, challenge: 2 },
+      )
+    end
+  end
+
   describe "caching" do
     it "creates cache records on first call" do
       expect { described_class.get }.to change { Cache::SquadPoint.count }.from(0).to(4)

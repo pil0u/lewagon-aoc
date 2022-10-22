@@ -12,11 +12,16 @@ module Scores
         .includes(:users)
         .map { |city| { **identity_of(city), **stats_of(city) } }
         .sort_by { |city| city[:score] * -1 } # * -1 to reverse with no iterating
-        .each_with_object({ collection: [], curr_score: -1, curr_rank: 0 }) do |city, ranks|
-          ranks[:curr_rank] += 1 unless city[:score] == ranks[:curr_score] # handling equalities
-          ranks[:collection] << city.merge(rank: ranks[:curr_rank])
-          ranks[:curr_score] = city[:score]
+        .each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |city, ranks|
+          if city[:score] == ranks[:last_score] # handling equalities
+            ranks[:gap] += 1
+          else
+            ranks[:rank] += 1 + ranks[:gap]
+            ranks[:gap] = 0
+          end
+          ranks[:collection] << city.merge(rank: ranks[:rank])
           # previous_rank: 12, #TODO: Clarify behavior and implement
+          ranks[:last_score] = city[:score]
         end[:collection]
     end
 
@@ -25,7 +30,6 @@ module Scores
         id: city.id,
         name: city.name,
         slug: city.slug,
-        total_members: city.users.count,
       }
     end
 
@@ -33,6 +37,7 @@ module Scores
       score = scores_per_city[city.id] || { score: 0 }
       {
         score: score[:score],
+        total_members: city.users.count,
         top_contributors: city.top_contributors
         # daily_score: 200      #TODO: Implement
         # daily_contributors_part_1: 23,  # TODO: Implement

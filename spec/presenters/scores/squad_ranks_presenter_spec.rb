@@ -31,7 +31,7 @@ RSpec.describe Scores::SquadRanksPresenter do
     )
   end
 
-  it "completes the user stats" do
+  it "completes the squad stats" do
     expect(described_class.new(input).ranks).to contain_exactly(
       hash_including(id: 1, total_members: 2),
       hash_including(id: 2, total_members: 1),

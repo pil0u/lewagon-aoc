@@ -22,7 +22,7 @@ RSpec.describe Scores::CityScores do
     allow(Scores::SoloScores).to receive(:get).and_return(solo_scores).once
   end
 
-  it "groups the scores of squad members into the squad score" do
+  it "groups the scores of city members into the city score" do
     expect(described_class.get).to contain_exactly(
       { score: 125, city_id: 1 },
       { score: 126, city_id: 2 },
@@ -134,7 +134,7 @@ RSpec.describe Scores::CityScores do
         end
       end
 
-      context "when the users makeup of the squad has changed in the meantime" do
+      context "when the users makeup of the city has changed in the meantime" do
         let(:new_bordeaux_users) { create_list :user, 2, city: bordeaux }
 
         before do

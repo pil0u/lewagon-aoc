@@ -55,11 +55,11 @@ RSpec.describe Scores::CityRanksPresenter do
     end
 
     it "uses non-dense ranking" do
-      expect(described_class.new(input).ranks).to match([
+      expect(described_class.new(input).ranks).to contain_exactly(
         hash_including(id: 2, rank: 1),
         hash_including(id: 1, rank: 1),
         hash_including(id: 3, rank: 3),
-      ])
+      )
     end
   end
 end

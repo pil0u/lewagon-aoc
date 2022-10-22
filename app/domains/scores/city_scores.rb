@@ -20,13 +20,12 @@ module Scores
 
       # index for o(1) fetch
       city_for_user = User.where(id: points.pluck(:user_id)).pluck(:id, :city_id).to_h
-      city_sizes = City.pluck(:id, :size).to_h
+      cities = City.all.map { |c| [c.id, c] }
 
-      cities = points.group_by { |user| city_for_user[user[:user_id]] }
-      cities.map do |city_id, user_scores|
+      city_users = points.group_by { |user| city_for_user[user[:user_id]] }
+      city_users.map do |city_id, user_scores|
         next if city_id.nil?
-        three_percents = (city_sizes[city_id] * 0.03).ceil
-        countable_user_count = [three_percents, 10].max
+        countable_user_count = cities[city_id].top_contributors
 
         countable_scores = user_scores
           .map { |user| user[:score] }

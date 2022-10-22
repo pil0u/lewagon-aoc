@@ -34,10 +34,10 @@ group :development, :test do
   gem "rubocop-rails", "~> 2.15", require: false
   gem "rspec-rails", "~> 4.0"
   gem "factory_bot_rails", "~> 6.2"
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
   gem "listen", "~> 3.7"
 

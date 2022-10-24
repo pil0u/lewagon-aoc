@@ -23,7 +23,10 @@ class PagesController < ApplicationController
     @now = Time.now.getlocal("-05:00")
   end
 
-  def code_of_conduct; end
+  def code_of_conduct
+    @admins = User.admins.pluck(:username)
+  end
+
   def faq; end
   def setup; end
 

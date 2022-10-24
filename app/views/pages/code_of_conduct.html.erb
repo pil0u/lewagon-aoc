@@ -1,1 +1,75 @@
 <%= render PageTitleComponent.new(title: "Code of Conduct") %>
+
+<div class="flex flex-col text-justify max-w-3xl mx-auto gap-y-6 my-4">
+  <p>
+    <span class="text-wagon-red">Le Wagon</span> x <span class="text-other-green">Advent of Code</span> is about
+    learning, collaboration, sharing and having fun. It is a breeze of warmth of intellectual stimulation and kindness
+    as we approach Christmas.
+  </p>
+
+  <p>
+    During an event about fun, rules are boring, but boring people breaking rules is not fun.
+  </p>
+
+  <p class="strong">
+    All participants of the event are expected to abide by our Code of Conduct.
+  </p>
+
+  <ol class="list-decimal flex flex-col max-w-2xl mx-auto gap-y-4">
+    <li>
+      <h3 class="strong">Be respectful, show empathy towards community members</h3>
+      <p>
+        As obvious as it sounds, focus on good vibes and avoid any form of harrassment.
+      </p>
+    </li>
+    <li>
+      <h3 class="strong">Avoid spoilers</h3>
+      <p>
+        The community usually opens a thread in the
+        <%= link_to "#aoc Slack channel", Aoc.slack_channel, class: "link-explicit link-slack" %> every day to discuss
+        the puzzles. Try to avoid posting direct solutions in such threads.
+      </p>
+    </li>
+    <li>
+      <h3 class="strong">Respect the competitive aspects of the event</h3>
+      <p>
+        Just like during the bootcamp, we do allow and even encourage participants to solve puzzles in groups. Just like
+        during the bootcamp, blindly copy-pasting solutions from others learns you <em>nada</em> and ruins the fun for
+        others.
+      </p>
+    </li>
+    <li>
+      <h3 class="strong">Please, don't try to break in</h3>
+      <p>
+        While I understand the temptation, trying to penetrate the platform is not fun for the community or the Admins.
+        If you want access to the data of the event, just ask. If you want more points, just ask, but you might end up
+        with less.
+      </p>
+    </li>
+    <li>
+      <h3 class="strong">Anything can happen</h3>
+      <p>
+        As organisers, we try to anticipate a lot but we always get surprises. The Code of Conduct is subject to
+        changes. These changes are version controlled and Admins will communicate about them to participants.
+      </p>
+    </li>
+  </ol>
+
+  <h3 class="strong">Enforcement</h3>
+
+  <p>
+    Violation of these easy, simple rules may be reported to Admins, in private on Slack. All reports will be reviewed and
+    investigated and will result in a response that is deemed necessary and appropriate to the circumstances - from a
+    gentle reminder to a permanent exclusion.
+  </p>
+
+  <p>
+    Admins: <span class="strong"><%= @admins.join(", ") %></span>
+  </p>
+
+  <h3 class="strong">Versions</h3>
+
+  <ul>
+    <li>2022-10-24 - Initial release</li>
+  </ul>
+</div>

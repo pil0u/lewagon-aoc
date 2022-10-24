@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Scores
   class SoloScores < CachedComputer
     def get
@@ -7,10 +9,10 @@ module Scores
     private
 
     def cache_key
-      @key ||= State.order(:fetch_api_end).last.fetch_api_end
+      @cache_key ||= State.order(:fetch_api_end).last.fetch_api_end
     end
 
-    RETURNED_ATTRIBUTES = [:score, :user_id]
+    RETURNED_ATTRIBUTES = %i[score user_id].freeze
 
     def compute
       points = Scores::SoloPoints.get
@@ -18,7 +20,7 @@ module Scores
         .group_by { |p| p[:user_id] }
         .map do |user_id, user_points|
           total_score = user_points.sum { |u| u[:score] }
-          { user_id: user_id, score: total_score  }
+          { user_id:, score: total_score }
         end
     end
   end

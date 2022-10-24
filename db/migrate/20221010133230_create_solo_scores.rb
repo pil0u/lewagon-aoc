@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSoloScores < ActiveRecord::Migration[7.0]
   disable_ddl_transaction!
 
@@ -11,6 +13,6 @@ class CreateSoloScores < ActiveRecord::Migration[7.0]
     end
 
     add_index :solo_scores, :fetched_at, algorithm: :concurrently
-    add_index :solo_scores, [:user_id, :fetched_at], unique: true
+    add_index :solo_scores, %i[user_id fetched_at], unique: true
   end
 end

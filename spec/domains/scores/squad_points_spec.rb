@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe Scores::SquadPoints do
   let!(:state) { create(:state) }
@@ -10,15 +12,17 @@ RSpec.describe Scores::SquadPoints do
   let!(:squad_2) { create(:squad, id: 2) }
   let!(:user_3) { create(:user, id: 3, squad: squad_2) }
 
-  let(:solo_points) { [
-    { score: 28, user_id: 1, day: 1, challenge: 1 },
-    { score: 25, user_id: 1, day: 1, challenge: 2 },
+  let(:solo_points) do
+    [
+      { score: 28, user_id: 1, day: 1, challenge: 1 },
+      { score: 25, user_id: 1, day: 1, challenge: 2 },
 
-    { score: 25, user_id: 2, day: 1, challenge: 1 },
+      { score: 25, user_id: 2, day: 1, challenge: 1 },
 
-    { score: 50, user_id: 3, day: 1, challenge: 1 },
-    { score: 50, user_id: 3, day: 1, challenge: 2 },
-  ] }
+      { score: 50, user_id: 3, day: 1, challenge: 1 },
+      { score: 50, user_id: 3, day: 1, challenge: 2 }
+    ]
+  end
 
   before do
     allow(Scores::SoloPoints).to receive(:get).and_return(solo_points).once
@@ -29,7 +33,7 @@ RSpec.describe Scores::SquadPoints do
       { score: 53, squad_id: 1, day: 1, challenge: 1 },
       { score: 25, squad_id: 1, day: 1, challenge: 2 },
       { score: 50, squad_id: 2, day: 1, challenge: 1 },
-      { score: 50, squad_id: 2, day: 1, challenge: 2 },
+      { score: 50, squad_id: 2, day: 1, challenge: 2 }
     )
   end
 
@@ -43,20 +47,21 @@ RSpec.describe Scores::SquadPoints do
 
   context "when there are user unaffiliated to any squads" do
     let!(:user_4) { create(:user, id: 4, squad: nil) }
+
     before do
       solo_points << { score: 50, user_id: 4, day: 1, challenge: 1 }
     end
 
     it "does not include their points" do
       expect(described_class.get).not_to include(
-        { score: 50, squad_id: nil, day: 1, challenge: 2 },
+        { score: 50, squad_id: nil, day: 1, challenge: 2 }
       )
     end
   end
 
   describe "caching" do
     it "creates cache records on first call" do
-      expect { described_class.get }.to change { Cache::SquadPoint.count }.from(0).to(4)
+      expect { described_class.get }.to change(Cache::SquadPoint, :count).from(0).to(4)
     end
 
     context "on second call" do
@@ -65,7 +70,7 @@ RSpec.describe Scores::SquadPoints do
       end
 
       it "doesn't re-create cache" do
-        expect { described_class.get }.not_to change { Cache::SquadPoint.count }
+        expect { described_class.get }.not_to change(Cache::SquadPoint, :count)
       end
 
       it "doesn't do any computation" do
@@ -79,23 +84,25 @@ RSpec.describe Scores::SquadPoints do
           allow(Scores::SoloPoints).to receive(:get).and_return(new_solo_points).once
         end
 
-        let(:new_solo_points) { [
-          { score: 28, user_id: 1, day: 1, challenge: 1 },
-          { score: 25, user_id: 1, day: 1, challenge: 2 },
+        let(:new_solo_points) do
+          [
+            { score: 28, user_id: 1, day: 1, challenge: 1 },
+            { score: 25, user_id: 1, day: 1, challenge: 2 },
 
-          { score: 25, user_id: 2, day: 1, challenge: 1 },
-          { score: 25, user_id: 2, day: 1, challenge: 2 },
+            { score: 25, user_id: 2, day: 1, challenge: 1 },
+            { score: 25, user_id: 2, day: 1, challenge: 2 },
 
-          { score: 50, user_id: 3, day: 1, challenge: 1 },
-          { score: 50, user_id: 3, day: 1, challenge: 2 },
-        ] }
+            { score: 50, user_id: 3, day: 1, challenge: 1 },
+            { score: 50, user_id: 3, day: 1, challenge: 2 }
+          ]
+        end
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
             { score: 53, squad_id: 1, day: 1, challenge: 1 },
             { score: 50, squad_id: 1, day: 1, challenge: 2 },
             { score: 50, squad_id: 2, day: 1, challenge: 1 },
-            { score: 50, squad_id: 2, day: 1, challenge: 2 },
+            { score: 50, squad_id: 2, day: 1, challenge: 2 }
           )
         end
 
@@ -105,7 +112,7 @@ RSpec.describe Scores::SquadPoints do
         end
 
         it "creates new cache records" do
-          expect { described_class.get }.to change { Cache::SquadPoint.count }.from(4).to(8)
+          expect { described_class.get }.to change(Cache::SquadPoint, :count).from(4).to(8)
         end
       end
 
@@ -122,7 +129,7 @@ RSpec.describe Scores::SquadPoints do
             { score: 25, squad_id: 1, day: 1, challenge: 2 },
             { score: 50, squad_id: 2, day: 1, challenge: 1 },
             { score: 50, squad_id: 2, day: 1, challenge: 2 },
-            { score: 25, squad_id: 3, day: 1, challenge: 1 },
+            { score: 25, squad_id: 3, day: 1, challenge: 1 }
           )
         end
 
@@ -132,7 +139,7 @@ RSpec.describe Scores::SquadPoints do
         end
 
         it "creates new cache records" do
-          expect { described_class.get }.to change { Cache::SquadPoint.count }.from(4).to(9)
+          expect { described_class.get }.to change(Cache::SquadPoint, :count).from(4).to(9)
         end
       end
     end

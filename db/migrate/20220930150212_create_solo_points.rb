@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSoloPoints < ActiveRecord::Migration[7.0]
   disable_ddl_transaction!
 
@@ -13,6 +15,6 @@ class CreateSoloPoints < ActiveRecord::Migration[7.0]
     end
 
     add_index :solo_points, :fetched_at, algorithm: :concurrently
-    add_index :solo_points, [:day, :challenge, :user_id, :fetched_at], unique: true, name: "unique_daychalluserfetch_on_solo_points"
+    add_index :solo_points, %i[day challenge user_id fetched_at], unique: true, name: "unique_daychalluserfetch_on_solo_points"
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSquadScores < ActiveRecord::Migration[7.0]
   disable_ddl_transaction!
 
@@ -11,6 +13,6 @@ class CreateSquadScores < ActiveRecord::Migration[7.0]
     end
 
     add_index :squad_scores, :cache_key, algorithm: :concurrently
-    add_index :squad_scores, [:squad_id, :cache_key], unique: true
+    add_index :squad_scores, %i[squad_id cache_key], unique: true
   end
 end

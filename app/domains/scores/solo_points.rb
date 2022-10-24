@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Scores
   class SoloPoints < CachedComputer
     def get
@@ -7,13 +9,13 @@ module Scores
     private
 
     def cache_key
-      @key ||= State.order(:fetch_api_end).last.fetch_api_end
+      @cache_key ||= State.order(:fetch_api_end).last.fetch_api_end
     end
 
-    RETURNED_ATTRIBUTES = [:score, :user_id, :day, :challenge]
+    RETURNED_ATTRIBUTES = %i[score user_id day challenge].freeze
 
     def compute
-      completions = Completion.select(Arel.star, Arel.sql(<<~SQL))
+      completions = Completion.select(Arel.star, Arel.sql(<<~SQL.squish))
         CASE
         WHEN duration <= interval '24 hours'
           THEN 50

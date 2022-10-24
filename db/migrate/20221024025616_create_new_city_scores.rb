@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateNewCityScores < ActiveRecord::Migration[7.0]
   disable_ddl_transaction!
 
@@ -13,7 +15,6 @@ class CreateNewCityScores < ActiveRecord::Migration[7.0]
     end
 
     add_index :city_scores, :cache_fingerprint, algorithm: :concurrently
-    add_index :city_scores, [:city_id, :cache_fingerprint], unique: true,
-      algorithm: :concurrently
+    add_index :city_scores, %i[city_id cache_fingerprint], unique: true, algorithm: :concurrently
   end
 end

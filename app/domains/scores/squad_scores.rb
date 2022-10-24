@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Scores
   class SquadScores < CachedComputer
     def get
@@ -7,23 +9,24 @@ module Scores
     private
 
     def cache_key
-      @key ||= [
+      @cache_key ||= [
         State.order(:fetch_api_end).last.fetch_api_end,
         Squad.maximum(:updated_at)
-      ].join('-')
+      ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = [:score, :squad_id]
+    RETURNED_ATTRIBUTES = %i[score squad_id].freeze
 
     def compute
       points = Scores::SquadPoints.get
       points
         .group_by { |p| p[:squad_id] }
-        .map do |squad_id, squad_points|
+        .filter_map do |squad_id, squad_points|
           next if squad_id.nil?
+
           total_score = squad_points.sum { |u| u[:score] }
-          { squad_id: squad_id, score: total_score  }
-        end.compact
+          { squad_id:, score: total_score }
+        end
     end
   end
 end

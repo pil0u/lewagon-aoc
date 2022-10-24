@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSquadPoints < ActiveRecord::Migration[7.0]
   disable_ddl_transaction!
 
@@ -13,6 +15,6 @@ class CreateSquadPoints < ActiveRecord::Migration[7.0]
     end
 
     add_index :squad_points, :cache_key, algorithm: :concurrently
-    add_index :squad_points, [:day, :challenge, :squad_id, :cache_key], unique: true, name: "unique_daychallsquadcache_on_solo_points"
+    add_index :squad_points, %i[day challenge squad_id cache_key], unique: true, name: "unique_daychallsquadcache_on_solo_points"
   end
 end

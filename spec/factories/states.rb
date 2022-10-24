@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :state do
     fetch_api_begin { DateTime.new(2022, 12, 3, 12, 34, 12) }

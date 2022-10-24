@@ -12,9 +12,9 @@ class User < ApplicationRecord
   has_many :completions, dependent: :destroy
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
-  validates :username, presence: true
-  validates :sponsor_tier, presence: true, if: :sponsor_since
   validates :sponsor_since, presence: true, if: :sponsor_tier
+  validates :sponsor_tier, presence: true, if: :sponsor_since
+  validates :username, presence: true
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }

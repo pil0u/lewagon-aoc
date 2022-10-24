@@ -13,10 +13,13 @@ class User < ApplicationRecord
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :username, presence: true
+  validates :sponsor_tier, presence: true, if: :sponsor_since
+  validates :sponsor_since, presence: true, if: :sponsor_tier
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :moderators, -> { where(uid: MODERATORS.values) }
+  scope :sponsors, -> { where.not(sponsor_tier: nil).order(:sponsor_since) }
   scope :synced, -> { where(synced: true) }
 
   def self.from_kitt(auth)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_23_210418) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -159,6 +159,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
     t.string "provider"
     t.datetime "remember_created_at"
     t.text "remember_token"
+    t.datetime "sponsor_since"
+    t.text "sponsor_tier"
     t.integer "squad_id"
     t.boolean "synced", default: false
     t.string "uid"

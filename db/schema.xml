@@ -89,6 +89,14 @@
       <datatype>TEXT</datatype>
       <default>NULL</default>
     </row>
+    <row name="sponsor_since" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="sponsor_tier" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
     <row name="squad_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>

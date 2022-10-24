@@ -62,7 +62,7 @@ class PagesController < ApplicationController
   end
 
   def render_countdown?
-    Rails.env.production? && Time.now.utc < Aoc.launch_time
+    Time.now.utc < Aoc.launch_time && Rails.env.production? && !ENV["THIS_IS_STAGING"]
   end
 
   #   ### old

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[code_of_conduct faq stats welcome]
-  before_action :render_countdown, only: %i[code_of_conduct faq stats welcome], if: :render_countdown?
+  skip_before_action :authenticate_user!, only: %i[code_of_conduct faq sponsors stats welcome]
+  before_action :render_countdown, only: %i[code_of_conduct faq sponsors stats welcome], if: :render_countdown?
 
   def calendar
     user_completions = current_user.completions.group(:day).count
@@ -26,6 +26,10 @@ class PagesController < ApplicationController
   def code_of_conduct; end
   def faq; end
   def setup; end
+
+  def sponsors
+    @sponsors = User.sponsors
+  end
 
   def stats
     @registered_users = User.count

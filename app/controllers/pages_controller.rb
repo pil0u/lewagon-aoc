@@ -23,7 +23,10 @@ class PagesController < ApplicationController
     @now = Time.now.getlocal("-05:00")
   end
 
-  def code_of_conduct; end
+  def code_of_conduct
+    @admins = User.admins.pluck(:username)
+  end
+
   def faq; end
   def setup; end
 
@@ -59,7 +62,7 @@ class PagesController < ApplicationController
   end
 
   def render_countdown?
-    Rails.env.production? && Time.now.utc < Aoc.launch_time
+    Time.now.utc < Aoc.launch_time && Rails.env.production? && !ENV["THIS_IS_STAGING"]
   end
 
   #   ### old

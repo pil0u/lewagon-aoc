@@ -1,6 +1,7 @@
 require:
   - rubocop-performance
   - rubocop-rails
+  # - rubocop-rspec
 
 AllCops:
   NewCops: enable
@@ -21,16 +22,10 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Enabled: false
 
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/CyclomaticComplexity:
+Metrics/ClassLength: # TODO: remove after old files are deprecated
   Enabled: false
 
 Metrics/MethodLength:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
   Enabled: false
 
 Naming/VariableNumber:

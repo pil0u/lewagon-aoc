@@ -2,7 +2,7 @@
 EnableDefaultLinters: true
 exclude:
   - '**/vendor/**/*'
-  - '**/___*' # TODO
+  - '**/___*' # Files to deprecate
 
 linters:
   ErbSafety:
@@ -14,7 +14,7 @@ linters:
   HardCodedString:
     exclude:
       - '**/app/components/**/*'
-      - '**/app/components/*'
+      - '**/app/components/*' # https://github.com/Shopify/erb-lint/issues/265
       - '**/app/views/**/*'
 
   Rubocop:

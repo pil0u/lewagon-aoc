@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_24_025616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -86,11 +86,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
     t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
+  create_table "city_scores", force: :cascade do |t|
+    t.string "cache_fingerprint"
+    t.bigint "city_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.index ["cache_fingerprint"], name: "index_city_scores_on_cache_fingerprint"
+    t.index ["city_id", "cache_fingerprint"], name: "index_city_scores_on_city_id_and_cache_fingerprint", unique: true
+    t.index ["city_id"], name: "index_city_scores_on_city_id"
+  end
+
   create_table "completions", force: :cascade do |t|
     t.integer "challenge", limit: 2
     t.bigint "completion_unix_time"
     t.datetime "created_at", null: false
     t.integer "day", limit: 2
+    t.virtual "duration", type: :interval, as: "\nCASE\n    WHEN (completion_unix_time IS NOT NULL) THEN (to_timestamp((completion_unix_time)::double precision) - to_timestamp(((1669870800)::double precision + (((day - 1) * 86400))::double precision)))\n    ELSE NULL::interval\nEND", stored: true
+    t.virtual "release_date", type: :datetime, precision: nil, as: "to_timestamp(((1669870800)::double precision + (((day - 1) * 86400))::double precision))", stored: true
     t.bigint "user_id", null: false
     t.index ["user_id", "day", "challenge"], name: "index_completions_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_completions_on_user_id"
@@ -135,6 +148,54 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  create_table "solo_points", force: :cascade do |t|
+    t.string "cache_fingerprint", null: false
+    t.integer "challenge"
+    t.datetime "created_at", null: false
+    t.integer "day"
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["cache_fingerprint"], name: "index_solo_points_on_cache_fingerprint"
+    t.index ["day", "challenge", "user_id", "cache_fingerprint"], name: "unique_daychalluserfetch_on_solo_points", unique: true
+    t.index ["user_id"], name: "index_solo_points_on_user_id"
+  end
+
+  create_table "solo_scores", force: :cascade do |t|
+    t.string "cache_fingerprint"
+    t.datetime "created_at", null: false
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["cache_fingerprint"], name: "index_solo_scores_on_cache_fingerprint"
+    t.index ["user_id", "cache_fingerprint"], name: "index_solo_scores_on_user_id_and_cache_fingerprint", unique: true
+    t.index ["user_id"], name: "index_solo_scores_on_user_id"
+  end
+
+  create_table "squad_points", force: :cascade do |t|
+    t.string "cache_fingerprint"
+    t.integer "challenge"
+    t.datetime "created_at", null: false
+    t.integer "day"
+    t.integer "score"
+    t.bigint "squad_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cache_fingerprint"], name: "index_squad_points_on_cache_fingerprint"
+    t.index ["day", "challenge", "squad_id", "cache_fingerprint"], name: "unique_daychallsquadcache_on_solo_points", unique: true
+    t.index ["squad_id"], name: "index_squad_points_on_squad_id"
+  end
+
+  create_table "squad_scores", force: :cascade do |t|
+    t.string "cache_fingerprint"
+    t.datetime "created_at", null: false
+    t.integer "score"
+    t.bigint "squad_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cache_fingerprint"], name: "index_squad_scores_on_cache_fingerprint"
+    t.index ["squad_id", "cache_fingerprint"], name: "index_squad_scores_on_squad_id_and_cache_fingerprint", unique: true
+    t.index ["squad_id"], name: "index_squad_scores_on_squad_id"
+  end
+
   create_table "squads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.citext "name"
@@ -169,7 +230,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
     t.index ["city_id"], name: "index_users_on_city_id"
   end
 
+  add_foreign_key "city_scores", "cities"
   add_foreign_key "completions", "users"
+  add_foreign_key "solo_points", "users"
+  add_foreign_key "solo_scores", "users"
+  add_foreign_key "squad_points", "squads"
+  add_foreign_key "squad_scores", "squads"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"
 
@@ -334,16 +400,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_181628) do
     ORDER BY co.day, co.challenge, COALESCE(sum(cc.points), (0)::numeric) DESC;
   SQL
   add_index "city_points", ["city_id", "day", "challenge"], name: "index_city_points_on_city_id_and_day_and_challenge", unique: true
-
-  create_view "city_scores", materialized: true, sql_definition: <<-SQL
-      SELECT scores.city_id,
-      scores.score AS in_contest,
-      rank() OVER (ORDER BY scores.score DESC) AS rank
-     FROM ( SELECT city_points.city_id,
-              sum(city_points.points) AS score
-             FROM city_points
-            GROUP BY city_points.city_id) scores;
-  SQL
-  add_index "city_scores", ["city_id"], name: "index_city_scores_on_city_id", unique: true
 
 end

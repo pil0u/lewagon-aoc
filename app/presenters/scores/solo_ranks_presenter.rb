@@ -40,9 +40,8 @@ module Scores
     end
 
     def stats_of(user)
-      completions = user.completions
-      all = completions.actual.where(challenge: 1).count
-      gold = completions.actual.where(challenge: 2).count
+      completions = user.completions.group_by(&:challenge).transform_values(&:count)
+      all, gold = completions[1] || 0, completions[2] || 0
       silver = all - gold
 
       score = scores_per_user[user.id]

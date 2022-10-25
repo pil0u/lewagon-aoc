@@ -28,7 +28,7 @@ RSpec.describe Scores::CityScores do
 
   it "groups the scores of city members into the city score" do
     expect(described_class.get).to contain_exactly(
-      { score: 125, city_id: 1 },
+      { score: 100, city_id: 1 },
       { score: 126, city_id: 2 },
       { score: 120, city_id: 3 }
     )
@@ -87,8 +87,8 @@ RSpec.describe Scores::CityScores do
     end
 
     # 3% == 3 for Bordeaux (80 ppl), so eligible to Top 10 instead
-    it "averages the available alumni's scores" do
-      theoretical_score = 125 # (150 * 4 + 100 * 4).to_f / 8 rounded up
+    it "acts as if the missing scores were 0" do
+      theoretical_score = 100 # (150 * 4 + 100 * 4 + 0 * 2).to_f / 10 rounded up
       expect(described_class.get).to contain_exactly(
         { score: theoretical_score, city_id: 1 }
       )
@@ -130,7 +130,7 @@ RSpec.describe Scores::CityScores do
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
-            { score: 138, city_id: 1 },
+            { score: 110, city_id: 1 },
             { score: 126, city_id: 2 },
             { score: 145, city_id: 3 }
           )

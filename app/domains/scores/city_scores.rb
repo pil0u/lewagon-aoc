@@ -35,7 +35,9 @@ module Scores
                            .sort_by { |score| score * -1 } # * -1 to reverse without another iteration
                            .slice(0, countable_user_count)
 
-        average_score = countable_scores.sum.to_f / countable_scores.size
+        # If countable_scores < countable_user_count, it behaves as if the
+        # missing scores were 0
+        average_score = countable_scores.sum.to_f / countable_user_count
 
         { city_id:, score: average_score.ceil }
       end

@@ -334,9 +334,9 @@
         Let <code>N</code> be the number of total participants in the event.
       </p>
       <p>
-        For each <em>challenge</em>, participants are ranked by their relative time to solve it. The first participant to find
-        the correct answer to a puzzle wins <code>N</code> points, the second one wins <code>N-1</code> points, the
-        third one <code>N-2</code> points and so on. Example:
+        For each <em>challenge</em>, participants are ranked by their relative time to solve it. The first participant
+        to find the correct answer to a puzzle wins <code>N</code> points, the second one wins <code>N-1</code> points,
+        the third one <code>N-2</code> points and so on. Example:
       </p>
 
       <table class="w-full text-center">
@@ -447,6 +447,20 @@
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
         To be announced.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <%= render Faq::DetailsSummaryComponent.new(title: "What personal data does the platform collect?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        When you hit the button "Sign in with Kitt", we only collect your <span class="strong">GitHub username</span>.
+        We use it as your default public username on the platform, but you can change it any time.
+      </p>
+      <p>
+        <span class="strong">We do not collect emails or real names.</span> That's it.
       </p>
     </div>
   </details>

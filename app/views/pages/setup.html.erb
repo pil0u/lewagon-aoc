@@ -26,18 +26,20 @@
       <div class="flex flex-col gap-y-2">
         <p>
           Once logged in, you need to join our private leaderboards there. The code to our private leaderboard is
-          <code class="strong">123456-abcdef</code>. Use it <%= link_to(
-                                                                  "on this page",
-                                                                  "https://adventofcode.com/leaderboard/private",
-                                                                  target: :ext,
-                                                                  class: "link-explicit link-external"
-                                                                ) %>, then click [Join].
+          <code class="strong"><%= @private_leaderboard %></code>.
+          Use it <%= link_to(
+                       "on this page",
+                       "https://adventofcode.com/leaderboard/private",
+                       target: :ext,
+                       class: "link-explicit link-external"
+                     ) %>, then click [Join].
         </p>
         <p>
           You should be prompted: <code>You have joined that private leaderboard.</code>
         </p>
         <p>
-          If the leaderboard is already full, refresh this page to get a new code and start over.
+          If the private leaderboard is full, reach out to us
+          <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %> and we will create a new one.
         </p>
       </div>
     </li>

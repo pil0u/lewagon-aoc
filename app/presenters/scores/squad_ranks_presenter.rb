@@ -39,7 +39,7 @@ module Scores
       {
         score: score[:score],
         # daily_score: 200      #TODO: Implement
-        total_members: squad.users.count
+        total_members: squad.users.size
       }
     end
   end

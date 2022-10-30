@@ -9,7 +9,10 @@ class User < ApplicationRecord
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
+
   has_many :completions, dependent: :destroy
+  has_many :solo_points, class_name: "Cache::SoloPoint", dependent: :delete_all
+  has_many :solo_scores, class_name: "Cache::SoloScore", dependent: :delete_all
   has_many :insanity_points, class_name: "Cache::InsanityPoint", dependent: :delete_all
   has_many :insanity_scores, class_name: "Cache::InsanityScore", dependent: :delete_all
 

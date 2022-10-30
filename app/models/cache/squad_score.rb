@@ -2,5 +2,6 @@
 
 module Cache
   class SquadScore < ApplicationRecord
+    belongs_to :squad
   end
 end

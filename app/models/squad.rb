@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Squad < ApplicationRecord
+  has_many :squad_points, class_name: "Cache::SquadPoint", dependent: :delete_all
+  has_many :squad_scores, class_name: "Cache::SquadScore", dependent: :delete_all
   has_many :users, dependent: :nullify
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }, length: { in: 3..24 }

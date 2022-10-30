@@ -5,6 +5,21 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by!(uid: params[:uid])
+
+    solo_scores = Scores::SoloScores.get
+    solo_presenter = Scores::SoloRanksPresenter.new(solo_scores)
+    participants = solo_presenter.ranks
+    @solo_stats = participants.find { |h| h[:uid].to_s == @user.uid }
+
+    squad_scores = Scores::SquadScores.get
+    squad_presenter = Scores::SquadRanksPresenter.new(squad_scores)
+    squads = squad_presenter.ranks
+    @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
+
+    city_scores = Scores::CityScores.get
+    city_presenter = Scores::CityRanksPresenter.new(city_scores)
+    cities = city_presenter.ranks
+    @city_stats = cities.find { |h| h[:id] == @user.city_id }
   end
 
   def edit

@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :sentry_set_user
 
+  private
+
   def sentry_set_user
     Sentry.set_user(
       id: current_user&.id,

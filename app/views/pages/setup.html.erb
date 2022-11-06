@@ -55,7 +55,7 @@
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Paste that number here and hit "Save":
+          Paste that number below, <span class="line-through">read</span> approve the Code of Conduct and hit "Save":
         </p>
 
         <%= form_with(
@@ -71,6 +71,12 @@
           </div>
 
           <div class="flex items-center gap-x-3">
+            <%= f.check_box(
+                  :accepted_coc,
+                  checked: current_user.accepted_coc,
+                  data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" },
+                  class: "focus:no-ring"
+                ) %>
             <%= f.label :accepted_coc, class: "text-sm" do
                   "I have read and I will comply with the #{link_to(
                     'Code of Conduct',
@@ -80,12 +86,6 @@
                     class: 'link-explicit link-internal'
                   )}".html_safe
                 end %>
-            <%= f.check_box(
-                  :accepted_coc,
-                  checked: current_user.accepted_coc,
-                  data: { "unlock-target" => "checkbox", action: "change->unlock#toggle" },
-                  class: "focus:no-ring"
-                ) %>
           </div>
 
         <% end %>
@@ -99,8 +99,7 @@
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Just wait for the next update of the data. This page will magically disappear to make room for the real
-          thing ✨
+          Just wait for the next update of the data and reload this page to discover what is behind the curtain ✨
         </p>
         <p>
           In the meantime, don't hesitate to have a look at the

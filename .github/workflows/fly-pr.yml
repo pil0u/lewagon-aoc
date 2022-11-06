@@ -37,6 +37,7 @@ jobs:
           flyctl secrets set --app=lewagon-aoc-pr
           AOC_ROOMS=${{ secrets.AOC_ROOMS }}
           RAILS_MASTER_KEY=${{ secrets.STAGING_RAILS_MASTER_KEY }}
+          SENTRY_CURRENT_ENV=fly-pr
           SESSION_COOKIE=${{ secrets.SESSION_COOKIE }}
           THIS_IS_STAGING=1
 

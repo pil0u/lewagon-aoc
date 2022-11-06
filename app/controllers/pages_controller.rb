@@ -28,7 +28,10 @@ class PagesController < ApplicationController
   end
 
   def faq; end
-  def setup; end
+
+  def setup
+    @private_leaderboard = ENV.fetch("AOC_ROOMS").split(",").last
+  end
 
   def stats
     @registered_users = User.count

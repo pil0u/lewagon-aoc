@@ -14,6 +14,7 @@ RSpec.describe Scores::UserRanksPresenter do
   let!(:user_1) do
     create :user,
            id: 1,
+           uid: 1,
            username: "Saunier",
            city: paris,
            squad: squad_1,
@@ -23,6 +24,7 @@ RSpec.describe Scores::UserRanksPresenter do
   let!(:user_2) do
     create :user,
            id: 2,
+           uid: 2,
            username: "pil0u",
            city: bordeaux,
            squad: squad_2,
@@ -99,7 +101,7 @@ RSpec.describe Scores::UserRanksPresenter do
   end
 
   context "in case of equality" do
-    let!(:user_3) { create :user, id: 3 }
+    let!(:user_3) { create :user, id: 3, uid: 3 }
 
     let(:input) do
       [
@@ -129,7 +131,7 @@ RSpec.describe Scores::UserRanksPresenter do
   end
 
   context "when user has not completed any challenge" do
-    let!(:user_3) { create :user, id: 3 }
+    let!(:user_3) { create :user, id: 3, uid: 3 }
 
     let(:input) do
       [

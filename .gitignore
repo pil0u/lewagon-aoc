@@ -8,6 +8,9 @@
 # Local environment variables (dotenv)
 .env
 
+# Local database dumps
+*.dump
+
 # Byebug command history file
 .byebug_history
 

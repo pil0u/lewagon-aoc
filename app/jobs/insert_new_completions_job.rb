@@ -15,6 +15,7 @@ class InsertNewCompletionsJob < ApplicationJob
       update_users_sync_status
       transform_completions_for_database
       insert_new_completions
+      manage_null_completions
       update_fetch_api_end
     end
 
@@ -106,6 +107,21 @@ class InsertNewCompletionsJob < ApplicationJob
       Rails.logger.info "✔ #{@completions.size} new completions inserted"
     else
       Rails.logger.info "🤷 No completions to insert"
+    end
+  end
+
+  def manage_null_completions
+    users = User.pluck(:aoc_id, :id).to_h.except(nil)
+    stored_completions = Completion.joins(:user).pluck(:aoc_id, :day).group_by { |completion| completion[0] }
+
+    # Create day 0 completions for users who don't have any completion yet
+    users.each do |aoc_id, user_id|
+      Completion.create(user_id:, day: 0) unless aoc_id.in? stored_completions.keys
+    end
+
+    # Destroy day 0 completions for users who have other completions
+    stored_completions.each do |aoc_id, completions|
+      Completion.find_by(user_id: users[aoc_id.to_i], day: 0).destroy if completions.size > 1 && completions.include?([aoc_id, 0])
     end
   end
 

@@ -17,6 +17,8 @@ module Scores
     def compute
       completions = Completion.select(Arel.star, Arel.sql(<<~SQL.squish))
         CASE
+        WHEN "day" = 0
+          THEN 0
         WHEN duration <= interval '24 hours'
           THEN 50
         WHEN duration <= '48 hours'

@@ -10,6 +10,7 @@ Sentry.init do |config|
   #   fly-pr            lewagon-aoc-pr.fly.dev
   #   heroku-staging    lewagon-aoc-staging.herokuapp.com
   #   production        aoc.lewagon.community
+  config.enabled_environments = %w[production heroku-staging fly fly-pr]
 
   # Set traces_sample_rate to 1.0 to capture 100%
   # of transactions for performance monitoring.

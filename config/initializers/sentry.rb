@@ -15,9 +15,7 @@ Sentry.init do |config|
   # https://docs.sentry.io/platforms/ruby/guides/rails/configuration/sampling/#setting-a-sampling-function
   config.traces_sampler = lambda do |sampling_context|
     # if this is the continuation of a trace, just use that decision (rate controlled by the caller)
-    unless sampling_context[:parent_sampled].nil?
-      next sampling_context[:parent_sampled]
-    end
+    next sampling_context[:parent_sampled] unless sampling_context[:parent_sampled].nil?
 
     transaction_context = sampling_context[:transaction_context]
     transaction_name = transaction_context[:name]

@@ -20,6 +20,13 @@ class UsersController < ApplicationController
     city_presenter = Scores::CityRanksPresenter.new(city_scores)
     cities = city_presenter.ranks
     @city_stats = cities.find { |h| h[:id] == @user.city_id }
+
+    @latest_day = Aoc.latest_day
+    @daily_completions = Array.new(@latest_day) { [nil, nil] }
+
+    Completion.actual.where(user: @user).each do |completion|
+      @daily_completions[@latest_day - completion.day][completion.challenge - 1] = completion
+    end
   end
 
   def edit

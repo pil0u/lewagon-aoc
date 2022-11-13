@@ -6,7 +6,7 @@ class Aoc
   end
 
   def self.end_time
-    Time.new(2022, 12, 31, 11, 30, 0, "UTC")
+    Time.new(2022, 12, 25, 23, 59, 59, "UTC")
   end
 
   def self.in_progress?
@@ -17,6 +17,10 @@ class Aoc
 
   def self.launch_time
     Time.new(2022, 11, 10, 11, 30, 0, "UTC")
+  end
+
+  def self.lewagon_end_time
+    Time.new(2022, 12, 31, 11, 30, 0, "UTC")
   end
 
   def self.lock_time

@@ -11,6 +11,9 @@ class UsersController < ApplicationController
     participants = solo_presenter.ranks
     @solo_stats = participants.find { |h| h[:uid].to_s == @user.uid }
 
+    @solo_stats[:hardcore_score] ||= 0
+    @solo_stats[:hardcore_rank] ||= 0
+
     squad_scores = Scores::SquadScores.get
     squad_presenter = Scores::SquadRanksPresenter.new(squad_scores)
     squads = squad_presenter.ranks

@@ -15,6 +15,15 @@ class Aoc
     now >= begin_time && now < end_time
   end
 
+  def self.latest_day
+    now = Time.now.getlocal("-05:00")
+
+    return 0 if now < begin_time
+    return 25 if now > end_time
+
+    now.day
+  end
+
   def self.launch_time
     Time.new(2022, 11, 10, 11, 30, 0, "UTC")
   end

@@ -12,8 +12,25 @@ Sentry.init do |config|
   #   production        aoc.lewagon.community
   config.enabled_environments = %w[production heroku-staging fly fly-pr]
 
-  # Set traces_sample_rate to 1.0 to capture 100%
-  # of transactions for performance monitoring.
-  # We recommend adjusting this value in production.
-  config.traces_sample_rate = 1.0
+  # https://docs.sentry.io/platforms/ruby/guides/rails/configuration/sampling/#setting-a-sampling-function
+  config.traces_sampler = lambda do |sampling_context|
+    # if this is the continuation of a trace, just use that decision (rate controlled by the caller)
+    unless sampling_context[:parent_sampled].nil?
+      next sampling_context[:parent_sampled]
+    end
+
+    transaction_context = sampling_context[:transaction_context]
+    transaction_name = transaction_context[:name]
+
+    case transaction_name
+    when /packs/ # webpack assets from 2021 platform
+      0.01
+    when "/"
+      0.05
+    when /InsertNewCompletionsJob/
+      0.1
+    else
+      1.0
+    end
+  end
 end

@@ -16,6 +16,6 @@ class CreateInsanityPoints < ActiveRecord::Migration[7.0]
 
     add_index :insanity_points, :cache_fingerprint, algorithm: :concurrently
     add_index :insanity_points, %i[day challenge user_id cache_fingerprint], unique: true,
-      name: "unique_daychalluserfetch_on_insanity_points"
+                                                                             name: "unique_daychalluserfetch_on_insanity_points"
   end
 end

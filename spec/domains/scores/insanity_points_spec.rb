@@ -40,10 +40,10 @@ RSpec.describe Scores::InsanityPoints do
     let!(:completions) do
       [
         create_completion(1, 1, user_1, 3.hours + 25.minutes),
-        create_completion(1, 1, user_3, 3.hours + 26.minute),
+        create_completion(1, 1, user_3, 3.hours + 26.minutes),
         create_completion(1, 1, user_5, 4.hours),
         create_completion(1, 1, user_2, 1.day + 2.hours),
-        create_completion(1, 1, user_4, 3.days + 1.minute),
+        create_completion(1, 1, user_4, 3.days + 1.minute)
       ]
     end
 
@@ -58,7 +58,7 @@ RSpec.describe Scores::InsanityPoints do
         { score: 4, user_id: 3, day: 1, challenge: 1 },
         { score: 3, user_id: 5, day: 1, challenge: 1 },
         { score: 2, user_id: 2, day: 1, challenge: 1 },
-        { score: 1, user_id: 4, day: 1, challenge: 1 },
+        { score: 1, user_id: 4, day: 1, challenge: 1 }
       )
     end
 
@@ -72,7 +72,7 @@ RSpec.describe Scores::InsanityPoints do
           { score: 4, user_id: 1, day: 1, challenge: 1 },
           { score: 3, user_id: 3, day: 1, challenge: 1 },
           { score: 2, user_id: 2, day: 1, challenge: 1 },
-          { score: 1, user_id: 4, day: 1, challenge: 1 },
+          { score: 1, user_id: 4, day: 1, challenge: 1 }
         )
       end
     end

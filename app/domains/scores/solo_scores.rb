@@ -15,7 +15,7 @@ module Scores
     RETURNED_ATTRIBUTES = %i[score user_id].freeze
 
     def compute
-      default_points = User.pluck(:id).map { |u| [u, []] }.to_h # No points by default
+      default_points = User.pluck(:id).index_with { |_u| [] } # No points by default
 
       points = Scores::SoloPoints.get
       points

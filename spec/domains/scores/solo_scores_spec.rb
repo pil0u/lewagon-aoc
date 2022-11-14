@@ -31,7 +31,7 @@ RSpec.describe Scores::SoloScores do
 
     it "still includes it in the scores with 0 points" do
       expect(described_class.get).to include(
-        { score: 0, user_id: 3 },
+        { score: 0, user_id: 3 }
       )
     end
   end

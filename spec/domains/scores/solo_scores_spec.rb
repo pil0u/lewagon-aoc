@@ -26,6 +26,16 @@ RSpec.describe Scores::SoloScores do
     )
   end
 
+  context "when a user has no points" do
+    let!(:user_3) { create(:user, id: 3) }
+
+    it "still includes it in the scores with 0 points" do
+      expect(described_class.get).to include(
+        { score: 0, user_id: 3 },
+      )
+    end
+  end
+
   describe "caching" do
     it "creates cache records on first call" do
       expect { described_class.get }.to change(Cache::SoloScore, :count).from(0).to(2)

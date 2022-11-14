@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Scores
-  class SoloScores < CachedComputer
+  class InsanityScores < CachedComputer
     def get
-      cache(Cache::SoloScore) { compute }
+      cache(Cache::InsanityScore) { compute }
     end
 
     private
@@ -17,7 +17,7 @@ module Scores
     def compute
       default_points = User.pluck(:id).index_with { |_u| [] } # No points by default
 
-      points = Scores::SoloPoints.get
+      points = Scores::InsanityPoints.get
       points
         .group_by { |p| p[:user_id] }
         .reverse_merge(default_points)

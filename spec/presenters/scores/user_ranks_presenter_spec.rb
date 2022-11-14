@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Scores::SoloRanksPresenter do
+RSpec.describe Scores::UserRanksPresenter do
   let!(:paris) { create :city, name: "Paris" }
   let!(:bordeaux) { create :city, name: "Bordeaux" }
   let!(:squad_1) { create :squad, name: "The Killers" }

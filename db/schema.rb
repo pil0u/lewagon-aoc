@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_24_025616) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_14_024538) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -148,6 +148,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_025616) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  create_table "insanity_points", force: :cascade do |t|
+    t.string "cache_fingerprint", null: false
+    t.integer "challenge"
+    t.datetime "created_at", null: false
+    t.integer "day"
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["cache_fingerprint"], name: "index_insanity_points_on_cache_fingerprint"
+    t.index ["day", "challenge", "user_id", "cache_fingerprint"], name: "unique_daychalluserfetch_on_insanity_points", unique: true
+    t.index ["user_id"], name: "index_insanity_points_on_user_id"
+  end
+
+  create_table "insanity_scores", force: :cascade do |t|
+    t.string "cache_fingerprint", null: false
+    t.datetime "created_at", null: false
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["cache_fingerprint"], name: "index_insanity_scores_on_cache_fingerprint"
+    t.index ["user_id", "cache_fingerprint"], name: "index_insanity_scores_on_user_id_and_cache_fingerprint", unique: true
+    t.index ["user_id"], name: "index_insanity_scores_on_user_id"
+  end
+
   create_table "solo_points", force: :cascade do |t|
     t.string "cache_fingerprint", null: false
     t.integer "challenge"
@@ -232,6 +256,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_24_025616) do
 
   add_foreign_key "city_scores", "cities"
   add_foreign_key "completions", "users"
+  add_foreign_key "insanity_points", "users"
+  add_foreign_key "insanity_scores", "users"
   add_foreign_key "solo_points", "users"
   add_foreign_key "solo_scores", "users"
   add_foreign_key "squad_points", "squads"

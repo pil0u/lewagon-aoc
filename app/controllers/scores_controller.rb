@@ -20,7 +20,6 @@ class ScoresController < ApplicationController
     presenter = Scores::UserRanksPresenter.new(scores)
 
     @participants = presenter.ranks
-    @participants.select! { |participant| participant[:entered_hardcore] }
 
     add_display_rank(@participants)
   end

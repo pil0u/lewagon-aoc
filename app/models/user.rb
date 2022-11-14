@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
+  scope :insanity, -> { where(entered_hardcore: true) }
   scope :moderators, -> { where(uid: MODERATORS.values) }
 
   def self.from_kitt(auth)

@@ -11,7 +11,7 @@ module Scores
     def cache_key
       @cache_key ||= [
         State.order(:fetch_api_end).last.fetch_api_end,
-        City.maximum(:updated_at)
+        City.maximum(:updated_at),
       ].join("-")
     end
 
@@ -30,10 +30,10 @@ module Scores
 
         countable_user_count = cities[city_id].top_contributors
 
-        countable_scores = user_scores
-                           .pluck(:score)
-                           .sort_by { |score| score * -1 } # * -1 to reverse without another iteration
-                           .slice(0, countable_user_count)
+        countable_scores = user_scores.
+          pluck(:score).
+          sort_by { |score| score * -1 }. # * -1 to reverse without another iteration
+          slice(0, countable_user_count)
 
         # If countable_scores < countable_user_count, it behaves as if the
         # missing scores were 0

@@ -4,14 +4,32 @@ require:
   # - rubocop-rspec
 
 AllCops:
-  NewCops: enable
+  NewCops: disable
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/*'
+    - !ruby/regexp /___/
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
 
 Layout/LineLength:
   Enabled: false
 
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 Lint/MissingSuper:
   Exclude:
     - "**/app/components/**/*"
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: new_line
 
 Lint/SymbolConversion:
   EnforcedStyle: consistent
@@ -48,3 +66,12 @@ Style/NumericPredicate:
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma

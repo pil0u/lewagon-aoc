@@ -18,7 +18,7 @@ RSpec.describe Scores::CityScores do
     [
       *bordeaux_users.map { |u| { user_id: u.id, score: u.aoc_id.even? ? 100 : 150 } },
       *brussels_users.map { |u| { user_id: u.id, score: u.aoc_id <= 110 ? 126 : 25 } },
-      *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 120 : 110 } }
+      *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 120 : 110 } },
     ]
   end
 
@@ -30,7 +30,7 @@ RSpec.describe Scores::CityScores do
     expect(described_class.get).to contain_exactly(
       { score: 100, city_id: 1 },
       { score: 126, city_id: 2 },
-      { score: 120, city_id: 3 }
+      { score: 120, city_id: 3 },
     )
   end
 
@@ -42,7 +42,7 @@ RSpec.describe Scores::CityScores do
       [
         *paris_users[0...10].map { |u| { user_id: u.id, score: 120 } },
         *paris_users[10...20].map { |u| { user_id: u.id, score: 100 } },
-        *paris_users[20...].map { |u| { user_id: u.id, score: 23 } }
+        *paris_users[20...].map { |u| { user_id: u.id, score: 23 } },
       ]
     end
 
@@ -50,7 +50,7 @@ RSpec.describe Scores::CityScores do
     it "averages the top 3% of alumni scores" do
       theoretical_score = 117 # (120 * 10 + 100 * 2).to_f / 12 rounded up
       expect(described_class.get).to contain_exactly(
-        { score: theoretical_score, city_id: 3 }
+        { score: theoretical_score, city_id: 3 },
       )
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe Scores::CityScores do
     let(:solo_scores) do
       [
         *brussels_users[0...8].map { |u| { user_id: u.id, score: 150 } },
-        *brussels_users[8...].map { |u| { user_id: u.id, score: 20 } }
+        *brussels_users[8...].map { |u| { user_id: u.id, score: 20 } },
       ]
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Scores::CityScores do
     it "averages the top 10 of alumni's scores" do
       theoretical_score = 124 # (150 * 8 + 20 * 2).to_f / 10 rounded up
       expect(described_class.get).to contain_exactly(
-        { score: theoretical_score, city_id: 2 }
+        { score: theoretical_score, city_id: 2 },
       )
     end
   end
@@ -82,7 +82,7 @@ RSpec.describe Scores::CityScores do
     let(:solo_scores) do
       [
         *bordeaux_users[0...4].map { |u| { user_id: u.id, score: 150 } },
-        *bordeaux_users[4...].map { |u| { user_id: u.id, score: 100 } }
+        *bordeaux_users[4...].map { |u| { user_id: u.id, score: 100 } },
       ]
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Scores::CityScores do
     it "acts as if the missing scores were 0" do
       theoretical_score = 100 # (150 * 4 + 100 * 4 + 0 * 2).to_f / 10 rounded up
       expect(described_class.get).to contain_exactly(
-        { score: theoretical_score, city_id: 1 }
+        { score: theoretical_score, city_id: 1 },
       )
     end
   end
@@ -124,7 +124,7 @@ RSpec.describe Scores::CityScores do
           [
             *bordeaux_users.map { |u| { user_id: u.id, score: u.aoc_id.even? ? 100 : 175 } },
             *brussels_users.map { |u| { user_id: u.id, score: u.aoc_id <= 110 ? 126 : 50 } },
-            *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 145 : 110 } }
+            *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 145 : 110 } },
           ]
         end
 
@@ -132,7 +132,7 @@ RSpec.describe Scores::CityScores do
           expect(described_class.get).to contain_exactly(
             { score: 110, city_id: 1 },
             { score: 126, city_id: 2 },
-            { score: 145, city_id: 3 }
+            { score: 145, city_id: 3 },
           )
         end
 
@@ -161,7 +161,7 @@ RSpec.describe Scores::CityScores do
 
             *bordeaux_users.map { |u| { user_id: u.id, score: u.aoc_id.even? ? 100 : 150 } },
             *brussels_users.map { |u| { user_id: u.id, score: u.aoc_id <= 110 ? 126 : 25 } },
-            *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 120 : 110 } }
+            *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 120 : 110 } },
           ]
         end
 
@@ -169,7 +169,7 @@ RSpec.describe Scores::CityScores do
           expect(described_class.get).to contain_exactly(
             { score: 140, city_id: 1 },
             { score: 126, city_id: 2 },
-            { score: 120, city_id: 3 }
+            { score: 120, city_id: 3 },
           )
         end
 

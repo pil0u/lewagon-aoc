@@ -11,11 +11,11 @@ class PagesController < ApplicationController
       14, 10, 1,  22, 18,
       21, 17, 13, 9,  5,
       8,  4,  25, 16, 12,
-      20, 11, 7,  3,  24
+      20, 11, 7,  3,  24,
     ].map do |day|
       {
         parts_solved: user_completions[day] || 0,
-        release_time: Time.new(2022, 12, day, 0, 0, 0, "-05:00")
+        release_time: Time.new(2022, 12, day, 0, 0, 0, "-05:00"),
       }
     end
 
@@ -41,16 +41,16 @@ class PagesController < ApplicationController
     @silver_stars = Completion.where(challenge: 1).count
     @gold_stars = Completion.where(challenge: 2).count
 
-    @daily_completers = Completion.actual
-                                  .group(:day, :challenge).order(:day, :challenge).count # { [12, 1]: 5, [12, 2]: 8, ... }
-                                  .group_by { |day_challenge, _| day_challenge.first }   # { 12: [ [[12, 1], 5], [[12, 2], 8] ], ... }
-                                  .map do |day, completers|
-                                    {
-                                      number: day,
-                                      gold_completers: completers[1][1],
-                                      silver_completers: completers[0][1] - completers[1][1]
-                                    }
-                                  end
+    @daily_completers = Completion.actual.
+      group(:day, :challenge).order(:day, :challenge).count. # { [12, 1]: 5, [12, 2]: 8, ... }
+      group_by { |day_challenge, _| day_challenge.first }.   # { 12: [ [[12, 1], 5], [[12, 2], 8] ], ... }
+      map do |day, completers|
+      {
+        number: day,
+        gold_completers: completers[1][1],
+        silver_completers: completers[0][1] - completers[1][1],
+      }
+    end
     @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil
   end
 

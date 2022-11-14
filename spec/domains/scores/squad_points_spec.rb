@@ -20,7 +20,7 @@ RSpec.describe Scores::SquadPoints do
       { score: 25, user_id: 2, day: 1, challenge: 1 },
 
       { score: 50, user_id: 3, day: 1, challenge: 1 },
-      { score: 50, user_id: 3, day: 1, challenge: 2 }
+      { score: 50, user_id: 3, day: 1, challenge: 2 },
     ]
   end
 
@@ -33,7 +33,7 @@ RSpec.describe Scores::SquadPoints do
       { score: 53, squad_id: 1, day: 1, challenge: 1 },
       { score: 25, squad_id: 1, day: 1, challenge: 2 },
       { score: 50, squad_id: 2, day: 1, challenge: 1 },
-      { score: 50, squad_id: 2, day: 1, challenge: 2 }
+      { score: 50, squad_id: 2, day: 1, challenge: 2 },
     )
   end
 
@@ -54,7 +54,7 @@ RSpec.describe Scores::SquadPoints do
 
     it "does not include their points" do
       expect(described_class.get).not_to include(
-        { score: 50, squad_id: nil, day: 1, challenge: 2 }
+        { score: 50, squad_id: nil, day: 1, challenge: 2 },
       )
     end
   end
@@ -93,7 +93,7 @@ RSpec.describe Scores::SquadPoints do
             { score: 25, user_id: 2, day: 1, challenge: 2 },
 
             { score: 50, user_id: 3, day: 1, challenge: 1 },
-            { score: 50, user_id: 3, day: 1, challenge: 2 }
+            { score: 50, user_id: 3, day: 1, challenge: 2 },
           ]
         end
 
@@ -102,7 +102,7 @@ RSpec.describe Scores::SquadPoints do
             { score: 53, squad_id: 1, day: 1, challenge: 1 },
             { score: 50, squad_id: 1, day: 1, challenge: 2 },
             { score: 50, squad_id: 2, day: 1, challenge: 1 },
-            { score: 50, squad_id: 2, day: 1, challenge: 2 }
+            { score: 50, squad_id: 2, day: 1, challenge: 2 },
           )
         end
 
@@ -129,7 +129,7 @@ RSpec.describe Scores::SquadPoints do
             { score: 25, squad_id: 1, day: 1, challenge: 2 },
             { score: 50, squad_id: 2, day: 1, challenge: 1 },
             { score: 50, squad_id: 2, day: 1, challenge: 2 },
-            { score: 25, squad_id: 3, day: 1, challenge: 1 }
+            { score: 25, squad_id: 3, day: 1, challenge: 1 },
           )
         end
 

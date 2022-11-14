@@ -11,7 +11,7 @@ RSpec.describe Scores::InsanityScores do
     [
       { score: 10, user_id: 1, day: 1, challenge: 1 },
       { score: 10, user_id: 1, day: 1, challenge: 2 },
-      { score: 9, user_id: 2, day: 1, challenge: 1 }
+      { score: 9, user_id: 2, day: 1, challenge: 1 },
     ]
   end
 
@@ -22,7 +22,7 @@ RSpec.describe Scores::InsanityScores do
   it "totals the points from each challenge for each user" do
     expect(described_class.get).to contain_exactly(
       { score: 20, user_id: 1 },
-      { score: 9, user_id: 2 }
+      { score: 9, user_id: 2 },
     )
   end
 
@@ -31,7 +31,7 @@ RSpec.describe Scores::InsanityScores do
 
     it "still includes it in the scores with 0 points" do
       expect(described_class.get).to include(
-        { score: 0, user_id: 3 }
+        { score: 0, user_id: 3 },
       )
     end
   end

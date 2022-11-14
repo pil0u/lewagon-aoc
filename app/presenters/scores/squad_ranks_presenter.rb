@@ -10,11 +10,11 @@ module Scores
     attr_reader :scores_per_squad
 
     def ranks
-      @ranks ||= Squad
-                 .includes(:users)
-                 .map { |squad| { **identity_of(squad), **stats_of(squad) } }
-                 .sort_by { |squad| squad[:score] * -1 } # * -1 to reverse with no iterating
-                 .each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |squad, ranks|
+      @ranks ||= Squad.
+        includes(:users).
+        map { |squad| { **identity_of(squad), **stats_of(squad) } }.
+        sort_by { |squad| squad[:score] * -1 }. # * -1 to reverse with no iterating
+        each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |squad, ranks|
                    if squad[:score] == ranks[:last_score] # handling equalities
                      ranks[:gap] += 1
                    else
@@ -30,7 +30,7 @@ module Scores
     def identity_of(squad)
       {
         id: squad.id,
-        name: squad.name
+        name: squad.name,
       }
     end
 
@@ -39,7 +39,7 @@ module Scores
       {
         score: score[:score],
         # daily_score: 200      #TODO: Implement
-        total_members: squad.users.count
+        total_members: squad.users.count,
       }
     end
   end

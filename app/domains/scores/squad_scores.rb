@@ -11,7 +11,7 @@ module Scores
     def cache_key
       @cache_key ||= [
         State.order(:fetch_api_end).last.fetch_api_end,
-        Squad.maximum(:updated_at)
+        Squad.maximum(:updated_at),
       ].join("-")
     end
 
@@ -19,9 +19,9 @@ module Scores
 
     def compute
       points = Scores::SquadPoints.get
-      points
-        .group_by { |p| p[:squad_id] }
-        .filter_map do |squad_id, squad_points|
+      points.
+        group_by { |p| p[:squad_id] }.
+        filter_map do |squad_id, squad_points|
           next if squad_id.nil?
 
           total_score = squad_points.sum { |u| u[:score] }

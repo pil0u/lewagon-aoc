@@ -14,7 +14,7 @@ RSpec.describe Scores::SquadScores do
       { score: 53, squad_id: 1, day: 1, challenge: 1 },
       { score: 25, squad_id: 1, day: 1, challenge: 2 },
       { score: 50, squad_id: 2, day: 1, challenge: 1 },
-      { score: 50, squad_id: 2, day: 1, challenge: 2 }
+      { score: 50, squad_id: 2, day: 1, challenge: 2 },
     ]
   end
 
@@ -25,7 +25,7 @@ RSpec.describe Scores::SquadScores do
   it "groups the scores of squad members into the squad score" do
     expect(described_class.get).to contain_exactly(
       { score: 78, squad_id: 1 },
-      { score: 100, squad_id: 2 }
+      { score: 100, squad_id: 2 },
     )
   end
 
@@ -59,14 +59,14 @@ RSpec.describe Scores::SquadScores do
             { score: 53, squad_id: 1, day: 1, challenge: 1 },
             { score: 50, squad_id: 1, day: 1, challenge: 2 },
             { score: 50, squad_id: 2, day: 1, challenge: 1 },
-            { score: 50, squad_id: 2, day: 1, challenge: 2 }
+            { score: 50, squad_id: 2, day: 1, challenge: 2 },
           ]
         end
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
             { score: 103, squad_id: 1 },
-            { score: 100, squad_id: 2 }
+            { score: 100, squad_id: 2 },
           )
         end
 
@@ -93,7 +93,7 @@ RSpec.describe Scores::SquadScores do
             { score: 25, squad_id: 1, day: 1, challenge: 2 },
             { score: 50, squad_id: 2, day: 1, challenge: 1 },
             { score: 50, squad_id: 2, day: 1, challenge: 2 },
-            { score: 50, squad_id: 3, day: 1, challenge: 1 }
+            { score: 50, squad_id: 3, day: 1, challenge: 1 },
           ]
         end
 
@@ -101,7 +101,7 @@ RSpec.describe Scores::SquadScores do
           expect(described_class.get).to contain_exactly(
             { score: 78, squad_id: 1 },
             { score: 100, squad_id: 2 },
-            { score: 50, squad_id: 3 }
+            { score: 50, squad_id: 3 },
           )
         end
 

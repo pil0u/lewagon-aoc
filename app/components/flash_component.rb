@@ -5,7 +5,7 @@ class FlashComponent < ApplicationComponent
     @flash = flash
     @flash_type_css_class = {
       "alert" => "text-wagon-red border border-wagon-red",
-      "notice" => "bg-aoc-gray text-dark"
+      "notice" => "bg-aoc-gray text-dark",
     }
   end
 end

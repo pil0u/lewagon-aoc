@@ -11,24 +11,25 @@ RSpec.describe Scores::SoloPoints do
     [
       create_completion(1, 1, user_1, 3.hours + 25.minutes),
       create_completion(1, 2, user_1, 1.day + 12.minutes),
-      create_completion(1, 1, user_2, 3.days + 1.minute)
+      create_completion(1, 1, user_2, 3.days + 1.minute),
     ]
   end
 
   def create_completion(day, challenge, user, duration)
     completion_timestamp = DateTime.new(2022, 12, 0 + day, 6, 0, 0) + duration
     create(:completion,
-           day:,
-           challenge:,
-           user:,
-           completion_unix_time: completion_timestamp.to_i)
+      day:,
+      challenge:,
+      user:,
+      completion_unix_time: completion_timestamp.to_i,
+    )
   end
 
   it "computes the points for users for each challenge" do
     expect(described_class.get).to contain_exactly(
       { score: 50, user_id: 1, day: 1, challenge: 1 },
       { score: 49, user_id: 1, day: 1, challenge: 2 },
-      { score: 25, user_id: 2, day: 1, challenge: 1 }
+      { score: 25, user_id: 2, day: 1, challenge: 1 },
     )
   end
 
@@ -39,7 +40,7 @@ RSpec.describe Scores::SoloPoints do
       create_completion(1, 1, user_1, 1.hour + 15.minutes)
 
       expect(described_class.get).to contain_exactly(
-        { score: 50, user_id: 1, day: 1, challenge: 1 }
+        { score: 50, user_id: 1, day: 1, challenge: 1 },
       )
     end
 
@@ -47,7 +48,7 @@ RSpec.describe Scores::SoloPoints do
       create_completion(1, 1, user_1, 1.day + 6.hours + 4.seconds)
 
       expect(described_class.get).to contain_exactly(
-        { score: 43, user_id: 1, day: 1, challenge: 1 }
+        { score: 43, user_id: 1, day: 1, challenge: 1 },
       )
     end
 
@@ -55,7 +56,7 @@ RSpec.describe Scores::SoloPoints do
       create_completion(1, 1, user_1, 7.days)
 
       expect(described_class.get).to contain_exactly(
-        { score: 25, user_id: 1, day: 1, challenge: 1 }
+        { score: 25, user_id: 1, day: 1, challenge: 1 },
       )
     end
   end

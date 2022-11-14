@@ -88,7 +88,7 @@ class InsertNewCompletionsJob < ApplicationJob
             day: day.to_i,
             challenge: challenge.to_i,
             completion_unix_time: value["get_star_ts"],
-            created_at: now
+            created_at: now,
           }
 
           # This helps limit the size of the INSERT query in spite of the default ON CONFLICT DO NOTHING

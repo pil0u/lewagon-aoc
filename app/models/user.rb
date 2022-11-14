@@ -55,7 +55,7 @@ class User < ApplicationRecord
     css_class = {
       "KO" => "text-wagon-red",
       "Pending" => "text-aoc-atmospheric",
-      "OK" => "text-aoc-green"
+      "OK" => "text-aoc-green",
     }
 
     css_class[sync_status]

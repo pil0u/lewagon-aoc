@@ -15,7 +15,7 @@ RSpec.describe Scores::SquadRanksPresenter do
     [
       { score: 78, squad_id: 1 },
       { score: 100, squad_id: 2 },
-      { score: 0, squad_id: 3 }
+      { score: 0, squad_id: 3 },
     ]
   end
 
@@ -24,8 +24,8 @@ RSpec.describe Scores::SquadRanksPresenter do
       [
         hash_including(id: 2, score: 100, rank: 1),
         hash_including(id: 1, score: 78, rank: 2),
-        hash_including(id: 3, score: 0, rank: 3)
-      ]
+        hash_including(id: 3, score: 0, rank: 3),
+      ],
     )
   end
 
@@ -33,7 +33,7 @@ RSpec.describe Scores::SquadRanksPresenter do
     expect(described_class.new(input).ranks).to contain_exactly(
       hash_including(id: 1, name: "The Killers"),
       hash_including(id: 2, name: "Grouplove"),
-      hash_including(id: 3, name: "Longest Johns")
+      hash_including(id: 3, name: "Longest Johns"),
     )
   end
 
@@ -41,7 +41,7 @@ RSpec.describe Scores::SquadRanksPresenter do
     expect(described_class.new(input).ranks).to contain_exactly(
       hash_including(id: 1, total_members: 2),
       hash_including(id: 2, total_members: 1),
-      hash_including(id: 3, total_members: 0)
+      hash_including(id: 3, total_members: 0),
     )
   end
 
@@ -50,7 +50,7 @@ RSpec.describe Scores::SquadRanksPresenter do
       [
         { score: 78, squad_id: 1 },
         { score: 100, squad_id: 2 },
-        { score: 100, squad_id: 3 }
+        { score: 100, squad_id: 3 },
       ]
     end
 
@@ -59,8 +59,8 @@ RSpec.describe Scores::SquadRanksPresenter do
         [
           hash_including(id: 3, score: 100),
           hash_including(id: 2, score: 100),
-          hash_including(id: 1, score: 78)
-        ]
+          hash_including(id: 1, score: 78),
+        ],
       )
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Scores::SquadRanksPresenter do
       expect(described_class.new(input).ranks).to contain_exactly(
         hash_including(id: 3, rank: 1),
         hash_including(id: 2, rank: 1),
-        hash_including(id: 1, rank: 3)
+        hash_including(id: 1, rank: 3),
       )
     end
   end

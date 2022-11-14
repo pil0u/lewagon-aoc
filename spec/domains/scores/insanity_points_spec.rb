@@ -11,24 +11,25 @@ RSpec.describe Scores::InsanityPoints do
     [
       create_completion(1, 1, user_1, 3.hours + 25.minutes),
       create_completion(1, 2, user_1, 1.day + 12.minutes),
-      create_completion(1, 1, user_2, 3.days + 1.minute)
+      create_completion(1, 1, user_2, 3.days + 1.minute),
     ]
   end
 
   def create_completion(day, challenge, user, duration)
     completion_timestamp = DateTime.new(2022, 12, 0 + day, 6, 0, 0) + duration
     create(:completion,
-           day:,
-           challenge:,
-           user:,
-           completion_unix_time: completion_timestamp.to_i)
+      day:,
+      challenge:,
+      user:,
+      completion_unix_time: completion_timestamp.to_i,
+    )
   end
 
   it "computes the points for users for each challenge" do
     expect(described_class.get).to contain_exactly(
       { score: 2, user_id: 1, day: 1, challenge: 1 },
       { score: 2, user_id: 1, day: 1, challenge: 2 },
-      { score: 1, user_id: 2, day: 1, challenge: 1 }
+      { score: 1, user_id: 2, day: 1, challenge: 1 },
     )
   end
 
@@ -43,13 +44,13 @@ RSpec.describe Scores::InsanityPoints do
         create_completion(1, 1, user_3, 3.hours + 26.minutes),
         create_completion(1, 1, user_5, 4.hours),
         create_completion(1, 1, user_2, 1.day + 2.hours),
-        create_completion(1, 1, user_4, 3.days + 1.minute)
+        create_completion(1, 1, user_4, 3.days + 1.minute),
       ]
     end
 
     it "gives the first user to complete the challenge as many points as there are players" do
       expect(described_class.get).to include(
-        { score: 5, user_id: 1, day: 1, challenge: 1 }
+        { score: 5, user_id: 1, day: 1, challenge: 1 },
       )
     end
 
@@ -58,7 +59,7 @@ RSpec.describe Scores::InsanityPoints do
         { score: 4, user_id: 3, day: 1, challenge: 1 },
         { score: 3, user_id: 5, day: 1, challenge: 1 },
         { score: 2, user_id: 2, day: 1, challenge: 1 },
-        { score: 1, user_id: 4, day: 1, challenge: 1 }
+        { score: 1, user_id: 4, day: 1, challenge: 1 },
       )
     end
 
@@ -72,7 +73,7 @@ RSpec.describe Scores::InsanityPoints do
           { score: 4, user_id: 1, day: 1, challenge: 1 },
           { score: 3, user_id: 3, day: 1, challenge: 1 },
           { score: 2, user_id: 2, day: 1, challenge: 1 },
-          { score: 1, user_id: 4, day: 1, challenge: 1 }
+          { score: 1, user_id: 4, day: 1, challenge: 1 },
         )
       end
     end

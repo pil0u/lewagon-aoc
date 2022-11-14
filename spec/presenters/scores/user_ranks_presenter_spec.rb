@@ -13,21 +13,21 @@ RSpec.describe Scores::UserRanksPresenter do
 
   let!(:user_1) do
     create :user,
-           id: 1,
-           username: "Saunier",
-           city: paris,
-           squad: squad_1,
-           batch: batch_1,
-           entered_hardcore: false
+      id: 1,
+      username: "Saunier",
+      city: paris,
+      squad: squad_1,
+      batch: batch_1,
+      entered_hardcore: false
   end
   let!(:user_2) do
     create :user,
-           id: 2,
-           username: "pil0u",
-           city: bordeaux,
-           squad: squad_2,
-           batch: batch_2,
-           entered_hardcore: true
+      id: 2,
+      username: "pil0u",
+      city: bordeaux,
+      squad: squad_2,
+      batch: batch_2,
+      entered_hardcore: true
   end
 
   let!(:completions) do
@@ -48,7 +48,7 @@ RSpec.describe Scores::UserRanksPresenter do
   let(:input) do
     [
       { score: 99, user_id: 1 },
-      { score: 25, user_id: 2 }
+      { score: 25, user_id: 2 },
     ]
   end
 
@@ -56,8 +56,8 @@ RSpec.describe Scores::UserRanksPresenter do
     expect(described_class.new(input).ranks).to match(
       [
         hash_including(uid: 1, score: 99, rank: 1),
-        hash_including(uid: 2, score: 25, rank: 2)
-      ]
+        hash_including(uid: 2, score: 25, rank: 2),
+      ],
     )
   end
 
@@ -69,7 +69,7 @@ RSpec.describe Scores::UserRanksPresenter do
         city_name: "Paris",
         batch_number: 1,
         squad_name: "The Killers",
-        entered_hardcore: false
+        entered_hardcore: false,
       ),
       hash_including(
         uid: 2,
@@ -77,8 +77,8 @@ RSpec.describe Scores::UserRanksPresenter do
         city_name: "Bordeaux",
         batch_number: 2,
         squad_name: "Grouplove",
-        entered_hardcore: true
-      )
+        entered_hardcore: true,
+      ),
     )
   end
 
@@ -87,14 +87,14 @@ RSpec.describe Scores::UserRanksPresenter do
       hash_including(
         uid: 1,
         silver_stars: 1,
-        gold_stars: 2
+        gold_stars: 2,
       ),
       hash_including(
         uid: 2,
         username: "pil0u",
         silver_stars: 0,
-        gold_stars: 3
-      )
+        gold_stars: 3,
+      ),
     )
   end
 
@@ -105,7 +105,7 @@ RSpec.describe Scores::UserRanksPresenter do
       [
         { score: 99, user_id: 1 },
         { score: 25, user_id: 2 },
-        { score: 99, user_id: 3 }
+        { score: 99, user_id: 3 },
       ]
     end
 
@@ -114,8 +114,8 @@ RSpec.describe Scores::UserRanksPresenter do
         [
           hash_including(uid: 1, score: 99),
           hash_including(uid: 3, score: 99),
-          hash_including(uid: 2, score: 25)
-        ]
+          hash_including(uid: 2, score: 25),
+        ],
       )
     end
 
@@ -123,7 +123,7 @@ RSpec.describe Scores::UserRanksPresenter do
       expect(described_class.new(input).ranks).to contain_exactly(
         hash_including(uid: 1, rank: 1),
         hash_including(uid: 3, rank: 1),
-        hash_including(uid: 2, rank: 3)
+        hash_including(uid: 2, rank: 3),
       )
     end
   end
@@ -135,13 +135,13 @@ RSpec.describe Scores::UserRanksPresenter do
       [
         { score: 99, user_id: 1 },
         { score: 25, user_id: 2 },
-        { score: 0, user_id: 3 }
+        { score: 0, user_id: 3 },
       ]
     end
 
     it "has no stars" do
       expect(described_class.new(input).ranks).to include(
-        hash_including(uid: 3, silver_stars: 0, gold_stars: 0)
+        hash_including(uid: 3, silver_stars: 0, gold_stars: 0),
       )
     end
   end
@@ -153,7 +153,7 @@ RSpec.describe Scores::UserRanksPresenter do
 
     it "includes no info about it in the output" do
       expect(described_class.new(input).ranks).to include(
-        hash_including(uid: 1, squad_name: nil)
+        hash_including(uid: 1, squad_name: nil),
       )
     end
   end
@@ -165,7 +165,7 @@ RSpec.describe Scores::UserRanksPresenter do
 
     it "includes no info about it in the output" do
       expect(described_class.new(input).ranks).to include(
-        hash_including(uid: 1, city_name: nil)
+        hash_including(uid: 1, city_name: nil),
       )
     end
   end
@@ -177,7 +177,7 @@ RSpec.describe Scores::UserRanksPresenter do
 
     it "includes no info about it in the output" do
       expect(described_class.new(input).ranks).to include(
-        hash_including(uid: 1, batch_number: nil)
+        hash_including(uid: 1, batch_number: nil),
       )
     end
   end

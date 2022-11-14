@@ -15,7 +15,7 @@ RSpec.describe Scores::CityRanksPresenter do
     [
       { score: 125, city_id: 1 },
       { score: 126, city_id: 2 },
-      { score: 0,   city_id: 3 }
+      { score: 0,   city_id: 3 },
     ]
   end
 
@@ -24,8 +24,8 @@ RSpec.describe Scores::CityRanksPresenter do
       [
         hash_including(id: 2, score: 126, rank: 1),
         hash_including(id: 1, score: 125, rank: 2),
-        hash_including(id: 3, score: 0, rank: 3)
-      ]
+        hash_including(id: 3, score: 0, rank: 3),
+      ],
     )
   end
 
@@ -33,7 +33,7 @@ RSpec.describe Scores::CityRanksPresenter do
     expect(described_class.new(input).ranks).to contain_exactly(
       hash_including(id: 1, name: "Bordeaux", slug: "bordeaux"),
       hash_including(id: 2, name: "Rio de Janeiro", slug: "rio-de-janeiro"),
-      hash_including(id: 3, name: "Paris", slug: "paris")
+      hash_including(id: 3, name: "Paris", slug: "paris"),
     )
   end
 
@@ -41,7 +41,7 @@ RSpec.describe Scores::CityRanksPresenter do
     expect(described_class.new(input).ranks).to contain_exactly(
       hash_including(id: 1, total_members: 2, top_contributors: 10),
       hash_including(id: 2, total_members: 1, top_contributors: 10),
-      hash_including(id: 3, total_members: 0, top_contributors: 15)
+      hash_including(id: 3, total_members: 0, top_contributors: 15),
     )
   end
 
@@ -50,7 +50,7 @@ RSpec.describe Scores::CityRanksPresenter do
       [
         { score: 126, city_id: 1 },
         { score: 126, city_id: 2 },
-        { score: 120, city_id: 3 }
+        { score: 120, city_id: 3 },
       ]
     end
 
@@ -59,8 +59,8 @@ RSpec.describe Scores::CityRanksPresenter do
         [
           hash_including(id: 2, score: 126),
           hash_including(id: 1, score: 126),
-          hash_including(id: 3, score: 120)
-        ]
+          hash_including(id: 3, score: 120),
+        ],
       )
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Scores::CityRanksPresenter do
       expect(described_class.new(input).ranks).to contain_exactly(
         hash_including(id: 2, rank: 1),
         hash_including(id: 1, rank: 1),
-        hash_including(id: 3, rank: 3)
+        hash_including(id: 3, rank: 3),
       )
     end
   end

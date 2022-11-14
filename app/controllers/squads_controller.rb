@@ -57,7 +57,7 @@ class SquadsController < ApplicationController
 
     redirect_to(
       settings_path,
-      alert: "You cannot #{action_name} Squads since #{Aoc.lock_time.to_fs(:long_ordinal)} (see FAQ)"
+      alert: "You cannot #{action_name} Squads since #{Aoc.lock_time.to_fs(:long_ordinal)} (see FAQ)",
     )
   end
 

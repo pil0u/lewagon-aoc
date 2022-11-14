@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     Sentry.set_user(
       id: current_user&.id,
       aoc_id: current_user&.aoc_id,
-      github_username: current_user&.github_username
+      github_username: current_user&.github_username,
     )
   end
 end

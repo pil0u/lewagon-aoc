@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
     redirect_back(
       fallback_location: "/",
-      alert: "You cannot join or leave the Ladder of Insanity since #{Aoc.lock_time.to_fs(:long_ordinal)} (see FAQ)"
+      alert: "You cannot join or leave the Ladder of Insanity since #{Aoc.lock_time.to_fs(:long_ordinal)} (see FAQ)",
     )
   end
 
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
       # validation), then the id of that instance is nil, which disappears with .compact below
       city: City.find_by(id: form_params[:city_id]),
       entered_hardcore: form_params[:entered_hardcore],
-      username: form_params[:username]
+      username: form_params[:username],
     }.compact
   end
 

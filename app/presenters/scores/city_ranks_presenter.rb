@@ -10,11 +10,11 @@ module Scores
     attr_reader :scores_per_city
 
     def ranks
-      @ranks ||= City
-                 .includes(:users)
-                 .map { |city| { **identity_of(city), **stats_of(city) } }
-                 .sort_by { |city| city[:score] * -1 } # * -1 to reverse with no iterating
-                 .each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |city, ranks|
+      @ranks ||= City.
+        includes(:users).
+        map { |city| { **identity_of(city), **stats_of(city) } }.
+        sort_by { |city| city[:score] * -1 }. # * -1 to reverse with no iterating
+        each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |city, ranks|
                    if city[:score] == ranks[:last_score] # handling equalities
                      ranks[:gap] += 1
                    else
@@ -31,7 +31,7 @@ module Scores
       {
         id: city.id,
         name: city.name,
-        slug: city.slug
+        slug: city.slug,
       }
     end
 
@@ -40,7 +40,7 @@ module Scores
       {
         score: score[:score],
         total_members: city.users.count,
-        top_contributors: city.top_contributors
+        top_contributors: city.top_contributors,
         # daily_score: 200      #TODO: Implement
         # daily_contributors_part_1: 23,  # TODO: Implement
         # daily_contributors_part_2: 23,  # TODO: Implement

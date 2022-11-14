@@ -2,5 +2,6 @@
 
 module Cache
   class CityScore < ApplicationRecord
+    belongs_to :city
   end
 end

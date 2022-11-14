@@ -30,7 +30,7 @@ module Scores
 
     def identity_of(user)
       {
-        uid: user.id,
+        uid: user.uid.to_i,
         username: user.username,
         city_name: user.city&.name,
         batch_number: user.batch&.number,

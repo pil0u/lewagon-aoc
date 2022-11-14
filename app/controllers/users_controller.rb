@@ -5,6 +5,33 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by!(uid: params[:uid])
+
+    casual_scores = Scores::SoloScores.get
+    casual_presenter = Scores::UserRanksPresenter.new(casual_scores)
+    casual_participants = casual_presenter.ranks
+    @casual_stats = casual_participants.find { |h| h[:uid].to_s == @user.uid }
+
+    insanity_scores = Scores::InsanityScores.get
+    insanity_presenter = Scores::UserRanksPresenter.new(insanity_scores)
+    insane_participants = insanity_presenter.ranks
+    @insanity_stats = insane_participants.find { |h| h[:uid].to_s == @user.uid }
+
+    squad_scores = Scores::SquadScores.get
+    squad_presenter = Scores::SquadRanksPresenter.new(squad_scores)
+    squads = squad_presenter.ranks
+    @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
+
+    city_scores = Scores::CityScores.get
+    city_presenter = Scores::CityRanksPresenter.new(city_scores)
+    cities = city_presenter.ranks
+    @city_stats = cities.find { |h| h[:id] == @user.city_id }
+
+    @latest_day = Aoc.latest_day
+    @daily_completions = Array.new(@latest_day) { [nil, nil] }
+
+    Completion.where(user: @user).each do |completion|
+      @daily_completions[@latest_day - completion.day][completion.challenge - 1] = completion
+    end
   end
 
   def edit

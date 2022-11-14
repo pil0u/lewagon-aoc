@@ -39,7 +39,7 @@ module Scores
       score = scores_per_city[city.id] || { score: 0 }
       {
         score: score[:score],
-        total_members: city.users.count,
+        total_members: city.users.size,
         top_contributors: city.top_contributors
         # daily_score: 200      #TODO: Implement
         # daily_contributors_part_1: 23,  # TODO: Implement

@@ -9,7 +9,10 @@ class User < ApplicationRecord
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
+
   has_many :completions, dependent: :destroy
+  has_many :solo_points, class_name: "Cache::SoloPoint", dependent: :delete_all
+  has_many :solo_scores, class_name: "Cache::SoloScore", dependent: :delete_all
   has_many :insanity_points, class_name: "Cache::InsanityPoint", dependent: :delete_all
   has_many :insanity_scores, class_name: "Cache::InsanityScore", dependent: :delete_all
 
@@ -18,8 +21,8 @@ class User < ApplicationRecord
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
+  scope :insanity, -> { where(entered_hardcore: true) }
   scope :moderators, -> { where(uid: MODERATORS.values) }
-  scope :synced, -> { where(synced: true) }
 
   def self.from_kitt(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|

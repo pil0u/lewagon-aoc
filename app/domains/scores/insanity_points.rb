@@ -16,7 +16,7 @@ module Scores
 
     def compute
       completions = Completion
-                    .joins(:user).merge(User.where(entered_hardcore: true))
+                    .joins(:user).merge(User.insanity)
                     .select(Arel.star, Arel.sql(<<~SQL.squish))
                       (SELECT COUNT(*) FROM users WHERE entered_hardcore AND synced)
                       - (rank() OVER (PARTITION BY day, challenge ORDER BY completion_unix_time ASC))

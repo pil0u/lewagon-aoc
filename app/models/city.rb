@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class City < ApplicationRecord
+  has_many :city_scores, class_name: "Cache::CityScore", dependent: :delete_all
+
   has_many :users, dependent: :nullify
   has_many :completions, through: :users
 

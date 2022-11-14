@@ -2,5 +2,6 @@
 
 module Cache
   class SoloPoint < ApplicationRecord
+    belongs_to :user
   end
 end

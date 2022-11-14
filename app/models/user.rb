@@ -22,7 +22,6 @@ class User < ApplicationRecord
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :moderators, -> { where(uid: MODERATORS.values) }
-  scope :synced, -> { where(synced: true) }
 
   def self.from_kitt(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|

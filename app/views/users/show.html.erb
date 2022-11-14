@@ -8,10 +8,10 @@
 
   <span>.</span>
   <span class="text-lg">
-    <% if @solo_stats[:silver_stars] > 0 %>
-      <span class="text-aoc-silver"><%= @solo_stats[:silver_stars] %>*</span>
+    <% if @casual_stats[:silver_stars] > 0 %>
+      <span class="text-aoc-silver"><%= @casual_stats[:silver_stars] %>*</span>
     <% end %>
-    <span class="text-aoc-gold"><%= @solo_stats[:gold_stars] %>*</span>
+    <span class="text-aoc-gold"><%= @casual_stats[:gold_stars] %>*</span>
   </span>
 </div>
 
@@ -23,11 +23,11 @@
 
     <div class="h-3/5 flex flex-col justify-around">
       <span class="flex items-center justify-center text-aoc-atmospheric text-lg">
-        <%= @solo_stats[:score] %> pts
+        <%= @casual_stats[:score] %> pts
       </span>
 
       <span class="flex items-center justify-center text-lg">
-        <%= @solo_stats[:rank] %><sup><%= @solo_stats[:rank].ordinal %></sup>
+        <%= @casual_stats[:rank] %><sup><%= @casual_stats[:rank].ordinal %></sup>
       </span>
     </div>
   </div>
@@ -40,11 +40,11 @@
 
       <div class="h-3/5 flex flex-col justify-around">
         <span class="flex items-center justify-center text-aoc-atmospheric text-lg">
-          <%= @solo_stats[:hardcore_score] %> pts
+          <%= @insanity_stats[:score] %> pts
         </span>
 
         <span class="flex items-center justify-center text-lg">
-          <%= @solo_stats[:hardcore_rank] %><sup><%= @solo_stats[:hardcore_rank].ordinal %></sup>
+          <%= @insanity_stats[:rank] %><sup><%= @insanity_stats[:rank].ordinal %></sup>
         </span>
       </div>
     </div>

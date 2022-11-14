@@ -6,13 +6,15 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by!(uid: params[:uid])
 
-    solo_scores = Scores::SoloScores.get
-    solo_presenter = Scores::SoloRanksPresenter.new(solo_scores)
-    participants = solo_presenter.ranks
-    @solo_stats = participants.find { |h| h[:uid].to_s == @user.uid }
+    casual_scores = Scores::SoloScores.get
+    casual_presenter = Scores::UserRanksPresenter.new(casual_scores)
+    casual_participants = casual_presenter.ranks
+    @casual_stats = casual_participants.find { |h| h[:uid].to_s == @user.uid }
 
-    @solo_stats[:hardcore_score] ||= 0
-    @solo_stats[:hardcore_rank] ||= 0
+    insanity_scores = Scores::InsanityScores.get
+    insanity_presenter = Scores::UserRanksPresenter.new(insanity_scores)
+    insane_participants = insanity_presenter.ranks
+    @insanity_stats = insane_participants.find { |h| h[:uid].to_s == @user.uid }
 
     squad_scores = Scores::SquadScores.get
     squad_presenter = Scores::SquadRanksPresenter.new(squad_scores)

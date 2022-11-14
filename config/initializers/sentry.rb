@@ -12,23 +12,26 @@ Sentry.init do |config|
   #   production        aoc.lewagon.community
   config.enabled_environments = %w[production heroku-staging fly fly-pr]
 
-  # https://docs.sentry.io/platforms/ruby/guides/rails/configuration/sampling/#setting-a-sampling-function
-  config.traces_sampler = lambda do |sampling_context|
-    # if this is the continuation of a trace, just use that decision (rate controlled by the caller)
-    next sampling_context[:parent_sampled] unless sampling_context[:parent_sampled].nil?
+  # Disable traces all the way
+  config.traces_sample_rate = 0.0
 
-    transaction_context = sampling_context[:transaction_context]
-    transaction_name = transaction_context[:name]
+  # # https://docs.sentry.io/platforms/ruby/guides/rails/configuration/sampling/#setting-a-sampling-function
+  # config.traces_sampler = lambda do |sampling_context|
+  #   # if this is the continuation of a trace, just use that decision (rate controlled by the caller)
+  #   next sampling_context[:parent_sampled] unless sampling_context[:parent_sampled].nil?
 
-    case transaction_name
-    when /packs/ # webpack assets from 2021 platform
-      0.01
-    when "/"
-      0.05
-    when /InsertNewCompletionsJob/
-      0.1
-    else
-      1.0
-    end
-  end
+  #   transaction_context = sampling_context[:transaction_context]
+  #   transaction_name = transaction_context[:name]
+
+  #   case transaction_name
+  #   when /packs/ # webpack assets from 2021 platform
+  #     0.01
+  #   when "/"
+  #     0.05
+  #   when /InsertNewCompletionsJob/
+  #     0.1
+  #   else
+  #     1.0
+  #   end
+  # end
 end

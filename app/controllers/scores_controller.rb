@@ -15,61 +15,19 @@ class ScoresController < ApplicationController
   def insanity
     session[:last_score_page] = "insanity"
 
-    scores = Scores::SoloScores.get
-    presenter = Scores::SoloRanksPresenter.new(scores)
+    scores = Scores::InsanityScores.get
+    presenter = Scores::UserRanksPresenter.new(scores)
 
     @participants = presenter.ranks
 
     add_display_rank(@participants)
-
-    # @participants = [
-    #   {
-    #     uid: 1,                                     # uid
-    #     rank: 1,                                    # TBD
-    #     previous_rank: 12,                          # TBD
-    #     username: "Francisco-Webdeveloper-andMore", # username
-    #     city_name: "Rio de Janeiro",                # JOIN cities ON cities.id = users.city_id (cities.name)
-    #     batch_number: 1970,                         # JOIN batches ON batches.id = users.batch_id (batches.number)
-    #     squad_name: "This is very long 123456",     # JOIN squads ON squads.id = users.squad_id (squads.name)
-    #     silver_stars: 10,                           # TBD
-    #     gold_stars: 15,                             # TBD
-    #     score: 500 * 2 * 25,                        # TBD
-    #     daily_score: 124                            # TBD
-    #   },
-    #   {
-    #     uid: 6788,
-    #     rank: 2,
-    #     previous_rank: 2,
-    #     username: "pil0u",
-    #     city_name: "Bordeaux",
-    #     batch_number: 343,
-    #     squad_name: "Vuvuzela",
-    #     silver_stars: 3,
-    #     gold_stars: 14,
-    #     score: 1234,
-    #     daily_score: 18
-    #   },
-    #   {
-    #     uid: 12,
-    #     rank: 2,
-    #     previous_rank: 1,
-    #     username: "toto",
-    #     city_name: nil,
-    #     batch_number: nil,
-    #     squad_name: nil,
-    #     silver_stars: 0,
-    #     gold_stars: 0,
-    #     score: 0,
-    #     daily_score: 0
-    #   }
-    # ]
   end
 
   def solo
     session[:last_score_page] = "solo"
 
     scores = Scores::SoloScores.get
-    presenter = Scores::SoloRanksPresenter.new(scores)
+    presenter = Scores::UserRanksPresenter.new(scores)
 
     @participants = presenter.ranks
 

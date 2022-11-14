@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Scores
-  class SoloRanksPresenter
+  class UserRanksPresenter
     def initialize(scores)
       # storing with an index for o(1) fetch later
       @scores_per_user = scores.index_by { |u| u[:user_id] }.freeze

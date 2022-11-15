@@ -42,19 +42,19 @@
 
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
-      <%= @participant[:squad_name] || "-" %>
+      <%= @participant[:squad_name] || "&nbsp".html_safe %>
     <% end %>
   </td>
 
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
-      <%= @participant[:city_name] || "-" %>
+      <%= @participant[:city_name] || "&nbsp".html_safe %>
     <% end %>
   </td>
 
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
-      <%= @participant[:batch_number] || "-" %>
+      <%= @participant[:batch_number] || "&nbsp".html_safe %>
     <% end %>
   </td>
 

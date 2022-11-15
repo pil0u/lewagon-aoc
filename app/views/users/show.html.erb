@@ -1,37 +1,28 @@
-<div class="text-lg flex flex-wrap gap-x-6 justify-center sm:justify-start">
-  <h2 class="strong"><%= @user.username %></h2>
+<div class="text-lg flex flex-wrap flex-col sm:flex-row items-center sm:justify-between">
+  <div class="flex flex-wrap gap-x-6">
+    <h2 class="strong"><%= @user.username %></h2>
 
-  <% if @user.batch_id.present? %>
-    <span>.</span>
-    <span>#<%= @user.batch.number %></span>
-  <% end %>
-
-  <span>.</span>
-  <span class="text-lg">
-    <% if @casual_stats[:silver_stars] > 0 %>
-      <span class="text-aoc-silver"><%= @casual_stats[:silver_stars] %>*</span>
+    <% if @user.batch_id.present? %>
+      <span>·</span>
+      <span>batch #<%= @user.batch.number %></span>
     <% end %>
-    <span class="text-aoc-gold"><%= @casual_stats[:gold_stars] %>*</span>
-  </span>
+  </div>
+
+  <div class="flex gap-x-6">
+    <span>
+      <% if @casual_stats[:silver_stars] > 0 %>
+        <span class="text-aoc-silver"><%= @casual_stats[:silver_stars] %>*</span>
+      <% end %>
+      <span class="text-aoc-gold"><%= @casual_stats[:gold_stars] %>*</span>
+    </span>
+    <span>·</span>
+    <span class="text-aoc-atmospheric"><%= @casual_stats[:score] %> pts</span>
+    <span>·</span>
+    <span><%= @casual_stats[:rank] %><sup><%= @casual_stats[:rank].ordinal %></sup></span>
+  </div>
 </div>
 
 <div class="my-4 flex flex-wrap justify-center gap-2">
-  <div class="w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darker">
-    <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
-      solo
-    </h3>
-
-    <div class="h-3/5 flex flex-col justify-around">
-      <span class="flex items-center justify-center text-aoc-atmospheric text-lg">
-        <%= @casual_stats[:score] %> pts
-      </span>
-
-      <span class="flex items-center justify-center text-lg">
-        <%= @casual_stats[:rank] %><sup><%= @casual_stats[:rank].ordinal %></sup>
-      </span>
-    </div>
-  </div>
-
   <% if @user.entered_hardcore? %>
     <div class="w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darker">
       <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">

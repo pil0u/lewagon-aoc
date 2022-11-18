@@ -22,6 +22,6 @@
   </thead>
 
   <tbody>
-    <%= render Scores::UserRowComponent.with_collection(@participants, user: current_user, extended: true) %>
+    <%= render Scores::UserRowComponent.with_collection(@participants, user: current_user, extended: true, colorize_hardcore: true) %>
   </tbody>
 </table>

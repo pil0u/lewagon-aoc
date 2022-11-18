@@ -8,7 +8,6 @@ class ScoresController < ApplicationController
     presenter = Scores::CityRanksPresenter.new(scores)
 
     @cities = presenter.ranks
-                       .sort_by { |city| [city[:score] * -1, city[:total_members] * -1, city[:name]] }
 
     add_display_rank(@cities)
   end

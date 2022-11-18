@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 module Scores
-  class SoloRowComponent < ApplicationComponent
+  class UserRowComponent < ApplicationComponent
     include ScoresHelper
 
     with_collection_parameter :participant
 
-    def initialize(participant:, user:, hardcore:)
+    def initialize(participant:, user:, extended: false)
       @participant = participant
       @user = user
-      @hardcore = hardcore
+      @extended = extended
     end
   end
 end

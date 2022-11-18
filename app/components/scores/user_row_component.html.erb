@@ -38,7 +38,7 @@
     <% end %>
   </td>
 
-  <% unless @hardcore %>
+  <% if @extended %>
 
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>

@@ -19,8 +19,8 @@ class SquadsController < ApplicationController
     squads = squad_presenter.ranks
     @squad_stats = squads.find { |h| h[:id] == @squad.id }
     # TODO: remove when implemented
-    @squad_stats[:silver_stars] = 0
-    @squad_stats[:gold_stars] = 0
+    @squad_stats[:silver_stars] = @squad_users.sum { |h| h[:silver_stars] }
+    @squad_stats[:gold_stars] = @squad_users.sum { |h| h[:gold_stars] }
   end
 
   def create

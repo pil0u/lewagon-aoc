@@ -1,4 +1,6 @@
-<p class="text-lg">Welcome, <span class="strong"><%= current_user.username %></span></p>
+<p class="text-lg">
+  Welcome, <%= link_to current_user.username, profile_path(current_user.uid), class: "strong hover:text-gold" %>
+</p>
 
 <div class="mx-auto my-4 w-max grid grid-cols-5 gap-2 lg:gap-3">
   <%= render Calendar::AdventDayComponent.with_collection(@advent_days, now: @now) %>

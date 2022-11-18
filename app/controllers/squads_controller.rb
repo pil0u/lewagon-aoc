@@ -6,6 +6,14 @@ class SquadsController < ApplicationController
   def show
     @squad = Squad.find(params[:id])
 
+    casual_scores = Scores::SoloScores.get
+    casual_presenter = Scores::UserRanksPresenter.new(casual_scores)
+    casual_participants = casual_presenter.ranks
+    squad_user_uids = @squad.users.pluck(:uid).map(&:to_i)
+    @squad_users = casual_participants.select { |p| p[:uid].in? squad_user_uids }
+                                      .sort_by { |p| p[:score] * -1 }
+    compute_ranks_from_score(@squad_users)
+
     squad_scores = Scores::SquadScores.get
     squad_presenter = Scores::SquadRanksPresenter.new(squad_scores)
     squads = squad_presenter.ranks
@@ -59,6 +67,26 @@ class SquadsController < ApplicationController
   end
 
   private
+
+  # This method computes the proper :rank and adds a :display_rank boolean
+  # attribute which tells whether the rank should be displayed or hidden because
+  # of a tie with the previous entity
+  def compute_ranks_from_score(array)
+    [{}, *array].each_cons(2).map do |elem_a, elem_b|
+      if elem_a == {}
+        elem_b[:rank] = 1
+        elem_b[:display_rank] = true
+      else
+        if elem_b[:score] == elem_a[:score]
+          elem_b[:rank] = elem_a[:rank]
+          elem_b[:display_rank] = false
+        else
+          elem_b[:rank] = elem_a[:rank] + 1
+          elem_b[:display_rank] = true
+        end
+      end
+    end
+  end
 
   def restrict_after_lock
     return unless Time.now.utc > Aoc.lock_time

@@ -14,7 +14,7 @@ module Scores
                  .where(id: scores_per_user.keys)
                  .includes(:city, :squad, :batch, :completions)
                  .map { |user| { **identity_of(user), **stats_of(user) } }
-                 .sort_by { |user| user[:score] * -1 } # * -1 to reverse with no iterating
+                 .sort_by { |user| [user[:score] * -1, user[:created_at].to_i * -1] } # * -1 to reverse with no iterating
                  .each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |user, ranks|
                    if user[:score] == ranks[:last_score] # handling equalities
                      ranks[:gap] += 1
@@ -35,7 +35,8 @@ module Scores
         city_name: user.city&.name,
         batch_number: user.batch&.number,
         squad_name: user.squad&.name,
-        entered_hardcore: user.entered_hardcore
+        entered_hardcore: user.entered_hardcore,
+        created_at: user.created_at
       }
     end
 

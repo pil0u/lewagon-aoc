@@ -13,7 +13,7 @@ module Scores
       @ranks ||= City
                  .includes(:users)
                  .map { |city| { **identity_of(city), **stats_of(city) } }
-                 .sort_by { |city| city[:score] * -1 } # * -1 to reverse with no iterating
+                 .sort_by { |city| [city[:score] * -1, city[:total_members] * -1, city[:name]] } # * -1 to reverse with no iterating
                  .each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |city, ranks|
                    if city[:score] == ranks[:last_score] # handling equalities
                      ranks[:gap] += 1

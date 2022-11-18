@@ -19,6 +19,6 @@
   </thead>
 
   <tbody>
-    <%= render Scores::SoloRowComponent.with_collection(@participants, user: current_user, hardcore: true) %>
+    <%= render Scores::UserRowComponent.with_collection(@participants, user: current_user) %>
   </tbody>
 </table>

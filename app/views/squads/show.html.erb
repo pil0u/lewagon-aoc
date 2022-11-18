@@ -1,1 +1,18 @@
-<%= render PageTitleComponent.new(title: @squad.name) %>
+<div class="text-lg flex flex-wrap flex-col sm:flex-row items-center sm:justify-between">
+  <div class="flex flex-wrap gap-x-6">
+    <h2 class="strong"><%= @squad.name %></h2>
+  </div>
+
+  <div class="flex gap-x-6">
+    <span>
+      <% if @squad_stats[:silver_stars] > 0 %>
+        <span class="text-aoc-silver"><%= @squad_stats[:silver_stars] %>*</span>
+      <% end %>
+      <span class="text-aoc-gold"><%= @squad_stats[:gold_stars] %>*</span>
+    </span>
+    <span>·</span>
+    <span class="text-aoc-atmospheric"><%= @squad_stats[:score] %> pts</span>
+    <span>·</span>
+    <span><%= @squad_stats[:rank] %><sup><%= @squad_stats[:rank].ordinal %></sup></span>
+  </div>
+</div>

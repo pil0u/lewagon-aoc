@@ -5,6 +5,14 @@ class SquadsController < ApplicationController
 
   def show
     @squad = Squad.find(params[:id])
+
+    squad_scores = Scores::SquadScores.get
+    squad_presenter = Scores::SquadRanksPresenter.new(squad_scores)
+    squads = squad_presenter.ranks
+    @squad_stats = squads.find { |h| h[:id] == @squad.id }
+    # TODO: remove when implemented
+    @squad_stats[:silver_stars] = 0
+    @squad_stats[:gold_stars] = 0
   end
 
   def create

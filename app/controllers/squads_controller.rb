@@ -76,14 +76,12 @@ class SquadsController < ApplicationController
       if elem_a == {}
         elem_b[:rank] = 1
         elem_b[:display_rank] = true
+      elsif elem_b[:score] == elem_a[:score]
+        elem_b[:rank] = elem_a[:rank]
+        elem_b[:display_rank] = false
       else
-        if elem_b[:score] == elem_a[:score]
-          elem_b[:rank] = elem_a[:rank]
-          elem_b[:display_rank] = false
-        else
-          elem_b[:rank] = elem_a[:rank] + 1
-          elem_b[:display_rank] = true
-        end
+        elem_b[:rank] = elem_a[:rank] + 1
+        elem_b[:display_rank] = true
       end
     end
   end

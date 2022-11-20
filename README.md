@@ -59,6 +59,15 @@ OVERMIND_PROCFILE=Procfile.dev
 
 Then, instead of the usual `bin/dev`, you have to run `overmind s`.
 
+### Launch webapp on local mobile browser
+
+Because the OAuth will not work on your local IP, you have to bypass authentication by **temporarily** adding this line, for example in the `welcome` controller method:
+```ruby
+sign_in(User.find_by(github_username: "your_username"))
+```
+
+Then, find the local IP address of the computer you launch the server from (ex: `192.168.1.14`) and open the app on your mobile browser from that IP (ex: `http://192.168.1.14:3000`)
+
 ## Advent of Code API hacking
 
 On `adventofcode.com`, a user can create one (and only one) private leaderboard. Up to 200 users can join it using the generated code. A first room was already generated from the generic account `lewagon-aoc`.  

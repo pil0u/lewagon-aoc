@@ -34,7 +34,8 @@
   }
 
   .disabled {
-    @apply pointer-events-none bg-aoc-gray-darker text-aoc-gray-dark;
+    @apply pointer-events-none bg-aoc-gray-darker text-aoc-gray-dark bg-opacity-40;
+    /* For some weird reason, a background opacity >= 50% changes the text color on mobile. WTF. */
   }
 
   .form-element {
@@ -43,12 +44,6 @@
 
   .input {
     @apply form-element w-48 bg-aoc-gray-darkest;
-  }
-
-  input:disabled {
-    -webkit-appearance: none;
-    appearance: none;
-    @apply text-aoc-gray-dark;
   }
 
   /* Hide the spinner for numerical input */

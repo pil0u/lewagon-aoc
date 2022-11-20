@@ -1,0 +1,61 @@
+<%= render PageTitleComponent.new(title: "Participation") %>
+
+<div class="my-4 flex flex-col gap-y-4">
+  <p>
+    The city which brings the most sign ups - <em>in proportion to their size</em> - by November 30th will be allowed to
+    customise their name on the platform (custom <span class="text-[#d946ef]">colour</span>, custom 𝑛𝑎𝑚𝑒).
+  </p>
+
+  <p>
+    This table gives you the participation stats in real time.
+  </p>
+
+  <p>
+    The assignment of users to their city is manual: they need to select it in
+    their <%= link_to "settings", settings_path, class: "link-internal link-explicit" %>.
+  </p>
+</div>
+
+<table class="block overflow-x-auto whitespace-nowrap w-full max-w-2xl mx-auto">
+  <thead>
+    <tr class="border-b border-aoc-gray-darker">
+      <th class="font-light w-full"></th>
+      <th class="font-light min-w-[6rem]">Size</th>
+      <th class="font-light min-w-[6rem]">Participants</th>
+      <th class="font-light min-w-[12rem]">% participation</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cities.each do |city| %>
+      <tr class="hover:bg-hover">
+        <td>
+          <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
+            <%= city[:name] %>
+          <% end %>
+        </td>
+
+        <td>
+          <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
+            <%= city[:n_participants] %>
+          <% end %>
+        </td>
+
+        <td>
+          <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
+            <%= city[:size] %>
+          <% end %>
+        </td>
+
+        <td class="py-1 strong">
+          <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
+            <%= number_to_percentage(
+                  city[:participation_ratio] * 100,
+                  precision: city[:participation_ratio] == 0 ? 0 : 2
+                ) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

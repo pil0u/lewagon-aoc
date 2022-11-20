@@ -29,31 +29,23 @@
   <tbody>
     <% @cities.each do |city| %>
       <tr class="hover:bg-hover">
-        <td>
-          <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
-            <%= city[:name] %>
-          <% end %>
+        <td class="text-center">
+          <%= city[:name] %>
         </td>
 
-        <td>
-          <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
-            <%= city[:size] %>
-          <% end %>
+        <td class="text-center">
+          <%= city[:size] %>
         </td>
 
-        <td>
-          <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
-            <%= city[:n_participants] %>
-          <% end %>
+        <td class="text-center">
+          <%= city[:n_participants] %>
         </td>
 
-        <td class="py-1 strong">
-          <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
-            <%= number_to_percentage(
-                  city[:participation_ratio] * 100,
-                  precision: city[:participation_ratio] == 0 ? 0 : 2
-                ) %>
-          <% end %>
+        <td class="py-1 strong text-center">
+          <%= number_to_percentage(
+                city[:participation_ratio] * 100,
+                precision: city[:participation_ratio] == 0 ? 0 : 2
+              ) %>
         </td>
       </tr>
     <% end %>

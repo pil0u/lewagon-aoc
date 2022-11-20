@@ -32,15 +32,13 @@
   details > summary::-webkit-details-marker {
     display: none;
   }
-  
-  /*
+
   .disabled {
     @apply pointer-events-none bg-aoc-gray-darker text-aoc-gray-dark;
   }
-  */
 
   .form-element {
-    @apply px-3 py-2 leading-normal border border-aoc-gray-darker rounded-none;
+    @apply px-3 py-2 leading-normal border border-aoc-gray-darker rounded-none disabled:disabled;
   }
 
   .input {
@@ -50,7 +48,6 @@
   input:disabled {
     -webkit-appearance: none;
     appearance: none;
-    @apply text-red-500;
   }
 
   /* Hide the spinner for numerical input */

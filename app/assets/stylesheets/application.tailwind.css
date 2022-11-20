@@ -48,6 +48,7 @@
 
   /* Hide the spinner for numerical input */
   input[type=number] {
+    -webkit-appearance: none;
     -moz-appearance: textfield;
   }
 

@@ -16,13 +16,13 @@
   </p>
 </div>
 
-<table class="block overflow-x-auto whitespace-nowrap w-full max-w-2xl mx-auto">
+<table class="block overflow-x-auto whitespace-nowrap w-full max-w-lg mx-auto">
   <thead>
     <tr class="border-b border-aoc-gray-darker">
       <th class="font-light w-full"></th>
-      <th class="font-light min-w-[6rem]">Size</th>
+      <th class="font-light min-w-[6rem]">Alumni</th>
       <th class="font-light min-w-[6rem]">Participants</th>
-      <th class="font-light min-w-[12rem]">% participation</th>
+      <th class="font-light min-w-[6rem]">%</th>
     </tr>
   </thead>
 
@@ -37,13 +37,13 @@
 
         <td>
           <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
-            <%= city[:n_participants] %>
+            <%= city[:size] %>
           <% end %>
         </td>
 
         <td>
           <%= link_to city_path(city[:slug]), class: "flex justify-center" do %>
-            <%= city[:size] %>
+            <%= city[:n_participants] %>
           <% end %>
         </td>
 

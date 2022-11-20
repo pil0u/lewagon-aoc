@@ -48,6 +48,7 @@
   input:disabled {
     -webkit-appearance: none;
     appearance: none;
+    @apply disabled;
   }
 
   /* Hide the spinner for numerical input */

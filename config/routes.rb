@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/faq",             to: "pages#faq"
+  get "/participation",   to: "pages#participation"
   get "/stats",           to: "pages#stats"
 
   unauthenticated do

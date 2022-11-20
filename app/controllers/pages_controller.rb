@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[code_of_conduct faq stats welcome]
-  before_action :render_countdown, only: %i[code_of_conduct faq stats welcome], if: :render_countdown?
+  skip_before_action :authenticate_user!, only: %i[code_of_conduct faq participation stats welcome]
+  before_action :render_countdown, only: %i[code_of_conduct faq participation stats welcome], if: :render_countdown?
 
   def calendar
     user_completions = current_user.completions.group(:day).count
@@ -28,6 +28,23 @@ class PagesController < ApplicationController
   end
 
   def faq; end
+
+  def participation
+    users_per_city = City.joins(:users).group(:id).count
+    @cities = City.all.map do |city|
+      n_participants = users_per_city[city.id] || 0
+
+      {
+        slug: city.slug,
+        name: city.name,
+        size: city.size,
+        n_participants:,
+        participation_ratio: n_participants / city.size.to_f
+      }
+    end
+
+    @cities.sort_by! { |city| [city[:participation_ratio] * -1, city[:name]] }
+  end
 
   def setup
     @private_leaderboard = ENV.fetch("AOC_ROOMS").split(",").last

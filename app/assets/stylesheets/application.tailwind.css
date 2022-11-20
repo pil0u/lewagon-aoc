@@ -48,8 +48,7 @@
   input:disabled {
     -webkit-appearance: none;
     appearance: none;
-    color: #666666;
-    @apply pointer-events-none bg-aoc-gray-darker;
+    @apply text-aoc-gray-dark;
   }
 
   /* Hide the spinner for numerical input */

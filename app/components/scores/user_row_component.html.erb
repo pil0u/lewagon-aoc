@@ -22,7 +22,7 @@
     <% end %>
   </td>
 
-  <td class="text-lg">
+  <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center gap-x-1" do %>
       <% if @participant[:silver_stars] > 0 %>
         <span class="text-aoc-silver"><%= @participant[:silver_stars] %>*</span>

@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :solo_scores, class_name: "Cache::SoloScore", dependent: :delete_all
   has_many :insanity_points, class_name: "Cache::InsanityPoint", dependent: :delete_all
   has_many :insanity_scores, class_name: "Cache::InsanityScore", dependent: :delete_all
+  has_many :messages, dependent: :nullify
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :username, presence: true

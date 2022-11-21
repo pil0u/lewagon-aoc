@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get     "/city/:slug",      to: "cities#show",    as: :city
     get     "/day/:number",     to: "days#show",      as: :day, number: /[1-9]|1\d|2[0-5]/
     get     "/the-wall",        to: "messages#index", as: :messages
+    post    "/the-wall",        to: "messages#create"
     get     "/scores/cities",   to: "scores#cities"
     get     "/scores/insanity", to: "scores#insanity"
     get     "/scores/solo",     to: "scores#solo"

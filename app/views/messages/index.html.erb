@@ -1,1 +1,13 @@
 <%= render PageTitleComponent.new(title: "The Wall") %>
+
+<%= form_with model: @message, class: "my-4 mx-auto w-full max-w-md flex flex-col gap-y-2" do |f| %>
+  <%= f.text_area :content, placeholder: "Your message", rows: 2, class: "w-full input" %>
+
+  <%= f.submit "Send", class: "w-fit self-end button" %>
+<% end %>
+
+<% @messages.each do |message| %>
+  <p><%= simple_format message.content %></p>
+  <p><%= message.user.username %></p>
+  <p><%= message.created_at %></p>
+<% end %>

@@ -3,5 +3,5 @@
 class Message < ApplicationRecord
   belongs_to :user
 
-  validates :content, presence: true, length: { in: 4..256 }
+  validates :content, presence: true, length: { in: 4..512 }
 end

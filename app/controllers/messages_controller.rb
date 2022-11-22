@@ -5,11 +5,14 @@ class MessagesController < ApplicationController
 
   def index
     @message = Message.new(user: current_user)
-    @messages = Message.order(:created_at)
+    @messages = Message.order(created_at: :desc)
   end
 
   def create
-    message = Message.new(content: message_params[:content], user: current_user)
+    message = Message.new(
+      content: helpers.restrictive_sanitize(message_params[:content]),
+      user: current_user
+    )
 
     unless @allowed_to_post
       redirect_to(messages_path, alert: "You already sent a message today")

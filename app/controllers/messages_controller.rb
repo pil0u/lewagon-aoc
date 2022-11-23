@@ -6,7 +6,6 @@ class MessagesController < ApplicationController
   def index
     @message = Message.new(user: current_user)
     @messages = Message.order(created_at: :desc)
-    @placeholder = Message::PLACEHOLDERS.sample
   end
 
   def create

@@ -2,19 +2,19 @@
 
 <p class="my-4 text-center">
   Welcome to this new experience.<br>
-  A space where you are granted an extension of your freedom.<br>
+  A space of extended freedom.<br>
   Until you find its boundaries.
 </p>
 
 <%= form_with model: @message, class: "my-4 mx-auto w-full max-w-md flex flex-col gap-y-2" do |f| %>
-  <%= f.text_area :content, placeholder: @placeholder, rows: 2, class: "w-full input" %>
+  <%= f.text_area :content, placeholder: "You will be baked, and then there will be cake", rows: 2, class: "w-full input" %>
 
   <%= f.submit "Send", class: "w-fit self-end button" %>
 <% end %>
 
 <div class="flex flex-col gap-y-3">
   <% @messages.each do |message| %>
-    <div class="<%= "self-end" if message.user == current_user %> w-5/6 max-w-lg px-4 py-2 flex flex-col gap-y-1 bg-aoc-gray-darkest border border-dotted border-aoc-gray-dark group">
+    <div class="<%= "self-end" if message.user == current_user %> w-5/6 max-w-lg px-4 py-2 flex flex-col gap-y-1 bg-aoc-gray-darkest border border-aoc-gray-dark group">
       <p class="break-words">
         <%= restrictive_sanitize(message.content) %>
       </p>
@@ -23,7 +23,7 @@
         <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= message.created_at %></span>
 
         <em class="text-sm text-aoc-gray-dark">
-          - <%= link_to message.user.username, profile_path(message.user.uid), class: "group-hover:text-aoc-gray" %>
+          - <%= link_to message.user.username, profile_path(message.user.uid), class: "link-explicit group-hover:text-aoc-gray" %>
         </em>
       </div>
     </div>

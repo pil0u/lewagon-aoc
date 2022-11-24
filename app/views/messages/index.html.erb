@@ -1,1 +1,17 @@
 <%= render PageTitleComponent.new(title: "The Wall") %>
+
+<p class="my-4 text-center">
+  Welcome to this new experience.<br>
+  A space of extended freedom.<br>
+  Until you find its boundaries.
+</p>
+
+<%= form_with model: @message, class: "my-4 mx-auto w-full max-w-md flex flex-col gap-y-2" do |f| %>
+  <%= f.text_area :content, placeholder: "You will be baked, and then there will be cake", rows: 2, class: "w-full input" %>
+
+  <%= f.submit "Send", class: "w-fit self-end button" %>
+<% end %>
+
+<div class="flex flex-col gap-y-3">
+  <%= render Messages::BoxComponent.with_collection(@messages, user: current_user) %>
+</div>

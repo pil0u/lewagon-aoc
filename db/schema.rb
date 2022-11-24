@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_14_024538) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_20_205916) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -172,6 +172,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_14_024538) do
     t.index ["user_id"], name: "index_insanity_scores_on_user_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "solo_points", force: :cascade do |t|
     t.string "cache_fingerprint", null: false
     t.integer "challenge"
@@ -258,6 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_14_024538) do
   add_foreign_key "completions", "users"
   add_foreign_key "insanity_points", "users"
   add_foreign_key "insanity_scores", "users"
+  add_foreign_key "messages", "users"
   add_foreign_key "solo_points", "users"
   add_foreign_key "solo_scores", "users"
   add_foreign_key "squad_points", "squads"

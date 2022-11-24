@@ -32,10 +32,10 @@
   details > summary::-webkit-details-marker {
     display: none;
   }
-  
 
   .disabled {
-    @apply pointer-events-none bg-aoc-gray-darker text-aoc-gray-dark;
+    @apply pointer-events-none bg-aoc-gray-darker text-aoc-gray-dark bg-opacity-40;
+    /* For some weird reason, a background opacity >= 50% changes the text color on mobile. WTF. */
   }
 
   .form-element {

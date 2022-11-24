@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
 
   def index
     @message = Message.new(user: current_user)
-    @messages = Message.order(created_at: :desc)
+    @messages = Message.includes(:user).order(created_at: :desc)
   end
 
   def create

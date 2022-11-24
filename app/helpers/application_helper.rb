@@ -13,6 +13,6 @@ module ApplicationHelper
   end
 
   def restrictive_sanitize(text)
-    sanitize(text, tags: %w(b em del span sub sup), attributes: %w(style))
+    sanitize(text, tags: %w[b em del span sub sup], attributes: %w[style])
   end
 end

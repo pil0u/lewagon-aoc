@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MessagesController < ApplicationController
-  before_action :set_allowed_to_post, only: %i[index create]
+  before_action :set_restricted, only: %i[index create]
 
   def index
     @message = Message.new(user: current_user)
@@ -14,7 +14,7 @@ class MessagesController < ApplicationController
       user: current_user
     )
 
-    unless @allowed_to_post
+    if @restricted
       redirect_to(messages_path, alert: "You already sent a message today")
       return
     end
@@ -28,10 +28,10 @@ class MessagesController < ApplicationController
 
   private
 
-  def set_allowed_to_post
+  def set_restricted
     today = Time.now.getlocal("-05:00").beginning_of_day
 
-    @allowed_to_post = current_user.messages.where("created_at > ?", today).count == 0
+    @restricted = current_user.messages.where("created_at > ?", today).count != 0
   end
 
   def message_params

@@ -8,10 +8,6 @@ module Scores
 
     private
 
-    def cache_key
-      @cache_key ||= State.order(:fetch_api_end).last.fetch_api_end
-    end
-
     RETURNED_ATTRIBUTES = %i[score user_id day challenge].freeze
 
     def compute

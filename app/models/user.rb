@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :messages, dependent: :nullify
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
+  validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
 
   scope :admins, -> { where(uid: ADMINS.values) }

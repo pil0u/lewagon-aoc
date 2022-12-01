@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_20_205916) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_01_211743) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -257,7 +257,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_20_205916) do
     t.string "uid"
     t.datetime "updated_at", null: false
     t.string "username"
-    t.index ["aoc_id"], name: "index_users_on_aoc_id"
+    t.index ["aoc_id"], name: "index_users_on_aoc_id", unique: true
     t.index ["batch_id"], name: "index_users_on_batch_id"
     t.index ["city_id"], name: "index_users_on_city_id"
   end

@@ -52,4 +52,8 @@ class Aoc
   def self.slack_channel
     "slack://channel?team=T02NE0241&id=C02PN711H09"
   end
+
+  def self.url(day)
+    "https://adventofcode.com/2022/day/#{day}"
+  end
 end

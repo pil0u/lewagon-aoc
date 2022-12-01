@@ -1,1 +1,3 @@
 <%= render PageTitleComponent.new(title: "Day #{@number}") %>
+
+<%= link_to "link to puzzle", Aoc.url(@number), target: :ext, class: "link-explicit link-external text-3xl text-center" %>

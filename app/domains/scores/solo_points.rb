@@ -8,6 +8,13 @@ module Scores
 
     private
 
+    def cache_key
+      @cache_key ||= [
+        State.maximum(:fetch_api_end),
+        User.maximum(:updated_at)
+      ].join("-")
+    end
+
     RETURNED_ATTRIBUTES = %i[score user_id day challenge].freeze
 
     def compute

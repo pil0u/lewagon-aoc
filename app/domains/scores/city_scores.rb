@@ -8,6 +8,13 @@ module Scores
 
     private
 
+    def cache_key
+      @cache_key ||= [
+        State.maximum(:fetch_api_end),
+        City.maximum(:updated_at)
+      ].join("-")
+    end
+
     RETURNED_ATTRIBUTES = %i[score city_id].freeze
 
     def compute

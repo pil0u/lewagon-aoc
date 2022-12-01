@@ -21,12 +21,5 @@ module Scores
         results
       end
     end
-
-    def cache_key
-      @cache_key ||= [
-        State.maximum(:fetch_api_end),
-        User.maximum(:updated_at)
-      ].join("-")
-    end
   end
 end

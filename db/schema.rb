@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_01_211743) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_03_074923) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "achievements", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "nature"
+    t.datetime "unlocked_at", precision: nil
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["nature"], name: "index_achievements_on_nature"
+    t.index ["unlocked_at"], name: "index_achievements_on_unlocked_at"
+    t.index ["user_id"], name: "index_achievements_on_user_id"
+  end
 
   create_table "batches", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -262,6 +273,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_211743) do
     t.index ["city_id"], name: "index_users_on_city_id"
   end
 
+  add_foreign_key "achievements", "users"
   add_foreign_key "city_scores", "cities"
   add_foreign_key "completions", "users"
   add_foreign_key "insanity_points", "users"

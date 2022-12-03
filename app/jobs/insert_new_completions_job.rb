@@ -18,6 +18,8 @@ class InsertNewCompletionsJob < ApplicationJob
       update_fetch_api_end
     end
 
+    launch_cache_refresh
+
     nil
   end
 
@@ -114,5 +116,9 @@ class InsertNewCompletionsJob < ApplicationJob
     @state.update(fetch_api_end: now)
 
     Rails.logger.info "🏁 Completions update finished at #{now}"
+  end
+
+  def launch_cache_refresh
+    Cache::PopulateJob.perform_later
   end
 end

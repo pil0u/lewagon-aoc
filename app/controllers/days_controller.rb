@@ -28,7 +28,5 @@ class DaysController < ApplicationController
         score:
       }
     end.sort_by { |user_score| [user_score[:score] * -1, user_score[:part_2], user_score[:part_1]] }
-
-    p @users
   end
 end

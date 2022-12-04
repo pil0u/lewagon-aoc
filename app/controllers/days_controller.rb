@@ -9,10 +9,10 @@ class DaysController < ApplicationController
     @gold_stars = completions[2].to_i
     @silver_stars = completions[1].to_i - @gold_stars
 
+    @solved_part_one = current_user.solved?(@day, 1)
+    @solved_part_two = current_user.solved?(@day, 2)
     @snippets_part_one = Snippet.where(day: @day, challenge: 1).count
     @snippets_part_two = Snippet.where(day: @day, challenge: 2).count
-    @solved_part_one = daily_completions.find_by(user: current_user, challenge: 1)
-    @solved_part_two = daily_completions.find_by(user: current_user, challenge: 2)
 
     attributes = %i[user_id username challenge duration]
     user_completions = daily_completions.pluck(*attributes).map { |completion| attributes.zip(completion).to_h }

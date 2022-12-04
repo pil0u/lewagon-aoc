@@ -5,18 +5,25 @@ module Completions
     end
 
     def call
-      @completions_from_api = {}
-      @completions = []
-
       ActiveRecord::Base.transaction do
-        @state = State.create
+        log_timing do
+          api_completions = fetch_completions_from_aoc_api
+          Rails.logger.info "✔ Completions fetched"
 
-        update_fetch_api_begin
-        fetch_completions_from_aoc_api
-        update_users_sync_status
-        transform_completions_for_database
-        insert_new_completions
-        update_fetch_api_end
+          update_users_sync_status(api_completions.keys)
+          Rails.logger.info "✔ Users' sync status updated"
+
+          completion_attributes = transform_for_database(api_completions)
+          Rails.logger.info \
+            "✔ Completions prepared for database import (total: #{completion_attributes.size})"
+
+          if completion_attributes.any?
+            inserted = insert_into_db(completion_attributes)
+            Rails.logger.info "✔ #{inserted} new completions inserted"
+          else
+            Rails.logger.info "🤷 No completions to insert"
+          end
+        end
       end
 
       launch_cache_refresh
@@ -25,23 +32,22 @@ module Completions
 
     private
 
-    def update_fetch_api_begin
-      now = Time.now.utc
-      @state.update(fetch_api_begin: now)
+    def log_timing
+      state = State.create(fetch_api_begin: Time.now)
+      Rails.logger.info "🤖 Completions update started at #{state.fetch_api_begin}"
 
-      Rails.logger.info "🤖 Completions update started at #{now}"
+      yield
+
+      state.update(fetch_api_end: Time.now)
+      Rails.logger.info "🏁 Completions update finished at #{state.fetch_api_end}"
     end
 
     def fetch_completions_from_aoc_api
       aoc_group_ids = Aoc.private_leaderboards.map { |id| id.split("-").first }
 
-      aoc_group_ids.each do |aoc_group_id|
-        current_group_completions = fetch_completions(aoc_group_id)
-
-        @completions_from_api.deep_merge!(current_group_completions)
+      aoc_group_ids.reduce({}) do |api_completions, aoc_group_id|
+        api_completions.deep_merge! fetch_completions(aoc_group_id)
       end
-
-      Rails.logger.info "✔ Completions fetched"
     end
 
     def fetch_completions(id)
@@ -59,63 +65,51 @@ module Completions
       JSON.parse(response.body)["members"]
     end
 
-    def update_users_sync_status
-      participant_ids = @completions_from_api.keys.map(&:to_i)
+    def update_users_sync_status(participant_ids)
+      to_sync = User.where(aoc_id: participant_ids).where.not(synced: true)
+      to_unsync = User.where.not(aoc_id: participant_ids).where(synced: true)
 
-      User.find_each do |user|
-        new_synced = participant_ids.include?(user.aoc_id)
+      to_sync.update(synced: true)
+      to_unsync.update(synced: false)
 
-        if user.synced != new_synced
-          user.update(synced: new_synced)
-          Rails.logger.info "\t#{user.id}-#{user.github_username} is now #{new_synced ? '' : 'un'}synced."
-        end
+      to_sync.pluck(:id, :github_username).each do |(id, github_username)|
+        Rails.logger.info "\t#{id}-#{github_username} is now synced."
       end
-
-      Rails.logger.info "✔ Users' sync status updated"
+      to_unsync.pluck(:id, :github_username).each do |(id, github_username)|
+        Rails.logger.info "\t#{id}-#{github_username} is now unsynced."
+      end
     end
 
-    def transform_completions_for_database
+    def transform_for_database(api_completions)
       now = Time.now.utc
       users = User.pluck(:aoc_id, :id).to_h.except(nil)
       stored_completions = Completion.joins(:user).pluck(:aoc_id, :day, :challenge)
 
-      @completions_from_api.each do |aoc_id, results|
+      api_completions.each_with_object([]) do |(aoc_id, results), to_insert|
         user_id = users[aoc_id.to_i]
-        next if user_id.nil?
+        next unless user_id # Unknown user
 
-        results["completion_day_level"].each do |day, challenges|
+        user_completions = results["completion_day_level"]
+        user_completions.each_with_object(to_insert) do |(day, challenges), completions|
           challenges.each do |challenge, value|
-            completion = {
+            # This helps limit the size of the INSERT query
+            # even if we have a ON CONFLICT DO NOTHING default
+            next if stored_completions.include? [aoc_id, day, challenge].map(&:to_i)
+
+            completions << {
               user_id:,
               day: day.to_i,
               challenge: challenge.to_i,
               completion_unix_time: value["get_star_ts"],
               created_at: now
             }
-
-            # This helps limit the size of the INSERT query in spite of the default ON CONFLICT DO NOTHING
-            @completions << completion unless [aoc_id, day, challenge].map(&:to_i).in?(stored_completions)
           end
         end
       end
-
-      Rails.logger.info "✔ Completions prepared for database import (total: #{@completions.length})"
     end
 
-    def insert_new_completions
-      if @completions.any?
-        Completion.insert_all(@completions)
-        Rails.logger.info "✔ #{@completions.size} new completions inserted"
-      else
-        Rails.logger.info "🤷 No completions to insert"
-      end
-    end
-
-    def update_fetch_api_end
-      now = Time.now.utc
-      @state.update(fetch_api_end: now)
-
-      Rails.logger.info "🏁 Completions update finished at #{now}"
+    def insert_into_db(completions)
+      Completion.insert_all(completions).count
     end
 
     def launch_cache_refresh

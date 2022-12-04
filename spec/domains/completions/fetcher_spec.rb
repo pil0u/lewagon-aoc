@@ -88,4 +88,23 @@ RSpec.describe Completions::Fetcher do
         and change { denis.completions.count }.from(0).to(6)
     end
   end
+
+  context "when we have no user for a participant of the leaderboard" do
+    let!(:denis) { nil }
+
+    it "doesn't fetch their Completions" do
+      expect { described_class.call }.
+        to change { Completion.count }.from(0).to(8)
+    end
+  end
+
+  context "when the process fails halfway through" do
+    before do
+      allow_any_instance_of(Net::HTTP).to receive(:request).and_raise
+    end
+
+    it "doesn't modify the DB" do
+      expect { described_class.call rescue nil }.not_to change { State.count }
+    end
+  end
 end

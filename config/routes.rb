@@ -30,8 +30,8 @@ Rails.application.routes.draw do
     get     "/",                    to: "pages#calendar",   as: :calendar
     get     "/city/:slug",          to: "cities#show",      as: :city
     get     "/day/:day",            to: "days#show",        as: :day, day: /[1-9]|1\d|2[0-5]/
-    get     "/day/:day/:challenge", to: "solutions#show",   as: :solution, day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: SolvedPuzzleConstraint.new
-    post    "/day/:day/:challenge", to: "solutions#create",                day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: SolvedPuzzleConstraint.new
+    get     "/day/:day/:challenge", to: "snippets#show",    as: :snippet, day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: SolvedPuzzleConstraint.new
+    post    "/day/:day/:challenge", to: "snippets#create",                day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: SolvedPuzzleConstraint.new
     get     "/the-wall",            to: "messages#index",   as: :messages
     post    "/the-wall",            to: "messages#create"
     get     "/scores/cities",       to: "scores#cities"

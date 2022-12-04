@@ -22,7 +22,7 @@
 
 <div class="my-4 flex flex-wrap justify-center gap-2">
   <% if @solved_part_one %>
-    <%= link_to solution_path(day: @day, challenge: 1), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
+    <%= link_to snippet_path(day: @day, challenge: 1), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
       <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
         Solutions
       </h3>
@@ -42,7 +42,7 @@
   <% end %>
 
   <% if @solved_part_two %>
-    <%= link_to solution_path(day: @day, challenge: 2), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
+    <%= link_to snippet_path(day: @day, challenge: 2), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
       <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
         Solutions
       </h3>

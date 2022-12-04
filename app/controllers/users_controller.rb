@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     set_updated_params
 
     if current_user.update(@params)
-      Achievements::UnlockJob.perform_later(:complete_setup, current_user)
+      # Achievements::UnlockJob.perform_later(:complete_setup, current_user)
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
       redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s

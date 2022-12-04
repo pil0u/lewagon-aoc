@@ -1,17 +1,18 @@
+# frozen_string_literal: true
+
 module Achievements
   class MassUnlocker
-
     class << self
       def call(...)
         new(...).call
       end
 
       def nature
-        @nature ||= self.name.split("::").last.gsub('MassUnlocker', '').underscore
+        @nature ||= name.split("::").last.gsub("MassUnlocker", "").underscore
       end
     end
 
-    def unlock_for!(users, at: Time.now)
+    def unlock_for!(users, at: Time.zone.now)
       return unless users.any?
 
       # Idempotency
@@ -21,9 +22,9 @@ module Achievements
 
       to_create = to_unlock_for.pluck(:id).map do |user_id|
         {
-          user_id: user_id,
+          user_id:,
           nature: self.class.nature,
-          unlocked_at: at,
+          unlocked_at: at
         }
       end
       Achievement.insert_all(to_create)

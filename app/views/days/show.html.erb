@@ -18,6 +18,8 @@
   </div>
 </div>
 
+<% if @day <= Aoc.latest_day %>
+
 <div class="my-4 flex flex-wrap justify-center gap-2">
   <% if @solved_part_one %>
     <%= link_to solution_path(day: @day, challenge: 1), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
@@ -70,3 +72,9 @@
     <%= render Scores::DailyUserRowComponent.with_collection(@users) %>
   </table>
 </div>
+
+<% else %>
+
+<span class="my-8 text-center">Puzzle is not released yet</span>
+
+<% end %>

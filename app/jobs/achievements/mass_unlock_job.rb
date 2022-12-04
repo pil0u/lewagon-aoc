@@ -4,8 +4,8 @@ class Achievements::MassUnlockJob < ApplicationJob
   queue_as :default
 
   def perform(nature)
-    unlocker = "Achievements::#{nature.classify}MassUnlocker".safe_constantize
-    raise "No Achievement MassUnlocker exist for nature #{nature.inspect}"
+    unlocker = "Achievements::#{nature.to_s.classify}MassUnlocker".safe_constantize
+    raise "No Achievement MassUnlocker exist for nature #{nature.inspect}" unless unlocker
     unlocker.call
   end
 end

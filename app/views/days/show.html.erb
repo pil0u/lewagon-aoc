@@ -67,13 +67,6 @@
       <th class="w-24 font-light strong">Score</th>
     </tr>
 
-    <% @users.each do |user| %>
-      <tr>
-        <td class="text-center"><%= user[:username] %></th>
-        <td><%= duration_as_text(user[:part_1]) %></td>
-        <td><%= duration_as_text(user[:part_2]) %></td>
-        <td><%= user[:score] %></td>
-      </tr>
-    <% end %>
+    <%= render Scores::DailyUserRowComponent.with_collection(@users) %>
   </table>
 </div>

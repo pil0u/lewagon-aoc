@@ -29,6 +29,6 @@ class DaysController < ApplicationController
       }
     end
 
-    @users.sort_by! { |user| [user[:score] * -1, user[:part_2], user[:part_1]] }
+    @users.sort_by! { |user| [user[:score] * -1, user[:part_2].nil? ? user[:part_1] : user[:part_2], user[:part_1]] }
   end
 end

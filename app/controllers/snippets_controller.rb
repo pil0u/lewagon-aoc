@@ -9,7 +9,7 @@ class SnippetsController < ApplicationController
 
   def create
     snippet = Snippet.new(
-      code: helpers.sanitize(snippet_params[:code]),
+      code: helpers.snippets_sanitizer(snippet_params[:code]),
       language: snippet_params[:language],
       user: current_user,
       day: params[:day],

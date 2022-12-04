@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 module Achievements
   class Unlocker
-
     class << self
       def call(...)
         new(...).call
       end
 
       def nature
-        @nature ||= self.name.split("::").last.gsub('Unlocker', '').underscore
+        @nature ||= name.split("::").last.gsub("Unlocker", "").underscore
       end
 
       def inherited(klass)
+        super
         # Prepending so we don't need to remember to include it in each implem
         klass.prepend Idempotency
       end
@@ -21,7 +23,7 @@ module Achievements
     end
     attr_reader :user
 
-    def unlock!(at: Time.now)
+    def unlock!(at: Time.zone.now)
       Achievement.create!(user: @user, nature: self.class.nature, unlocked_at: at)
     end
 
@@ -29,11 +31,12 @@ module Achievements
     module Idempotency
       def call
         return if already_has_achievement?(user)
+
         super
       end
 
       def already_has_achievement?(user)
-        user.achievements.where(nature: self.class.nature).exists?
+        user.achievements.exists?(nature: self.class.nature)
       end
     end
   end

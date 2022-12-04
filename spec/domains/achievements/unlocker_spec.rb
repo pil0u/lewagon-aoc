@@ -1,11 +1,13 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe Achievements::Unlocker do
   let(:unlocker) { MyTestUnlocker }
   let!(:user) { create :user }
 
   before do
-    stub_const('MyTestUnlocker', Class.new(described_class) { def call; unlock!; end })
+    stub_const("MyTestUnlocker", Class.new(described_class) { def call = unlock! })
   end
 
   it "creates an achievement of the correct nature for the user" do
@@ -13,12 +15,12 @@ RSpec.describe Achievements::Unlocker do
   end
 
   it "knows the nature of the achievement associated to the unlocker" do
-    expect(unlocker.nature).to eq('my_test')
+    expect(unlocker.nature).to eq("my_test")
   end
 
   context "when the user already has the achievement" do
     before do
-      user.achievements.create!(nature: 'my_test')
+      user.achievements.create!(nature: "my_test")
     end
 
     it "doesn't perform any check again" do

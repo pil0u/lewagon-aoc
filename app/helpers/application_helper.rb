@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def snippets_sanitizer(text)
-    sanitize(text).gsub!("&gt;", ">").gsub!("&lt;", "<")
+    sanitize(text).gsub("&gt;", ">").gsub("&lt;", "<")
   end
 
   def rouge(text, language)

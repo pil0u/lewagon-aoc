@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
 
   def create
     message = Message.new(
-      content: helpers.restrictive_sanitize(message_params[:content]),
+      content: helpers.messages_sanitizer(message_params[:content]),
       user: current_user
     )
 

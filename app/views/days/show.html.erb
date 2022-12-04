@@ -1,3 +1,80 @@
-<%= render PageTitleComponent.new(title: "Day #{@number}") %>
+<div class="text-lg flex flex-wrap flex-col sm:flex-row items-center sm:justify-between">
+  <div class="flex flex-wrap gap-x-6">
+    <h2 class="strong">Day <%= @day %></h2>
 
-<%= link_to "link to puzzle", Aoc.url(@number), target: :ext, class: "link-explicit link-external text-3xl text-center" %>
+    <% if @day <= Aoc.latest_day %>
+      <span>·</span>
+      <%= link_to "link to puzzle", Aoc.url(@day), target: :ext, class: "link-explicit link-external" %>
+    <% end %>
+  </div>
+
+  <div class="flex items-center gap-x-6">
+    <span>
+      <% if @silver_stars > 0 %>
+        <span class="text-aoc-silver"><%= @silver_stars %>*</span>
+      <% end %>
+      <span class="text-aoc-gold"><%= @gold_stars %>*</span>
+    </span>
+  </div>
+</div>
+
+<% if @day <= Aoc.latest_day %>
+
+<div class="my-4 flex flex-wrap justify-center gap-2">
+  <% if @solved_part_one %>
+    <%= link_to snippet_path(day: @day, challenge: 1), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
+      <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
+        Solutions
+      </h3>
+
+      <div class="h-3/5 flex flex-col justify-around">
+        <span class="flex items-center justify-center text-aoc-silver text-lg">
+          Part 1
+        </span>
+
+        <span class="flex items-center justify-center">
+          <%= @snippets_part_one %> shared
+        </span>
+      </div>
+    <% end %>
+  <% else %>
+    <span>Solve the puzzle to share your solution and access others'</span>
+  <% end %>
+
+  <% if @solved_part_two %>
+    <%= link_to snippet_path(day: @day, challenge: 2), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
+      <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
+        Solutions
+      </h3>
+
+      <div class="h-3/5 flex flex-col justify-around">
+        <span class="flex items-center justify-center text-aoc-gold text-lg">
+          Part 2
+        </span>
+
+        <span class="flex items-center justify-center">
+          <%= @snippets_part_two %> shared
+        </span>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="pb-2 block overflow-x-auto max-w-full">
+  <table class="mx-auto text-right">
+    <tr>
+      <th></th>
+      <th class="w-24 font-light text-aoc-silver">Part 1</th>
+      <th class="w-24 font-light text-aoc-gold">Part 2</th>
+      <th class="w-24 font-light strong">Score</th>
+    </tr>
+
+    <%= render Scores::DailyUserRowComponent.with_collection(@users) %>
+  </table>
+</div>
+
+<% else %>
+
+<span class="my-8 text-center">Puzzle is not released yet</span>
+
+<% end %>

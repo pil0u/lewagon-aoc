@@ -12,7 +12,17 @@ module ApplicationHelper
     end
   end
 
-  def restrictive_sanitize(text)
+  def messages_sanitizer(text)
     sanitize(text, tags: %w[b em del span sub sup], attributes: %w[style])
+  end
+
+  def snippets_sanitizer(text)
+    sanitize(text).gsub("&gt;", ">").gsub("&lt;", "<")
+  end
+
+  def rouge(text, language)
+    formatter = Rouge::Formatters::HTML.new
+    lexer = Rouge::Lexer.find(language)
+    formatter.format(lexer.lex(text))
   end
 end

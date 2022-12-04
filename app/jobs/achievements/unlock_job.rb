@@ -5,8 +5,8 @@ class Achievements::UnlockJob < ApplicationJob
 
   def perform(nature, user_id)
     user = User.find(user_id)
-    unlocker = "Achievements::#{nature.classify}Unlocker".safe_constantize
-    raise "No Achievement Unlocker exist for nature #{nature.inspect}"
+    unlocker = "Achievements::#{nature.to_s.classify}Unlocker".safe_constantize
+    raise "No Achievement Unlocker exist for nature #{nature.inspect}" unless unlocker
     unlocker.call(user)
   end
 end

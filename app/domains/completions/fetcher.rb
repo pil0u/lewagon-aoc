@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Completions
   class Fetcher
     def self.call(...)
@@ -33,12 +35,12 @@ module Completions
     private
 
     def log_timing
-      state = State.create(fetch_api_begin: Time.now)
+      state = State.create(fetch_api_begin: Time.zone.now)
       Rails.logger.info "🤖 Completions update started at #{state.fetch_api_begin}"
 
       yield
 
-      state.update(fetch_api_end: Time.now)
+      state.update(fetch_api_end: Time.zone.now)
       Rails.logger.info "🏁 Completions update finished at #{state.fetch_api_end}"
     end
 

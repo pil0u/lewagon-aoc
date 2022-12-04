@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SnippetsController < ApplicationController
   def show
     @day = params[:day]

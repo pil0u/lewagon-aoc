@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Devise sign in and sign out with OmniAuth
+  # Devise sign in and sign out with OmniAuth
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   devise_scope :user do
@@ -19,20 +19,20 @@ Rails.application.routes.draw do
     get "/", to: "pages#welcome"
   end
 
-  # Routes for authenticated + unconfirmed users
+  # Routes for authenticated + unconfirmed users
   authenticated :user, ->(user) { !user.confirmed? } do
     get   "/",  to: "pages#setup", as: :setup
     patch "/",  to: "users#update"
   end
 
-  # Routes for authenticated + confirmed users
+  # Routes for authenticated + confirmed users
   authenticated :user, ->(user) { user.confirmed? } do
     get     "/",                    to: "pages#calendar",   as: :calendar
     get     "/city/:slug",          to: "cities#show",      as: :city
     get     "/day/:day",            to: "days#show",        as: :day, day: /[1-9]|1\d|2[0-5]/
     get     "/day/:day/:challenge", to: "snippets#show",    as: :snippet, day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: SolvedPuzzleConstraint.new
     post    "/day/:day/:challenge", to: "snippets#create",                day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: SolvedPuzzleConstraint.new
-    get     "/the-wall",            to: "messages#index",   as: :messages
+    get     "/the-wall",            to: "messages#index", as: :messages
     post    "/the-wall",            to: "messages#create"
     get     "/scores/cities",       to: "scores#cities"
     get     "/scores/insanity",     to: "scores#insanity"

@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-class Scores::DailyUserRowComponent < ApplicationComponent
-  include ApplicationHelper
+module Scores
+  class DailyUserRowComponent < ApplicationComponent
+    include ApplicationHelper
 
-  with_collection_parameter :user
+    with_collection_parameter :user
 
-  def initialize(user:)
-    @user = user
+    def initialize(user:)
+      @user = user
+    end
   end
 end

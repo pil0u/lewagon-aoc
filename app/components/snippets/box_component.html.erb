@@ -1,3 +1,16 @@
-<div>
-  <span><%= @snippet.code %></span>
+<div class="w-5/6 px-4 py-2 flex flex-col self-center gap-y-1 bg-aoc-gray-darkest border border-aoc-gray-dark group">
+  <div class="flex justify-end">
+    <span class="px-2 text-sm bg-aoc-gray text-aoc-gray-darker font-semibold">
+      <%= Snippet::LANGUAGES[@snippet.language.to_sym] %>
+    </span>
+  </div>
+  <pre class="code-highlight text-sm whitespace-pre-wrap overflow-x-auto"><%= raw rouge(@snippet.code, @snippet.language) %></pre>
+
+  <div class="flex justify-end gap-x-2">
+    <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+
+    <em class="text-sm text-aoc-gray-dark">
+      - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
+    </em>
+  </div>
 </div>

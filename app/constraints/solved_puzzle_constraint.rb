@@ -2,6 +2,6 @@
 
 class SolvedPuzzleConstraint
   def matches?(request)
-    request.env["warden"].user.solved?(request.params[:day], request.params[:challenge])
+    request.env["warden"]&.user&.solved?(request.params[:day], request.params[:challenge])
   end
 end

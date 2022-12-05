@@ -1,6 +1,7 @@
-<div class="w-5/6 px-4 py-2 flex flex-col self-center gap-y-1 bg-aoc-gray-darkest border border-aoc-gray-dark group">
-  <div class="flex justify-end">
-    <span class="px-2 text-sm bg-aoc-gray text-aoc-gray-darker font-semibold">
+<div id="<%= @snippet.id %>" class="w-5/6 px-4 py-2 flex flex-col self-center gap-y-1 bg-aoc-gray-darkest border border-aoc-gray-dark group">
+  <div class="flex justify-end text-sm gap-x-3">
+    <%= link_to "⚓", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id) %>
+    <span class="px-2 bg-aoc-gray text-aoc-gray-darker font-semibold">
       <%= Snippet::LANGUAGES[@snippet.language.to_sym] %>
     </span>
   </div>

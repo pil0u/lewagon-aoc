@@ -89,7 +89,7 @@ module Completions
 
       api_completions.each_with_object([]) do |(aoc_id, results), to_insert|
         user_id = users[aoc_id.to_i]
-        next unless user_id # Unknown user
+        next if user_id.nil? # Unknown user
 
         user_completions = results["completion_day_level"]
         user_completions.each_with_object(to_insert) do |(day, challenges), completions|

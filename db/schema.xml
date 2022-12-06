@@ -205,7 +205,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="101" y="551" name="batches">
+  <table x="101" y="851" name="batches">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -452,6 +452,44 @@
     </row>
     <row name="created_at" null="1" autoincrement="0">
       <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="user_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="101" y="551" name="snippets">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="challenge" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="code" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="day" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="language" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
       <default>NULL</default>
     </row>
     <row name="updated_at" null="1" autoincrement="0">

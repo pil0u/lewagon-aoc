@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :messages, dependent: :nullify
   has_many :achievements, dependent: :destroy
 
+
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
@@ -48,6 +49,10 @@ class User < ApplicationRecord
 
   def moderator?
     uid.in?(MODERATORS.values)
+  end
+
+  def solved?(day, challenge)
+    Completion.where(user: self, day:, challenge:).any?
   end
 
   def sync_status

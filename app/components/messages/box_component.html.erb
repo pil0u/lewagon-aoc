@@ -1,6 +1,6 @@
 <div class="<%= "self-end" if @message.user == @user %> w-5/6 max-w-lg px-4 py-2 flex flex-col gap-y-1 bg-aoc-gray-darkest border border-aoc-gray-dark group">
   <p class="break-words">
-    <%= restrictive_sanitize(@message.content) %>
+    <%= messages_sanitizer(@message.content) %>
   </p>
 
   <div class="flex justify-end gap-x-2">

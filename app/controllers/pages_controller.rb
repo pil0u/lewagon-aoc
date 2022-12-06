@@ -55,8 +55,8 @@ class PagesController < ApplicationController
     @confirmed_users = User.confirmed.count
     @participating_users = User.distinct(:id).joins(:completions).count
 
-    @silver_stars = Completion.where(challenge: 1).count
     @gold_stars = Completion.where(challenge: 2).count
+    @silver_stars = Completion.where(challenge: 1).count - @gold_stars
 
     @daily_completers = Completion.group(:day, :challenge).order(:day, :challenge).count # { [12, 1]: 5, [12, 2]: 8, ... }
                                   .group_by { |day_challenge, _| day_challenge.first }   # { 12: [ [[12, 1], 5], [[12, 2], 8] ], ... }

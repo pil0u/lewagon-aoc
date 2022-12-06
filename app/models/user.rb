@@ -50,6 +50,10 @@ class User < ApplicationRecord
     uid.in?(MODERATORS.values)
   end
 
+  def solved?(day, challenge)
+    Completion.where(user: self, day:, challenge:).any?
+  end
+
   def sync_status
     return "KO" if aoc_id.nil? || !accepted_coc
     return "Pending" unless synced

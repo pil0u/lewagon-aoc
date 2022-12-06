@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_03_074923) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_04_072935) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -191,6 +191,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_074923) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "snippets", force: :cascade do |t|
+    t.integer "challenge"
+    t.text "code"
+    t.datetime "created_at", null: false
+    t.integer "day"
+    t.text "language"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "day", "challenge", "language"], name: "index_snippets_on_user_id_and_day_and_challenge_and_language", unique: true
+    t.index ["user_id"], name: "index_snippets_on_user_id"
+  end
+
   create_table "solo_points", force: :cascade do |t|
     t.string "cache_fingerprint", null: false
     t.integer "challenge"
@@ -279,6 +291,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_03_074923) do
   add_foreign_key "insanity_points", "users"
   add_foreign_key "insanity_scores", "users"
   add_foreign_key "messages", "users"
+  add_foreign_key "snippets", "users"
   add_foreign_key "solo_points", "users"
   add_foreign_key "solo_scores", "users"
   add_foreign_key "squad_points", "squads"

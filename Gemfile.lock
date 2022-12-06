@@ -265,6 +265,7 @@ GEM
     reverse_markdown (2.1.1)
       nokogiri
     rexml (3.2.5)
+    rouge (4.0.0)
     rspec-core (3.12.0)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.0)
@@ -411,6 +412,7 @@ DEPENDENCIES
   puma (~> 5.6)
   rack-mini-profiler (~> 2.0)
   rails (~> 7.0.3)
+  rouge (~> 4.0)
   rspec-rails (~> 6.0)
   rubocop (~> 1.31)
   rubocop-performance (~> 1.14)

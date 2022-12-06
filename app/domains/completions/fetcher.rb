@@ -35,12 +35,12 @@ module Completions
     private
 
     def log_timing
-      state = State.create(fetch_api_begin: Time.zone.now)
+      state = State.create(fetch_api_begin: Time.now.utc)
       Rails.logger.info "🤖 Completions update started at #{state.fetch_api_begin}"
 
       yield
 
-      state.update(fetch_api_end: Time.zone.now)
+      state.update(fetch_api_end: Time.now.utc)
       Rails.logger.info "🏁 Completions update finished at #{state.fetch_api_end}"
     end
 

@@ -23,7 +23,7 @@ module Achievements
     end
     attr_reader :user
 
-    def unlock!(at: Time.zone.now)
+    def unlock!(at: Time.now.utc)
       Achievement.create!(user: @user, nature: self.class.nature, unlocked_at: at)
     end
 

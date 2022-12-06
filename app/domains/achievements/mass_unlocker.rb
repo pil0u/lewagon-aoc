@@ -12,7 +12,7 @@ module Achievements
       end
     end
 
-    def unlock_for!(users, at: Time.zone.now)
+    def unlock_for!(users, at: Time.now.utc)
       return unless users.any?
 
       # Idempotency

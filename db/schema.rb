@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_04_072935) do
 
   create_table "achievements", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "nature"
+    t.text "nature"
     t.datetime "unlocked_at", precision: nil
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false

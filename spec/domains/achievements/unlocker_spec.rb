@@ -11,7 +11,7 @@ RSpec.describe Achievements::Unlocker do
   end
 
   it "creates an achievement of the correct nature for the user" do
-    expect { unlocker.call(user) }.to change { user.achievements.count }.from(0).to(1)
+    expect { unlocker.call(user) }.to change { user.achievements.where(nature: 'my_test').count }.from(0).to(1)
   end
 
   it "knows the nature of the achievement associated to the unlocker" do

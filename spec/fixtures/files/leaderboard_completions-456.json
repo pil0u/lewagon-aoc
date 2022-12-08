@@ -1,0 +1,56 @@
+{
+  "members": {
+    "151323": {
+      "completion_day_level": {
+        "1": {
+          "2": {
+            "star_index": 118195,
+            "get_star_ts": 1669918892
+          },
+          "1": {
+            "star_index": 117923,
+            "get_star_ts": 1669918804
+          }
+        },
+        "4": {
+          "2": {
+            "get_star_ts": 1670130339,
+            "star_index": 782719
+          },
+          "1": {
+            "get_star_ts": 1670130271,
+            "star_index": 781689
+          }
+        },
+        "3": {
+          "1": {
+            "get_star_ts": 1670043972,
+            "star_index": 511896
+          },
+          "2": {
+            "get_star_ts": 1670044230,
+            "star_index": 514878
+          }
+        },
+        "2": {
+          "2": {
+            "get_star_ts": 1669959061,
+            "star_index": 222107
+          },
+          "1": {
+            "star_index": 212535,
+            "get_star_ts": 1669958282
+          }
+        }
+      },
+      "id": 151323,
+      "last_star_ts": 1670130339,
+      "global_score": 0,
+      "local_score": 62,
+      "name": "Aquaj",
+      "stars": 8
+    }
+  },
+  "owner_id": 151323,
+  "event": "2022"
+}

@@ -8,6 +8,10 @@ module Scores
 
     private
 
+    def after_compute
+      # Achievements::MassUnlockJob.perform_later(:raising_the_bar)
+    end
+
     def cache_key
       @cache_key ||= [
         State.maximum(:fetch_api_end),

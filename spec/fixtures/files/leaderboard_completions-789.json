@@ -1,0 +1,46 @@
+{
+  "members": {
+    "1675967": {
+      "stars": 6,
+      "name": "endenis",
+      "local_score": 44,
+      "global_score": 0,
+      "id": 1675967,
+      "last_star_ts": 1670062872,
+      "completion_day_level": {
+        "2": {
+          "2": {
+            "star_index": 308250,
+            "get_star_ts": 1669975006
+          },
+          "1": {
+            "get_star_ts": 1669973902,
+            "star_index": 302009
+          }
+        },
+        "3": {
+          "2": {
+            "star_index": 598289,
+            "get_star_ts": 1670062872
+          },
+          "1": {
+            "star_index": 595993,
+            "get_star_ts": 1670062338
+          }
+        },
+        "1": {
+          "2": {
+            "star_index": 747,
+            "get_star_ts": 1669886230
+          },
+          "1": {
+            "star_index": 0,
+            "get_star_ts": 1669886056
+          }
+        }
+      }
+    }
+  },
+  "owner_id": 151323,
+  "event": "2022"
+}

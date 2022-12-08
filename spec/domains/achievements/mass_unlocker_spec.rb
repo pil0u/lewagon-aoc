@@ -20,7 +20,7 @@ RSpec.describe Achievements::MassUnlocker do
   end
 
   it "knows the nature of the achievement associated to the unlocker" do
-    expect(unlocker.nature).to eq("my_test")
+    expect(unlocker.nature).to eq(:my_test)
   end
 
   context "when some of the users already have the achievement" do

@@ -8,7 +8,7 @@ module Achievements
       end
 
       def nature
-        @nature ||= name.split("::").last.gsub("MassUnlocker", "").underscore
+        @nature ||= name.split("::").last.gsub("MassUnlocker", "").underscore.to_sym
       end
     end
 

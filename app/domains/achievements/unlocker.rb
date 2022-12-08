@@ -8,7 +8,7 @@ module Achievements
       end
 
       def nature
-        @nature ||= name.split("::").last.gsub("Unlocker", "").underscore
+        @nature ||= name.split("::").last.gsub("Unlocker", "").underscore.to_sym
       end
 
       def inherited(klass)

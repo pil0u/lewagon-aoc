@@ -15,7 +15,7 @@ RSpec.describe Achievements::Unlocker do
   end
 
   it "knows the nature of the achievement associated to the unlocker" do
-    expect(unlocker.nature).to eq("my_test")
+    expect(unlocker.nature).to eq(:my_test)
   end
 
   context "when the user already has the achievement" do

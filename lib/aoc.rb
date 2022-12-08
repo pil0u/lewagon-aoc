@@ -33,7 +33,7 @@ class Aoc
   end
 
   def self.lock_time
-    Time.new(2022, 12, 8, 11, 30, 0, "UTC")
+    Time.new(2022, 12, 9, 17, 30, 0, "UTC")
   end
 
   def self.next_puzzle_time

@@ -25,14 +25,14 @@ RSpec.describe Scores::SoloScores do
   it "totals the points from each challenge for each user" do
     expect(described_class.get).to contain_exactly(
       hash_including(score: 149, user_id: 1),
-      hash_including(score: 65, user_id: 2),
+      hash_including(score: 65, user_id: 2)
     )
   end
 
   it "includes the score of the current day" do
     expect(described_class.get).to contain_exactly(
       hash_including(current_day_score: 50, user_id: 1),
-      hash_including(current_day_score: 40, user_id: 2),
+      hash_including(current_day_score: 40, user_id: 2)
     )
   end
 
@@ -73,7 +73,7 @@ RSpec.describe Scores::SoloScores do
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
             hash_including(user_id: 1, current_day_score: 0),
-            hash_including(user_id: 2, current_day_score: 0),
+            hash_including(user_id: 2, current_day_score: 0)
           )
         end
 

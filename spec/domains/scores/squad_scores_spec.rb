@@ -28,14 +28,14 @@ RSpec.describe Scores::SquadScores do
   it "groups the scores of squad members into the squad score" do
     expect(described_class.get).to contain_exactly(
       hash_including(score: 138, squad_id: 1),
-      hash_including(score: 140, squad_id: 2),
+      hash_including(score: 140, squad_id: 2)
     )
   end
 
   it "includes the score of the current day" do
     expect(described_class.get).to contain_exactly(
       hash_including(current_day_score: 60, squad_id: 1),
-      hash_including(current_day_score: 40, squad_id: 2),
+      hash_including(current_day_score: 40, squad_id: 2)
     )
   end
 
@@ -48,7 +48,7 @@ RSpec.describe Scores::SquadScores do
 
     it "sets their score of the day to 0" do
       expect(described_class.get).to include(
-        hash_including(current_day_score: 0, squad_id: 2),
+        hash_including(current_day_score: 0, squad_id: 2)
       )
     end
   end
@@ -131,7 +131,7 @@ RSpec.describe Scores::SquadScores do
           expect(described_class.get).to contain_exactly(
             { score: 148, squad_id: 1, current_day_score: 70 },
             { score: 110, squad_id: 2, current_day_score: 50 },
-            { score: 50, squad_id: 3, current_day_score: 10 },
+            { score: 50, squad_id: 3, current_day_score: 10 }
           )
         end
 
@@ -154,7 +154,7 @@ RSpec.describe Scores::SquadScores do
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
             hash_including(squad_id: 1, current_day_score: 0),
-            hash_including(squad_id: 2, current_day_score: 0),
+            hash_including(squad_id: 2, current_day_score: 0)
           )
         end
 

@@ -73,7 +73,7 @@ RSpec.describe Scores::InsanityScores do
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
             hash_including(user_id: 1, current_day_score: 0),
-            hash_including(user_id: 2, current_day_score: 0),
+            hash_including(user_id: 2, current_day_score: 0)
           )
         end
 

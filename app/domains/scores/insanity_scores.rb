@@ -30,10 +30,10 @@ module Scores
         .group_by { |p| p[:user_id] }
         .reverse_merge(default_points)
         .map do |user_id, user_points|
-          total_score = user_points.sum { |points| points[:score] }
+          total_score = user_points.sum { |point| point[:score] }
 
-          day_points = user_points.select { |points| points[:day] == Aoc.latest_day }
-          day_score = day_points.sum { |points| points[:score] }
+          day_points = user_points.select { |point| point[:day] == Aoc.latest_day }
+          day_score = day_points.sum { |point| point[:score] }
 
           { user_id:, score: total_score, current_day_score: day_score }
         end

@@ -47,8 +47,8 @@ RSpec.describe Scores::UserRanksPresenter do
 
   let(:input) do
     [
-      { score: 99, user_id: 1 },
-      { score: 25, user_id: 2 }
+      { score: 99, user_id: 1, current_day_score: 50 },
+      { score: 25, user_id: 2, current_day_score: 40 }
     ]
   end
 
@@ -87,13 +87,15 @@ RSpec.describe Scores::UserRanksPresenter do
       hash_including(
         uid: 1,
         silver_stars: 1,
-        gold_stars: 2
+        gold_stars: 2,
+        daily_score: 50
       ),
       hash_including(
         uid: 2,
         username: "pil0u",
         silver_stars: 0,
-        gold_stars: 3
+        gold_stars: 3,
+        daily_score: 40
       )
     )
   end

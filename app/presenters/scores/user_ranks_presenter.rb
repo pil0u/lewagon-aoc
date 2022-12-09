@@ -50,8 +50,8 @@ module Scores
       {
         silver_stars: silver,
         gold_stars: gold,
-        score: score[:score]
-        # daily_score: 100 #TODO: Implement
+        score: score[:score],
+        daily_score: score[:current_day_score]
       }
     end
   end

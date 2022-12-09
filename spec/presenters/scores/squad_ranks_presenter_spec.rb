@@ -13,9 +13,9 @@ RSpec.describe Scores::SquadRanksPresenter do
 
   let(:input) do
     [
-      { score: 78, squad_id: 1 },
-      { score: 100, squad_id: 2 },
-      { score: 0, squad_id: 3 }
+      { score: 78, squad_id: 1, current_day_score: 20 },
+      { score: 100, squad_id: 2, current_day_score: 50 },
+      { score: 0, squad_id: 3, current_day_score: 0 }
     ]
   end
 
@@ -39,18 +39,18 @@ RSpec.describe Scores::SquadRanksPresenter do
 
   it "completes the squad stats" do
     expect(described_class.new(input).ranks).to contain_exactly(
-      hash_including(id: 1, total_members: 2),
-      hash_including(id: 2, total_members: 1),
-      hash_including(id: 3, total_members: 0)
+      hash_including(id: 1, total_members: 2, daily_score: 20),
+      hash_including(id: 2, total_members: 1, daily_score: 50),
+      hash_including(id: 3, total_members: 0, daily_score: 0)
     )
   end
 
   context "in case of equality" do
     let(:input) do
       [
-        { score: 78, squad_id: 1 },
-        { score: 100, squad_id: 2 },
-        { score: 100, squad_id: 3 }
+        { score: 78, squad_id: 1, current_day_score: 20 },
+        { score: 100, squad_id: 2, current_day_score: 50 },
+        { score: 100, squad_id: 3, current_day_score: 100 }
       ]
     end
 

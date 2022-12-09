@@ -38,7 +38,7 @@ module Scores
       score = scores_per_squad[squad.id] || { score: 0 }
       {
         score: score[:score],
-        # daily_score: 200      #TODO: Implement
+        daily_score: score[:current_day_score],
         total_members: squad.users.size
       }
     end

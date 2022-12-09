@@ -13,20 +13,44 @@ RSpec.describe Scores::SquadScores do
     [
       { score: 53, squad_id: 1, day: 1, challenge: 1 },
       { score: 25, squad_id: 1, day: 1, challenge: 2 },
+      { score: 60, squad_id: 1, day: 2, challenge: 1 },
       { score: 50, squad_id: 2, day: 1, challenge: 1 },
-      { score: 50, squad_id: 2, day: 1, challenge: 2 }
+      { score: 50, squad_id: 2, day: 1, challenge: 2 },
+      { score: 40, squad_id: 2, day: 2, challenge: 1 }
     ]
   end
 
   before do
+    allow(Aoc).to receive(:latest_day).and_return(2)
     allow(Scores::SquadPoints).to receive(:get).and_return(squad_points).once
   end
 
   it "groups the scores of squad members into the squad score" do
     expect(described_class.get).to contain_exactly(
-      { score: 78, squad_id: 1 },
-      { score: 100, squad_id: 2 }
+      hash_including(score: 138, squad_id: 1),
+      hash_including(score: 140, squad_id: 2),
     )
+  end
+
+  it "includes the score of the current day" do
+    expect(described_class.get).to contain_exactly(
+      hash_including(current_day_score: 60, squad_id: 1),
+      hash_including(current_day_score: 40, squad_id: 2),
+    )
+  end
+
+  context "when a squad has no point for the day" do
+    before do
+      squad_points.delete(
+        squad_points.find { |score| score[:day] == 2 && score[:squad_id] == 2 }
+      )
+    end
+
+    it "sets their score of the day to 0" do
+      expect(described_class.get).to include(
+        hash_including(current_day_score: 0, squad_id: 2),
+      )
+    end
   end
 
   describe "caching" do
@@ -57,16 +81,18 @@ RSpec.describe Scores::SquadScores do
         let(:new_squad_points) do
           [
             { score: 53, squad_id: 1, day: 1, challenge: 1 },
-            { score: 50, squad_id: 1, day: 1, challenge: 2 },
+            { score: 25, squad_id: 1, day: 1, challenge: 2 },
+            { score: 70, squad_id: 1, day: 2, challenge: 1 },
             { score: 50, squad_id: 2, day: 1, challenge: 1 },
-            { score: 50, squad_id: 2, day: 1, challenge: 2 }
+            { score: 50, squad_id: 2, day: 1, challenge: 2 },
+            { score: 60, squad_id: 2, day: 2, challenge: 1 }
           ]
         end
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
-            { score: 103, squad_id: 1 },
-            { score: 100, squad_id: 2 }
+            { score: 148, squad_id: 1, current_day_score: 70 },
+            { score: 160, squad_id: 2, current_day_score: 60 }
           )
         end
 
@@ -91,17 +117,21 @@ RSpec.describe Scores::SquadScores do
           [
             { score: 53, squad_id: 1, day: 1, challenge: 1 },
             { score: 25, squad_id: 1, day: 1, challenge: 2 },
-            { score: 50, squad_id: 2, day: 1, challenge: 1 },
-            { score: 50, squad_id: 2, day: 1, challenge: 2 },
-            { score: 50, squad_id: 3, day: 1, challenge: 1 }
+            { score: 70, squad_id: 1, day: 2, challenge: 1 },
+            { score: 30, squad_id: 2, day: 1, challenge: 1 },
+            { score: 30, squad_id: 2, day: 1, challenge: 2 },
+            { score: 50, squad_id: 2, day: 2, challenge: 1 },
+            { score: 20, squad_id: 3, day: 1, challenge: 1 },
+            { score: 20, squad_id: 3, day: 1, challenge: 2 },
+            { score: 10, squad_id: 3, day: 2, challenge: 1 }
           ]
         end
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
-            { score: 78, squad_id: 1 },
-            { score: 100, squad_id: 2 },
-            { score: 50, squad_id: 3 }
+            { score: 148, squad_id: 1, current_day_score: 70 },
+            { score: 110, squad_id: 2, current_day_score: 50 },
+            { score: 50, squad_id: 3, current_day_score: 10 },
           )
         end
 
@@ -112,6 +142,29 @@ RSpec.describe Scores::SquadScores do
 
         it "creates new cache records" do
           expect { described_class.get }.to change(Cache::SquadScore, :count).from(2).to(5)
+        end
+      end
+
+      context "when we moved to a new AoC day" do
+        before do
+          allow(Aoc).to receive(:latest_day).and_return(3)
+          allow(Scores::SquadPoints).to receive(:get).and_return(squad_points)
+        end
+
+        it "doesn't provide stale results" do
+          expect(described_class.get).to contain_exactly(
+            hash_including(squad_id: 1, current_day_score: 0),
+            hash_including(squad_id: 2, current_day_score: 0),
+          )
+        end
+
+        it "recomputes" do
+          expect_any_instance_of(described_class).to receive(:compute).and_call_original
+          described_class.get
+        end
+
+        it "creates new cache records" do
+          expect { described_class.get }.to change(Cache::SquadScore, :count).from(2).to(4)
         end
       end
     end

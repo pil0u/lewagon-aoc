@@ -26,8 +26,11 @@ module Scores
           next if squad_id.nil?
 
           total_score = squad_points.sum { |points| points[:score] }
-          day_score = squad_points.find { |points| points[:day] == Aoc.latest_day } || {}
-          { squad_id:, score: total_score, current_day_score: day_score.fetch(:score, 0) }
+
+          day_points = squad_points.select { |points| points[:day] == Aoc.latest_day }
+          day_score = day_points.sum { |points| points[:score] }
+
+          { squad_id:, score: total_score, current_day_score: day_score }
         end
     end
   end

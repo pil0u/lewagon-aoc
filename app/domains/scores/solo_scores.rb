@@ -27,8 +27,11 @@ module Scores
         .reverse_merge(default_points)
         .map do |user_id, user_points|
           total_score = user_points.sum { |point| point[:score] }
-          day_score = user_points.find { |points| points[:day] == Aoc.latest_day } || {}
-          { user_id:, score: total_score, current_day_score: day_score.fetch(:score, 0) }
+
+          day_points = user_points.select { |points| points[:day] == Aoc.latest_day }
+          day_score = day_points.sum { |points| points[:score] }
+
+          { user_id:, score: total_score, current_day_score: day_score }
         end
     end
   end

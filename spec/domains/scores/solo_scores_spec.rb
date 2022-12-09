@@ -11,18 +11,28 @@ RSpec.describe Scores::SoloScores do
     [
       { score: 50, user_id: 1, day: 1, challenge: 1 },
       { score: 49, user_id: 1, day: 1, challenge: 2 },
-      { score: 25, user_id: 2, day: 1, challenge: 1 }
+      { score: 50, user_id: 1, day: 2, challenge: 1 },
+      { score: 25, user_id: 2, day: 1, challenge: 1 },
+      { score: 40, user_id: 2, day: 2, challenge: 1 }
     ]
   end
 
   before do
+    allow(Aoc).to receive(:latest_day).and_return(2)
     allow(Scores::SoloPoints).to receive(:get).and_return(solo_points)
   end
 
   it "totals the points from each challenge for each user" do
     expect(described_class.get).to contain_exactly(
-      { score: 99, user_id: 1 },
-      { score: 25, user_id: 2 }
+      hash_including(score: 149, user_id: 1),
+      hash_including(score: 65, user_id: 2),
+    )
+  end
+
+  it "includes the score of the current day" do
+    expect(described_class.get).to contain_exactly(
+      hash_including(current_day_score: 50, user_id: 1),
+      hash_including(current_day_score: 40, user_id: 2),
     )
   end
 
@@ -31,7 +41,7 @@ RSpec.describe Scores::SoloScores do
 
     it "still includes it in the scores with 0 points" do
       expect(described_class.get).to include(
-        { score: 0, user_id: 3 }
+        { score: 0, user_id: 3, current_day_score: 0 }
       )
     end
   end
@@ -53,6 +63,28 @@ RSpec.describe Scores::SoloScores do
       it "doesn't do any computation" do
         expect_any_instance_of(described_class).not_to receive(:compute)
         described_class.get
+      end
+
+      context "when we moved to a new AoC day" do
+        before do
+          allow(Aoc).to receive(:latest_day).and_return(3)
+        end
+
+        it "doesn't provide stale results" do
+          expect(described_class.get).to contain_exactly(
+            hash_including(user_id: 1, current_day_score: 0),
+            hash_including(user_id: 2, current_day_score: 0),
+          )
+        end
+
+        it "recomputes" do
+          expect_any_instance_of(described_class).to receive(:compute).and_call_original
+          described_class.get
+        end
+
+        it "creates new cache records" do
+          expect { described_class.get }.to change(Cache::SoloScore, :count).from(2).to(4)
+        end
       end
     end
   end

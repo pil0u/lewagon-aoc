@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_09_073449) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_09_081123) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -219,6 +219,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_073449) do
   create_table "solo_scores", force: :cascade do |t|
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
+    t.integer "current_day_score"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false

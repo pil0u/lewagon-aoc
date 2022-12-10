@@ -31,44 +31,49 @@ module Scores
         compute_score(city_id, user_points)
       end
     end
-  end
 
-  def compute_score(city_id, user_points)
-    return if city_id.nil?
+    def compute_score(city_id, user_points)
+      return if city_id.nil?
 
-    countable_user_count = cities[city_id].top_contributors
+      countable_user_count = cities[city_id].top_contributors
 
-    per_challenge = user_points.group_by { |points| [points[:day], points[:challenge]] }
-    per_challenge = per_challenge.map do |challenge, contributions|
-      score = compute_challenge_score(challenge, contributions)
+      per_challenge = user_points.group_by { |points| [points[:day], points[:challenge]] }
+      per_challenge = per_challenge.map do |challenge, contributions|
+        score = compute_challenge_score(challenge, contributions, to_count: countable_user_count)
+
+        score
+      end
+
+      total_score = per_challenge.pluck(:average_score).sum
+      current_day = per_challenge.select { |point| point[:day] == Aoc.latest_day }
+      part_1 = current_day.find { |point| point[:challenge] == 1 } || {}
+      part_2 = current_day.find { |point| point[:challenge] == 2 } || {}
+
+      {
+        city_id:,
+        score: total_score.ceil,
+        current_day_part_1_contributors: part_1[:contributors]&.count || 0,
+        current_day_part_2_contributors: part_2[:contributors]&.count || 0,
+        current_day_score: current_day.pluck(:average_score).sum
+      }
+    end
+
+    def compute_challenge_score(challenge, contributions, to_count:)
+      countable_scores = contributions
+        .pluck(:score)
+        .sort_by { |score| score * -1 } # * -1 to reverse without another iteration
+        .slice(0, to_count)
 
       # If countable_scores < countable_user_count, it behaves as if the
       # missing scores were 0
-      score[:average_score] = score[:total_score].to_f / countable_user_count
+      avg = countable_scores.sum.to_f / to_count
 
-      score
+      day, challenge = challenge
+      { day: day, challenge: challenge, total_score: countable_scores.sum, average_score: avg, contributors: contributions.pluck(:user_id) }
     end
 
-    total_score = per_chall.pluck(:average_score).sum
-    current_day = per_chall.select { |point| point[:day] == Aoc.latest_day }
-    part_1 = current_day.find { |point| point[:challenge] == 1 } || {}
-    part_2 = current_day.find { |point| point[:challenge] == 2 } || {}
-
-    {
-      city_id:,
-      score: total_score.ceil,
-      current_day_part_1_contributors: part_1[:contributors]&.count || 0,
-      current_day_part_2_contributors: part_2[:contributors]&.count || 0,
-      current_day_score: current_day.pluck(:average_score).sum
-    }
-  end
-
-  def compute_challenge_score(challenge, contributions)
-    countable_scores = contributions
-      .pluck(:score)
-      .sort_by { |score| score * -1 } # * -1 to reverse without another iteration
-      .slice(0, countable_user_count)
-
-    { day: day, challenge: challenge, total_score: countable_scores.sum, contributors: points.pluck(:user_id) }
+    def cities
+      @cities ||= City.all.index_by(&:id)
+    end
   end
 end

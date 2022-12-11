@@ -5,3 +5,7 @@ en:
         aoc_id: "Advent of Code ID"
       squad:
         pin: "Squad PIN"
+  achievements:
+    welcome_to_the_party:
+      title: "Welcome to the party 🎉"
+      description: "You properly synced your AoC account with the platform"

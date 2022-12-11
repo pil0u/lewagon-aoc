@@ -28,6 +28,7 @@ module Completions
         end
       end
 
+      unlock_achievements
       launch_cache_refresh
       true
     end
@@ -112,6 +113,10 @@ module Completions
 
     def insert_into_db(completions)
       Completion.insert_all(completions).count
+    end
+
+    def unlock_achievements
+      Achievements::MassUnlockJob.perform_later(:welcome_to_the_party)
     end
 
     def launch_cache_refresh

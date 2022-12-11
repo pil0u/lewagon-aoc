@@ -78,7 +78,15 @@
   <% end %>
 </div>
 
-<div class="pb-2 block overflow-x-auto max-w-full">
+<% if @achievements.any? %>
+
+<div class="my-4 flex flex-wrap gap-x-6 justify-center">
+  <%= render Achievements::UnlockedComponent.with_collection(@achievements) %>
+</div>
+
+<% end %>
+
+<div class="my-4 pb-2 block overflow-x-auto max-w-full">
   <table class="w-[30rem] mx-auto text-right leading-tight">
     <tr>
       <th rowspan="2" class="align-bottom font-light">Day</th>

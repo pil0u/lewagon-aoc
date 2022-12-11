@@ -26,6 +26,8 @@ class UsersController < ApplicationController
     cities = city_presenter.ranks
     @city_stats = cities.find { |h| h[:id] == @user.city_id }
 
+    @achievements = @user.achievements.order(unlocked_at: :desc).pluck(:nature)
+
     @latest_day = Aoc.latest_day
     @daily_completions = Array.new(@latest_day) { [nil, nil] }
 

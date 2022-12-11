@@ -13,9 +13,9 @@ RSpec.describe Scores::CityRanksPresenter do
 
   let(:input) do
     [
-      { score: 125, city_id: 1 },
-      { score: 126, city_id: 2 },
-      { score: 0,   city_id: 3 }
+      { score: 125, city_id: 1, current_day_part_1_contributors: 3, current_day_part_2_contributors: 2 },
+      { score: 126, city_id: 2, current_day_part_1_contributors: 4, current_day_part_2_contributors: 1 },
+      { score: 0,   city_id: 3, current_day_part_1_contributors: 2, current_day_part_2_contributors: 1 }
     ]
   end
 
@@ -39,9 +39,12 @@ RSpec.describe Scores::CityRanksPresenter do
 
   it "completes the city stats" do
     expect(described_class.new(input).ranks).to contain_exactly(
-      hash_including(id: 1, total_members: 2, top_contributors: 10),
-      hash_including(id: 2, total_members: 1, top_contributors: 10),
-      hash_including(id: 3, total_members: 0, top_contributors: 15)
+      hash_including(id: 1, total_members: 2, top_contributors: 10,
+        daily_contributors_part_1: 3, daily_contributors_part_2: 2),
+      hash_including(id: 2, total_members: 1, top_contributors: 10,
+        daily_contributors_part_1: 4, daily_contributors_part_2: 1),
+      hash_including(id: 3, total_members: 0, top_contributors: 15,
+        daily_contributors_part_1: 2, daily_contributors_part_2: 1),
     )
   end
 
@@ -57,8 +60,8 @@ RSpec.describe Scores::CityRanksPresenter do
     it "ranks the cities properly" do
       expect(described_class.new(input).ranks).to match(
         [
-          hash_including(id: 2, score: 126),
           hash_including(id: 1, score: 126),
+          hash_including(id: 2, score: 126),
           hash_including(id: 3, score: 120)
         ]
       )

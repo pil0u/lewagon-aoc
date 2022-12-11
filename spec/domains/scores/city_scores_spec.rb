@@ -7,13 +7,15 @@ RSpec.describe Scores::CityScores do
 
   let(:bordeaux) { create :city, name: "Bordeaux" }
   let(:brussels) { create :city, name: "Brussels" }
-  let(:city_points) { [
-    { day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96, score: 8.00 },
-    { day: 1, challenge: 2, city_id: brussels.id, contributor_count: 1, total_score: 48, score: 4.00 },
-    { day: 2, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 78, score: 6.50 },
+  let(:city_points) do
+    [
+      { day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96, score: 8.00 },
+      { day: 1, challenge: 2, city_id: brussels.id, contributor_count: 1, total_score: 48, score: 4.00 },
+      { day: 2, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 78, score: 6.50 },
 
-    { day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 },
-  ] }
+      { day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 }
+    ]
+  end
 
   before do
     allow(Aoc).to receive(:latest_day).and_return(2)
@@ -23,14 +25,14 @@ RSpec.describe Scores::CityScores do
   it "sums the challenge scores into a total score for each city" do
     expect(described_class.get).to contain_exactly(
       hash_including(city_id: brussels.id, score: 19),
-      hash_including(city_id: bordeaux.id, score: 5),
+      hash_including(city_id: bordeaux.id, score: 5)
     )
   end
 
   it "return the number of contributors for each part of the current day" do
     expect(described_class.get).to contain_exactly(
       hash_including(city_id: brussels.id, current_day_part_1_contributors: 2, current_day_part_2_contributors: 0),
-      hash_including(city_id: bordeaux.id, current_day_part_1_contributors: 0, current_day_part_2_contributors: 0),
+      hash_including(city_id: bordeaux.id, current_day_part_1_contributors: 0, current_day_part_2_contributors: 0)
     )
   end
 
@@ -62,14 +64,14 @@ RSpec.describe Scores::CityScores do
         let(:new_city_points) do
           [
             *city_points,
-            { day: 1, challenge: 2, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 },
+            { day: 1, challenge: 2, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 }
           ]
         end
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
             hash_including(city_id: brussels.id, score: 19),
-            hash_including(city_id: bordeaux.id, score: 10),
+            hash_including(city_id: bordeaux.id, score: 10)
           )
         end
 
@@ -95,14 +97,14 @@ RSpec.describe Scores::CityScores do
         let(:new_city_points) do
           [
             *city_points,
-            { day: 1, challenge: 2, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 },
+            { day: 1, challenge: 2, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 }
           ]
         end
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
             hash_including(city_id: brussels.id, score: 19),
-            hash_including(city_id: bordeaux.id, score: 10),
+            hash_including(city_id: bordeaux.id, score: 10)
           )
         end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateNewCityPoints < ActiveRecord::Migration[7.0]
   disable_ddl_transaction!
 
@@ -18,6 +20,6 @@ class CreateNewCityPoints < ActiveRecord::Migration[7.0]
 
     add_index :city_points, :cache_fingerprint, algorithm: :concurrently
     add_index :city_points, %i[day challenge city_id cache_fingerprint], unique: true, algorithm: :concurrently,
-      name: "unique_daychallcityfing_on_city_points"
+                                                                         name: "unique_daychallcityfing_on_city_points"
   end
 end

@@ -28,14 +28,14 @@ module Scores
       city_users = points.group_by { |user| city_for_user[user[:user_id]] }
 
       city_users.without(nil).flat_map do |city_id, user_points|
-        challenge_contribs = user_points.group_by { |points| [points[:day], points[:challenge]] }
+        challenge_contribs = user_points.group_by { |point| [point[:day], point[:challenge]] }
 
         countable = top_contributors_of(city_id)
         challenge_contribs.map do |(day, challenge), contributions|
           countable_scores = contributions
-            .pluck(:score)
-            .sort_by { |score| score * -1 } # * -1 to reverse without another iteration
-            .slice(0, countable)
+                             .pluck(:score)
+                             .sort_by { |score| score * -1 } # * -1 to reverse without another iteration
+                             .slice(0, countable)
 
           # If countable_scores < countable_user_count, it behaves as if the
           # missing scores were 0
@@ -43,8 +43,8 @@ module Scores
 
           {
             city_id:,
-            day: day,
-            challenge: challenge,
+            day:,
+            challenge:,
             score: avg,
             total_score: countable_scores.sum,
             contributor_count: contributions.count
@@ -54,7 +54,7 @@ module Scores
     end
 
     def top_contributors_of(city_id)
-      @contributors ||= City.all.map { |city| [city.id, city.top_contributors] }.to_h
+      @contributors ||= City.all.to_h { |city| [city.id, city.top_contributors] }
       @contributors[city_id]
     end
   end

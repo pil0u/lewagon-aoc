@@ -1,25 +1,31 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe Scores::CityPoints do
   let!(:state) { create :state }
   let(:brussels) { create(:city, name: "Brussels", size: 400) }
   let(:brussels_users) { create_list(:user, 18, city: brussels) }
-  let(:brussels_points) { [
-    { day: 1, challenge: 1, score: 50, user_id: brussels_users[0].id },
-    { day: 1, challenge: 2, score: 48, user_id: brussels_users[0].id },
-    { day: 2, challenge: 1, score: 30, user_id: brussels_users[0].id },
+  let(:brussels_points) do
+    [
+      { day: 1, challenge: 1, score: 50, user_id: brussels_users[0].id },
+      { day: 1, challenge: 2, score: 48, user_id: brussels_users[0].id },
+      { day: 2, challenge: 1, score: 30, user_id: brussels_users[0].id },
 
-    { day: 1, challenge: 1, score: 46, user_id: brussels_users[1].id },
-    { day: 2, challenge: 1, score: 48, user_id: brussels_users[1].id },
-  ] }
+      { day: 1, challenge: 1, score: 46, user_id: brussels_users[1].id },
+      { day: 2, challenge: 1, score: 48, user_id: brussels_users[1].id }
+    ]
+  end
 
   let(:bordeaux) { create(:city, name: "Bordeaux", size: 400) }
   let(:bordeaux_users) { create_list(:user, 12, city: bordeaux) }
-  let(:bordeaux_points) { [
-    { day: 1, challenge: 1, score: 46, user_id: bordeaux_users[0].id },
-  ] }
+  let(:bordeaux_points) do
+    [
+      { day: 1, challenge: 1, score: 46, user_id: bordeaux_users[0].id }
+    ]
+  end
 
-  let(:solo_points) { [ *brussels_points, *bordeaux_points ] }
+  let(:solo_points) { [*brussels_points, *bordeaux_points] }
 
   before do
     allow(Scores::SoloPoints).to receive(:get).and_return(solo_points).once
@@ -30,8 +36,7 @@ RSpec.describe Scores::CityPoints do
       hash_including(day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2),
       hash_including(day: 1, challenge: 2, city_id: brussels.id, contributor_count: 1),
       hash_including(day: 2, challenge: 1, city_id: brussels.id, contributor_count: 2),
-
-      hash_including(day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 1),
+      hash_including(day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 1)
     )
   end
 
@@ -40,30 +45,31 @@ RSpec.describe Scores::CityPoints do
       hash_including(day: 1, challenge: 1, city_id: brussels.id, total_score: 96),
       hash_including(day: 1, challenge: 2, city_id: brussels.id, total_score: 48),
       hash_including(day: 2, challenge: 1, city_id: brussels.id, total_score: 78),
-
-      hash_including(day: 1, challenge: 1, city_id: bordeaux.id, total_score: 46),
+      hash_including(day: 1, challenge: 1, city_id: bordeaux.id, total_score: 46)
     )
   end
 
   context "when a city has a lot of alumni" do
-    let(:solo_points) { [
-      *brussels_points,
+    let(:solo_points) do
+      [
+        *brussels_points,
 
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[0].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[1].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[2].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[3].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[4].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[5].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[6].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[7].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[8].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[9].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[10].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[11].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[12].id },
-      { day: 3, challenge: 1, score: 30, user_id: brussels_users[13].id },
-    ] }
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[0].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[1].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[2].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[3].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[4].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[5].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[6].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[7].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[8].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[9].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[10].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[11].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[12].id },
+        { day: 3, challenge: 1, score: 30, user_id: brussels_users[13].id }
+      ]
+    end
 
     before do
       brussels.update!(size: 380)
@@ -79,7 +85,7 @@ RSpec.describe Scores::CityPoints do
         # (30 + 48).to_f / (380 * .03)
         hash_including(day: 2, challenge: 1, city_id: brussels.id, total_score: 78, score: 6.50, contributor_count: 2),
         # (20 * 12).to_f / (380 * .03) -- checks we're properly limiting the sum to the top N
-        hash_including(day: 3, challenge: 1, city_id: brussels.id, total_score: 360, score: 30, contributor_count: 14),
+        hash_including(day: 3, challenge: 1, city_id: brussels.id, total_score: 360, score: 30, contributor_count: 14)
       )
     end
   end
@@ -99,7 +105,7 @@ RSpec.describe Scores::CityPoints do
         # (48).to_f / 10
         { day: 1, challenge: 2, city_id: brussels.id, total_score: 48, score: 4.80, contributor_count: 1 },
         # (30 + 48).to_f / 10
-        { day: 2, challenge: 1, city_id: brussels.id, total_score: 78, score: 7.80, contributor_count: 2 },
+        { day: 2, challenge: 1, city_id: brussels.id, total_score: 78, score: 7.80, contributor_count: 2 }
       )
     end
   end
@@ -132,7 +138,7 @@ RSpec.describe Scores::CityPoints do
         let(:new_solo_points) do
           [
             *solo_points,
-            { day: 1, challenge: 1, score: 40, user_id: bordeaux_users[2].id },
+            { day: 1, challenge: 1, score: 40, user_id: bordeaux_users[2].id }
           ]
         end
 
@@ -141,8 +147,7 @@ RSpec.describe Scores::CityPoints do
             hash_including(day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96),
             hash_including(day: 1, challenge: 2, city_id: brussels.id, contributor_count: 1, total_score: 48),
             hash_including(day: 2, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 78),
-
-            hash_including(day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 2, total_score: 86),
+            hash_including(day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 2, total_score: 86)
           )
         end
 
@@ -168,7 +173,7 @@ RSpec.describe Scores::CityPoints do
         let(:new_solo_scores) do
           [
             *solo_points,
-            { day: 1, challenge: 1, score: 40, user_id: new_bordeaux_users[0].id },
+            { day: 1, challenge: 1, score: 40, user_id: new_bordeaux_users[0].id }
           ]
         end
 
@@ -177,8 +182,7 @@ RSpec.describe Scores::CityPoints do
             hash_including(day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96),
             hash_including(day: 1, challenge: 2, city_id: brussels.id, contributor_count: 1, total_score: 48),
             hash_including(day: 2, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 78),
-
-            hash_including(day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 2, total_score: 86),
+            hash_including(day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 2, total_score: 86)
           )
         end
 

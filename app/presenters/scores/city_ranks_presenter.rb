@@ -43,7 +43,7 @@ module Scores
         top_contributors: city.top_contributors,
         daily_score: score[:current_day_score],
         daily_contributors_part_1: score[:current_day_part_1_contributors],
-        daily_contributors_part_2: score[:current_day_part_2_contributors],
+        daily_contributors_part_2: score[:current_day_part_2_contributors]
       }
     end
   end

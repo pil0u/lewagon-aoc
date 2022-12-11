@@ -11,11 +11,12 @@ module Scores
     def cache_key
       @cache_key ||= [
         State.maximum(:fetch_api_end),
-        Squad.maximum(:updated_at)
+        Squad.maximum(:updated_at),
+        Aoc.latest_day
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[score squad_id].freeze
+    RETURNED_ATTRIBUTES = %i[score squad_id current_day_score].freeze
 
     def compute
       points = Scores::SquadPoints.get
@@ -24,8 +25,12 @@ module Scores
         .filter_map do |squad_id, squad_points|
           next if squad_id.nil?
 
-          total_score = squad_points.sum { |u| u[:score] }
-          { squad_id:, score: total_score }
+          total_score = squad_points.sum { |point| point[:score] }
+
+          day_points = squad_points.select { |point| point[:day] == Aoc.latest_day }
+          day_score = day_points.sum { |point| point[:score] }
+
+          { squad_id:, score: total_score, current_day_score: day_score }
         end
     end
   end

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Scores::CityPoints do
+  let!(:state) { create :state }
   let(:brussels) { create(:city, name: "Brussels", size: 400) }
   let(:brussels_users) { create_list(:user, 18, city: brussels) }
   let(:brussels_points) { [
@@ -100,6 +101,96 @@ RSpec.describe Scores::CityPoints do
         # (30 + 48).to_f / 10
         { day: 2, challenge: 1, city_id: brussels.id, total_score: 78, score: 7.80, contributor_count: 2 },
       )
+    end
+  end
+
+  describe "caching" do
+    it "creates cache records on first call" do
+      expect { described_class.get }.to(change { Cache::CityPoint.count }.from(0).to(4))
+    end
+
+    context "on second call" do
+      before do
+        described_class.get
+      end
+
+      it "doesn't re-create cache" do
+        expect { described_class.get }.not_to(change { Cache::CityPoint.count })
+      end
+
+      it "doesn't do any computation" do
+        expect_any_instance_of(described_class).not_to receive(:compute)
+        described_class.get
+      end
+
+      context "when AOC state has been refetched in the meantime" do
+        before do
+          create(:state, fetch_api_begin: state.fetch_api_end + 2.seconds)
+          allow(Scores::SoloPoints).to receive(:get).and_return(new_solo_points)
+        end
+
+        let(:new_solo_points) do
+          [
+            *solo_points,
+            { day: 1, challenge: 1, score: 40, user_id: bordeaux_users[2].id },
+          ]
+        end
+
+        it "doesn't provide stale results" do
+          expect(described_class.get).to contain_exactly(
+            hash_including(day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96),
+            hash_including(day: 1, challenge: 2, city_id: brussels.id, contributor_count: 1, total_score: 48),
+            hash_including(day: 2, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 78),
+
+            hash_including(day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 2, total_score: 86),
+          )
+        end
+
+        it "recomputes" do
+          expect_any_instance_of(described_class).to receive(:compute).and_call_original
+          described_class.get
+        end
+
+        it "creates new cache records" do
+          expect { described_class.get }.to(change { Cache::CityPoint.count }.from(4).to(8))
+        end
+      end
+
+      context "when the users makeup of the city has changed in the meantime" do
+        let(:new_bordeaux_users) { create_list :user, 2, city: bordeaux }
+
+        before do
+          travel 10.seconds # Specs go too fast, updated_at stays the same otherwise
+          new_bordeaux_users # creating after travel
+          allow(Scores::SoloPoints).to receive(:get).and_return(new_solo_scores)
+        end
+
+        let(:new_solo_scores) do
+          [
+            *solo_points,
+            { day: 1, challenge: 1, score: 40, user_id: new_bordeaux_users[0].id },
+          ]
+        end
+
+        it "doesn't provide stale results" do
+          expect(described_class.get).to contain_exactly(
+            hash_including(day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96),
+            hash_including(day: 1, challenge: 2, city_id: brussels.id, contributor_count: 1, total_score: 48),
+            hash_including(day: 2, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 78),
+
+            hash_including(day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 2, total_score: 86),
+          )
+        end
+
+        it "recomputes" do
+          expect_any_instance_of(described_class).to receive(:compute).and_call_original
+          described_class.get
+        end
+
+        it "creates new cache records" do
+          expect { described_class.get }.to(change { Cache::CityPoint.count }.from(4).to(8))
+        end
+      end
     end
   end
 end

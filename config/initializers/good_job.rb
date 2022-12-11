@@ -13,7 +13,7 @@ Rails.application.configure do
       },
       auto_cleanup: {
         cron: "every day at 1 am",
-        class: "InsertNewCompletionsJob"
+        class: "Cache::CleanupJob"
       }
     }
   }

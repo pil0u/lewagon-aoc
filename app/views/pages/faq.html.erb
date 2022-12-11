@@ -184,7 +184,7 @@
         Ranking cities is hard, because the number of Alumni per campus is very different.
       </p>
       <p>
-        For <em>each challenge</em>, only the scores of your city's top contributors is taken into account. The number
+        For <em>each challenge</em>, only the scores of your city's top contributors are taken into account. The number
         of top contributors is determined by your <span class="strong">city's size</span>: it's either
         <code class="strong">3%</code> of your city's size, or <code class="strong">10</code> contributors, whatever
         the <em>greatest</em>.
@@ -207,8 +207,8 @@
         and will stay the same until the end of the event.
       </p>
       <p>
-        The score of the city is <span class="strong">the average of the individual scores from its top
-        contributors</span>.
+        So, for <em>each challenge</em>, the score of a city is <span class="strong">the average of the individual scores from its top
+        contributors</span>. Finally, the global score of a city is the sum of these averages for all challenges.
       </p>
       <p>
         Examples:
@@ -216,15 +216,17 @@
           <li>
             Stockholm's number of top contributors is set to <code>10</code>.<br>
             12 people from Stockholm joined the event with these scores:<br>
-            <code>[200, 190, 170, 150, 150, 120, 110, 90, 70, 70, 50, 30]</code><br>
-            Stockholm's score is the average of the 10 participants with the highest scores among the 15,
-            so <code class="strong">132</code>.
+            <code>day 1 part 1 | [50, 50, 50, 48, 48, 45, 36, 25, 25, 25, 25, 0]</code><br>
+            <code>day 1 part 2 | [50, 50, 50, 50, 40, 25, 25, 0, 0, 0, 0, 0]</code><br>
+            Stockholm's score is the sum of each challenge average of the 10 participants with the highest scores among the 15,
+            so <code><span class="strong">40.2</span> for day 1 part 1 + <span class="strong">29</span> for day 1 part 2 = <span class="strong">70</span></code>.
           </li>
           <li>
             Berlin's number of top contributors is set to <code>56</code>.<br>
             Only 12 people from Berlin joined the event with these scores:<br>
-            <code>[200, 190, 170, 150, 150, 120, 110, 90, 70, 70, 50, 30]</code><br>
-            Berlin's score is <code class="strong">25</code>.
+            <code>day 1 part 1 | [50, 50, 50, 48, 48, 45, 36, 25, 25, 25, 25, 0]</code><br>
+            <code>day 1 part 2 | [50, 50, 50, 50, 40, 25, 25, 0, 0, 0, 0, 0]</code><br>
+            Berlin's score is <code class="strong">13</code>.
           </li>
         </ul>
       </p>

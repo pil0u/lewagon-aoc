@@ -25,8 +25,8 @@ module Scores
 
       # index for o(1) fetch
       city_for_user = User.where(id: points.pluck(:user_id)).pluck(:id, :city_id).to_h
-
       city_users = points.group_by { |user| city_for_user[user[:user_id]] }
+
       city_users.without(nil).flat_map do |city_id, user_points|
         challenge_contribs = user_points.group_by { |points| [points[:day], points[:challenge]] }
 

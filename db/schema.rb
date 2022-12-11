@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_09_111348) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_11_092254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -97,13 +97,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_111348) do
     t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
+  create_table "city_points", force: :cascade do |t|
+    t.string "cache_fingerprint"
+    t.integer "challenge"
+    t.bigint "city_id", null: false
+    t.integer "contributor_count"
+    t.datetime "created_at", null: false
+    t.integer "day"
+    t.decimal "score"
+    t.integer "total_score"
+    t.datetime "updated_at", null: false
+    t.index ["cache_fingerprint"], name: "index_city_points_on_cache_fingerprint"
+    t.index ["city_id"], name: "index_city_points_on_city_id"
+    t.index ["day", "challenge", "city_id", "cache_fingerprint"], name: "unique_daychallcityfing_on_city_points", unique: true
+  end
+
   create_table "city_scores", force: :cascade do |t|
     t.string "cache_fingerprint"
     t.bigint "city_id", null: false
     t.datetime "created_at", null: false
     t.integer "current_day_part_1_contributors"
     t.integer "current_day_part_2_contributors"
-    t.integer "current_day_score"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.index ["cache_fingerprint"], name: "index_city_scores_on_cache_fingerprint"
@@ -289,6 +303,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_111348) do
   end
 
   add_foreign_key "achievements", "users"
+  add_foreign_key "city_points", "cities"
   add_foreign_key "city_scores", "cities"
   add_foreign_key "completions", "users"
   add_foreign_key "insanity_points", "users"
@@ -412,32 +427,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_111348) do
        LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)));
   SQL
   add_index "city_contributions", ["completion_id"], name: "index_city_contributions_on_completion_id", unique: true
-
-  create_view "city_points", materialized: true, sql_definition: <<-SQL
-      WITH synced_user_numbers AS (
-           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
-             FROM ( SELECT count(u_1.*) AS value
-                     FROM (cities
-                       LEFT JOIN users u_1 ON ((u_1.city_id = cities.id)))
-                    WHERE u_1.synced
-                    GROUP BY cities.id) synced_user_counts
-          )
-   SELECT c.id AS city_id,
-      co.day,
-      co.challenge,
-      COALESCE(sum(cc.points), (0)::numeric) AS points,
-      rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(cc.points)) DESC) AS rank,
-      count(*) FILTER (WHERE (co.id IS NOT NULL)) AS participating_users,
-      (count(*) FILTER (WHERE (co.id IS NOT NULL)) >= ( SELECT synced_user_numbers.median
-             FROM synced_user_numbers)) AS complete
-     FROM (((cities c
-       LEFT JOIN users u ON ((u.city_id = c.id)))
-       LEFT JOIN completions co ON ((co.user_id = u.id)))
-       LEFT JOIN city_contributions cc ON ((cc.completion_id = co.id)))
-    GROUP BY c.id, co.day, co.challenge
-    ORDER BY co.day, co.challenge, COALESCE(sum(cc.points), (0)::numeric) DESC;
-  SQL
-  add_index "city_points", ["city_id", "day", "challenge"], name: "index_city_points_on_city_id_and_day_and_challenge", unique: true
 
   create_view "scores", materialized: true, sql_definition: <<-SQL
       SELECT u.id AS user_id,

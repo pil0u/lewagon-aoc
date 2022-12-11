@@ -3,101 +3,40 @@
 require "rails_helper"
 
 RSpec.describe Scores::CityScores do
-  let!(:state) { create(:state) }
+  let(:state) { create(:state) }
 
-  let!(:bordeaux) { create(:city, name: "Bordeaux", id: 1, size: 80) }
-  let!(:bordeaux_users) { create_list(:user, 8, city: bordeaux) { |u, i| u.aoc_id = i + 1 } }
+  let(:bordeaux) { create :city, name: "Bordeaux" }
+  let(:brussels) { create :city, name: "Brussels" }
+  let(:city_points) { [
+    { day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96, score: 8.00 },
+    { day: 1, challenge: 2, city_id: brussels.id, contributor_count: 1, total_score: 48, score: 4.00 },
+    { day: 2, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 78, score: 6.50 },
 
-  let!(:brussels) { create(:city, name: "Brussels", id: 2, size: 250) }
-  let!(:brussels_users) { create_list(:user, 12, city: brussels) { |u, i| u.aoc_id = 100 + i + 1 } }
-
-  let!(:paris) { create(:city, name: "Paris", id: 3, size: 400) }
-  let!(:paris_users) { create_list(:user, 50, city: paris) { |u, i| u.aoc_id = 1000 + i + 1 } }
-
-  let(:solo_scores) do
-    [
-      *bordeaux_users.map { |u| { user_id: u.id, score: u.aoc_id.even? ? 100 : 150 } },
-      *brussels_users.map { |u| { user_id: u.id, score: u.aoc_id <= 110 ? 126 : 25 } },
-      *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 120 : 110 } }
-    ]
-  end
+    { day: 1, challenge: 1, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 },
+  ] }
 
   before do
-    allow(Scores::SoloScores).to receive(:get).and_return(solo_scores).once
+    allow(Aoc).to receive(:latest_day).and_return(2)
+    allow(Scores::CityPoints).to receive(:get).and_return(city_points).once
   end
 
-  it "groups the scores of city members into the city score" do
+  it "sums the challenge scores into a total score for each city" do
     expect(described_class.get).to contain_exactly(
-      { score: 100, city_id: 1 },
-      { score: 126, city_id: 2 },
-      { score: 120, city_id: 3 }
+      hash_including(city_id: brussels.id, score: 19),
+      hash_including(city_id: bordeaux.id, score: 5),
     )
   end
 
-  context "when a city has a lot of alumni" do
-    let!(:paris) { create(:city, name: "Paris", id: 3, size: 400) }
-    let!(:paris_users) { create_list(:user, 50, city: paris) { |u, i| u.aoc_id = i + 1 } }
-
-    let(:solo_scores) do
-      [
-        *paris_users[0...10].map { |u| { user_id: u.id, score: 120 } },
-        *paris_users[10...20].map { |u| { user_id: u.id, score: 100 } },
-        *paris_users[20...].map { |u| { user_id: u.id, score: 23 } }
-      ]
-    end
-
-    # 3% == 12 for Paris (400 ppl)
-    it "averages the top 3% of alumni scores" do
-      theoretical_score = 117 # (120 * 10 + 100 * 2).to_f / 12 rounded up
-      expect(described_class.get).to contain_exactly(
-        { score: theoretical_score, city_id: 3 }
-      )
-    end
-  end
-
-  context "when a city doesn't have a lot of alumni" do
-    let!(:brussels) { create(:city, name: "Brussels", id: 2, size: 250) }
-    let!(:brussels_users) { create_list(:user, 12, city: brussels) { |u, i| u.aoc_id = i + 1 } }
-
-    let(:solo_scores) do
-      [
-        *brussels_users[0...8].map { |u| { user_id: u.id, score: 150 } },
-        *brussels_users[8...].map { |u| { user_id: u.id, score: 20 } }
-      ]
-    end
-
-    # 3% == 8 for Brussels (250 ppl)
-    it "averages the top 10 of alumni's scores" do
-      theoretical_score = 124 # (150 * 8 + 20 * 2).to_f / 10 rounded up
-      expect(described_class.get).to contain_exactly(
-        { score: theoretical_score, city_id: 2 }
-      )
-    end
-  end
-
-  context "when a city doesn't have enough participants to fill its 'top' spots" do
-    let!(:bordeaux) { create(:city, name: "Bordeaux", id: 1, size: 80) }
-    let!(:bordeaux_users) { create_list(:user, 8, city: bordeaux) { |u, i| u.aoc_id = i + 1 } }
-
-    let(:solo_scores) do
-      [
-        *bordeaux_users[0...4].map { |u| { user_id: u.id, score: 150 } },
-        *bordeaux_users[4...].map { |u| { user_id: u.id, score: 100 } }
-      ]
-    end
-
-    # 3% == 3 for Bordeaux (80 ppl), so eligible to Top 10 instead
-    it "acts as if the missing scores were 0" do
-      theoretical_score = 100 # (150 * 4 + 100 * 4 + 0 * 2).to_f / 10 rounded up
-      expect(described_class.get).to contain_exactly(
-        { score: theoretical_score, city_id: 1 }
-      )
-    end
+  it "return the number of contributors for each part of the current day" do
+    expect(described_class.get).to contain_exactly(
+      hash_including(city_id: brussels.id, current_day_part_1_contributors: 2, current_day_part_2_contributors: 0),
+      hash_including(city_id: bordeaux.id, current_day_part_1_contributors: 0, current_day_part_2_contributors: 0),
+    )
   end
 
   describe "caching" do
     it "creates cache records on first call" do
-      expect { described_class.get }.to(change { Cache::CityScore.count }.from(0).to(3))
+      expect { described_class.get }.to(change { Cache::CityScore.count }.from(0).to(2))
     end
 
     context "on second call" do
@@ -117,22 +56,20 @@ RSpec.describe Scores::CityScores do
       context "when AOC state has been refetched in the meantime" do
         before do
           create(:state, fetch_api_begin: state.fetch_api_end + 2.seconds)
-          allow(Scores::SoloScores).to receive(:get).and_return(new_solo_scores).once
+          allow(Scores::CityPoints).to receive(:get).and_return(new_city_points)
         end
 
-        let(:new_solo_scores) do
+        let(:new_city_points) do
           [
-            *bordeaux_users.map { |u| { user_id: u.id, score: u.aoc_id.even? ? 100 : 175 } },
-            *brussels_users.map { |u| { user_id: u.id, score: u.aoc_id <= 110 ? 126 : 50 } },
-            *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 145 : 110 } }
+            *city_points,
+            { day: 1, challenge: 2, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 },
           ]
         end
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
-            { score: 110, city_id: 1 },
-            { score: 126, city_id: 2 },
-            { score: 145, city_id: 3 }
+            hash_including(city_id: brussels.id, score: 19),
+            hash_including(city_id: bordeaux.id, score: 10),
           )
         end
 
@@ -142,7 +79,7 @@ RSpec.describe Scores::CityScores do
         end
 
         it "creates new cache records" do
-          expect { described_class.get }.to(change { Cache::CityScore.count }.from(3).to(6))
+          expect { described_class.get }.to(change { Cache::CityScore.count }.from(2).to(4))
         end
       end
 
@@ -152,24 +89,20 @@ RSpec.describe Scores::CityScores do
         before do
           travel 10.seconds # Specs go too fast, updated_at stays the same otherwise
           new_bordeaux_users # creating after travel
-          allow(Scores::SoloScores).to receive(:get).and_return(new_solo_scores).once
+          allow(Scores::CityPoints).to receive(:get).and_return(new_city_points)
         end
 
-        let(:new_solo_scores) do
+        let(:new_city_points) do
           [
-            *new_bordeaux_users.map { |u| { user_id: u.id, score: 200 } },
-
-            *bordeaux_users.map { |u| { user_id: u.id, score: u.aoc_id.even? ? 100 : 150 } },
-            *brussels_users.map { |u| { user_id: u.id, score: u.aoc_id <= 110 ? 126 : 25 } },
-            *paris_users.map    { |u| { user_id: u.id, score: u.aoc_id <= 1012 ? 120 : 110 } }
+            *city_points,
+            { day: 1, challenge: 2, city_id: bordeaux.id, contributor_count: 1, total_score: 50, score: 5.00 },
           ]
         end
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
-            { score: 140, city_id: 1 },
-            { score: 126, city_id: 2 },
-            { score: 120, city_id: 3 }
+            hash_including(city_id: brussels.id, score: 19),
+            hash_including(city_id: bordeaux.id, score: 10),
           )
         end
 
@@ -179,7 +112,7 @@ RSpec.describe Scores::CityScores do
         end
 
         it "creates new cache records" do
-          expect { described_class.get }.to(change { Cache::CityScore.count }.from(3).to(6))
+          expect { described_class.get }.to(change { Cache::CityScore.count }.from(2).to(4))
         end
       end
     end

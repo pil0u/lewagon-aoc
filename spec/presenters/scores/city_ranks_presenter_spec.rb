@@ -40,11 +40,11 @@ RSpec.describe Scores::CityRanksPresenter do
   it "completes the city stats" do
     expect(described_class.new(input).ranks).to contain_exactly(
       hash_including(id: 1, total_members: 2, top_contributors: 10,
-        daily_contributors_part_1: 3, daily_contributors_part_2: 2),
+                     daily_contributors_part_1: 3, daily_contributors_part_2: 2),
       hash_including(id: 2, total_members: 1, top_contributors: 10,
-        daily_contributors_part_1: 4, daily_contributors_part_2: 1),
+                     daily_contributors_part_1: 4, daily_contributors_part_2: 1),
       hash_including(id: 3, total_members: 0, top_contributors: 15,
-        daily_contributors_part_1: 2, daily_contributors_part_2: 1),
+                     daily_contributors_part_1: 2, daily_contributors_part_2: 1)
     )
   end
 

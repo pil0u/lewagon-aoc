@@ -28,14 +28,13 @@ module Scores
       city_users.filter_map do |city_id, city_points|
         contributors = city_points
                        .select { |point| point[:day] == Aoc.latest_day }
-                       .sort_by { |point| point[:challenge] }
-                       .map { |part| [part[:challenge], (part[:contributor_count] || 0)] }
+                       .to_h { |part| [part[:challenge], part[:contributor_count]] }
 
         {
           score: city_points.pluck(:score).sum.ceil,
           city_id:,
-          current_day_part_1_contributors: contributors[1],
-          current_day_part_2_contributors: contributors[2]
+          current_day_part_1_contributors: contributors[1] || 0,
+          current_day_part_2_contributors: contributors[2] || 0
         }
       end
     end

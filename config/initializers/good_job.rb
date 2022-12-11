@@ -7,8 +7,12 @@ Rails.application.configure do
     shutdown_timeout: 30,
     enable_cron: true,
     cron: {
+      fast_refresh_completions: {
+        cron: "every 3 minutes from midnight to 4 am",
+        class: "InsertNewCompletionsJob"
+      },
       refresh_completions: {
-        cron: "every 10 minutes",
+        cron: "every 10 minutes from 4 to 24",
         class: "InsertNewCompletionsJob"
       }
     }

@@ -25,23 +25,32 @@ RSpec.describe Completions::Fetcher do
   end
 
   describe "created State" do
-    subject { described_class.call; State.last }
+    subject { State.last }
+
+    before do
+      described_class.call
+    end
 
     it "should log the completion start and end times" do
-      expect(subject.attributes).to match(hash_including(
-        fetch_api_begin: a_kind_of(DateTime), fetch_api_end: a_kind_of(DateTime)
-      ))
+      expect(subject.attributes.symbolize_keys)
+        .to match(hash_including(
+                    fetch_api_begin: a_kind_of(ActiveSupport::TimeWithZone),
+                    fetch_api_end: a_kind_of(ActiveSupport::TimeWithZone)
+                  ))
     end
 
     it "should keep track of how many completions were created during the refresh" do
-      expect(subject.attributes).to match(hash_including(completions_fetched: 8))
+      expect(subject.attributes.symbolize_keys).to match(hash_including(completions_fetched: 14))
     end
 
     context "when there are no new completions" do
-      subject { described_class.call; described_class.call;  State.last }
+      before do
+        # second time should create no completions
+        described_class.call
+      end
 
       it "should keep note that 0 completions were created" do
-        expect(subject.attributes).to match(hash_including(completions_fetched: 8))
+        expect(subject.attributes.symbolize_keys).to match(hash_including(completions_fetched: 0))
       end
     end
   end

@@ -6,6 +6,9 @@ en:
       squad:
         pin: "Squad PIN"
   achievements:
+    elementary:
+      title: "Elementary"
+      description: "You solved puzzle 0, the countdown riddle"
     welcome_to_the_party:
       title: "Welcome to the party 🎉"
       description: "You properly synced your AoC account with the platform"

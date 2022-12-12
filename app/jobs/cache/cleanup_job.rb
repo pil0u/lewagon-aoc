@@ -9,7 +9,7 @@ module Cache
         Cache::SoloPoint, Cache::SoloScore,
         Cache::InsanityPoint, Cache::InsanityScore,
         Cache::SquadPoint, Cache::SquadScore,
-        Cache::CityPoint, Cache::CityScore,
+        Cache::CityPoint, Cache::CityScore
       ].each do |cache_model|
         Cache::Clean.call(cache_model)
       end

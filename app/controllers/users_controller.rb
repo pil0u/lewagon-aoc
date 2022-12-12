@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     # Sort user achievements in the same order as in the YAML definition
     @achievements = @user.achievements
                          .pluck(:nature)
-                         .sort_by(&Achievement.keys.map(&:to_s).method(:index))
+                         .sort_by { |achievement| Achievement.keys.index(achievement.to_sym) }
 
     @latest_day = Aoc.latest_day
     @daily_completions = Array.new(@latest_day) { [nil, nil] }

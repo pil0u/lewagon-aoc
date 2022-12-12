@@ -3,7 +3,7 @@
 module Achievements
   class ElementaryMassUnlocker < MassUnlocker
     def call
-      eligible_users = User.where(uid: ["171", "5134", "7665", "11200", "13740", "14764"])
+      eligible_users = User.where(uid: %w[171 5134 7665 11200 13740 14764])
 
       unlock_for!(eligible_users)
     end

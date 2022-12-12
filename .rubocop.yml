@@ -28,6 +28,7 @@ Metrics/ClassLength: # TODO: remove after old files are deprecated
 Metrics/CyclomaticComplexity:
   Exclude:
     - "**/app/controllers/days_controller.rb"
+    - "**/app/controllers/users_controller.rb"
 
 Metrics/MethodLength:
   Enabled: false

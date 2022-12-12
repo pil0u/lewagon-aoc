@@ -10,6 +10,10 @@ Rails.application.configure do
       refresh_completions: {
         cron: "every 10 minutes",
         class: "InsertNewCompletionsJob"
+      },
+      auto_cleanup: {
+        cron: "55 5 * * *",
+        class: "Cache::CleanupJob"
       }
     }
   }

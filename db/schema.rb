@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_11_092254) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_12_071509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -280,8 +280,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_092254) do
   end
 
   create_table "states", force: :cascade do |t|
+    t.integer "completions_fetched"
     t.datetime "fetch_api_begin", precision: nil
     t.datetime "fetch_api_end", precision: nil
+    t.index ["completions_fetched"], name: "index_states_on_completions_fetched"
+    t.index ["fetch_api_begin"], name: "index_states_on_fetch_api_begin"
+    t.index ["fetch_api_end"], name: "index_states_on_fetch_api_end"
   end
 
   create_table "users", force: :cascade do |t|

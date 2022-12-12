@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+module Achievements
+  class ElementaryMassUnlocker < MassUnlocker
+    def call
+      eligible_users = User.where(uid: ["171", "5134", "7665", "11200", "13740", "14764"])
+
+      unlock_for!(eligible_users)
+    end
+  end
+end

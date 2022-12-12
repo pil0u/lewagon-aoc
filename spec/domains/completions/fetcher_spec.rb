@@ -24,6 +24,28 @@ RSpec.describe Completions::Fetcher do
     expect { described_class.call }.to change { State.count }.by(1)
   end
 
+  describe "created State" do
+    subject { described_class.call; State.last }
+
+    it "should log the completion start and end times" do
+      expect(subject.attributes).to match(hash_including(
+        fetch_api_begin: a_kind_of(DateTime), fetch_api_end: a_kind_of(DateTime)
+      ))
+    end
+
+    it "should keep track of how many completions were created during the refresh" do
+      expect(subject.attributes).to match(hash_including(completions_fetched: 8))
+    end
+
+    context "when there are no new completions" do
+      subject { described_class.call; described_class.call;  State.last }
+
+      it "should keep note that 0 completions were created" do
+        expect(subject.attributes).to match(hash_including(completions_fetched: 8))
+      end
+    end
+  end
+
   it "creates completions for each user in the leaderboard" do
     expect { described_class.call }
       .to change { aquaj.completions.count }.from(0).to(8)

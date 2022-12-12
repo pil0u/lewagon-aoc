@@ -22,8 +22,10 @@ module Completions
           if completion_attributes.any?
             inserted = insert_into_db(completion_attributes)
             Rails.logger.info "✔ #{inserted} new completions inserted"
+            inserted
           else
             Rails.logger.info "🤷 No completions to insert"
+            0
           end
         end
       end
@@ -36,12 +38,12 @@ module Completions
     private
 
     def log_timing
-      state = State.create(fetch_api_begin: Time.now.utc)
+      state = State.create!(fetch_api_begin: Time.now.utc)
       Rails.logger.info "🤖 Completions update started at #{state.fetch_api_begin}"
 
-      yield
+      inserted = yield
 
-      state.update(fetch_api_end: Time.now.utc)
+      state.update!(fetch_api_end: Time.now.utc, completions_fetched: inserted)
       Rails.logger.info "🏁 Completions update finished at #{state.fetch_api_end}"
     end
 

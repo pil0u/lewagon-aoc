@@ -10,7 +10,7 @@ module Scores
 
     def cache_key
       @cache_key ||= [
-        State.maximum(:fetch_api_end),
+        State.with_changes.maximum(:fetch_api_end),
         User.maximum(:updated_at),
         Aoc.latest_day
       ].join("-")

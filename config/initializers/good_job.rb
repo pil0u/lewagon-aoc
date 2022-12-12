@@ -12,7 +12,7 @@ Rails.application.configure do
         class: "InsertNewCompletionsJob"
       },
       auto_cleanup: {
-        cron: "59 * * * *",
+        cron: "55 5 * * *",
         class: "Cache::CleanupJob"
       }
     }

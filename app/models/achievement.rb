@@ -6,4 +6,12 @@ class Achievement < ApplicationRecord
   before_create do
     self.unlocked_at ||= Time.now.utc
   end
+
+  def self.full_list
+    I18n.t("achievements")
+  end
+
+  def self.keys
+    full_list.keys
+  end
 end

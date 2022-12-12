@@ -8,9 +8,7 @@ module Scores
 
     private
 
-    def after_compute
-      # Achievements::MassUnlockJob.perform_later(:raising_the_bar)
-    end
+    def after_compute; end
 
     def cache_key
       @cache_key ||= [

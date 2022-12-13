@@ -18,7 +18,7 @@ module Scores
     RETURNED_ATTRIBUTES = %i[score user_id day challenge completion_id].freeze
 
     def compute
-      completions = Completion.select(Arel.star, Arel.sql(<<~SQL.squish))
+      completions = Completion.select(Arel.sql("completions.*"), Arel.sql(<<~SQL.squish))
         CASE
         WHEN duration <= interval '24 hours'
           THEN 50
@@ -30,9 +30,9 @@ module Scores
       SQL
 
       completions.map do |completion|
-        c.attributes.symbolize_keys
-          .slice(*RETURNED_ATTRIBUTES)
-          .merge(completion_id: c.id)
+        completion.attributes.symbolize_keys
+                  .slice(*RETURNED_ATTRIBUTES)
+                  .merge(completion_id: completion.id)
       end
     end
   end

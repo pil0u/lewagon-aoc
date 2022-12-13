@@ -20,7 +20,7 @@ module Scores
     def compute
       completions = Completion
                     .joins(:user).merge(User.insanity)
-                    .select(Arel.star, Arel.sql(<<~SQL.squish))
+                    .select(Arel.sql("completions.*"), Arel.sql(<<~SQL.squish))
                       (SELECT COUNT(*) FROM users WHERE entered_hardcore AND synced)
                       - (rank() OVER (PARTITION BY day, challenge ORDER BY completion_unix_time ASC))
                       + 1
@@ -28,9 +28,9 @@ module Scores
                     SQL
 
       completions.map do |completion|
-        c.attributes.symbolize_keys
-          .slice(*RETURNED_ATTRIBUTES)
-          .merge(completion_id: c.id)
+        completion.attributes.symbolize_keys
+                  .slice(*RETURNED_ATTRIBUTES)
+                  .merge(completion_id: completion.id)
       end
     end
   end

@@ -26,9 +26,9 @@ RSpec.describe Scores::SoloPoints do
 
   it "computes the points for users for each challenge" do
     expect(described_class.get).to contain_exactly(
-      { score: 50, user_id: 1, day: 1, challenge: 1 },
-      { score: 49, user_id: 1, day: 1, challenge: 2 },
-      { score: 25, user_id: 2, day: 1, challenge: 1 }
+      { score: 50, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
+      { score: 49, user_id: 1, day: 1, challenge: 2, completion_id: completions[1].id },
+      { score: 25, user_id: 2, day: 1, challenge: 1, completion_id: completions[2].id }
     )
   end
 
@@ -36,26 +36,26 @@ RSpec.describe Scores::SoloPoints do
     let!(:completions) { [] }
 
     it "gives a user 50 points for a <24hr completion" do
-      create_completion(1, 1, user_1, 1.hour + 15.minutes)
+      completion = create_completion(1, 1, user_1, 1.hour + 15.minutes)
 
       expect(described_class.get).to contain_exactly(
-        { score: 50, user_id: 1, day: 1, challenge: 1 }
+        { score: 50, user_id: 1, day: 1, challenge: 1, completion_id: completion.id }
       )
     end
 
     it "gives a user 1 less points for a each hour after 24hr" do
-      create_completion(1, 1, user_1, 1.day + 6.hours + 4.seconds)
+      completion = create_completion(1, 1, user_1, 1.day + 6.hours + 4.seconds)
 
       expect(described_class.get).to contain_exactly(
-        { score: 43, user_id: 1, day: 1, challenge: 1 }
+        { score: 43, user_id: 1, day: 1, challenge: 1, completion_id: completion.id }
       )
     end
 
     it "gives a user 25 points for >48hr completion" do
-      create_completion(1, 1, user_1, 7.days)
+      completion = create_completion(1, 1, user_1, 7.days)
 
       expect(described_class.get).to contain_exactly(
-        { score: 25, user_id: 1, day: 1, challenge: 1 }
+        { score: 25, user_id: 1, day: 1, challenge: 1, completion_id: completion.id }
       )
     end
   end

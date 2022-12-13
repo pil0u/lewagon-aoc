@@ -15,7 +15,7 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[score user_id day challenge].freeze
+    RETURNED_ATTRIBUTES = %i[score user_id day challenge completion_id].freeze
 
     def compute
       completions = Completion.select(Arel.star, Arel.sql(<<~SQL.squish))
@@ -29,7 +29,11 @@ module Scores
         END AS score
       SQL
 
-      completions.map { |c| c.attributes.symbolize_keys.slice(*RETURNED_ATTRIBUTES) }
+      completions.map do |completion|
+        c.attributes.symbolize_keys
+          .slice(*RETURNED_ATTRIBUTES)
+          .merge(completion_id: c.id)
+      end
     end
   end
 end

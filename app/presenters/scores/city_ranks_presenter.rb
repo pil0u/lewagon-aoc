@@ -35,8 +35,9 @@ module Scores
       }
     end
 
+    DEFAULTS = { score: 0, current_day_part_1_contributors: 0, current_day_part_2_contributors: 0 }
     def stats_of(city)
-      score = scores_per_city[city.id] || { score: 0 }
+      score = scores_per_city[city.id] || DEFAULTS
       {
         score: score[:score],
         total_members: city.users.size,

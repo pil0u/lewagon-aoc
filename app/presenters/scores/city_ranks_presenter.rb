@@ -35,7 +35,7 @@ module Scores
       }
     end
 
-    DEFAULTS = { score: 0, current_day_part_1_contributors: 0, current_day_part_2_contributors: 0 }
+    DEFAULTS = { score: 0, current_day_part_1_contributors: 0, current_day_part_2_contributors: 0 }.freeze
     def stats_of(city)
       score = scores_per_city[city.id] || DEFAULTS
       {

@@ -3,7 +3,7 @@
 module Achievements
   class Speed90MassUnlocker < MassUnlocker
     def call
-      user_ids = Completion.where(duration: ..90.minutes)
+      user_ids = Completion.where(duration: ..(90.minutes))
                            .group(:user_id)
                            .pluck(:user_id)
       eligible_users = User.where(id: user_ids)

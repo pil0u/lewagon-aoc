@@ -21,3 +21,12 @@ en:
     the_journey:
       title: "The Journey"
       description: "You earned your first star"
+    algorithms101:
+      title: "Algorithms 101"
+      description: "You earned your 5th star"
+    algorithms1011:
+      title: "Algorithms 1011"
+      description: "You earned your 11th star"
+    algorithms10111:
+      title: "Algorithms 10111"
+      description: "You earned your 23rd star"

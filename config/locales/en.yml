@@ -30,3 +30,6 @@ en:
     stars23:
       title: "Algorithms 10111"
       description: "You earned your 23rd star"
+    speed1440:
+      title: "Will you make it a habit?"
+      description: "You solved a puzzle in the 24 hours following its release"

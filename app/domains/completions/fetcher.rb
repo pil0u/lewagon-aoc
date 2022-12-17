@@ -123,6 +123,7 @@ module Completions
       Achievements::MassUnlockJob.perform_later(:stars5)
       Achievements::MassUnlockJob.perform_later(:stars11)
       Achievements::MassUnlockJob.perform_later(:stars23)
+      Achievements::MassUnlockJob.perform_later(:speed1440)
     end
 
     def launch_cache_refresh

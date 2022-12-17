@@ -18,3 +18,6 @@ en:
     locked_loaded:
       title: "Locked & Loaded"
       description: "You are locked into a full squad"
+    the_journey:
+      title: "The Journey"
+      description: "You earned your first star"

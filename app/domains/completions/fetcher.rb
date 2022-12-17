@@ -119,6 +119,7 @@ module Completions
 
     def unlock_achievements
       Achievements::MassUnlockJob.perform_later(:welcome_to_the_party)
+      Achievements::MassUnlockJob.perform_later(:the_journey)
     end
 
     def launch_cache_refresh

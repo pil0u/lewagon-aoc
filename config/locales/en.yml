@@ -12,3 +12,6 @@ en:
     welcome_to_the_party:
       title: "Welcome to the party 🎉"
       description: "You properly synced your AoC account with the platform"
+    root:
+      title: "Roots"
+      description: "You joined your city team"

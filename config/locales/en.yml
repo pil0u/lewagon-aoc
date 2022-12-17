@@ -30,6 +30,24 @@ en:
     stars23:
       title: "Algorithms 10111"
       description: "You earned your 23rd star"
+    speed10:
+      title: "Still asleep"
+      description: "You solved a puzzle in the 10 minutes following its release"
+    speed30:
+      title: "A well-deserved breakfast"
+      description: "You solved a puzzle in the 30 minutes following its release"
+    speed90:
+      title: "Morning routine"
+      description: "You solved a puzzle in the 90 minutes following its release"
+    speed180:
+      title: "Rush hour"
+      description: "You solved a puzzle in the 3 hours following its release"
+    speed360:
+      title: "Work hours well spent"
+      description: "You solved a puzzle in the 6 hours following its release"
+    speed720:
+      title: "Workout or puzzle?"
+      description: "You solved a puzzle in the 12 hours following its release"
     speed1440:
-      title: "Will you make it a habit?"
+      title: "Full score cocktail"
       description: "You solved a puzzle in the 24 hours following its release"

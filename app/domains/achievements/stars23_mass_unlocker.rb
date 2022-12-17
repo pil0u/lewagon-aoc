@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Achievements
-  class Algorithms1011MassUnlocker < MassUnlocker
+  class Stars23MassUnlocker < MassUnlocker
     def call
       user_ids = Completion.group(:user_id)
                            .count
-                           .select { |_user_id, completions| completions >= 11 }
+                           .select { |_user_id, completions| completions >= 23 }
                            .keys
       eligible_users = User.where(id: user_ids)
 

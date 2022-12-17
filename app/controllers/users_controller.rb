@@ -79,7 +79,7 @@ class UsersController < ApplicationController
   end
 
   def unlock_achievements
-    Achievements::UnlockJob.perform_later(:root, current_user.id)
+    Achievements::UnlockJob.perform_later(:city_join, current_user.id)
   end
 
   def form_params

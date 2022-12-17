@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Achievements
-  class RootUnlocker < Unlocker
+  class CityJoinUnlocker < Unlocker
     def call
       return unless user.city_id
 

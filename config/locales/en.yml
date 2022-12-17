@@ -6,27 +6,27 @@ en:
       squad:
         pin: "Squad PIN"
   achievements:
-    elementary:
+    countdown_riddle:
       title: "Elementary"
       description: "You solved puzzle 0, the countdown riddle"
-    welcome_to_the_party:
+    setup_complete:
       title: "Welcome to the party 🎉"
       description: "You properly synced your AoC account with the platform"
-    root:
+    city_join:
       title: "Roots"
       description: "You joined your city team"
     locked_loaded:
       title: "Locked & Loaded"
       description: "You are locked into a full squad"
-    the_journey:
+    stars1:
       title: "The Journey"
       description: "You earned your first star"
-    algorithms101:
+    stars5:
       title: "Algorithms 101"
       description: "You earned your 5th star"
-    algorithms1011:
+    stars11:
       title: "Algorithms 1011"
       description: "You earned your 11th star"
-    algorithms10111:
+    stars23:
       title: "Algorithms 10111"
       description: "You earned your 23rd star"

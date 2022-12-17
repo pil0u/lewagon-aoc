@@ -118,11 +118,11 @@ module Completions
     end
 
     def unlock_achievements
-      Achievements::MassUnlockJob.perform_later(:welcome_to_the_party)
-      Achievements::MassUnlockJob.perform_later(:the_journey)
-      Achievements::MassUnlockJob.perform_later(:algorithms101)
-      Achievements::MassUnlockJob.perform_later(:algorithms1011)
-      Achievements::MassUnlockJob.perform_later(:algorithms10111)
+      Achievements::MassUnlockJob.perform_later(:setup_complete)
+      Achievements::MassUnlockJob.perform_later(:stars1)
+      Achievements::MassUnlockJob.perform_later(:stars5)
+      Achievements::MassUnlockJob.perform_later(:stars11)
+      Achievements::MassUnlockJob.perform_later(:stars23)
     end
 
     def launch_cache_refresh

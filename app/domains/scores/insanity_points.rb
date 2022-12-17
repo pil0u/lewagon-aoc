@@ -15,19 +15,23 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[score user_id day challenge].freeze
+    RETURNED_ATTRIBUTES = %i[score user_id day challenge completion_id].freeze
 
     def compute
       completions = Completion
                     .joins(:user).merge(User.insanity)
-                    .select(Arel.star, Arel.sql(<<~SQL.squish))
+                    .select(Arel.sql("completions.*"), Arel.sql(<<~SQL.squish))
                       (SELECT COUNT(*) FROM users WHERE entered_hardcore AND synced)
                       - (rank() OVER (PARTITION BY day, challenge ORDER BY completion_unix_time ASC))
                       + 1
                       AS score
                     SQL
 
-      completions.map { |c| c.attributes.symbolize_keys.slice(*RETURNED_ATTRIBUTES) }
+      completions.map do |completion|
+        completion.attributes.symbolize_keys
+                  .slice(*RETURNED_ATTRIBUTES)
+                  .merge(completion_id: completion.id)
+      end
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_12_071509) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_13_064143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -179,12 +179,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_071509) do
   create_table "insanity_points", force: :cascade do |t|
     t.string "cache_fingerprint", null: false
     t.integer "challenge"
+    t.bigint "completion_id"
     t.datetime "created_at", null: false
     t.integer "day"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_insanity_points_on_cache_fingerprint"
+    t.index ["completion_id"], name: "index_insanity_points_on_completion_id"
     t.index ["day", "challenge", "user_id", "cache_fingerprint"], name: "unique_daychalluserfetch_on_insanity_points", unique: true
     t.index ["user_id"], name: "index_insanity_points_on_user_id"
   end
@@ -224,12 +226,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_071509) do
   create_table "solo_points", force: :cascade do |t|
     t.string "cache_fingerprint", null: false
     t.integer "challenge"
+    t.bigint "completion_id"
     t.datetime "created_at", null: false
     t.integer "day"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_solo_points_on_cache_fingerprint"
+    t.index ["completion_id"], name: "index_solo_points_on_completion_id"
     t.index ["day", "challenge", "user_id", "cache_fingerprint"], name: "unique_daychalluserfetch_on_solo_points", unique: true
     t.index ["user_id"], name: "index_solo_points_on_user_id"
   end

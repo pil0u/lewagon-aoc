@@ -14,6 +14,10 @@ Rails.application.configure do
       auto_cleanup: {
         cron: "55 5 * * *",
         class: "Cache::CleanupJob"
+      },
+      lock_time_achievements: {
+        cron: "30 18 9 12 *", # 9th December at 18:30
+        class: "Achievements::LockTimeJob"
       }
     }
   }

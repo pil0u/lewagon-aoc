@@ -15,3 +15,6 @@ en:
     root:
       title: "Roots"
       description: "You joined your city team"
+    locked_loaded:
+      title: "Locked & Loaded"
+      description: "You are locked into a full squad"

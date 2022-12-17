@@ -6,9 +6,48 @@ en:
       squad:
         pin: "Squad PIN"
   achievements:
-    elementary:
+    countdown_riddle:
       title: "Elementary"
       description: "You solved puzzle 0, the countdown riddle"
-    welcome_to_the_party:
+    setup_complete:
       title: "Welcome to the party 🎉"
       description: "You properly synced your AoC account with the platform"
+    city_join:
+      title: "Roots"
+      description: "You joined your city team"
+    full_squad:
+      title: "Locked & Loaded"
+      description: "You are locked into a full squad"
+    stars1:
+      title: "The Journey"
+      description: "You earned your first star"
+    stars5:
+      title: "Algorithms 101"
+      description: "You earned your 5th star"
+    stars11:
+      title: "Algorithms 1011"
+      description: "You earned your 11th star"
+    stars23:
+      title: "Algorithms 10111"
+      description: "You earned your 23rd star"
+    speed10:
+      title: "Still asleep"
+      description: "You solved a puzzle in the 10 minutes following its release"
+    speed30:
+      title: "A well-deserved breakfast"
+      description: "You solved a puzzle in the 30 minutes following its release"
+    speed90:
+      title: "Morning routine"
+      description: "You solved a puzzle in the 90 minutes following its release"
+    speed180:
+      title: "Rush hour"
+      description: "You solved a puzzle in the 3 hours following its release"
+    speed360:
+      title: "Work hours well spent"
+      description: "You solved a puzzle in the 6 hours following its release"
+    speed720:
+      title: "Workout or puzzle?"
+      description: "You solved a puzzle in the 12 hours following its release"
+    speed1440:
+      title: "Full score cocktail"
+      description: "You solved a puzzle in the 24 hours following its release"

@@ -78,6 +78,8 @@
   <% end %>
 </div>
 
+<h3 class="text-center">Achievements unlocked: <span class="strong"><%= @achievements.count %></span>/<%= Achievement.keys.count %></h3>
+
 <% if @achievements.any? %>
 
 <div class="my-4 flex flex-wrap gap-x-6 justify-center">

@@ -14,7 +14,7 @@ class DaysController < ApplicationController
     @snippets_part_one = Snippet.where(day: @day, challenge: 1).count
     @snippets_part_two = Snippet.where(day: @day, challenge: 2).count
 
-    attributes = %i[user_id username challenge duration]
+    attributes = %i[uid user_id username challenge duration]
     user_completions = daily_completions.pluck(*attributes).map { |completion| attributes.zip(completion).to_h }
     @users = Scores::SoloPoints.get
                                .select { |score| score[:day] == @day }
@@ -23,6 +23,7 @@ class DaysController < ApplicationController
                                .map do |user_id, score|
       {
         username: user_completions.find { |completion| completion[:user_id] == user_id }[:username],
+        uid: user_completions.find { |completion| completion[:user_id] == user_id }[:uid],
         part_1: user_completions.find { |completion| completion[:user_id] == user_id && completion[:challenge] == 1 }&.dig(:duration),
         part_2: user_completions.find { |completion| completion[:user_id] == user_id && completion[:challenge] == 2 }&.dig(:duration),
         score:

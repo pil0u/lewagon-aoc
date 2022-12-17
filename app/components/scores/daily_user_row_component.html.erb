@@ -1,6 +1,14 @@
 <tr>
-  <td class="text-center"><%= @user[:username] %></th>
-  <td><%= duration_as_text(@user[:part_1]) %></td>
-  <td><%= duration_as_text(@user[:part_2]) %></td>
+  <td class="text-center pr-3">
+    <% if @user[:uid] %>
+      <%= link_to profile_path(@user[:uid]) do %>
+        <%= @user[:username] %>
+      <% end %>
+    <% else %>
+      <%= @user[:username] %>
+    <% end %>
+  </td>
+  <td class="pr-3"><%= duration_as_text(@user[:part_1]) %></td>
+  <td class="pr-3"><%= duration_as_text(@user[:part_2]) %></td>
   <td><%= @user[:score] %></td>
 </tr>

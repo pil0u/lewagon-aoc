@@ -15,7 +15,7 @@ en:
     city_join:
       title: "Roots"
       description: "You joined your city team"
-    locked_loaded:
+    full_squad:
       title: "Locked & Loaded"
       description: "You are locked into a full squad"
     stars1:

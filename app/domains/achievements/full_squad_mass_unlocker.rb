@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Achievements
-  class LockedLoadedMassUnlocker < MassUnlocker
+  class FullSquadMassUnlocker < MassUnlocker
     def call
       full_squads = User.group(:squad_id)
                         .where.not(squad_id: nil)

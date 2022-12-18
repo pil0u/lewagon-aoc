@@ -63,8 +63,8 @@ class PagesController < ApplicationController
                                   .map do |day, completers|
                                     {
                                       number: day,
-                                      gold_completers: completers[1][1],
-                                      silver_completers: completers[0][1] - completers[1][1]
+                                      gold_completers: completers.dig(1, 1).to_i,
+                                      silver_completers: completers.dig(0, 1).to_i - completers.dig(1, 1).to_i
                                     }
                                   end
     @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil

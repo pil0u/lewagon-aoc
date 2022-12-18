@@ -6,6 +6,9 @@ en:
       squad:
         pin: "Squad PIN"
   achievements:
+    edition2020:
+      title: "Burdigala"
+      description: "You solved at least one challenge during the 2020 edition"
     countdown_riddle:
       title: "Elementary"
       description: "You solved puzzle 0, the countdown riddle"

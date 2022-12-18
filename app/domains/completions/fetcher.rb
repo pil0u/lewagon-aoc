@@ -15,6 +15,8 @@ module Completions
           update_users_sync_status(api_completions.keys)
           Rails.logger.info "✔ Users' sync status updated"
 
+          unlock_yoda(api_completions)
+
           completion_attributes = transform_for_database(api_completions)
           Rails.logger.info \
             "✔ Completions prepared for database import (total: #{completion_attributes.size})"
@@ -82,6 +84,15 @@ module Completions
       end
       to_unsync.pluck(:id, :github_username).each do |(id, github_username)|
         Rails.logger.info "\t#{id}-#{github_username} is now unsynced."
+      end
+    end
+
+    def unlock_yoda(api_completions)
+      aoc_ids = api_completions.filter_map { |aoc_id, results| aoc_id if results["global_score"] > 0 }
+      user_ids = User.where(aoc_id: aoc_ids).pluck(:id)
+
+      user_ids.each do |user_id|
+        Achievements::UnlockJob.perform_later(:global_score, user_id) 
       end
     end
 

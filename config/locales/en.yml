@@ -9,6 +9,9 @@ en:
     countdown_riddle:
       title: "Elementary"
       description: "You solved puzzle 0, the countdown riddle"
+    global_score:
+      title: "Yoda"
+      description: "You earned at least 1 point in Advent of Code global leaderboard"
     setup_complete:
       title: "Welcome to the party 🎉"
       description: "You properly synced your AoC account with the platform"

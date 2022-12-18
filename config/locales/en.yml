@@ -24,6 +24,12 @@ en:
     full_squad:
       title: "Locked & Loaded"
       description: "You are locked into a full squad"
+    sanity:
+      title: "Sanity"
+      description: "You chose *not* to enter the Ladder of Insanity"
+    insanity:
+      title: "This is madness"
+      description: "You chose to enter the Ladder of Insanity"
     stars1:
       title: "The Journey"
       description: "You earned your first star"

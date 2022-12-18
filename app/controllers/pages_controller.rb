@@ -27,6 +27,10 @@ class PagesController < ApplicationController
     @admins = User.admins.pluck(:username)
   end
 
+  def countdown
+    render "countdown", layout: false
+  end
+
   def faq; end
 
   def participation

@@ -27,7 +27,8 @@ Rails.application.routes.draw do
 
   # Routes for authenticated + confirmed users
   authenticated :user, ->(user) { user.confirmed? } do
-    get     "/",                    to: "pages#calendar",   as: :calendar
+    get     "/",                    to: "pages#calendar", as: :calendar
+    get     "/countdown",           to: "pages#countdown"
     get     "/city/:slug",          to: "cities#show",      as: :city
     get     "/day/:day",            to: "days#show",        as: :day, day: /[1-9]|1\d|2[0-5]/
     get     "/day/:day/:challenge", to: "snippets#show",    as: :snippet, day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: SolvedPuzzleConstraint.new

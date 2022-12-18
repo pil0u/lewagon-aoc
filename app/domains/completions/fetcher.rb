@@ -92,7 +92,7 @@ module Completions
       user_ids = User.where(aoc_id: aoc_ids).pluck(:id)
 
       user_ids.each do |user_id|
-        Achievements::UnlockJob.perform_later(:global_score, user_id) 
+        Achievements::UnlockJob.perform_later(:global_score, user_id)
       end
     end
 

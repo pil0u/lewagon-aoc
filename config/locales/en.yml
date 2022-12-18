@@ -57,6 +57,15 @@ en:
     speed1440:
       title: "Full score cocktail"
       description: "You solved a puzzle in the 24 hours following its release"
+    message1:
+      title: "The Social Network"
+      description: "You published your first message on The Wall"
+    message5:
+      title: "Codie-talkie"
+      description: "You published 5 messages on The Wall"
+    message10:
+      title: "Certified taunter"
+      description: "You published 10 messages on The Wall"
     github_star:
       title: "Fan"
       description: "You starred the project on GitHub"

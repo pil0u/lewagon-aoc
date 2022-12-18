@@ -9,6 +9,9 @@ en:
     edition2020:
       title: "Burdigala"
       description: "You solved at least one challenge during the 2020 edition"
+    edition2021:
+      title: "Hipster"
+      description: "You solved at least one challenge during the 2021 edition"
     countdown_riddle:
       title: "Elementary"
       description: "You solved puzzle 0, the countdown riddle"

@@ -1,0 +1,1079 @@
+1,Paris,14
+2,Paris,19
+3,Paris,22
+4,Paris,20
+5,Paris,23
+6,Paris,19
+7,Brussels,19
+8,Paris,22
+9,Brussels,22
+10,Paris,23
+11,Paris,24
+12,Brussels,19
+13,Lille,11
+14,Beirut,8
+15,Paris,34
+16,Bordeaux,8
+17,Brussels,11
+18,Paris,33
+19,Bordeaux,13
+20,Amsterdam,22
+21,Marseille,5
+22,Lille,14
+23,Brussels,26
+24,Paris,36
+25,Amsterdam,26
+26,Lille,9
+27,Nantes,8
+28,Lisbon,18
+29,Brussels,19
+30,Paris,39
+31,Bordeaux,25
+32,Beirut,6
+33,Copenhagen,7
+34,São Paulo,9
+35,Lille,7
+36,London,18
+37,Marseille,10
+38,Amsterdam,26
+39,Lille,13
+40,Bordeaux,25
+41,London,17
+42,Copenhagen,5
+43,Paris,39
+44,Barcelona,13
+45,Brussels,37
+46,São Paulo,13
+47,Nantes,14
+48,Paris,40
+49,Lisbon,25
+50,Rio de Janeiro,13
+51,Bordeaux,28
+52,Lyon,14
+53,Marseille,19
+54,London,19
+55,Copenhagen,12
+56,Lille,10
+57,Barcelona,12
+58,Tokyo,8
+59,Paris,21
+60,Nantes,8
+61,Shanghai,11
+62,Amsterdam,24
+63,Montréal,9
+64,São Paulo,17
+65,Berlin,16
+66,Marseille,8
+67,Bordeaux,22
+68,Lille,11
+69,Copenhagen,7
+70,Paris,40
+71,Lisbon,18
+72,Lyon,8
+73,Brussels,17
+74,London,22
+75,Barcelona,22
+76,Shanghai,7
+77,Montréal,18
+78,Tokyo,11
+79,Nantes,8
+80,Amsterdam,9
+81,São Paulo,22
+82,Lyon,6
+83,Paris,46
+84,Rio de Janeiro,16
+85,Bordeaux,27
+86,Lisbon,26
+87,Lille,12
+88,Chengdu,11
+89,Marseille,13
+90,Shanghai,13
+91,Marseille,12
+92,Berlin,32
+93,London,25
+94,Tokyo,20
+95,Barcelona,21
+96,Brussels,26
+97,Lisbon,19
+98,Montréal,13
+99,Amsterdam,11
+100,Paris,39
+101,Paris,19
+102,Bordeaux,12
+103,London,33
+104,Copenhagen,10
+105,Lille,15
+106,São Paulo,17
+107,Nantes,9
+108,Lille,18
+109,Lyon,16
+110,Rio de Janeiro,7
+111,Berlin,18
+112,Shanghai,10
+113,Barcelona,22
+114,Chengdu,7
+115,Belo Horizonte,6
+116,Lille,9
+117,Marseille,8
+118,Casablanca,5
+119,Copenhagen,5
+120,Paris,38
+121,Lyon,13
+122,Lisbon,21
+123,London,35
+124,Berlin,20
+125,Montréal,17
+126,Amsterdam,22
+127,Bordeaux,11
+128,Bali,15
+129,Barcelona,14
+130,Shanghai,17
+131,Milan,13
+132,Tokyo,17
+133,Brussels,18
+134,Paris,20
+135,Melbourne,6
+136,Sydney,2
+137,Rio de Janeiro,7
+138,São Paulo,18
+139,Nantes,8
+140,Bordeaux,21
+141,Marseille,16
+142,Berlin,30
+143,London,29
+144,Montréal,17
+145,Paris,40
+146,Paris,20
+147,Tokyo,16
+148,Lisbon,23
+149,Bali,13
+150,Tel Aviv,10
+151,Chengdu,8
+152,Lille,9
+153,Barcelona,20
+154,Amsterdam,17
+155,Brussels,15
+156,Buenos Aires,3
+157,Milan,16
+158,São Paulo,16
+159,Shanghai,23
+160,Chengdu,9
+161,Tel Aviv,14
+162,Lisbon,26
+163,Bali,24
+164,Copenhagen,5
+165,Tokyo,15
+166,Bordeaux,8
+167,Nantes,11
+168,Montréal,23
+169,Rio de Janeiro,15
+170,Melbourne,10
+171,Berlin,36
+172,Lille,9
+173,London,36
+174,Lyon,18
+175,Barcelona,25
+176,Marseille,10
+177,Paris,42
+178,Casablanca,8
+179,Lille,21
+180,Mexico,8
+181,Milan,9
+182,São Paulo,25
+183,Amsterdam,16
+184,Kyoto,6
+185,Brussels,21
+186,Melbourne,12
+187,Tokyo,23
+188,Montréal,22
+189,Bali,19
+190,London,35
+191,Bordeaux,20
+192,Copenhagen,14
+193,Tel Aviv,17
+194,Shanghai,27
+195,Berlin,39
+196,Lyon,19
+197,Nantes,12
+198,Buenos Aires,11
+199,Barcelona,19
+200,Paris,43
+201,Paris,24
+202,Chengdu,8
+203,Marseille,20
+204,Rio de Janeiro,12
+205,Lisbon,27
+206,Lille,7
+207,Casablanca,18
+208,Berlin,5
+209,Tel Aviv,17
+210,Montréal,17
+211,São Paulo,20
+212,Marseille,12
+213,Bordeaux,15
+214,Lausanne,4
+215,Buenos Aires,8
+216,Casablanca,10
+217,Bali,14
+218,Lyon,26
+219,Copenhagen,4
+220,Paris,43
+221,Paris,26
+222,London,39
+223,Berlin,29
+224,Lisbon,18
+225,Lille,15
+226,Tokyo,16
+227,Amsterdam,10
+228,Melbourne,13
+229,Brussels,19
+230,Rio de Janeiro,12
+231,Barcelona,23
+232,Paris,8
+233,Milan,17
+234,Nantes,11
+235,Mexico,13
+236,Shanghai,18
+237,Kyoto,8
+238,Shenzhen,6
+239,Chengdu,11
+240,London,42
+241,London,16
+242,Lyon,23
+243,Lisbon,18
+244,Berlin,34
+245,Barcelona,19
+246,Bordeaux,22
+247,Montréal,26
+248,Testville,3
+249,Lausanne,6
+250,Paris,41
+251,Paris,30
+252,Tokyo,16
+253,Bali,25
+254,Marseille,30
+255,Brussels,16
+256,São Paulo,15
+257,Lille,15
+258,Melbourne,12
+259,Amsterdam,23
+260,Rennes,7
+261,Rio de Janeiro,9
+262,Copenhagen,17
+263,Milan,13
+264,Tel Aviv,13
+265,Kyoto,4
+266,Berlin,11
+267,Madrid,17
+268,Buenos Aires,11
+269,Oslo,10
+272,Shanghai,24
+273,Bali,23
+274,Chengdu,9
+275,Barcelona,27
+276,Bordeaux,23
+277,Marseille,12
+278,Nantes,11
+279,Tokyo,18
+280,Lausanne,6
+281,Montréal,21
+282,Brussels,9
+283,Copenhagen,13
+284,São Paulo,7
+285,Lyon,15
+286,Amsterdam,19
+287,London,41
+288,Berlin,40
+289,Lille,14
+290,Paris,41
+291,Paris,30
+292,Belo Horizonte,7
+293,Lisbon,27
+294,Singapore,10
+295,Melbourne,13
+296,São Paulo,20
+297,Tel Aviv,17
+298,Rio de Janeiro,12
+299,Oslo,10
+300,Berlin,16
+301,Paris,29
+302,Buenos Aires,13
+303,Tokyo,8
+304,Brussels,10
+305,Brussels,28
+306,Bali,30
+307,Lyon,8
+308,Lyon,28
+309,Amsterdam,19
+310,Tokyo,23
+311,Madrid,11
+312,Lisbon,28
+313,Copenhagen,14
+314,Rennes,8
+315,Melbourne,10
+316,Montréal,13
+317,London,33
+318,London,16
+319,London,42
+320,Paris,42
+321,Paris,32
+322,Berlin,45
+323,Berlin,14
+324,Tel Aviv,27
+325,Bordeaux,26
+326,Lausanne,7
+327,São Paulo,14
+328,Lille,16
+329,Montréal,26
+330,Rio de Janeiro,15
+331,Singapore,10
+332,Marseille,31
+333,Shanghai,18
+334,Nantes,14
+335,Mexico,12
+336,Malmö,21
+337,Lisbon,10
+338,Shenzhen,11
+339,Milan,17
+340,Tel Aviv,8
+341,Barcelona,33
+342,Tel Aviv,14
+343,Bordeaux,28
+344,Lausanne,9
+345,Mexico,10
+346,Lisbon,28
+347,Mexico,13
+348,Melbourne,17
+349,Bali,30
+350,Paris,46
+351,Paris,31
+352,Lille,20
+353,Oslo,8
+354,Rio de Janeiro,12
+355,São Paulo,8
+356,Belo Horizonte,8
+357,Buenos Aires,16
+358,Rio de Janeiro,20
+359,Paris,19
+360,London,39
+361,London,38
+362,Brussels,17
+363,Tokyo,20
+364,Lyon,29
+365,Amsterdam,13
+366,Nantes,16
+367,Montréal,18
+368,São Paulo,14
+369,Madrid,12
+370,Berlin,41
+371,Berlin,24
+372,Marseille,23
+373,Marseille,7
+374,Melbourne,8
+375,Singapore,10
+376,Stockholm,8
+377,Barcelona,19
+378,Paris,20
+379,Singapore,8
+380,Milan,14
+381,Rennes,12
+382,Istanbul,5
+383,Lausanne,7
+384,Buenos Aires,9
+385,Brussels,9
+386,Berlin,16
+387,Tokyo,10
+388,London,36
+389,Munich,13
+390,London,23
+391,Brussels,13
+392,Montréal,11
+393,Mexico,3
+394,Tokyo,12
+395,Barcelona,5
+396,Seoul,5
+397,Marseille,28
+398,Berlin,44
+399,Berlin,29
+400,Paris,36
+401,Paris,26
+402,Oslo,9
+403,Montréal,11
+404,Melbourne,11
+405,Buenos Aires,12
+406,Lausanne,9
+407,Tel Aviv,8
+408,São Paulo,19
+409,Rio de Janeiro,10
+410,Shenzhen,7
+411,Bordeaux,17
+412,Lyon,14
+413,Barcelona,20
+414,Paris,16
+415,Lille,10
+416,Mexico,11
+417,Singapore,16
+418,Melbourne,8
+419,Lisbon,24
+420,Stockholm,7
+421,Lisbon,11
+422,Paris,10
+423,London,52
+424,London,14
+425,Lisbon,7
+426,Munich,14
+427,Shanghai,17
+428,Shanghai,19
+429,Tokyo,8
+430,Marseille,15
+431,Lausanne,10
+432,Berlin,38
+433,Berlin,25
+434,Berlin,22
+435,Bordeaux,19
+436,Brussels,14
+437,Lille,12
+438,Montréal,26
+439,Lyon,19
+440,Paris,44
+441,Paris,29
+442,Nantes,18
+443,Mexico,13
+444,São Paulo,19
+445,Rio de Janeiro,9
+446,São Paulo,19
+447,Rio de Janeiro,14
+448,Lisbon,26
+449,Amsterdam,28
+450,Paris,19
+452,Melbourne,16
+453,Singapore,5
+454,Singapore,17
+455,Brasilia,36
+456,Madrid,11
+457,Barcelona,11
+458,Oslo,10
+459,Lisbon,29
+460,Paris,16
+461,Istanbul,9
+462,Brussels,7
+463,Brussels,13
+464,Milan,12
+465,Mexico,9
+466,Melbourne,20
+467,Tokyo,22
+468,Lyon,8
+469,Lisbon,17
+470,Berlin,30
+471,Tokyo,9
+472,Brussels,26
+473,London,35
+474,London,37
+475,London,20
+476,London,41
+477,Dubai,7
+478,Bordeaux,4
+479,Buenos Aires,9
+480,Berlin,10
+481,Lyon,17
+482,Montréal,22
+483,Mexico,19
+484,Bordeaux,19
+485,Rennes,14
+486,Stockholm,14
+487,Rio de Janeiro,13
+488,Melbourne,10
+489,Munich,24
+490,Berlin,39
+491,Berlin,36
+492,Berlin,27
+493,São Paulo,11
+494,Seoul,4
+495,Seoul,7
+496,Marseille,26
+497,Shanghai,16
+498,Nantes,20
+499,Rio de Janeiro,10
+500,Paris,45
+501,Paris,38
+502,Paris,23
+503,São Paulo,29
+504,Amsterdam,28
+505,Lille,17
+506,Lausanne,12
+507,Lausanne,10
+508,Amsterdam,12
+509,Tokyo,6
+510,Bali,10
+511,Barcelona,24
+512,Singapore,10
+513,Brasilia,40
+514,Montréal,7
+515,Lyon,7
+516,Bordeaux,11
+517,Montréal,17
+518,Shanghai,9
+519,Singapore,11
+520,Marseille,9
+521,Marseille,8
+522,London,29
+523,London,28
+524,London,19
+525,London,30
+526,Bordeaux,12
+527,Bordeaux,9
+528,Montréal,8
+529,Montréal,5
+530,Berlin,30
+531,Berlin,22
+532,Berlin,29
+533,Berlin,20
+534,Melbourne,13
+535,Munich,13
+536,São Paulo,10
+537,Singapore,10
+538,São Paulo,21
+539,Singapore,7
+540,Rio de Janeiro,9
+541,Rio de Janeiro,8
+542,Rio de Janeiro,6
+543,Tokyo,15
+544,Mexico,10
+545,Mexico,8
+546,Barcelona,12
+547,Nantes,18
+548,Lyon,18
+549,Amsterdam,14
+550,Paris,38
+551,Paris,28
+552,Paris,28
+553,Paris,10
+554,Paris,14
+555,Lisbon,12
+556,Brussels,5
+557,Brussels,10
+558,Marseille,24
+559,Buenos Aires,12
+560,Lisbon,13
+561,Buenos Aires,8
+562,Dubai,6
+563,Oslo,8
+564,Lisbon,7
+565,Lille,13
+566,Lisbon,9
+567,Istanbul,6
+568,Milan,10
+569,Bali,2
+570,São Paulo,4
+571,Lyon,9
+572,Shanghai,12
+573,Shanghai,9
+574,Buenos Aires,8
+575,Tokyo,6
+576,Mexico,4
+577,Melbourne,4
+578,Lyon,6
+579,Rennes,6
+580,Lausanne,12
+581,Tel Aviv,4
+582,São Paulo,12
+583,Nantes,6
+584,Montréal,11
+585,Lausanne,10
+586,Lyon,16
+587,Tokyo,19
+588,Melbourne,14
+589,Paris,21
+590,Paris,34
+591,Paris,23
+592,Singapore,6
+593,Munich,11
+594,Bordeaux,21
+595,Tokyo,16
+596,Tokyo,6
+597,London,17
+598,London,27
+599,London,30
+600,London,7
+601,London,14
+602,London,17
+603,Berlin,18
+604,Berlin,27
+605,Berlin,29
+606,Berlin,36
+607,Bali,2
+608,Marseille,24
+609,Rio de Janeiro,11
+610,Marseille,25
+611,Melbourne,7
+612,Stockholm,13
+613,Lisbon,7
+614,Lisbon,12
+615,Singapore,6
+616,São Paulo,17
+617,Brussels,7
+618,Brussels,5
+619,Lausanne,7
+620,Brussels,7
+621,Brussels,6
+622,Mexico,8
+623,Dubai,5
+624,Lille,18
+625,Lille,17
+626,Amsterdam,10
+627,Amsterdam,11
+628,Madrid,10
+629,Barcelona,16
+630,Lyon,8
+631,Santiago,8
+632,Bordeaux,5
+633,Bordeaux,10
+634,Buenos Aires,6
+635,Buenos Aires,9
+636,Paris,11
+638,Santiago,13
+639,Santiago,10
+640,Montréal,8
+641,Santiago,15
+643,Santiago,5
+644,Santiago,6
+645,Santiago,8
+646,Santiago,6
+647,Shanghai,10
+648,Milan,8
+649,Bali,8
+650,São Paulo,7
+651,Santiago,5
+652,Santiago,9
+653,Mauritius,12
+654,Mauritius,12
+655,Paris,26
+656,Tokyo,17
+657,Montréal,7
+658,Lausanne,10
+659,Nantes,11
+660,Paris,45
+661,Marseille,14
+662,Marseille,17
+663,Nice,10
+664,Nice,12
+665,Montréal,4
+666,Shanghai,12
+667,Nantes,6
+668,Munich,6
+669,Bordeaux,15
+670,Berlin,33
+671,Berlin,10
+672,Berlin,27
+673,Berlin,6
+674,Munich,5
+675,Lille,5
+676,Dubai,4
+677,Bordeaux,9
+678,Lyon,9
+679,Mexico,8
+680,Melbourne,10
+681,Mexico,3
+682,Lisbon,11
+683,Lisbon,11
+684,Barcelona,8
+685,Mexico,4
+686,Rio de Janeiro,8
+687,Lima,7
+688,São Paulo,14
+689,Rio de Janeiro,6
+690,São Paulo,23
+691,Singapore,14
+692,Singapore,15
+693,Lima,6
+694,Belize,14
+695,Melbourne,5
+696,Istanbul,10
+697,London,29
+698,London,29
+699,London,16
+700,Amsterdam,21
+701,Amsterdam,9
+702,For Business,16
+703,Paris,18
+704,Paris,12
+705,Buenos Aires,10
+706,Singapore,9
+707,Shanghai,15
+708,Shanghai,8
+709,Melbourne,7
+710,Buenos Aires,6
+711,Melbourne,14
+712,Mauritius,15
+713,Rio de Janeiro,10
+714,Dubai,7
+715,Montréal,11
+716,Montréal,8
+717,Casablanca,8
+718,Tokyo,20
+719,Tokyo,6
+720,Santiago,13
+721,Brasilia,37
+722,Paris,44
+724,Paris,13
+725,Madrid,16
+726,Barcelona,21
+727,Tokyo,22
+728,Tokyo,6
+729,Paris,7
+730,Paris,42
+731,Paris,35
+732,Lausanne,12
+733,Bordeaux,17
+734,Berlin,28
+735,Berlin,40
+736,Munich,23
+737,Munich,12
+738,Berlin,23
+739,Berlin,33
+741,Berlin,11
+742,Lyon,9
+743,Lyon,14
+744,Amsterdam,10
+745,Amsterdam,22
+746,Amsterdam,12
+747,Stockholm,9
+748,Brussels,18
+749,Brussels,11
+750,London,29
+751,London,35
+752,London,32
+753,London,17
+754,London,38
+755,Lille,15
+756,Nantes,19
+757,Melbourne,12
+758,Rennes,9
+759,Milan,8
+760,Rio de Janeiro,7
+762,Martinique,13
+763,Mexico,7
+764,Mexico,2
+765,Lausanne,13
+766,São Paulo,20
+767,Lisbon,23
+768,Lisbon,16
+769,São Paulo,10
+770,Bordeaux,11
+771,Singapore,18
+772,Bali,10
+773,Nice,5
+774,Marseille,10
+775,Casablanca,5
+776,Marseille,15
+777,Shanghai,12
+778,Nice,4
+779,Marseille,14
+780,Rio de Janeiro,9
+781,Lima,40
+782,Munich,14
+783,Munich,11
+784,Lille,10
+785,Madrid,10
+786,Barcelona,22
+787,Melbourne,12
+788,Melbourne,16
+789,Lyon,15
+790,Montréal,16
+791,Montréal,20
+792,Dubai,6
+793,Rio de Janeiro,8
+794,Tel Aviv,9
+795,Tokyo,18
+796,Tokyo,10
+797,Nantes,12
+798,Mauritius,12
+799,Bordeaux,16
+800,Paris,37
+801,Paris,27
+802,Paris,28
+803,Lisbon,11
+804,Lisbon,16
+805,London,31
+806,London,32
+807,London,29
+808,London,34
+809,Bali,7
+810,Paris,11
+811,Paris,16
+812,Paris,16
+813,Berlin,37
+814,Berlin,16
+815,Berlin,24
+816,Berlin,19
+817,Berlin,13
+818,Lyon,14
+819,Cologne,11
+820,Rio de Janeiro,9
+821,Buenos Aires,9
+822,Rio de Janeiro,17
+823,Buenos Aires,11
+824,Amsterdam,11
+825,Amsterdam,16
+826,Brussels,17
+827,Martinique,16
+828,São Paulo,19
+829,Mexico,6
+830,São Paulo,31
+831,Mexico,4
+832,São Paulo,10
+833,Mexico,4
+834,Mauritius,8
+835,Nice,12
+836,Nice,13
+837,Casablanca,4
+838,Lausanne,9
+839,Casablanca,6
+840,Buenos Aires,8
+841,Buenos Aires,8
+842,Shanghai,8
+843,Buenos Aires,12
+844,Marseille,18
+845,Lisbon,21
+846,Montréal,16
+847,Montréal,8
+848,Tokyo,24
+849,Tokyo,6
+850,Shanghai,6
+851,Lille,13
+852,Melbourne,6
+853,Bordeaux,31
+854,Lyon,13
+855,Shanghai,10
+856,Nantes,20
+857,Melbourne,19
+858,Tokyo,18
+859,Tokyo,10
+860,Paris,37
+861,Paris,28
+862,Paris,40
+863,For Business,18
+864,Lyon,24
+865,Lisbon,21
+866,Shanghai,13
+867,Lisbon,9
+868,São Paulo,15
+869,Rio de Janeiro,10
+870,Berlin,46
+871,Berlin,44
+872,Nice,15
+873,Berlin,8
+874,Berlin,7
+875,Madrid,13
+876,Barcelona,14
+877,Madrid,15
+879,Mexico,6
+880,Munich,12
+881,Munich,16
+882,Bali,15
+883,Bali,11
+884,Rio de Janeiro,16
+885,Online,14
+886,Online,13
+887,Melbourne,16
+888,Zurich,10
+889,Buenos Aires,10
+890,Cologne,9
+891,Shanghai,8
+892,Online,13
+893,Online,11
+894,Online,24
+895,Nice,17
+896,Marseille,27
+897,Mexico,2
+898,São Paulo,39
+899,Mauritius,11
+900,London,26
+901,London,30
+902,London,29
+903,London,13
+904,London,25
+905,Buenos Aires,7
+906,Amsterdam,9
+907,Amsterdam,16
+908,Brussels,14
+909,São Paulo,10
+910,Singapore,16
+911,Singapore,7
+912,Medellín,47
+913,Online,12
+914,Medellín,24
+915,Buenos Aires,7
+916,Casablanca,7
+917,Shanghai,6
+918,Mauritius,8
+919,Mauritius,10
+920,Singapore,21
+921,Singapore,11
+922,Amsterdam,11
+923,Seine et Marne,11
+924,For Business,18
+926,Montréal,8
+927,Nantes,14
+928,Tokyo,24
+929,Amsterdam,16
+930,Rio de Janeiro,8
+931,Montréal,16
+932,Lyon,8
+933,Bordeaux,15
+934,Lausanne,5
+935,Zurich,6
+936,Lille,3
+937,Singapore,15
+938,São Paulo,23
+939,Amsterdam,8
+940,Paris,55
+941,Paris,33
+942,Munich,15
+943,Munich,8
+944,São Paulo,19
+945,Buenos Aires,11
+946,São Paulo,12
+947,Lisbon,29
+948,Lisbon,17
+949,Porto,12
+950,Cologne,9
+951,Cologne,10
+952,Berlin,33
+953,Berlin,14
+954,Berlin,25
+955,Berlin,12
+956,Berlin,8
+957,Berlin,6
+958,Bali,13
+959,Bali,5
+960,London,26
+961,London,29
+962,London,30
+963,London,17
+964,Mexico,6
+965,Mexico,5
+966,Melbourne,12
+967,Buenos Aires,5
+968,Casablanca,9
+969,Mexico,5
+970,Rio de Janeiro,14
+971,Nice,5
+972,Marseille,8
+973,Buenos Aires,11
+974,Mauritius,8
+975,Madrid,6
+976,Barcelona,16
+977,Madrid,5
+978,Barcelona,10
+979,Brussels,8
+980,Brussels,5
+981,Buenos Aires,6
+983,Casablanca,8
+984,Paris,4
+985,Online,15
+986,Online,25
+987,Testville,3
+988,Melbourne,22
+989,Cape Town,12
+990,Online,36
+991,Online,24
+992,Mauritius,11
+993,Martinique,13
+994,For Business,1
+995,Online,16
+996,Online,17
+997,Brasilia,20
+998,Mauritius,10
+999,Shanghai,6
+1000,Paris,48
+1001,Shanghai,10
+1002,Paris,49
+1003,Paris,30
+1004,Paris,16
+1005,Emil,18
+1006,Emil,15
+1007,Emil,14
+1008,Rio de Janeiro,14
+1009,Tokyo,14
+1010,Tokyo,19
+1011,Rio de Janeiro,15
+1012,Berlin,39
+1013,Berlin,18
+1014,Berlin,50
+1015,Singapore,20
+1016,Singapore,10
+1017,Tokyo,24
+1018,Tokyo,14
+1019,Rennes,11
+1020,São Paulo,12
+1021,Berlin,18
+1022,Berlin,10
+1023,Cologne,8
+1024,Cologne,5
+1025,Brussels,14
+1026,Brussels,17
+1027,Nantes,27
+1029,Shanghai,9
+1030,Paris,38
+1031,Lille,16
+1032,Lyon,17
+1033,Lyon,12
+1034,Bordeaux,21
+1035,Bordeaux,18
+1036,Amsterdam,13
+1037,Amsterdam,10
+1038,Montréal,25
+1039,Montréal,9
+1040,São Paulo,8
+1041,Lisbon,26
+1042,Lisbon,16
+1043,Porto,9
+1044,Melbourne,22
+1045,Madrid,14
+1046,Barcelona,28
+1047,Madrid,20
+1048,Barcelona,6
+1049,Buenos Aires,12
+1050,London,46
+1051,London,36
+1052,London,37
+1053,London,27
+1054,London,36
+1056,Nice,16
+1057,Nice,5
+1058,Montréal,20
+1059,Marseille,8
+1060,Lausanne,7
+1061,Lausanne,5
+1062,Zurich,4
+1063,Zurich,10
+1064,Marseille,22
+1065,Mexico,6
+1066,Bali,18
+1067,Mexico,9
+1068,Marseille,15
+1070,São Paulo,20
+1071,Munich,8
+1072,Munich,14
+1073,Emil,17
+1074,Emil,18
+1075,For Business,9
+1076,For Business,24
+1078,Melbourne,18
+1079,Amsterdam,6
+1080,Paris,21
+1081,Emil,11
+1082,Emil,10
+1083,Emil,19
+1085,Online,46
+1086,Online,53
+1087,Online,22
+1088,Casablanca,10
+1090,Online,48
+1091,Online,40
+1092,Online,6
+1098,Berlin,9
+1100,Singapore,16
+1101,Singapore,11
+1113,Paris,9

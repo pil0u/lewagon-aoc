@@ -3,7 +3,7 @@
 module Achievements
   class Message5Unlocker < Unlocker
     def call
-      return unless Message.where(user_id: user.id).count >= 5
+      return unless user.messages.count >= 5
 
       unlock!
     end

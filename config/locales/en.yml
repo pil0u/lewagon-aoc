@@ -57,3 +57,6 @@ en:
     speed1440:
       title: "Full score cocktail"
       description: "You solved a puzzle in the 24 hours following its release"
+    github_star:
+      title: "Fan"
+      description: "You starred the project on GitHub"

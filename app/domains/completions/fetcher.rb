@@ -119,6 +119,8 @@ module Completions
 
     def unlock_achievements
       Achievements::MassUnlockJob.perform_later(:setup_complete)
+      Achievements::MassUnlockJob.perform_later(:edition2020)
+      Achievements::MassUnlockJob.perform_later(:edition2021)
       Achievements::MassUnlockJob.perform_later(:stars1)
       Achievements::MassUnlockJob.perform_later(:stars5)
       Achievements::MassUnlockJob.perform_later(:stars11)

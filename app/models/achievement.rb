@@ -14,7 +14,7 @@ class Achievement < ApplicationRecord
   def self.keys
     full_list.keys
   end
-  
+
   def self.total
     full_list.count - 1
     # :sanity and :insanity are mutually exclusive

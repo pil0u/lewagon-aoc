@@ -1,0 +1,8 @@
+<div class="flex my-1 shadow-xl opacity-70 hover:opacity-100 hover:bg-hover rounded p-2">
+  <%= image_tag("dijkstra/#{@achievement.first}.svg", alt: @achievement.first, class: "w-16 sm:w-24") %>
+
+  <div class="flex flex-col pl-4 justify-center">
+    <h2 class="font-bold <%= "text-other-green" if @user_achievements.include?(@achievement.first.to_s) %>"><%= @achievement.last[:title] %></h2>
+    <p><%= @achievement.last[:description] %></p>
+  </div>
+</div>

@@ -1,10 +1,11 @@
-<nav class="flex mx-auto px-3 pb-2 gap-x-6 lg:gap-x-9 border-b border-aoc-gray-darker">
+<nav class="flex mx-auto px-3 pb-2 gap-x-6 lg:gap-x-9 border-b border-aoc-gray-darker flex-wrap justify-center">
 
   <% if @user.confirmed? %>
 
-    <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
+    <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path })%>
     <%= render NavTabComponent.new(link: { name: "scores", path: scores_path }) %>
     <%= render NavTabComponent.new(link: { name: "the wall", path: messages_path }) %>
+    <%= render NavTabComponent.new(link: { name: "achievements", path: achievements_path }) %>
     <%= render NavTabComponent.new(link: { name: "<i class=\"fas fa-gear\"></i>".html_safe, path: settings_path }) %>
 
   <% else %>

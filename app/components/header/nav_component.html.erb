@@ -2,7 +2,7 @@
 
   <% if @user.confirmed? %>
 
-    <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path })%>
+    <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
     <%= render NavTabComponent.new(link: { name: "scores", path: scores_path }) %>
     <%= render NavTabComponent.new(link: { name: "the wall", path: messages_path }) %>
     <%= render NavTabComponent.new(link: { name: "achievements", path: achievements_path }) %>

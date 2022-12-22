@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get "/faq",             to: "pages#faq"
   get "/participation",   to: "pages#participation"
   get "/stats",           to: "pages#stats"
+  get "/achievements",    to: "pages#achievements"
 
   # Routes for unauthenticated users
   unauthenticated do

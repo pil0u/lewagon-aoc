@@ -1,8 +1,8 @@
-<div class="flex my-2 shadow-xl opacity-70 hover:opacity-100 hover:bg-hover rounded p-1 sm:p-2 sm:border-0 group
-            relative [&:nth-child(odd)_#mobile]:left-0 [&:nth-child(even)_#mobile]:right-0 w-5/12 sm:w-full
+<div class="border-box flex my-2 shadow-xl opacity-70 hover:opacity-100 hover:bg-hover rounded sm:p-2 sm:border-0 group
+            relative [&:nth-child(odd)_#mobile]:left-0 [&:nth-child(even)_#mobile]:right-0 sm:w-full
             <%= "border-2 border-other-green" if @user_achievements.include?(@achievement.first.to_s) %>">
 
-  <%= image_tag("dijkstra/#{@achievement.first}.svg", alt: @achievement.first, class: "w-28 sm:w-24 mx-auto sm:mx-0") %>
+  <%= image_tag("dijkstra/#{@achievement.first}.svg", alt: @achievement.first, class: "w-36 sm:w-24 mx-auto sm:mx-0") %>
 
   <%# Display for desktop query %>
   <div id="desktop" class="flex flex-col pl-4 justify-center hidden sm:block">
@@ -13,8 +13,8 @@
   </div>
 
   <%# Display for mobile query %>
-  <div id="mobile" class="absolute shadow-xl top-32 p-3 rounded hidden group-hover:block sm:invisible z-10 h-32"
-       style="width: 77vw; background-color: rgba(34,35,53)">
+  <div id="mobile" class="absolute shadow-xl top-full p-3 mt-2 rounded hidden group-hover:block sm:invisible z-10 w-80"
+       style="background-color: rgba(34,35,53)">
     <h2 class="font-bold <%= "text-other-green" if @user_achievements.include?(@achievement.first.to_s) %>">
       <%= @achievement.last[:title] %>
     </h2>

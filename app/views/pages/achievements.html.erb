@@ -1,0 +1,8 @@
+<%= render PageTitleComponent.new(title: "Achievements") %>
+<p class="my-4">Achievements are a growing feature on this website. There are currently <%= Achievement.total %> achievements but more will be added over time, until then do your best to collect them all. GLHF</p>
+
+<div class="my-4 flex flex-col">
+  <% @achievements.each do |achievement| %>
+    <%= render Achievements::AchievementComponent.new(achievement, current_user.achievements.pluck(:nature)) %>
+  <% end %>
+</div>

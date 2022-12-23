@@ -16,9 +16,10 @@ module ApplicationHelper
     sanitize(text, tags: %w[b em del span sub sup], attributes: %w[style])
   end
 
-  def snippets_sanitizer(text)
-    sanitize(text).gsub("&gt;", ">").gsub("&lt;", "<").gsub("&amp;", "&")
-  end
+  # Ended up being an unnecessary precaution
+  # def snippets_sanitizer(text)
+  #   sanitize(text).gsub("&gt;", ">").gsub("&lt;", "<").gsub("&amp;", "&")
+  # end
 
   def rouge(text, language)
     formatter = Rouge::Formatters::HTML.new

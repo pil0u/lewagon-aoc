@@ -17,10 +17,10 @@ class DaysController < ApplicationController
     attributes = %i[uid user_id username challenge duration]
     user_completions = daily_completions.pluck(*attributes).map { |completion| attributes.zip(completion).to_h }
     @participants = Scores::SoloPoints.get
-                               .select { |score| score[:day] == @day }
-                               .group_by { |score| score[:user_id] }
-                               .transform_values { |scores| scores.sum { |score| score[:score] } }
-                               .map do |user_id, score|
+                                      .select { |score| score[:day] == @day }
+                                      .group_by { |score| score[:user_id] }
+                                      .transform_values { |scores| scores.sum { |score| score[:score] } }
+                                      .map do |user_id, score|
       {
         username: user_completions.find { |completion| completion[:user_id] == user_id }[:username],
         uid: user_completions.find { |completion| completion[:user_id] == user_id }[:uid],

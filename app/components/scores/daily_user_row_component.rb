@@ -4,9 +4,10 @@ module Scores
   class DailyUserRowComponent < ApplicationComponent
     include ApplicationHelper
 
-    with_collection_parameter :user
+    with_collection_parameter :participant
 
-    def initialize(user:)
+    def initialize(participant:, user:)
+      @participant = participant
       @user = user
     end
   end

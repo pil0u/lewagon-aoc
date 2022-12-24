@@ -1,22 +1,27 @@
-<tr class="hover:bg-hover">
+<tr class="hover:bg-hover
+  <%= "bg-aoc-green bg-opacity-20" if @participant[:uid] == @user.uid %>">
+
   <td>
-    <%= link_to profile_path(@user[:uid]), class: "flex justify-center" do %>
-      <%= @user[:username] %>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
+      <%= @participant[:username] %>
     <% end %>
   </td>
-    <td>
-    <%= link_to profile_path(@user[:uid]), class: "flex justify-end" do %>
-      <%= duration_as_text(@user[:part_1]) %>
-    <% end %>
-  </td>
-    <td>
-    <%= link_to profile_path(@user[:uid]), class: "flex justify-end" do %>
-      <%= duration_as_text(@user[:part_2]) %>
-    <% end %>
-  </td>
+
   <td>
-    <%= link_to profile_path(@user[:uid]), class: "flex justify-end" do %>
-      <%= @user[:score] %>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-end" do %>
+      <%= duration_as_text(@participant[:part_1]) %>
+    <% end %>
+  </td>
+
+  <td>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-end" do %>
+      <%= duration_as_text(@participant[:part_2]) %>
+    <% end %>
+  </td>
+
+  <td>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-end" do %>
+      <%= @participant[:score] %>
     <% end %>
   </td>
 </tr>

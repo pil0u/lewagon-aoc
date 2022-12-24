@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get "/faq",             to: "pages#faq"
   get "/participation",   to: "pages#participation"
   get "/stats",           to: "pages#stats"
-  get "/achievements",    to: "pages#achievements"
 
   # Routes for unauthenticated users
   unauthenticated do
@@ -48,6 +47,7 @@ Rails.application.routes.draw do
     get     "/profile/:uid",        to: "users#show",       as: :profile
     get     "/settings",            to: "users#edit"
     patch   "/settings",            to: "users#update"
+    get     "/achievements",        to: "pages#achievements"
   end
 
   # Admin routes

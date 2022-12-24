@@ -16,7 +16,7 @@ class DaysController < ApplicationController
 
     attributes = %i[uid user_id username challenge duration]
     user_completions = daily_completions.pluck(*attributes).map { |completion| attributes.zip(completion).to_h }
-    @users = Scores::SoloPoints.get
+    @participants = Scores::SoloPoints.get
                                .select { |score| score[:day] == @day }
                                .group_by { |score| score[:user_id] }
                                .transform_values { |scores| scores.sum { |score| score[:score] } }
@@ -30,6 +30,6 @@ class DaysController < ApplicationController
       }
     end
 
-    @users.sort_by! { |user| [user[:score] * -1, user[:part_2].nil? ? user[:part_1] : user[:part_2], user[:part_1]] }
+    @participants.sort_by! { |user| [user[:score] * -1, user[:part_2].nil? ? user[:part_1] : user[:part_2], user[:part_1]] }
   end
 end

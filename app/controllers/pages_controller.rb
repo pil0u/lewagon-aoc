@@ -5,7 +5,8 @@ class PagesController < ApplicationController
   before_action :render_countdown, only: %i[code_of_conduct faq participation stats welcome], if: :render_countdown?
 
   def achievements
-    @achievements = Achievement.full_list
+    @achievements = Achievement.full_list.to_a
+    @user_achievements = current_user.achievements.pluck(:nature)
   end
 
   def calendar

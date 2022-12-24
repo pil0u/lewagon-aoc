@@ -1,23 +1,16 @@
-<div class="border-box flex my-2 shadow-xl opacity-70 hover:opacity-100 hover:bg-hover rounded sm:p-2 sm:border-0 group
-            relative [&:nth-child(odd)_#mobile]:left-0 [&:nth-child(even)_#mobile]:right-0 sm:w-full
-            <%= "border-2 border-other-green" if @user_achievements.include?(@achievement.first.to_s) %>">
+<div class="flex flex-col sm:flex-row my-2 sm:shadow-xl opacity-70 hover:opacity-100 rounded sm:p-2 group sm:w-full hover:bg-hover">
 
-  <%= image_tag("dijkstra/#{@achievement.first}.svg", alt: @achievement.first, class: "w-36 sm:w-24 mx-auto sm:mx-0") %>
+  <%= image_tag("dijkstra/#{@user_achievements.include?(@achievement.first.to_s) ? @achievement.first : 'locked'}.svg",
+      alt: @achievement.first, class: "w-32 sm:w-24 max-w-[34vw]") %>
 
-  <%# Display for desktop query %>
-  <div id="desktop" class="flex flex-col pl-4 justify-center hidden sm:block">
-    <h2 class="font-bold <%= "text-other-green" if @user_achievements.include?(@achievement.first.to_s) %>">
-      <%= @achievement.last[:title] %>
-    </h2>
-    <p><%= @achievement.last[:description] %></p>
+  <div class="shadow-xl sm:shadow-none hidden group-hover:block sm:group-hover:flex sm:flex z-10 absolute left-1/2 w-0 sm:w-full sm:static sm:flex-col sm:pl-4 sm:justify-center">
+    <div class="h-32 bg-transparent mt-2 sm:hidden"></div>
+    <div class = "p-3 sm:p-0 rounded w-[77vw] transform -translate-x-1/2 sm:translate-x-0 sm:bg-transparent bg-[#222335] sm:w-full">
+      <h2 class="font-bold">
+        <%= @achievement.last[:title] %>
+      </h2>
+      <p><%= @achievement.last[:description] %></p>
+    </div>
   </div>
 
-  <%# Display for mobile query %>
-  <div id="mobile" class="absolute shadow-xl top-full p-3 mt-2 rounded hidden group-hover:block sm:invisible z-10 w-80"
-       style="background-color: rgba(34,35,53)">
-    <h2 class="font-bold <%= "text-other-green" if @user_achievements.include?(@achievement.first.to_s) %>">
-      <%= @achievement.last[:title] %>
-    </h2>
-    <p><%= @achievement.last[:description] %></p>
-  </div>
 </div>

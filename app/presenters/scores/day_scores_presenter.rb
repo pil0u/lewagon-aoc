@@ -10,19 +10,21 @@ module Scores
     attr_reader :scores_per_user
 
     def scores
-      @ranks ||= User
-                 .includes(:completions)
-                 .where(id: scores_per_user.keys)
-                 .flat_map { |user|
-                   @scores_per_user[user.id].map { |score| { **identity_of(user), **stats_of(user, score) } }
-                 }
-                 # * -1 to revert the sort without new iterations
-                 .sort_by { |user| [user[:day], user[:score] * -1, user[:part_2], user[:part_1]].compact }
+      @scores ||= User
+                  .includes(:completions)
+                  .where(id: scores_per_user.keys)
+                  .flat_map { |user| @scores_per_user[user.id].map { |score| present(user, score) } }
+                  # * -1 to revert the sort without new iterations
+                  .sort_by { |user| [user[:day], user[:score] * -1, user[:part_2], user[:part_1]].compact }
+    end
+
+    def present(user, score)
+      { **identity_of(user), **stats_of(user, score) }
     end
 
     def identity_of(user)
       {
-        username: user.username,
+        username: user.username
       }
     end
 

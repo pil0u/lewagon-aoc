@@ -38,7 +38,6 @@ RSpec.describe Scores::UserDayScores do
       hash_including(user_id: 2, day: 1, part_1_completion_id: 3, part_2_completion_id: nil),
       hash_including(user_id: 2, day: 2, part_1_completion_id: 5, part_2_completion_id: nil)
     )
-
   end
 
   describe "caching" do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Scores
-  class UserRanksPresenter
+  class UserScoresPresenter
     def initialize(scores)
       # storing with an index for o(1) fetch later
       @scores_per_user = scores.index_by { |u| u[:user_id] }.freeze
@@ -14,18 +14,7 @@ module Scores
                  .where(id: scores_per_user.keys)
                  .includes(:city, :squad, :batch, :completions)
                  .map { |user| { **identity_of(user), **stats_of(user) } }
-                 .sort_by { |user| [user[:score] * -1, user[:created_at].to_i * -1] } # * -1 to reverse with no iterating
-                 .each_with_object({ collection: [], last_score: -1, rank: 0, gap: 0 }) do |user, ranks|
-                   if user[:score] == ranks[:last_score] # handling equalities
-                     ranks[:gap] += 1
-                   else
-                     ranks[:rank] += 1 + ranks[:gap]
-                     ranks[:gap] = 0
-                   end
-                   ranks[:collection] << user.merge(rank: ranks[:rank])
-                   ranks[:last_score] = user[:score]
-                   # previous_rank: 12, #TODO: Clarify behavior and implement
-                 end[:collection]
+                 .sort_by { |user| user[:order] || Float::INFINITY }
     end
 
     def identity_of(user)
@@ -48,6 +37,8 @@ module Scores
 
       score = scores_per_user[user.id]
       {
+        rank: score[:rank],
+        order: score[:order],
         silver_stars: silver,
         gold_stars: gold,
         score: score[:score],

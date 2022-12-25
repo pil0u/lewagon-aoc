@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Scores::SquadRanksPresenter do
+RSpec.describe Scores::SquadScoresPresenter do
   let!(:squad_1) { create :squad, id: 1, name: "The Killers" }
   let!(:squad_2) { create :squad, id: 2, name: "Grouplove" }
   let!(:squad_3) { create :squad, id: 3, name: "Longest Johns" }

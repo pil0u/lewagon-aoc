@@ -13,7 +13,6 @@ module Ranks
       prev = {}
 
       collection.each_with_index.map do |score, index|
-        # if criterion(score) == criterion(prev)
         if score[:score] == prev[:score]
           gap += 1
         else
@@ -23,7 +22,7 @@ module Ranks
         rank = index + 1 - gap
         prev = score
 
-        score.merge(rank: rank)
+        score.merge(rank: rank, order: index)
       end
     end
 

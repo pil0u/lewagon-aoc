@@ -118,6 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_032706) do
     t.datetime "created_at", null: false
     t.integer "current_day_part_1_contributors"
     t.integer "current_day_part_2_contributors"
+    t.integer "order"
     t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
@@ -197,6 +198,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_032706) do
     t.string "cache_fingerprint", null: false
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
     t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
@@ -246,6 +248,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_032706) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
     t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
@@ -273,6 +276,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_032706) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
     t.integer "rank"
     t.integer "score"
     t.bigint "squad_id", null: false

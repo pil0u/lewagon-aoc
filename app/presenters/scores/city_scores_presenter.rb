@@ -13,7 +13,7 @@ module Scores
       @ranks ||= City
                  .includes(:users)
                  .map { |city| { **identity_of(city), **stats_of(city) } }
-                 .sort_by { |city| city[:rank] }
+                 .sort_by { |city| city[:order] || Float::INFINITY }
     end
 
     def identity_of(city)
@@ -26,9 +26,10 @@ module Scores
 
     DEFAULTS = { score: 0, current_day_part_1_contributors: 0, current_day_part_2_contributors: 0 }.freeze
     def stats_of(city)
-      score = scores_per_city[city.id] || DEFAULTS
+      score = scores_per_city[city.id] || DEFAULTS.merge(rank: scores_per_city.count + 1)
       {
         rank: score[:rank],
+        order: score[:order],
         score: score[:score],
         total_members: city.users.size,
         top_contributors: city.top_contributors,

@@ -5,7 +5,7 @@ class ScoresController < ApplicationController
     session[:last_score_page] = "cities"
 
     scores = Scores::CityScores.get
-    presenter = Scores::CityRanksPresenter.new(scores)
+    presenter = Scores::CityScoresPresenter.new(scores)
 
     @cities = presenter.ranks
 

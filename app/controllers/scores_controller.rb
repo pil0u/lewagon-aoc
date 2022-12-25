@@ -16,7 +16,7 @@ class ScoresController < ApplicationController
     session[:last_score_page] = "insanity"
 
     scores = Scores::InsanityScores.get
-    presenter = Scores::UserRanksPresenter.new(scores)
+    presenter = Scores::UserScoresPresenter.new(scores)
 
     @participants = presenter.ranks
 
@@ -27,7 +27,7 @@ class ScoresController < ApplicationController
     session[:last_score_page] = "solo"
 
     scores = Scores::SoloScores.get
-    presenter = Scores::UserRanksPresenter.new(scores)
+    presenter = Scores::UserScoresPresenter.new(scores)
 
     @participants = presenter.ranks
 
@@ -38,7 +38,7 @@ class ScoresController < ApplicationController
     session[:last_score_page] = "squads"
 
     scores = Scores::SquadScores.get
-    presenter = Scores::SquadRanksPresenter.new(scores)
+    presenter = Scores::SquadScoresPresenter.new(scores)
 
     @squads = presenter.ranks
 

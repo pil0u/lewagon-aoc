@@ -5,7 +5,7 @@ class CitiesController < ApplicationController
     @city = City.find_by_slug(params[:slug]) # rubocop:disable Rails/DynamicFindBy
 
     casual_scores = Scores::SoloScores.get
-    casual_presenter = Scores::UserRanksPresenter.new(casual_scores)
+    casual_presenter = Scores::UserScoresPresenter.new(casual_scores)
     casual_participants = casual_presenter.ranks
     squad_user_uids = @city.users.pluck(:uid).map(&:to_i)
     @city_users = casual_participants.select { |p| p[:uid].in? squad_user_uids }
@@ -13,7 +13,7 @@ class CitiesController < ApplicationController
     compute_ranks_from_score(@city_users)
 
     city_scores = Scores::CityScores.get
-    city_presenter = Scores::CityRanksPresenter.new(city_scores)
+    city_presenter = Scores::CityScoresPresenter.new(city_scores)
     cities = city_presenter.ranks
     @city_stats = cities.find { |h| h[:id] == @city.id }
     # TODO: remove when implemented

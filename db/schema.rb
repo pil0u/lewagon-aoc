@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_13_064143) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_25_032706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -118,11 +118,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_064143) do
     t.datetime "created_at", null: false
     t.integer "current_day_part_1_contributors"
     t.integer "current_day_part_2_contributors"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.index ["cache_fingerprint"], name: "index_city_scores_on_cache_fingerprint"
     t.index ["city_id", "cache_fingerprint"], name: "index_city_scores_on_city_id_and_cache_fingerprint", unique: true
     t.index ["city_id"], name: "index_city_scores_on_city_id"
+    t.index ["rank"], name: "index_city_scores_on_rank"
   end
 
   create_table "completions", force: :cascade do |t|
@@ -195,10 +197,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_064143) do
     t.string "cache_fingerprint", null: false
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_insanity_scores_on_cache_fingerprint"
+    t.index ["rank"], name: "index_insanity_scores_on_rank"
     t.index ["user_id", "cache_fingerprint"], name: "index_insanity_scores_on_user_id_and_cache_fingerprint", unique: true
     t.index ["user_id"], name: "index_insanity_scores_on_user_id"
   end
@@ -242,10 +246,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_064143) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_solo_scores_on_cache_fingerprint"
+    t.index ["rank"], name: "index_solo_scores_on_rank"
     t.index ["user_id", "cache_fingerprint"], name: "index_solo_scores_on_user_id_and_cache_fingerprint", unique: true
     t.index ["user_id"], name: "index_solo_scores_on_user_id"
   end
@@ -267,10 +273,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_064143) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "rank"
     t.integer "score"
     t.bigint "squad_id", null: false
     t.datetime "updated_at", null: false
     t.index ["cache_fingerprint"], name: "index_squad_scores_on_cache_fingerprint"
+    t.index ["rank"], name: "index_squad_scores_on_rank"
     t.index ["squad_id", "cache_fingerprint"], name: "index_squad_scores_on_squad_id_and_cache_fingerprint", unique: true
     t.index ["squad_id"], name: "index_squad_scores_on_squad_id"
   end

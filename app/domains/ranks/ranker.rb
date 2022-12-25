@@ -28,5 +28,9 @@ module Ranks
       end
       ordered
     end
+
+    def order
+      raise NotImplementedError
+    end
   end
 end

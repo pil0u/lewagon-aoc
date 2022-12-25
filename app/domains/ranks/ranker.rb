@@ -10,7 +10,7 @@ module Ranks
 
     def number(collection = rank)
       gap = 0
-      prev = nil
+      prev = {}
 
       collection.each_with_index.map do |score, index|
         # if criterion(score) == criterion(prev)

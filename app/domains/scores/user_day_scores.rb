@@ -30,8 +30,8 @@ module Scores
           score: day_points.pluck(:score).sum,
           day:,
           user_id:,
-          part_1_completion_id: part_1&.fetch(:completion_id),
-          part_2_completion_id: part_2&.fetch(:completion_id)
+          part_1_completion_id: part_1&.fetch(:completion_id, nil),
+          part_2_completion_id: part_2&.fetch(:completion_id, nil)
         }
       end
     end

@@ -3,7 +3,7 @@
 module Scores
   class InsanityScores < CachedComputer
     def get
-      cache(Cache::InsanityScore) { compute }
+      cache(Cache::InsanityScore) { Ranks::CityScores.rank_and_number(compute) }
     end
 
     private

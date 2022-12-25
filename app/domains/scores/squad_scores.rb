@@ -3,7 +3,7 @@
 module Scores
   class SquadScores < CachedComputer
     def get
-      cache(Cache::SquadScore) { compute }
+      cache(Cache::SquadScore) { Ranks::SquadScores.rank_and_number(compute) }
     end
 
     private

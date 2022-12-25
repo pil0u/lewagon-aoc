@@ -1,19 +1,18 @@
 module Ranks
   class Ranker
-    def self.rank(input)
-      new(input.dup).rank!
+    def self.rank_and_number(input)
+      new(input.dup).number
     end
 
     def initialize(scores)
       @scores = scores
     end
 
-    def rank!
-      gaps = 0
+    def number(collection = rank)
+      gap = 0
       prev = nil
-      ordered_scores = order
 
-      ordered.each_with_index do |score, index|
+      collection.each_with_index.map do |score, index|
         # if criterion(score) == criterion(prev)
         if score[:score] == prev[:score]
           gap += 1
@@ -22,14 +21,13 @@ module Ranks
         end
 
         rank = index + 1 - gap
-        score[:rank] = rank
-
         prev = score
+
+        score.merge(rank: rank)
       end
-      ordered
     end
 
-    def order
+    def rank
       raise NotImplementedError
     end
   end

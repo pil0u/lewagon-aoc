@@ -3,7 +3,7 @@
 module Scores
   class SoloScores < CachedComputer
     def get
-      cache(Cache::SoloScore) { compute }
+      cache(Cache::SoloScore) { Ranks::SoloScores.rank_and_number(compute) }
     end
 
     private

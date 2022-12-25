@@ -3,7 +3,7 @@
 module Scores
   class CityScores < CachedComputer
     def get
-      cache(Cache::CityScore) { compute }
+      cache(Cache::CityScore) { Ranks::CityScores.rank(compute) }
     end
 
     private
@@ -17,7 +17,7 @@ module Scores
     end
 
     RETURNED_ATTRIBUTES = %i[
-      score city_id
+      rank score city_id
       current_day_part_1_contributors current_day_part_2_contributors
     ].freeze
 

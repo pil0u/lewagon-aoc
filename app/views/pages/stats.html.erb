@@ -4,6 +4,8 @@
   <%= render Stats::TileComponent.new(title: "Sign in clickers", value: @registered_users) %>
   <%= render Stats::TileComponent.new(title: "Setup completers", value: @confirmed_users) %>
   <%= render Stats::TileComponent.new(title: "Puzzle solvers", value: @participating_users) %>
+  <%= render Stats::TileComponent.new(title: "Solution posters", value: @users_with_snippets) %>
+  <%= render Stats::TileComponent.new(title: "Solutions shared", value: @total_snippets) %>
 </div>
 
 <div class="flex flex-col gap-y-1">

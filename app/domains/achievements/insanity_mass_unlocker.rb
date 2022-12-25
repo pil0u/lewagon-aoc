@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 module Achievements
-  class RaisingTheBarMassUnlocker
+  class InsanityMassUnlocker < MassUnlocker
     def call
-      eligible_users = User.joins(:insanity_scores).where("score > 1000")
+      eligible_users = User.where(entered_hardcore: true)
+
       unlock_for!(eligible_users)
     end
   end

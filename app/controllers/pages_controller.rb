@@ -27,6 +27,10 @@ class PagesController < ApplicationController
     @admins = User.admins.pluck(:username)
   end
 
+  def countdown
+    render "countdown", layout: false
+  end
+
   def faq; end
 
   def participation
@@ -54,6 +58,8 @@ class PagesController < ApplicationController
     @registered_users = User.count
     @confirmed_users = User.confirmed.count
     @participating_users = User.distinct(:id).joins(:completions).count
+    @users_with_snippets = User.distinct(:id).joins(:snippets).count
+    @total_snippets = Snippet.count
 
     @gold_stars = Completion.where(challenge: 2).count
     @silver_stars = Completion.where(challenge: 1).count - @gold_stars
@@ -63,8 +69,8 @@ class PagesController < ApplicationController
                                   .map do |day, completers|
                                     {
                                       number: day,
-                                      gold_completers: completers[1][1],
-                                      silver_completers: completers[0][1] - completers[1][1]
+                                      gold_completers: completers.dig(1, 1).to_i,
+                                      silver_completers: completers.dig(0, 1).to_i - completers.dig(1, 1).to_i
                                     }
                                   end
     @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil

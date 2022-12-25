@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     set_updated_params
 
     if current_user.update(@params)
-      # Achievements::UnlockJob.perform_later(:complete_setup, current_user)
+      unlock_achievements
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
       redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s
@@ -76,6 +76,10 @@ class UsersController < ApplicationController
       entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username]
     }.compact
+  end
+
+  def unlock_achievements
+    Achievements::UnlockJob.perform_later(:city_join, current_user.id)
   end
 
   def form_params

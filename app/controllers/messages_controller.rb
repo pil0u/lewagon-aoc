@@ -20,6 +20,7 @@ class MessagesController < ApplicationController
     end
 
     if message.save
+      unlock_achievements
       redirect_to messages_path, notice: "Your message was published"
     else
       redirect_to messages_path, alert: message.errors.full_messages[0].to_s
@@ -32,6 +33,12 @@ class MessagesController < ApplicationController
     today = Time.now.getlocal("-05:00").beginning_of_day
 
     @restricted = current_user.messages.where("created_at > ?", today).count != 0
+  end
+
+  def unlock_achievements
+    Achievements::UnlockJob.perform_later(:message1, current_user.id)
+    Achievements::UnlockJob.perform_later(:message5, current_user.id)
+    Achievements::UnlockJob.perform_later(:message10, current_user.id)
   end
 
   def message_params

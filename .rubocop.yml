@@ -39,6 +39,9 @@ Metrics/PerceivedComplexity:
 
 Naming/VariableNumber:
   EnforcedStyle: snake_case
+  Exclude:
+    - "**/app/controllers/messages_controller.rb"
+    - "**/app/domains/completions/fetcher.rb"
 
 Rails/I18nLocaleTexts:
   Enabled: false

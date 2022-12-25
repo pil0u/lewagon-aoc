@@ -118,7 +118,21 @@ module Completions
     end
 
     def unlock_achievements
-      Achievements::MassUnlockJob.perform_later(:welcome_to_the_party)
+      Achievements::MassUnlockJob.perform_later(:setup_complete)
+      Achievements::MassUnlockJob.perform_later(:edition2020)
+      Achievements::MassUnlockJob.perform_later(:edition2021)
+      Achievements::MassUnlockJob.perform_later(:stars1)
+      Achievements::MassUnlockJob.perform_later(:stars5)
+      Achievements::MassUnlockJob.perform_later(:stars11)
+      Achievements::MassUnlockJob.perform_later(:stars23)
+      Achievements::MassUnlockJob.perform_later(:speed10)
+      Achievements::MassUnlockJob.perform_later(:speed30)
+      Achievements::MassUnlockJob.perform_later(:speed90)
+      Achievements::MassUnlockJob.perform_later(:speed180)
+      Achievements::MassUnlockJob.perform_later(:speed360)
+      Achievements::MassUnlockJob.perform_later(:speed720)
+      Achievements::MassUnlockJob.perform_later(:speed1440)
+      Achievements::MassUnlockJob.perform_later(:github_star)
     end
 
     def launch_cache_refresh

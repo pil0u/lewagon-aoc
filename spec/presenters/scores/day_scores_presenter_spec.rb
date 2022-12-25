@@ -37,10 +37,10 @@ RSpec.describe Scores::DayScoresPresenter do
   it "orders the users properly" do
     expect(described_class.new(input).scores).to match(
       [
-        hash_including(username: "Saunier", score: 99, day: 1),
-        hash_including(username: "pil0u", score: 25, day: 1),
-        hash_including(username: "Saunier", score: 50, day: 2),
-        hash_including(username: "pil0u", score: 40, day: 2)
+        hash_including(uid: '1', score: 99, day: 1),
+        hash_including(uid: '2', score: 25, day: 1),
+        hash_including(uid: '1', score: 50, day: 2),
+        hash_including(uid: '2', score: 40, day: 2)
       ]
     )
   end
@@ -48,15 +48,19 @@ RSpec.describe Scores::DayScoresPresenter do
   it "completes the user info" do
     expect(described_class.new(input).scores).to contain_exactly(
       hash_including(
+        uid: '1',
         username: "Saunier"
       ),
       hash_including(
+        uid: '2',
         username: "pil0u"
       ),
       hash_including(
+        uid: '1',
         username: "Saunier"
       ),
       hash_including(
+        uid: '2',
         username: "pil0u"
       )
     )
@@ -64,10 +68,10 @@ RSpec.describe Scores::DayScoresPresenter do
 
   it "completes the user stats" do
     expect(described_class.new(input).scores).to contain_exactly(
-      hash_including(username: "Saunier", day: 1, part_1: 2.minutes + 38.seconds, part_2: 4.minutes + 25.seconds),
-      hash_including(username: "pil0u", day: 1, part_1: 2.minutes + 54.seconds),
-      hash_including(username: "Saunier", day: 2, part_1: 5.minutes + 30.seconds),
-      hash_including(username: "pil0u", day: 2, part_1: 8.minutes + 58.seconds)
+      hash_including(uid: "1", day: 1, part_1: 2.minutes + 38.seconds, part_2: 4.minutes + 25.seconds),
+      hash_including(uid: "2", day: 1, part_1: 2.minutes + 54.seconds),
+      hash_including(uid: "1", day: 2, part_1: 5.minutes + 30.seconds),
+      hash_including(uid: "2", day: 2, part_1: 8.minutes + 58.seconds)
     )
   end
 end

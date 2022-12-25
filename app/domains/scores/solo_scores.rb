@@ -16,8 +16,6 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[score user_id current_day_score].freeze
-
     def compute
       default_points = User.pluck(:id).index_with { |_u| [] } # No points by default
 

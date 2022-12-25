@@ -16,8 +16,6 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[score squad_id current_day_score].freeze
-
     def compute
       points = Scores::SquadPoints.get
       points

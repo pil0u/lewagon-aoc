@@ -15,11 +15,6 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[
-      city_id day challenge
-      score total_score contributor_count
-    ].freeze
-
     def compute
       points = Scores::SoloPoints.get
 

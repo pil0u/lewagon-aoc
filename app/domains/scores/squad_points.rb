@@ -15,8 +15,6 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[score squad_id day challenge].freeze
-
     def compute
       points = Scores::SoloPoints.get
 

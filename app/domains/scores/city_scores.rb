@@ -16,11 +16,6 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[
-      rank score city_id
-      current_day_part_1_contributors current_day_part_2_contributors
-    ].freeze
-
     def compute
       points = Scores::CityPoints.get
 

@@ -9,11 +9,7 @@ module Ranks
       @completions = Completion.where(user_id: scores.pluck(:user_id)).group_by(&:user_id)
     end
 
-    def rank
-      @scores.sort_by { |score| criterion(score) }.reverse
-    end
-
-    def criterion(score)
+    def ranking_criterion(score)
       completions = @completions.fetch(score[:user_id], [])
       [
         score[:score],

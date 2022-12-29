@@ -3,7 +3,13 @@
 module Scores
   class UserDayScores < CachedComputer
     def get
-      cache(Cache::UserDayScore) { compute }
+      cache(Cache::UserDayScore) do
+        scores = compute
+        # Ranking is scoped to individual days
+        scores.group_by { |score| score[:day] }.flat_map do |_, coll|
+          Ranks::UserDayScores.rank_and_number(coll)
+        end
+      end
     end
 
     private

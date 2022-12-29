@@ -14,8 +14,7 @@ module Scores
                   .includes(:completions)
                   .where(id: scores_per_user.keys)
                   .flat_map { |user| @scores_per_user[user.id].map { |score| present(user, score) } }
-                  # * -1 to revert the sort without new iterations
-                  .sort_by { |user| [user[:day], user[:score] * -1, user[:part_2], user[:part_1]].compact }
+                  .sort_by { |user| user[:order] }
     end
 
     def present(user, score)
@@ -31,6 +30,8 @@ module Scores
 
     def stats_of(user, score)
       {
+        rank: score[:rank],
+        order: score[:order],
         day: score[:day],
         score: score[:score],
         part_1: user.completions.find { |completion| completion.id == score[:part_1_completion_id] }&.duration,

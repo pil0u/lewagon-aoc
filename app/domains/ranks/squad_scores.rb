@@ -8,11 +8,7 @@ module Ranks
       @squads = Squad.where(id: scores.pluck(:squad_id)).includes(:completions).index_by(&:id)
     end
 
-    def rank
-      @scores.sort_by { |score| criterion(score) }.reverse
-    end
-
-    def criterion(score)
+    def ranking_criterion(score)
       squad = @squads[score[:squad_id]]
       [
         score[:score],

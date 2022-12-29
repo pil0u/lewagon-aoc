@@ -13,13 +13,25 @@ RSpec.describe Scores::CityScoresPresenter do
 
   let(:input) do
     [
-      { score: 125, city_id: 1, current_day_part_1_contributors: 3, current_day_part_2_contributors: 2, rank: 2 },
-      { score: 126, city_id: 2, current_day_part_1_contributors: 4, current_day_part_2_contributors: 1, rank: 1 },
-      { score: 0,   city_id: 3, current_day_part_1_contributors: 2, current_day_part_2_contributors: 1, rank: 3 }
+      {
+        score: 125, city_id: 1,
+        current_day_part_1_contributors: 3, current_day_part_2_contributors: 2,
+        rank: 2, order: 2
+      },
+      {
+        score: 126, city_id: 2,
+        current_day_part_1_contributors: 4, current_day_part_2_contributors: 1,
+        rank: 1, order: 1
+      },
+      {
+        score: 0, city_id: 3,
+        current_day_part_1_contributors: 2, current_day_part_2_contributors: 1,
+        rank: 3, order: 3
+      }
     ]
   end
 
-  it "orders the cities based on rank" do
+  it "orders the cities based on order attribute" do
     expect(described_class.new(input).ranks).to match(
       [
         hash_including(id: 2, score: 126, rank: 1),

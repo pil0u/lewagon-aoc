@@ -12,9 +12,15 @@ module Ranks
       city = @cities[score[:city_id]]
       [
         score[:score],
-        city.completions.count { |c| c.duration < 24.hours }.clamp(0, city.top_contributors),
-        city.completions.count { |c| c.duration < 48.hours }.clamp(0, city.top_contributors),
+        ratio_of_completions(city, under: 24.hours),
+        ratio_of_completions(city, under: 48.hours),
       ]
+    end
+
+    def ratio_of_completions(city, under:)
+      city.completions.group_by { |c| [c.day, c.challenge] }.sum do |_, completions|
+        completions.count { |c| c.duration < under }.clamp(0, city.top_contributors).to_f
+      end / city.top_contributors
     end
   end
 end

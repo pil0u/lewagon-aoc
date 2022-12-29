@@ -6,7 +6,6 @@ module ApplicationHelper
 
     if duration < 48.hours
       parts = duration.parts
-
       [parts[:hours].to_i + (24 * parts[:days].to_i), parts[:minutes].to_i, parts[:seconds].to_i].map { |n| n.to_i.to_s.rjust(2, "0") }.join(":")
     else
       ">48h"

@@ -9,7 +9,7 @@ module Scores
 
     attr_reader :scores_per_user
 
-    def scores
+    def get
       @scores ||= User
                   .includes(:completions)
                   .where(id: scores_per_user.keys)

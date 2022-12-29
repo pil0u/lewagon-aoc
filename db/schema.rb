@@ -304,6 +304,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_25_032706) do
     t.index ["fetch_api_end"], name: "index_states_on_fetch_api_end"
   end
 
+  create_table "user_day_scores", force: :cascade do |t|
+    t.string "cache_fingerprint"
+    t.datetime "created_at", null: false
+    t.integer "day"
+    t.bigint "part_1_completion_id"
+    t.bigint "part_2_completion_id"
+    t.integer "score"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["cache_fingerprint"], name: "index_user_day_scores_on_cache_fingerprint"
+    t.index ["day", "user_id", "cache_fingerprint"], name: "unique_dayusercache_on_user_day_scores", unique: true
+    t.index ["part_1_completion_id"], name: "index_user_day_scores_on_part_1_completion_id"
+    t.index ["part_2_completion_id"], name: "index_user_day_scores_on_part_2_completion_id"
+    t.index ["user_id"], name: "index_user_day_scores_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.boolean "accepted_coc", default: false
     t.integer "aoc_id"

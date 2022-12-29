@@ -13,9 +13,9 @@ RSpec.describe Scores::SquadScoresPresenter do
 
   let(:input) do
     [
-      { score: 78, squad_id: 1, current_day_score: 20 },
-      { score: 100, squad_id: 2, current_day_score: 50 },
-      { score: 0, squad_id: 3, current_day_score: 0 }
+      { score: 78, squad_id: 1, current_day_score: 20, rank: 2, order: 2 },
+      { score: 100, squad_id: 2, current_day_score: 50, rank: 1, order: 1 },
+      { score: 0, squad_id: 3, current_day_score: 0, rank: 3, order: 3 }
     ]
   end
 
@@ -48,9 +48,9 @@ RSpec.describe Scores::SquadScoresPresenter do
   context "in case of equality" do
     let(:input) do
       [
-        { score: 78, squad_id: 1, current_day_score: 20 },
-        { score: 100, squad_id: 2, current_day_score: 50 },
-        { score: 100, squad_id: 3, current_day_score: 100 }
+        { score: 78, squad_id: 1, current_day_score: 20, rank: 3, order: 3 },
+        { score: 100, squad_id: 2, current_day_score: 50, rank: 1, order: 2 },
+        { score: 100, squad_id: 3, current_day_score: 100, rank: 1, order: 1 }
       ]
     end
 
@@ -61,14 +61,6 @@ RSpec.describe Scores::SquadScoresPresenter do
           hash_including(id: 2, score: 100),
           hash_including(id: 1, score: 78)
         ]
-      )
-    end
-
-    it "uses non-dense ranking" do
-      expect(described_class.new(input).ranks).to contain_exactly(
-        hash_including(id: 3, rank: 1),
-        hash_including(id: 2, rank: 1),
-        hash_including(id: 1, rank: 3)
       )
     end
   end

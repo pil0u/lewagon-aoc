@@ -13,7 +13,7 @@ module Ranks
       [
         score[:score],
         squad.completions.count { |c| c.duration < 24.hours },
-        squad.completions.count { |c| c.duration < 48.hours },
+        squad.completions.count { |c| c.duration < 48.hours }
       ]
     end
   end

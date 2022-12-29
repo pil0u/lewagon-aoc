@@ -10,7 +10,7 @@ module Scores
     attr_reader :scores_per_squad
 
     def get
-      @scores ||= Squad
+      @scores ||= Squad # rubocop:disable Naming/MemoizedInstanceVariableName
                   .includes(:users)
                   .map { |squad| { **identity_of(squad), **stats_of(squad) } }
                   .sort_by { |squad| squad[:order] || Float::INFINITY }

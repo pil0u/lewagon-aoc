@@ -13,7 +13,7 @@ module Ranks
       [
         score[:score],
         ratio_of_completions(city, under: 24.hours),
-        ratio_of_completions(city, under: 48.hours),
+        ratio_of_completions(city, under: 48.hours)
       ]
     end
 

@@ -10,7 +10,7 @@ module Scores
     attr_reader :scores_per_user
 
     def get
-      @scores ||= User
+      @scores ||= User # rubocop:disable Naming/MemoizedInstanceVariableName
                   .where(id: scores_per_user.keys)
                   .includes(:city, :squad, :batch, :completions)
                   .map { |user| { **identity_of(user), **stats_of(user) } }

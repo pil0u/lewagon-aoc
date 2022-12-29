@@ -10,7 +10,7 @@ module Scores
     attr_reader :scores_per_city
 
     def get
-      @scores ||= City
+      @scores ||= City # rubocop:disable Naming/MemoizedInstanceVariableName
                   .includes(:users)
                   .map { |city| { **identity_of(city), **stats_of(city) } }
                   .sort_by { |city| city[:order] || Float::INFINITY }

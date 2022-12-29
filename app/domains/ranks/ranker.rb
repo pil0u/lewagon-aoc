@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ranks
   class Ranker
     def self.rank_and_number(input)
@@ -22,7 +24,7 @@ module Ranks
         rank = index + 1 - gap
         prev = score
 
-        score.merge(rank: rank, order: index)
+        score.merge(rank:, order: index)
       end
     end
 

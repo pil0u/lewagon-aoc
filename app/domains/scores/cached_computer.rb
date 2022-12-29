@@ -15,7 +15,7 @@ module Scores
       cached_results = model.where(cache_fingerprint: cache_key.to_s)
 
       if cached_results.any?
-        attributes = model.column_names.map(&:to_sym) - [:id, :cache_fingerprint]
+        attributes = model.column_names.map(&:to_sym) - %i[id cache_fingerprint]
 
         cached_results.pluck(*attributes).map { |r| attributes.zip(r).to_h }
       else

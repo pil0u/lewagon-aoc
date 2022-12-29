@@ -8,11 +8,7 @@ module Ranks
       @cities = City.where(id: scores.pluck(:city_id)).includes(:completions).index_by(&:id)
     end
 
-    def rank
-      @scores.sort_by { |score| criterion(score) }.reverse
-    end
-
-    def criterion(score)
+    def ranking_criterion(score)
       city = @cities[score[:city_id]]
       [
         score[:score],

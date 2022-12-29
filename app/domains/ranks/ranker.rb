@@ -27,6 +27,10 @@ module Ranks
     end
 
     def rank
+      @scores.sort_by { |score| ranking_criterion(score) }.reverse
+    end
+
+    def ranking_criterion(*)
       raise NotImplementedError
     end
   end

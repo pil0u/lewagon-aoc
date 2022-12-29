@@ -14,22 +14,9 @@ class DaysController < ApplicationController
     @snippets_part_one = Snippet.where(day: @day, challenge: 1).count
     @snippets_part_two = Snippet.where(day: @day, challenge: 2).count
 
-    attributes = %i[uid user_id username challenge duration]
-    user_completions = daily_completions.pluck(*attributes).map { |completion| attributes.zip(completion).to_h }
-    @users = Scores::SoloPoints.get
-                               .select { |score| score[:day] == @day }
-                               .group_by { |score| score[:user_id] }
-                               .transform_values { |scores| scores.sum { |score| score[:score] } }
-                               .map do |user_id, score|
-      {
-        username: user_completions.find { |completion| completion[:user_id] == user_id }[:username],
-        uid: user_completions.find { |completion| completion[:user_id] == user_id }[:uid],
-        part_1: user_completions.find { |completion| completion[:user_id] == user_id && completion[:challenge] == 1 }&.dig(:duration),
-        part_2: user_completions.find { |completion| completion[:user_id] == user_id && completion[:challenge] == 2 }&.dig(:duration),
-        score:
-      }
-    end
+    scores = Scores::UserDayScores.get.select { |score| score[:day] == @day }
+    presenter = Scores::DayScoresPresenter.new(scores)
 
-    @users.sort_by! { |user| [user[:score] * -1, user[:part_2].nil? ? user[:part_1] : user[:part_2], user[:part_1]] }
+    @users = presenter.scores
   end
 end

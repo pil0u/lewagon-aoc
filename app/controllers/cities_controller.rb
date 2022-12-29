@@ -6,7 +6,7 @@ class CitiesController < ApplicationController
 
     casual_scores = Scores::SoloScores.get
     casual_presenter = Scores::UserScoresPresenter.new(casual_scores)
-    casual_participants = casual_presenter.ranks
+    casual_participants = casual_presenter.get
     squad_user_uids = @city.users.pluck(:uid).map(&:to_i)
     @city_users = casual_participants.select { |p| p[:uid].in? squad_user_uids }
                                      .sort_by { |p| p[:score] * -1 }
@@ -14,7 +14,7 @@ class CitiesController < ApplicationController
 
     city_scores = Scores::CityScores.get
     city_presenter = Scores::CityScoresPresenter.new(city_scores)
-    cities = city_presenter.ranks
+    cities = city_presenter.get
     @city_stats = cities.find { |h| h[:id] == @city.id }
     # TODO: remove when implemented
     @city_stats[:silver_stars] = @city_users.sum { |h| h[:silver_stars] }

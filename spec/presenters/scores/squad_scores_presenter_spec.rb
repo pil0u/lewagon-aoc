@@ -19,8 +19,8 @@ RSpec.describe Scores::SquadScoresPresenter do
     ]
   end
 
-  it "ranks the squads properly" do
-    expect(described_class.new(input).ranks).to match(
+  it "orders the squads based on their order attribute" do
+    expect(described_class.new(input).get).to match(
       [
         hash_including(id: 2, score: 100, rank: 1),
         hash_including(id: 1, score: 78, rank: 2),
@@ -30,7 +30,7 @@ RSpec.describe Scores::SquadScoresPresenter do
   end
 
   it "completes the squad info" do
-    expect(described_class.new(input).ranks).to contain_exactly(
+    expect(described_class.new(input).get).to contain_exactly(
       hash_including(id: 1, name: "The Killers"),
       hash_including(id: 2, name: "Grouplove"),
       hash_including(id: 3, name: "Longest Johns")
@@ -38,7 +38,7 @@ RSpec.describe Scores::SquadScoresPresenter do
   end
 
   it "completes the squad stats" do
-    expect(described_class.new(input).ranks).to contain_exactly(
+    expect(described_class.new(input).get).to contain_exactly(
       hash_including(id: 1, total_members: 2, daily_score: 20),
       hash_including(id: 2, total_members: 1, daily_score: 50),
       hash_including(id: 3, total_members: 0, daily_score: 0)
@@ -55,7 +55,7 @@ RSpec.describe Scores::SquadScoresPresenter do
     end
 
     it "ranks the squads properly" do
-      expect(described_class.new(input).ranks).to match(
+      expect(described_class.new(input).get).to match(
         [
           hash_including(id: 3, score: 100),
           hash_including(id: 2, score: 100),

@@ -8,22 +8,22 @@ class UsersController < ApplicationController
 
     casual_scores = Scores::SoloScores.get
     casual_presenter = Scores::UserScoresPresenter.new(casual_scores)
-    casual_participants = casual_presenter.ranks
+    casual_participants = casual_presenter.get
     @casual_stats = casual_participants.find { |h| h[:uid].to_s == @user.uid }
 
     insanity_scores = Scores::InsanityScores.get
     insanity_presenter = Scores::UserScoresPresenter.new(insanity_scores)
-    insane_participants = insanity_presenter.ranks
+    insane_participants = insanity_presenter.get
     @insanity_stats = insane_participants.find { |h| h[:uid].to_s == @user.uid }
 
     squad_scores = Scores::SquadScores.get
     squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
-    squads = squad_presenter.ranks
+    squads = squad_presenter.get
     @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
 
     city_scores = Scores::CityScores.get
     city_presenter = Scores::CityScoresPresenter.new(city_scores)
-    cities = city_presenter.ranks
+    cities = city_presenter.get
     @city_stats = cities.find { |h| h[:id] == @user.city_id }
 
     # Sort user achievements in the same order as in the YAML definition

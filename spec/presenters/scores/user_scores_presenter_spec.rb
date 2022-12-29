@@ -52,8 +52,8 @@ RSpec.describe Scores::UserScoresPresenter do
     ]
   end
 
-  it "ranks the users properly" do
-    expect(described_class.new(input).ranks).to match(
+  it "sorts the users based on the order attribute" do
+    expect(described_class.new(input).get).to match(
       [
         hash_including(uid: 1, score: 99, rank: 1),
         hash_including(uid: 2, score: 25, rank: 2)
@@ -62,7 +62,7 @@ RSpec.describe Scores::UserScoresPresenter do
   end
 
   it "completes the user info" do
-    expect(described_class.new(input).ranks).to contain_exactly(
+    expect(described_class.new(input).get).to contain_exactly(
       hash_including(
         uid: 1,
         username: "Saunier",
@@ -83,7 +83,7 @@ RSpec.describe Scores::UserScoresPresenter do
   end
 
   it "completes the user stats" do
-    expect(described_class.new(input).ranks).to contain_exactly(
+    expect(described_class.new(input).get).to contain_exactly(
       hash_including(
         uid: 1,
         silver_stars: 1,
@@ -111,8 +111,8 @@ RSpec.describe Scores::UserScoresPresenter do
       ]
     end
 
-    it "ranks the users properly" do
-      expect(described_class.new(input).ranks).to match(
+    it "orders the users properly" do
+      expect(described_class.new(input).get).to match(
         [
           hash_including(uid: 1, score: 99),
           hash_including(uid: 3, score: 99),
@@ -134,7 +134,7 @@ RSpec.describe Scores::UserScoresPresenter do
     end
 
     it "has no stars" do
-      expect(described_class.new(input).ranks).to include(
+      expect(described_class.new(input).get).to include(
         hash_including(uid: 3, silver_stars: 0, gold_stars: 0)
       )
     end
@@ -146,7 +146,7 @@ RSpec.describe Scores::UserScoresPresenter do
     end
 
     it "includes no info about it in the output" do
-      expect(described_class.new(input).ranks).to include(
+      expect(described_class.new(input).get).to include(
         hash_including(uid: 1, squad_name: nil)
       )
     end
@@ -158,7 +158,7 @@ RSpec.describe Scores::UserScoresPresenter do
     end
 
     it "includes no info about it in the output" do
-      expect(described_class.new(input).ranks).to include(
+      expect(described_class.new(input).get).to include(
         hash_including(uid: 1, city_name: nil)
       )
     end
@@ -170,7 +170,7 @@ RSpec.describe Scores::UserScoresPresenter do
     end
 
     it "includes no info about it in the output" do
-      expect(described_class.new(input).ranks).to include(
+      expect(described_class.new(input).get).to include(
         hash_including(uid: 1, batch_number: nil)
       )
     end

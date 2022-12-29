@@ -7,7 +7,7 @@ class ScoresController < ApplicationController
     scores = Scores::CityScores.get
     presenter = Scores::CityScoresPresenter.new(scores)
 
-    @cities = presenter.ranks
+    @cities = presenter.get
 
     add_display_rank(@cities)
   end
@@ -18,7 +18,7 @@ class ScoresController < ApplicationController
     scores = Scores::InsanityScores.get
     presenter = Scores::UserScoresPresenter.new(scores)
 
-    @participants = presenter.ranks
+    @participants = presenter.get
 
     add_display_rank(@participants)
   end
@@ -29,7 +29,7 @@ class ScoresController < ApplicationController
     scores = Scores::SoloScores.get
     presenter = Scores::UserScoresPresenter.new(scores)
 
-    @participants = presenter.ranks
+    @participants = presenter.get
 
     add_display_rank(@participants)
   end
@@ -40,7 +40,7 @@ class ScoresController < ApplicationController
     scores = Scores::SquadScores.get
     presenter = Scores::SquadScoresPresenter.new(scores)
 
-    @squads = presenter.ranks
+    @squads = presenter.get
 
     add_display_rank(@squads)
   end

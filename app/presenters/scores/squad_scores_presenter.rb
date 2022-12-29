@@ -9,11 +9,11 @@ module Scores
 
     attr_reader :scores_per_squad
 
-    def ranks
-      @ranks ||= Squad
-                 .includes(:users)
-                 .map { |squad| { **identity_of(squad), **stats_of(squad) } }
-                 .sort_by { |squad| squad[:order] || Float::INFINITY }
+    def get
+      @scores ||= Squad
+                  .includes(:users)
+                  .map { |squad| { **identity_of(squad), **stats_of(squad) } }
+                  .sort_by { |squad| squad[:order] || Float::INFINITY }
     end
 
     def identity_of(squad)

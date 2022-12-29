@@ -32,7 +32,7 @@ RSpec.describe Scores::CityScoresPresenter do
   end
 
   it "orders the cities based on order attribute" do
-    expect(described_class.new(input).ranks).to match(
+    expect(described_class.new(input).get).to match(
       [
         hash_including(id: 2, score: 126, rank: 1),
         hash_including(id: 1, score: 125, rank: 2),
@@ -42,7 +42,7 @@ RSpec.describe Scores::CityScoresPresenter do
   end
 
   it "completes the city info" do
-    expect(described_class.new(input).ranks).to contain_exactly(
+    expect(described_class.new(input).get).to contain_exactly(
       hash_including(id: 1, name: "Bordeaux", slug: "bordeaux"),
       hash_including(id: 2, name: "Rio de Janeiro", slug: "rio-de-janeiro"),
       hash_including(id: 3, name: "Paris", slug: "paris")
@@ -50,7 +50,7 @@ RSpec.describe Scores::CityScoresPresenter do
   end
 
   it "completes the city stats" do
-    expect(described_class.new(input).ranks).to contain_exactly(
+    expect(described_class.new(input).get).to contain_exactly(
       hash_including(id: 1, total_members: 2, top_contributors: 10,
                      daily_contributors_part_1: 3, daily_contributors_part_2: 2),
       hash_including(id: 2, total_members: 1, top_contributors: 10,

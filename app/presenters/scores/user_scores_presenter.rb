@@ -9,12 +9,12 @@ module Scores
 
     attr_reader :scores_per_user
 
-    def ranks
-      @ranks ||= User
-                 .where(id: scores_per_user.keys)
-                 .includes(:city, :squad, :batch, :completions)
-                 .map { |user| { **identity_of(user), **stats_of(user) } }
-                 .sort_by { |user| user[:order] || Float::INFINITY }
+    def get
+      @scores ||= User
+                  .where(id: scores_per_user.keys)
+                  .includes(:city, :squad, :batch, :completions)
+                  .map { |user| { **identity_of(user), **stats_of(user) } }
+                  .sort_by { |user| user[:order] || Float::INFINITY }
     end
 
     def identity_of(user)

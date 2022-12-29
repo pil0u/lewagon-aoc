@@ -9,11 +9,11 @@ module Scores
 
     attr_reader :scores_per_city
 
-    def ranks
-      @ranks ||= City
-                 .includes(:users)
-                 .map { |city| { **identity_of(city), **stats_of(city) } }
-                 .sort_by { |city| city[:order] || Float::INFINITY }
+    def get
+      @scores ||= City
+                  .includes(:users)
+                  .map { |city| { **identity_of(city), **stats_of(city) } }
+                  .sort_by { |city| city[:order] || Float::INFINITY }
     end
 
     def identity_of(city)

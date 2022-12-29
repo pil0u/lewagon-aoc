@@ -10,7 +10,7 @@ module Scores
     attr_reader :scores_per_user
 
     def get
-      @scores ||= User
+      @scores ||= User # rubocop:disable Naming/MemoizedInstanceVariableName
                   .includes(:completions)
                   .where(id: scores_per_user.keys)
                   .flat_map { |user| @scores_per_user[user.id].map { |score| present(user, score) } }

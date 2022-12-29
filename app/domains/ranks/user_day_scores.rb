@@ -13,7 +13,7 @@ module Ranks
       [
         score[:score],
         -(completions.find { |c| c.id == score[:part_1_completion_id] }&.duration || Float::INFINITY),
-        -(completions.find { |c| c.id == score[:part_2_completion_id] }&.duration || Float::INFINITY),
+        -(completions.find { |c| c.id == score[:part_2_completion_id] }&.duration || Float::INFINITY)
       ].compact
     end
   end

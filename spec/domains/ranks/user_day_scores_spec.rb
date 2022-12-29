@@ -33,10 +33,12 @@ RSpec.describe Ranks::UserDayScores do
     let(:pilou) { create :user, username: "Pil0u" }
     let(:aquaj) { create :user, username: "Aquaj" }
 
-    let!(:completions) { [
-      create(:completion, user: pilou, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 1.hour),
-      create(:completion, user: aquaj, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 2.hour),
-    ] }
+    let!(:completions) do
+      [
+        create(:completion, user: pilou, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 1.hour),
+        create(:completion, user: aquaj, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 2.hours)
+      ]
+    end
 
     it "prioritizes players that have completed part 1 the fastest" do
       expect(described_class.new(input).rank).to match([
@@ -44,7 +46,6 @@ RSpec.describe Ranks::UserDayScores do
                                                          input[1]
                                                        ])
     end
-
 
     context "in case of equality (second-level tie)" do
       let(:pilou) { create :user, username: "Pil0u", entered_hardcore: false }
@@ -63,15 +64,17 @@ RSpec.describe Ranks::UserDayScores do
         ]
       end
 
-      let!(:completions) { [
-        create(:completion, user: pilou, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 1.hour),
-        create(:completion, user: aquaj, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 1.hour),
+      let!(:completions) do
+        [
+          create(:completion, user: pilou, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 1.hour),
+          create(:completion, user: aquaj, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 1.hour),
 
-        create(:completion, user: pilou, day: 1, challenge: 2, completion_unix_time: Aoc.begin_time + 2.hour),
-        create(:completion, user: aquaj, day: 1, challenge: 2, completion_unix_time: Aoc.begin_time + 1.hour),
-      ] }
+          create(:completion, user: pilou, day: 1, challenge: 2, completion_unix_time: Aoc.begin_time + 2.hours),
+          create(:completion, user: aquaj, day: 1, challenge: 2, completion_unix_time: Aoc.begin_time + 1.hour)
+        ]
+      end
 
-    it "prioritizes players that have completed part 2 the fastest" do
+      it "prioritizes players that have completed part 2 the fastest" do
         expect(described_class.new(input).rank).to match([
                                                            input[1],
                                                            input[0]

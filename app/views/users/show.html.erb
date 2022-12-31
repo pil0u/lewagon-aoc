@@ -84,7 +84,7 @@
 
 <% if @achievements.any? %>
 
-<div class="my-4 flex flex-wrap gap-x-6 justify-center">
+<div class="my-4 flex flex-wrap justify-around">
   <%= render Achievements::UnlockedComponent.with_collection(@achievements) %>
 </div>
 

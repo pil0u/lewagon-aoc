@@ -78,7 +78,7 @@
   <% end %>
 </div>
 
-<%= link_to achievements_path, class: "group" do%>
+<%= link_to achievements_path, class: "group" do %>
   <h3 class="text-center"><span class="strong group-hover:text-gold">Achievements</span> unlocked: <span class="strong"><%= @achievements.count %></span>/<%= Achievement.total %></h3>
 <% end %>
 

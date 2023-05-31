@@ -25,9 +25,6 @@ jobs:
       - run: flyctl apps create --name=lewagon-aoc-pr
       - run: flyctl postgres attach lewagon-aoc-pr-db --app=lewagon-aoc-pr
 
-      # Deploy
-      - run: flyctl deploy --remote-only --app=lewagon-aoc-pr
-
       # Scale memory
       - run: flyctl scale memory 512 --app=lewagon-aoc-pr
 
@@ -43,6 +40,9 @@ jobs:
           SENTRY_CURRENT_ENV=fly-pr
           SESSION_COOKIE=${{ secrets.SESSION_COOKIE }}
           THIS_IS_STAGING=1
+
+      # Deploy
+      - run: flyctl deploy --remote-only --app=lewagon-aoc-pr
 
       # Seed data
       - run: flyctl ssh console --command="app/bin/rails db:seed" --app=lewagon-aoc-pr

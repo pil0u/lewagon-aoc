@@ -25,6 +25,6 @@ class City < ApplicationRecord
   end
 
   def top_contributors
-    [10, (batches.sum(&:size) * 0.03).ceil].max
+    [10, (batches.sum(:size) * 0.03).ceil].max
   end
 end

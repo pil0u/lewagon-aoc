@@ -10,18 +10,21 @@ State.create!(
 Rails.logger.info "✔ States initialized"
 
 # Initialize cities & batch
+
 require "csv"
 CSV.foreach("app/assets/batch_map.csv") do |row|
   city = City.find_or_create_by!(name: row[1])
 
   batch = Batch.find_or_initialize_by(number: row[0].to_i)
-  Batch.update!(batch.id, size: row[2].to_i, city_id: city.id)
+  batch_size = row[2].to_i
+  batch.update!(size: batch_size, city:)
 end
 
 Rails.logger.info "✔ Cities initialized"
 
 # Initialize some users in development
 if Rails.env.development?
+  User.destroy_all
   User.create!([
                  {
                    username: "test_1",

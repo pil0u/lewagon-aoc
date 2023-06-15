@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
 
-  before_save :add_city_id
+  before_save :add_city_id, if: :batch_id
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
   MODERATORS = { pilou: "6788", aquaj: "449" }.freeze
@@ -77,6 +77,6 @@ class User < ApplicationRecord
   private
 
   def add_city_id
-    self.city_id = Batch.find(batch_id).city_id unless batch_id.nil?
+    self.city_id = Batch.find(batch_id).city_id
   end
 end

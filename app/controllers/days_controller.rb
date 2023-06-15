@@ -17,6 +17,6 @@ class DaysController < ApplicationController
     scores = Scores::UserDayScores.get.select { |score| score[:day] == @day }
     presenter = Scores::DayScoresPresenter.new(scores)
 
-    @users = presenter.scores
+    @participants = presenter.scores
   end
 end

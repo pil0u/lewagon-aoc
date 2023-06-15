@@ -58,6 +58,7 @@ class PagesController < ApplicationController
     @registered_users = User.count
     @confirmed_users = User.confirmed.count
     @participating_users = User.distinct(:id).joins(:completions).count
+    @users_with_snippets = User.distinct(:id).joins(:snippets).count
     @total_snippets = Snippet.count
 
     @gold_stars = Completion.where(challenge: 2).count

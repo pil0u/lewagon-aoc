@@ -1,5 +1,7 @@
 <tr>
-  <td class="text-center"><%= @user[:username] %></th>
+  <td class="text-center">
+    <%= link_to @user[:username], profile_path(@user[:uid]) %>
+  </td>
   <td><%= duration_as_text(@user[:part_1]) %></td>
   <td><%= duration_as_text(@user[:part_2]) %></td>
   <td><%= @user[:score] %></td>

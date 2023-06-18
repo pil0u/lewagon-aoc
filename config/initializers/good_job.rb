@@ -8,11 +8,11 @@ Rails.application.configure do
     enable_cron: true,
     cron: {
       refresh_completions: {
-        cron: "every 10 minutes",
+        cron: "*/10 * 1-30 11-12 *", # every 10th minute between November 1st and December 30th
         class: "InsertNewCompletionsJob"
       },
       auto_cleanup: {
-        cron: "55 5 * * *",
+        cron: "55 5 * * *", # every day at 5:55
         class: "Cache::CleanupJob"
       },
       lock_time_achievements: {

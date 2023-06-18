@@ -5,8 +5,8 @@ name: Scale down Fly PR app
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 */2 * * *'
+  # schedule:
+  #   - cron: '0 */2 * * *'
 
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

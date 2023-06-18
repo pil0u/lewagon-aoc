@@ -4,10 +4,12 @@
 
   <div class="shadow-xl sm:shadow-none hidden group-hover:block sm:group-hover:flex sm:flex z-10 absolute left-1/2 w-0 sm:w-full sm:static sm:flex-col sm:pl-4 sm:justify-center">
     <div class="h-32 bg-transparent mt-2 sm:hidden"></div>
+
     <div class="p-3 sm:p-0 rounded w-[77vw] transform -translate-x-1/2 sm:translate-x-0 sm:bg-transparent bg-[#222335] sm:w-full">
       <h2 class="font-bold">
         <%= @achievement.last[:title] %>
       </h2>
+
       <p><%= @achievement.last[:description] %></p>
     </div>
   </div>

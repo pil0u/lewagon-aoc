@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateGoodJobBatches < ActiveRecord::Migration[7.0]
   def change
     reversible do |dir|
@@ -23,7 +24,7 @@ class CreateGoodJobBatches < ActiveRecord::Migration[7.0]
       t.datetime :finished_at
     end
 
-    safety_assured {
+    safety_assured do
       change_table :good_jobs do |t|
         t.uuid :batch_id
         t.uuid :batch_callback_id
@@ -31,6 +32,6 @@ class CreateGoodJobBatches < ActiveRecord::Migration[7.0]
         t.index :batch_id, where: "batch_id IS NOT NULL"
         t.index :batch_callback_id, where: "batch_callback_id IS NOT NULL"
       end
-    }
+    end
   end
 end

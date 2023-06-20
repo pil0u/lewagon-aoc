@@ -16,7 +16,7 @@ gem "jbuilder", "~> 2.11"
 gem "omniauth-kitt", "~> 0.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "pg", "~> 1.5"
-gem "puma", "~> 5.6" # new major
+gem "puma", "~> 6.3"
 gem "rouge", "~> 4.1"
 gem "scenic", "~> 1.7"
 gem "sentry-rails", "~> 5.9"
@@ -26,10 +26,10 @@ gem "stimulus-rails", "~> 1.2"
 gem "strong_migrations", "~> 1.4"
 gem "tailwindcss-rails", "~> 2.0"
 gem "turbo-rails", "~> 1.4"
-gem "view_component", "~> 2.62" # new major
+gem "view_component", "~> 3.2"
 
 group :development, :test do
-  gem "brakeman", "~> 5.2" # new major
+  gem "brakeman", "~> 6.0"
   gem "bundler-audit", "~> 0.9"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "erb_lint", "~> 0.4", require: false

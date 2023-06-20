@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_14_160909) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_20_205126) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -363,6 +363,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_160909) do
     t.index ["aoc_id"], name: "index_users_on_aoc_id", unique: true
     t.index ["batch_id"], name: "index_users_on_batch_id"
     t.index ["city_id"], name: "index_users_on_city_id"
+    t.check_constraint "accepted_coc IS NOT NULL", name: "users_accepted_coc_null"
+    t.check_constraint "entered_hardcore IS NOT NULL", name: "users_entered_hardcore_null"
+    t.check_constraint "synced IS NOT NULL", name: "users_synced_null"
   end
 
   add_foreign_key "achievements", "users"

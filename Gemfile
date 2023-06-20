@@ -11,12 +11,12 @@ gem "bootsnap", require: false # Reduces boot times through caching; required in
 gem "devise", "~> 4.9"
 gem "good_job", "~> 3.15"
 gem "humanize", "~> 2.5"
-gem "importmap-rails", "~> 1.1"
+gem "importmap-rails", "~> 1.2"
 gem "jbuilder", "~> 2.11"
 gem "omniauth-kitt", "~> 0.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "pg", "~> 1.5"
-gem "puma", "~> 5.6"
+gem "puma", "~> 5.6" # new major
 gem "rouge", "~> 4.1"
 gem "scenic", "~> 1.7"
 gem "sentry-rails", "~> 5.9"
@@ -26,10 +26,10 @@ gem "stimulus-rails", "~> 1.2"
 gem "strong_migrations", "~> 1.4"
 gem "tailwindcss-rails", "~> 2.0"
 gem "turbo-rails", "~> 1.4"
-gem "view_component", "~> 2.62"
+gem "view_component", "~> 2.62" # new major
 
 group :development, :test do
-  gem "brakeman", "~> 5.2"
+  gem "brakeman", "~> 5.2" # new major
   gem "bundler-audit", "~> 0.9"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "erb_lint", "~> 0.4", require: false
@@ -37,13 +37,13 @@ group :development, :test do
   gem "rspec-rails", "~> 6.0"
   gem "rubocop", "~> 1.52", require: false
   gem "rubocop-performance", "~> 1.18", require: false
-  gem "rubocop-rails", "~> 2.19", require: false
+  gem "rubocop-rails", "~> 2.20", require: false
   gem "rubocop-rspec", "~> 2.22", require: false
   gem "webmock", "~> 3.18"
 end
 
 group :development do
-  gem "dotenv-rails"
+  gem "dotenv-rails", "~> 2.8"
   gem "listen", "~> 3.8"
 
   # Display performance information such as SQL time and flame graphs for each request in your browser.

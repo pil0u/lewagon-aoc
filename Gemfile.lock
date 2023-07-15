@@ -322,9 +322,6 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     safely_block (0.4.0)
-    scenic (1.7.0)
-      activerecord (>= 4.0.0)
-      railties (>= 4.0.0)
     sentry-rails (5.9.0)
       railties (>= 5.0)
       sentry-ruby (~> 5.9.0)
@@ -433,7 +430,6 @@ DEPENDENCIES
   rubocop-performance (~> 1.18)
   rubocop-rails (~> 2.20)
   rubocop-rspec (~> 2.22)
-  scenic (~> 1.7)
   sentry-rails (~> 5.9)
   sentry-ruby (~> 5.9)
   solargraph

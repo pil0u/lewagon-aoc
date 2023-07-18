@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
+  self.ignored_columns += ["city_id"]
 
-  before_save :add_city_id, if: :batch_id
+  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
   MODERATORS = { pilou: "6788", aquaj: "449" }.freeze
 
   belongs_to :batch, optional: true
-  belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
+
+  delegate :city, :city_id, to: :batch
 
   has_many :completions, dependent: :destroy
   has_many :solo_points, class_name: "Cache::SoloPoint", dependent: :delete_all
@@ -72,11 +73,5 @@ class User < ApplicationRecord
     }
 
     css_class[sync_status]
-  end
-
-  private
-
-  def add_city_id
-    self.city_id = Batch.find(batch_id).city_id
   end
 end

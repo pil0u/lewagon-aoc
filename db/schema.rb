@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_19_112634) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_18_135448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -372,7 +372,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_112634) do
     t.boolean "accepted_coc", default: false, null: false
     t.integer "aoc_id"
     t.bigint "batch_id"
-    t.bigint "city_id"
     t.datetime "created_at", null: false
     t.boolean "entered_hardcore", default: false, null: false
     t.string "github_username"
@@ -386,7 +385,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_112634) do
     t.string "username"
     t.index ["aoc_id"], name: "index_users_on_aoc_id", unique: true
     t.index ["batch_id"], name: "index_users_on_batch_id"
-    t.index ["city_id"], name: "index_users_on_city_id"
   end
 
   add_foreign_key "achievements", "users"
@@ -403,5 +401,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_19_112634) do
   add_foreign_key "squad_points", "squads"
   add_foreign_key "squad_scores", "squads"
   add_foreign_key "users", "batches"
-  add_foreign_key "users", "cities"
 end

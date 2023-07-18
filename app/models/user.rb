@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  self.ignored_columns += ["city_id"]
-
   devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze

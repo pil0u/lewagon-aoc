@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class City < ApplicationRecord
-  self.ignored_columns += ["size"]
-
   has_many :city_points, class_name: "Cache::CityPoint", dependent: :delete_all
   has_many :city_scores, class_name: "Cache::CityScore", dependent: :delete_all
 

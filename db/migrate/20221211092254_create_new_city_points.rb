@@ -4,8 +4,6 @@ class CreateNewCityPoints < ActiveRecord::Migration[7.0]
   disable_ddl_transaction!
 
   def change
-    drop_view :city_points, materialized: true, revert_to_version: 2
-
     create_table :city_points do |t|
       t.integer :day
       t.integer :challenge

@@ -10,8 +10,8 @@ class AddDerivedDataToCompletions < ActiveRecord::Migration[7.0]
       # we have to use the definition in both
       release_date_sql = ActiveRecord::Base.sanitize_sql_array(
         ["to_timestamp(?::double precision + (day - 1) * ?)",
-        BEGINNING_OF_EXERCISES.to_i,
-        INTERVAL_BETWEEN_EXERCISES]
+         BEGINNING_OF_EXERCISES.to_i,
+         INTERVAL_BETWEEN_EXERCISES]
       )
 
       add_column :completions, :release_date, :virtual, type: :timestamp, stored: true,

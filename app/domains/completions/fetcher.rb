@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Completions
-  class Fetcher
+  class Fetcher # rubocop:disable Metrics/ClassLength
     def self.call(...)
       new.call(...)
     end

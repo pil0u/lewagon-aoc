@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @latest_day = Aoc.latest_day
     @daily_completions = Array.new(@latest_day) { [nil, nil] }
 
-    Completion.where(user: @user).each do |completion|
+    Completion.where(user: @user).find_each do |completion|
       @daily_completions[@latest_day - completion.day][completion.challenge - 1] = completion
     end
   end

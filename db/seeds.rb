@@ -11,12 +11,19 @@ Rails.logger.info "✔ States initialized"
 
 # Initialize cities & batch
 
+if Rails.env.development?
+  City.destroy_all
+  Batch.destroy_all
+end
+
 require "csv"
 CSV.foreach("db/static/batch_map.csv") do |row|
   city = City.find_or_create_by!(name: row[1])
 
   batch = Batch.find_or_initialize_by(number: row[0].to_i)
   batch_size = row[2].to_i
+
+  city.update!(size: city.size.to_i + batch_size)
   batch.update!(size: batch_size, city:)
 end
 

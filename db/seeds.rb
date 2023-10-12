@@ -18,13 +18,11 @@ end
 
 require "csv"
 CSV.foreach("db/static/batch_map.csv") do |row|
-  city = City.find_or_create_by!(name: row[1])
+  city = City.find_or_create_by!(name: row[3])
+  city.update!(size: city.size.to_i + 1)
 
-  batch = Batch.find_or_initialize_by(number: row[0].to_i)
-  batch_size = row[2].to_i
-
-  city.update!(size: city.size.to_i + batch_size)
-  batch.update!(size: batch_size, city:)
+  batch = Batch.find_or_initialize_by(number: row[1].to_i)
+  batch.update!(year: row[2], size: batch.size.to_i + 1, city:)
 end
 
 Rails.logger.info "✔ Cities initialized"

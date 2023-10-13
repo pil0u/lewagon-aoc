@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "csv"
-
 # Initialize unique state row
 State.create!(
   {
@@ -18,21 +16,7 @@ if Rails.env.development?
   Batch.destroy_all
 end
 
-csv_users = CSV.table("db/static/batch_map.csv", headers: false).to_a
-csv_users
-  .group_by { |user| user[3] }.entries
-  # Array<[city_name, Array<[uid, batch_number, batch_year, city_name]>]>
-  .map { |city_name, users| [city_name, users.length, users.group_by { |user| user[1] }.entries] }
-  # Array<[city_name, city_size, Array<[batch_number, Array<[uid, batch_number, batch_year, city_name]>]>]>
-  .each do |city_name, city_size, batches|
-    city = City.find_or_initialize_by(name: city_name)
-    city.update!(size: city_size)
-
-    batches.each do |batch_number, users|
-      batch = Batch.find_or_initialize_by(number: batch_number)
-      batch.update!(year: users.first[2], size: users.length, city:)
-    end
-  end
+KittScrapperJob.perform_now(update_batches: true)
 
 Rails.logger.info "✔ Cities initialized"
 

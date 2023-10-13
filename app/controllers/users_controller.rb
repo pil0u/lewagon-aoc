@@ -48,13 +48,17 @@ class UsersController < ApplicationController
 
     if current_user.update(@params)
       unlock_achievements
-      redirect_back fallback_location: "/", notice: "Your user information was updated"
+      redirect_back fallback_location: "/", notice: cheating? ? "Nice try" : "Your user information was updated"
     else
       redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s
     end
   end
 
   private
+
+  def cheating?
+    !params[:user][:batch_number].nil? || (current_user.batch && !params[:user][:city_id].nil?)
+  end
 
   def restrict_after_lock
     return unless Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore
@@ -80,6 +84,8 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :username)
+    attributes = %i[accepted_coc aoc_id entered_hardcore username]
+    attributes << :city_id unless current_user.batch
+    params.require(:user).permit(attributes)
   end
 end

@@ -117,6 +117,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.0)
+    docile (1.4.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -359,6 +360,12 @@ GEM
       sentry-ruby (~> 5.11.0)
     sentry-ruby (5.11.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     smart_properties (1.17.0)
     snaky_hash (2.0.1)
       hashie
@@ -465,6 +472,7 @@ DEPENDENCIES
   rubocop-rspec (~> 2.24)
   sentry-rails (~> 5.11)
   sentry-ruby (~> 5.11)
+  simplecov (~> 0.22.0)
   solargraph
   sprockets-rails (~> 3.4)
   stimulus-rails (~> 1.2)

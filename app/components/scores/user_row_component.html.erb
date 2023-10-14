@@ -48,7 +48,7 @@
 
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
-      <%= @participant[:city_name] || "&nbsp".html_safe %>
+      <%= @participant[:city_vanity_name] || "&nbsp".html_safe %>
     <% end %>
   </td>
 

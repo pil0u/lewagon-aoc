@@ -4,13 +4,13 @@ require "csv"
 require "net/http"
 
 class KittScraperJob < ApplicationJob
-  CSV_PATH = "db/static/batch_map.csv"
+  CSV_PATH = "db/static/kitt_alumni.csv"
 
   # User: [uid, batch_number, batch_year, city_name]
-  def perform(args = {})
+  def perform(scrape_kitt: true, upsert_data: true)
     @users = CSV.table(CSV_PATH, headers: false).to_a # Array<User>
-    fetch_kitt if args[:fetch_kitt]
-    update_batches if args[:update_batches]
+    perform_scrape_kitt if scrape_kitt
+    perform_update_batches if upsert_data
   end
 
   private
@@ -32,7 +32,7 @@ class KittScraperJob < ApplicationJob
     https.request(request)
   end
 
-  def fetch_kitt
+  def perform_scrape_kitt
     @uids = @users.map.with_object(Set.new) { |user, set| set.add(user[0]) }
     @new_users = []
     @page_num = 1
@@ -67,7 +67,7 @@ class KittScraperJob < ApplicationJob
 
   # CityOfUsers: Array<[city_name, Array<User>]>
   # CityOfBatches: Array<[city_name, city_size, Array<[batch_number, Array<User>]>]>
-  def update_batches
+  def perform_update_batches
     @users
       .group_by { |user| user[3] }.entries # CityOfUsers
       .map { |city_name, users| [city_name, users.length, users.group_by { |user| user[1] }.entries] } # CityOfBatches

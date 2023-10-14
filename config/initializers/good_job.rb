@@ -21,7 +21,7 @@ Rails.application.configure do
       },
       scrape_kitt: {
         cron: "0 5 1 12 *", # December 1st 5am
-        class: "KittScrapperJob",
+        class: "KittScraperJob",
         kwargs: { fetch_kitt: true, update_batches: true }
       }
     }

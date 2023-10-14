@@ -3,7 +3,7 @@
 require "csv"
 require "net/http"
 
-class KittScrapperJob < ApplicationJob
+class KittScraperJob < ApplicationJob
   CSV_PATH = "db/static/batch_map.csv"
 
   # User: [uid, batch_number, batch_year, city_name]

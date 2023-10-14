@@ -41,9 +41,14 @@ RSpec.describe Scores::SoloScores do
 
     it "still includes it in the scores with 0 points" do
       expect(described_class.get).to include(
-        { score: 0, user_id: 3, current_day_score: 0 }
+        hash_including(score: 0, user_id: 3, current_day_score: 0)
       )
     end
+  end
+
+  it "ranks the scores" do
+    expect(Ranks::SoloScores).to receive(:rank_and_number).and_call_original
+    described_class.get
   end
 
   describe "caching" do

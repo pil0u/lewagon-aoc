@@ -15,8 +15,6 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[score user_id day challenge completion_id].freeze
-
     def compute
       completions = Completion
                     .joins(:user).merge(User.insanity)
@@ -29,7 +27,7 @@ module Scores
 
       completions.map do |completion|
         completion.attributes.symbolize_keys
-                  .slice(*RETURNED_ATTRIBUTES)
+                  .slice(:score, :user_id, :day, :challenge)
                   .merge(completion_id: completion.id)
       end
     end

@@ -118,11 +118,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
     t.datetime "created_at", null: false
     t.integer "current_day_part_1_contributors"
     t.integer "current_day_part_2_contributors"
+    t.integer "order"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.index ["cache_fingerprint"], name: "index_city_scores_on_cache_fingerprint"
     t.index ["city_id", "cache_fingerprint"], name: "index_city_scores_on_city_id_and_cache_fingerprint", unique: true
     t.index ["city_id"], name: "index_city_scores_on_city_id"
+    t.index ["order"], name: "index_city_scores_on_order"
+    t.index ["rank"], name: "index_city_scores_on_rank"
   end
 
   create_table "completions", force: :cascade do |t|
@@ -231,10 +235,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
     t.string "cache_fingerprint", null: false
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_insanity_scores_on_cache_fingerprint"
+    t.index ["order"], name: "index_insanity_scores_on_order"
+    t.index ["rank"], name: "index_insanity_scores_on_rank"
     t.index ["user_id", "cache_fingerprint"], name: "index_insanity_scores_on_user_id_and_cache_fingerprint", unique: true
     t.index ["user_id"], name: "index_insanity_scores_on_user_id"
   end
@@ -278,10 +286,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_solo_scores_on_cache_fingerprint"
+    t.index ["order"], name: "index_solo_scores_on_order"
+    t.index ["rank"], name: "index_solo_scores_on_rank"
     t.index ["user_id", "cache_fingerprint"], name: "index_solo_scores_on_user_id_and_cache_fingerprint", unique: true
     t.index ["user_id"], name: "index_solo_scores_on_user_id"
   end
@@ -303,10 +315,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
+    t.integer "rank"
     t.integer "score"
     t.bigint "squad_id", null: false
     t.datetime "updated_at", null: false
     t.index ["cache_fingerprint"], name: "index_squad_scores_on_cache_fingerprint"
+    t.index ["order"], name: "index_squad_scores_on_order"
+    t.index ["rank"], name: "index_squad_scores_on_rank"
     t.index ["squad_id", "cache_fingerprint"], name: "index_squad_scores_on_squad_id_and_cache_fingerprint", unique: true
     t.index ["squad_id"], name: "index_squad_scores_on_squad_id"
   end
@@ -332,15 +348,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "day"
+    t.integer "order"
     t.bigint "part_1_completion_id"
     t.bigint "part_2_completion_id"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_user_day_scores_on_cache_fingerprint"
     t.index ["day", "user_id", "cache_fingerprint"], name: "unique_dayusercache_on_user_day_scores", unique: true
+    t.index ["order"], name: "index_user_day_scores_on_order"
     t.index ["part_1_completion_id"], name: "index_user_day_scores_on_part_1_completion_id"
     t.index ["part_2_completion_id"], name: "index_user_day_scores_on_part_2_completion_id"
+    t.index ["rank"], name: "index_user_day_scores_on_rank"
     t.index ["user_id"], name: "index_user_day_scores_on_user_id"
   end
 

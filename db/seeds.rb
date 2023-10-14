@@ -16,7 +16,7 @@ if Rails.env.development?
   Batch.destroy_all
 end
 
-KittScraperJob.perform_now(update_batches: true)
+KittScraperJob.perform_now(scrape_kitt: false)
 
 Rails.logger.info "✔ Cities initialized"
 

@@ -20,10 +20,6 @@ module Scores
       ].join("-")
     end
 
-    RETURNED_ATTRIBUTES = %i[
-      score day user_id part_1_completion_id part_2_completion_id
-    ].freeze
-
     def compute
       points = Scores::SoloPoints.get
 

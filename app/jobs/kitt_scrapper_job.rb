@@ -77,7 +77,7 @@ class KittScrapperJob < ApplicationJob
 
         batches.each do |batch_number, users|
           batch = Batch.find_or_initialize_by(number: batch_number)
-          batch.update!(year: users.first[2], size: users.length, city:)
+          batch.update!(size: users.length, city:)
         end
       end
   end

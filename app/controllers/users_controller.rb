@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   private
 
   def cheating?
-    !params[:user][:batch_number].nil? || (current_user.batch && !params[:user][:city_id].nil?)
+    !params[:user][:batch_number].nil? || (current_user.batch.present? && !params[:user][:city_id].nil?)
   end
 
   def restrict_after_lock
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
 
   def form_params
     attributes = %i[accepted_coc aoc_id entered_hardcore username]
-    attributes << :city_id unless current_user.batch
+    attributes << :city_id if current_user.batch.blank?
     params.require(:user).permit(attributes)
   end
 end

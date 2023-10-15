@@ -41,17 +41,10 @@ jobs:
       - name: Setup Database
         env:
           RAILS_ENV: test
-          POSTGRES_HOST: localhost
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          DATABASE_URL: 'postgres://postgres:postgres@localhost/postgres'
         run: bin/rails db:create db:schema:load
 
       - name: Build and test with rspec
         env:
-          RAILS_ENV: test
-          POSTGRES_HOST: localhost
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          DATABASE_URL: 'postgres://postgres:postgres@localhost/postgres'
         run: bundle exec rspec

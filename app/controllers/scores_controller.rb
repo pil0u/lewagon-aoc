@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ScoresController < ApplicationController
-  def cities
-    session[:last_score_page] = "cities"
+  def campuses
+    session[:last_score_page] = "campuses"
 
     scores = Scores::CityScores.get
     presenter = Scores::CityScoresPresenter.new(scores)

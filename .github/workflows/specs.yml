@@ -6,7 +6,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:15.2
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ""
@@ -34,6 +34,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
+      - name: Install PostgreSQL
+        run: sudo apt-get -yqq install libpq-dev
 
       - name: Run tests
         run: bundle exec rspec

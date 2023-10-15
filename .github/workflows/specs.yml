@@ -9,9 +9,8 @@ jobs:
         image: postgres:15.2
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
-          POSTGRES_HOST_AUTH_METHOD: trust
         ports:
           - 5432:5432
         # needed because the postgres container does not provide a healthcheck
@@ -39,5 +38,19 @@ jobs:
       - name: Install PostgreSQL
         run: sudo apt-get -yqq install libpq-dev
 
-      - name: Run tests
-        run: bundle exec rspec
+      - name: Setup Database
+        env:
+          RAILS_ENV: test
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        run: bin/rails db:create db:schema:load
+
+      - name: Build and test with rspec
+        env:
+          RAILS_ENV: test
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres

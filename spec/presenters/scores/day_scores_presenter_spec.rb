@@ -27,10 +27,14 @@ RSpec.describe Scores::DayScoresPresenter do
 
   let(:input) do
     [
-      { score: 99, user_id: 1, day: 1, part_1_completion_id: completions[0].id, part_2_completion_id: completions[1].id },
-      { score: 50, user_id: 1, day: 2, part_1_completion_id: completions[2].id, part_2_completion_id: nil },
-      { score: 25, user_id: 2, day: 1, part_1_completion_id: completions[3].id, part_2_completion_id: nil },
-      { score: 40, user_id: 2, day: 2, part_1_completion_id: completions[4].id, part_2_completion_id: nil }
+      { score: 99, rank: 1, order: 1, user_id: 1, day: 1,
+        part_1_completion_id: completions[0].id, part_2_completion_id: completions[1].id },
+      { score: 50, rank: 1, order: 1, user_id: 1, day: 2,
+        part_1_completion_id: completions[2].id, part_2_completion_id: nil },
+      { score: 25, rank: 2, order: 2, user_id: 2, day: 1,
+        part_1_completion_id: completions[3].id, part_2_completion_id: nil },
+      { score: 40, rank: 2, order: 2, user_id: 2, day: 2,
+        part_1_completion_id: completions[4].id, part_2_completion_id: nil }
     ]
   end
 
@@ -38,8 +42,8 @@ RSpec.describe Scores::DayScoresPresenter do
     expect(described_class.new(input).get).to match(
       [
         hash_including(uid: "1", score: 99, day: 1),
-        hash_including(uid: "2", score: 25, day: 1),
         hash_including(uid: "1", score: 50, day: 2),
+        hash_including(uid: "2", score: 25, day: 1),
         hash_including(uid: "2", score: 40, day: 2)
       ]
     )

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -118,11 +118,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
     t.datetime "created_at", null: false
     t.integer "current_day_part_1_contributors"
     t.integer "current_day_part_2_contributors"
+    t.integer "order"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.index ["cache_fingerprint"], name: "index_city_scores_on_cache_fingerprint"
     t.index ["city_id", "cache_fingerprint"], name: "index_city_scores_on_city_id_and_cache_fingerprint", unique: true
     t.index ["city_id"], name: "index_city_scores_on_city_id"
+    t.index ["order"], name: "index_city_scores_on_order"
+    t.index ["rank"], name: "index_city_scores_on_rank"
   end
 
   create_table "completions", force: :cascade do |t|
@@ -135,6 +139,34 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
     t.bigint "user_id", null: false
     t.index ["user_id", "day", "challenge"], name: "index_completions_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_completions_on_user_id"
+  end
+
+  create_table "good_job_batches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "callback_priority"
+    t.text "callback_queue_name"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.datetime "discarded_at"
+    t.datetime "enqueued_at"
+    t.datetime "finished_at"
+    t.text "on_discard"
+    t.text "on_finish"
+    t.text "on_success"
+    t.jsonb "serialized_properties"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "good_job_executions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "active_job_id", null: false
+    t.datetime "created_at", null: false
+    t.text "error"
+    t.datetime "finished_at"
+    t.text "job_class"
+    t.text "queue_name"
+    t.datetime "scheduled_at"
+    t.jsonb "serialized_params"
+    t.datetime "updated_at", null: false
+    t.index ["active_job_id", "created_at"], name: "index_good_job_executions_on_active_job_id_and_created_at"
   end
 
   create_table "good_job_processes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -153,12 +185,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
 
   create_table "good_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "active_job_id"
+    t.uuid "batch_callback_id"
+    t.uuid "batch_id"
     t.text "concurrency_key"
     t.datetime "created_at", null: false
     t.datetime "cron_at"
     t.text "cron_key"
     t.text "error"
+    t.integer "executions_count"
     t.datetime "finished_at"
+    t.boolean "is_discrete"
+    t.text "job_class"
     t.datetime "performed_at"
     t.integer "priority"
     t.text "queue_name"
@@ -168,10 +205,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
     t.datetime "updated_at", null: false
     t.index ["active_job_id", "created_at"], name: "index_good_jobs_on_active_job_id_and_created_at"
     t.index ["active_job_id"], name: "index_good_jobs_on_active_job_id"
+    t.index ["batch_callback_id"], name: "index_good_jobs_on_batch_callback_id", where: "(batch_callback_id IS NOT NULL)"
+    t.index ["batch_id"], name: "index_good_jobs_on_batch_id", where: "(batch_id IS NOT NULL)"
     t.index ["concurrency_key"], name: "index_good_jobs_on_concurrency_key_when_unfinished", where: "(finished_at IS NULL)"
     t.index ["cron_key", "created_at"], name: "index_good_jobs_on_cron_key_and_created_at"
     t.index ["cron_key", "cron_at"], name: "index_good_jobs_on_cron_key_and_cron_at", unique: true
     t.index ["finished_at"], name: "index_good_jobs_jobs_on_finished_at", where: "((retried_good_job_id IS NULL) AND (finished_at IS NOT NULL))"
+    t.index ["priority", "created_at"], name: "index_good_jobs_jobs_on_priority_created_at_when_unfinished", order: { priority: "DESC NULLS LAST" }, where: "(finished_at IS NULL)"
     t.index ["queue_name", "scheduled_at"], name: "index_good_jobs_on_queue_name_and_scheduled_at", where: "(finished_at IS NULL)"
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
@@ -195,10 +235,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
     t.string "cache_fingerprint", null: false
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_insanity_scores_on_cache_fingerprint"
+    t.index ["order"], name: "index_insanity_scores_on_order"
+    t.index ["rank"], name: "index_insanity_scores_on_rank"
     t.index ["user_id", "cache_fingerprint"], name: "index_insanity_scores_on_user_id_and_cache_fingerprint", unique: true
     t.index ["user_id"], name: "index_insanity_scores_on_user_id"
   end
@@ -242,10 +286,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_solo_scores_on_cache_fingerprint"
+    t.index ["order"], name: "index_solo_scores_on_order"
+    t.index ["rank"], name: "index_solo_scores_on_rank"
     t.index ["user_id", "cache_fingerprint"], name: "index_solo_scores_on_user_id_and_cache_fingerprint", unique: true
     t.index ["user_id"], name: "index_solo_scores_on_user_id"
   end
@@ -267,10 +315,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "current_day_score"
+    t.integer "order"
+    t.integer "rank"
     t.integer "score"
     t.bigint "squad_id", null: false
     t.datetime "updated_at", null: false
     t.index ["cache_fingerprint"], name: "index_squad_scores_on_cache_fingerprint"
+    t.index ["order"], name: "index_squad_scores_on_order"
+    t.index ["rank"], name: "index_squad_scores_on_rank"
     t.index ["squad_id", "cache_fingerprint"], name: "index_squad_scores_on_squad_id_and_cache_fingerprint", unique: true
     t.index ["squad_id"], name: "index_squad_scores_on_squad_id"
   end
@@ -296,31 +348,35 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
     t.string "cache_fingerprint"
     t.datetime "created_at", null: false
     t.integer "day"
+    t.integer "order"
     t.bigint "part_1_completion_id"
     t.bigint "part_2_completion_id"
+    t.integer "rank"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["cache_fingerprint"], name: "index_user_day_scores_on_cache_fingerprint"
     t.index ["day", "user_id", "cache_fingerprint"], name: "unique_dayusercache_on_user_day_scores", unique: true
+    t.index ["order"], name: "index_user_day_scores_on_order"
     t.index ["part_1_completion_id"], name: "index_user_day_scores_on_part_1_completion_id"
     t.index ["part_2_completion_id"], name: "index_user_day_scores_on_part_2_completion_id"
+    t.index ["rank"], name: "index_user_day_scores_on_rank"
     t.index ["user_id"], name: "index_user_day_scores_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.boolean "accepted_coc", default: false
+    t.boolean "accepted_coc", default: false, null: false
     t.integer "aoc_id"
     t.bigint "batch_id"
     t.bigint "city_id"
     t.datetime "created_at", null: false
-    t.boolean "entered_hardcore", default: false
+    t.boolean "entered_hardcore", default: false, null: false
     t.string "github_username"
     t.string "provider"
     t.datetime "remember_created_at"
     t.text "remember_token"
     t.integer "squad_id"
-    t.boolean "synced", default: false
+    t.boolean "synced", default: false, null: false
     t.string "uid"
     t.datetime "updated_at", null: false
     t.string "username"
@@ -343,141 +399,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_070924) do
   add_foreign_key "squad_scores", "squads"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"
-
-  create_view "completion_ranks", materialized: true, sql_definition: <<-SQL
-      SELECT co.id AS completion_id,
-      rank() OVER (PARTITION BY co.day, co.challenge ORDER BY co.completion_unix_time) AS in_contest,
-      rank() OVER (PARTITION BY u.batch_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_batch,
-      rank() OVER (PARTITION BY u.city_id, co.day, co.challenge ORDER BY co.completion_unix_time) AS in_city
-     FROM (completions co
-       LEFT JOIN users u ON ((co.user_id = u.id)))
-    WHERE (co.completion_unix_time IS NOT NULL);
-  SQL
-  add_index "completion_ranks", ["completion_id"], name: "index_completion_ranks_on_completion_id", unique: true
-  add_index "completion_ranks", ["in_batch"], name: "index_completion_ranks_on_in_batch"
-  add_index "completion_ranks", ["in_city"], name: "index_completion_ranks_on_in_city"
-  add_index "completion_ranks", ["in_contest"], name: "index_completion_ranks_on_in_contest"
-
-  create_view "point_values", materialized: true, sql_definition: <<-SQL
-      SELECT co.id AS completion_id,
-      ((( SELECT count(*) AS count
-             FROM users
-            WHERE users.synced) - cr.in_contest) + 1) AS in_contest,
-      ((( SELECT count(*) AS count
-             FROM users
-            WHERE (users.synced AND (users.batch_id = u.batch_id))) - cr.in_batch) + 1) AS in_batch,
-      ((( SELECT count(*) AS count
-             FROM users
-            WHERE (users.synced AND (users.city_id = u.city_id))) - cr.in_city) + 1) AS in_city
-     FROM ((completions co
-       LEFT JOIN users u ON ((co.user_id = u.id)))
-       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)))
-    WHERE (co.completion_unix_time IS NOT NULL);
-  SQL
-  add_index "point_values", ["completion_id"], name: "index_point_values_on_completion_id", unique: true
-
-  create_view "batch_contributions", materialized: true, sql_definition: <<-SQL
-      WITH synced_user_numbers AS (
-           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
-             FROM ( SELECT count(u.*) AS value
-                     FROM (batches
-                       LEFT JOIN users u ON ((u.batch_id = batches.id)))
-                    WHERE u.synced
-                    GROUP BY batches.id) synced_user_counts
-          )
-   SELECT co.id AS completion_id,
-          CASE
-              WHEN (cr.in_batch <= ( SELECT synced_user_numbers.median
-                 FROM synced_user_numbers)) THEN pv.in_contest
-              ELSE (0)::bigint
-          END AS points
-     FROM ((completions co
-       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
-       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)));
-  SQL
-  add_index "batch_contributions", ["completion_id"], name: "index_batch_contributions_on_completion_id", unique: true
-
-  create_view "batch_points", materialized: true, sql_definition: <<-SQL
-      WITH synced_user_numbers AS (
-           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
-             FROM ( SELECT count(u_1.*) AS value
-                     FROM (batches
-                       LEFT JOIN users u_1 ON ((u_1.batch_id = batches.id)))
-                    WHERE u_1.synced
-                    GROUP BY batches.id) synced_user_counts
-          )
-   SELECT b.id AS batch_id,
-      co.day,
-      co.challenge,
-      COALESCE(sum(bc.points), (0)::numeric) AS points,
-      rank() OVER (PARTITION BY co.day, co.challenge ORDER BY (sum(bc.points)) DESC) AS rank,
-      count(*) FILTER (WHERE (co.id IS NOT NULL)) AS participating_users,
-      (count(*) FILTER (WHERE (co.id IS NOT NULL)) >= ( SELECT synced_user_numbers.median
-             FROM synced_user_numbers)) AS complete
-     FROM (((batches b
-       LEFT JOIN users u ON ((u.batch_id = b.id)))
-       LEFT JOIN completions co ON ((co.user_id = u.id)))
-       LEFT JOIN batch_contributions bc ON ((bc.completion_id = co.id)))
-    GROUP BY b.id, co.day, co.challenge
-    ORDER BY co.day, co.challenge, COALESCE(sum(bc.points), (0)::numeric) DESC;
-  SQL
-  add_index "batch_points", ["batch_id", "day", "challenge"], name: "index_batch_points_on_batch_id_and_day_and_challenge", unique: true
-
-  create_view "batch_scores", materialized: true, sql_definition: <<-SQL
-      SELECT scores.batch_id,
-      scores.score AS in_contest,
-      rank() OVER (ORDER BY scores.score DESC) AS rank
-     FROM ( SELECT batch_points.batch_id,
-              sum(batch_points.points) AS score
-             FROM batch_points
-            GROUP BY batch_points.batch_id) scores;
-  SQL
-  add_index "batch_scores", ["batch_id"], name: "index_batch_scores_on_batch_id", unique: true
-
-  create_view "city_contributions", materialized: true, sql_definition: <<-SQL
-      WITH synced_user_numbers AS (
-           SELECT GREATEST(3, (ceil(percentile_cont((0.5)::double precision) WITHIN GROUP (ORDER BY ((synced_user_counts.value)::double precision))))::integer) AS median
-             FROM ( SELECT count(u.*) AS value
-                     FROM (cities
-                       LEFT JOIN users u ON ((u.city_id = cities.id)))
-                    WHERE u.synced
-                    GROUP BY cities.id) synced_user_counts
-          )
-   SELECT co.id AS completion_id,
-          CASE
-              WHEN (cr.in_city <= ( SELECT synced_user_numbers.median
-                 FROM synced_user_numbers)) THEN pv.in_contest
-              ELSE (0)::bigint
-          END AS points
-     FROM ((completions co
-       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
-       LEFT JOIN completion_ranks cr ON ((cr.completion_id = co.id)));
-  SQL
-  add_index "city_contributions", ["completion_id"], name: "index_city_contributions_on_completion_id", unique: true
-
-  create_view "scores", materialized: true, sql_definition: <<-SQL
-      SELECT u.id AS user_id,
-      COALESCE(sum(pv.in_contest), (0)::numeric) AS in_contest,
-      COALESCE(sum(pv.in_batch), (0)::numeric) AS in_batch,
-      COALESCE(sum(pv.in_city), (0)::numeric) AS in_city
-     FROM ((users u
-       LEFT JOIN completions co ON ((co.user_id = u.id)))
-       LEFT JOIN point_values pv ON ((pv.completion_id = co.id)))
-    GROUP BY u.id;
-  SQL
-  add_index "scores", ["user_id"], name: "index_scores_on_user_id", unique: true
-
-  create_view "ranks", materialized: true, sql_definition: <<-SQL
-      SELECT u.id AS user_id,
-      rank() OVER (ORDER BY s.in_contest DESC) AS in_contest,
-      rank() OVER (PARTITION BY b.id ORDER BY s.in_batch DESC) AS in_batch,
-      rank() OVER (PARTITION BY ci.id ORDER BY s.in_city DESC) AS in_city
-     FROM (((users u
-       LEFT JOIN scores s ON ((s.user_id = u.id)))
-       LEFT JOIN batches b ON ((u.batch_id = b.id)))
-       LEFT JOIN cities ci ON ((u.city_id = ci.id)))
-    ORDER BY s.in_contest DESC;
-  SQL
-  add_index "ranks", ["user_id"], name: "index_ranks_on_user_id", unique: true
-
 end

@@ -39,6 +39,11 @@ RSpec.describe Scores::SquadScores do
     )
   end
 
+  it "ranks the scores" do
+    expect(Ranks::SquadScores).to receive(:rank_and_number).and_call_original
+    described_class.get
+  end
+
   context "when a squad has no point for the day" do
     before do
       squad_points.delete(
@@ -91,8 +96,8 @@ RSpec.describe Scores::SquadScores do
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
-            { score: 148, squad_id: 1, current_day_score: 70 },
-            { score: 160, squad_id: 2, current_day_score: 60 }
+            hash_including(score: 148, squad_id: 1, current_day_score: 70),
+            hash_including(score: 160, squad_id: 2, current_day_score: 60)
           )
         end
 
@@ -129,9 +134,9 @@ RSpec.describe Scores::SquadScores do
 
         it "doesn't provide stale results" do
           expect(described_class.get).to contain_exactly(
-            { score: 148, squad_id: 1, current_day_score: 70 },
-            { score: 110, squad_id: 2, current_day_score: 50 },
-            { score: 50, squad_id: 3, current_day_score: 10 }
+            hash_including(score: 148, squad_id: 1, current_day_score: 70),
+            hash_including(score: 110, squad_id: 2, current_day_score: 50),
+            hash_including(score: 50, squad_id: 3, current_day_score: 10)
           )
         end
 

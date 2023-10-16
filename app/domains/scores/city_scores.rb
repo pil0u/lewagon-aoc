@@ -3,7 +3,7 @@
 module Scores
   class CityScores < CachedComputer
     def get
-      cache(Cache::CityScore) { compute }
+      cache(Cache::CityScore) { Ranks::CityScores.rank_and_number(compute) }
     end
 
     private
@@ -15,11 +15,6 @@ module Scores
         Aoc.latest_day
       ].join("-")
     end
-
-    RETURNED_ATTRIBUTES = %i[
-      score city_id
-      current_day_part_1_contributors current_day_part_2_contributors
-    ].freeze
 
     def compute
       points = Scores::CityPoints.get

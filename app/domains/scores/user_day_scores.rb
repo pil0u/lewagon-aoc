@@ -3,7 +3,13 @@
 module Scores
   class UserDayScores < CachedComputer
     def get
-      cache(Cache::UserDayScore) { compute }
+      cache(Cache::UserDayScore) do
+        scores = compute
+        # Ranking is scoped to individual days
+        scores.group_by { |score| score[:day] }.flat_map do |_, coll|
+          Ranks::UserDayScores.rank_and_number(coll)
+        end
+      end
     end
 
     private
@@ -13,10 +19,6 @@ module Scores
         State.with_changes.maximum(:fetch_api_end)
       ].join("-")
     end
-
-    RETURNED_ATTRIBUTES = %i[
-      score day user_id part_1_completion_id part_2_completion_id
-    ].freeze
 
     def compute
       points = Scores::SoloPoints.get

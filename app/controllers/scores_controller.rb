@@ -5,9 +5,9 @@ class ScoresController < ApplicationController
     session[:last_score_page] = "cities"
 
     scores = Scores::CityScores.get
-    presenter = Scores::CityRanksPresenter.new(scores)
+    presenter = Scores::CityScoresPresenter.new(scores)
 
-    @cities = presenter.ranks
+    @cities = presenter.get
 
     add_display_rank(@cities)
   end
@@ -16,9 +16,9 @@ class ScoresController < ApplicationController
     session[:last_score_page] = "insanity"
 
     scores = Scores::InsanityScores.get
-    presenter = Scores::UserRanksPresenter.new(scores)
+    presenter = Scores::UserScoresPresenter.new(scores)
 
-    @participants = presenter.ranks
+    @participants = presenter.get
 
     add_display_rank(@participants)
   end
@@ -27,9 +27,9 @@ class ScoresController < ApplicationController
     session[:last_score_page] = "solo"
 
     scores = Scores::SoloScores.get
-    presenter = Scores::UserRanksPresenter.new(scores)
+    presenter = Scores::UserScoresPresenter.new(scores)
 
-    @participants = presenter.ranks
+    @participants = presenter.get
 
     add_display_rank(@participants)
   end
@@ -38,9 +38,9 @@ class ScoresController < ApplicationController
     session[:last_score_page] = "squads"
 
     scores = Scores::SquadScores.get
-    presenter = Scores::SquadRanksPresenter.new(scores)
+    presenter = Scores::SquadScoresPresenter.new(scores)
 
-    @squads = presenter.ranks
+    @squads = presenter.get
 
     add_display_rank(@squads)
   end

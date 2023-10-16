@@ -4,8 +4,6 @@ class CreateNewCityScores < ActiveRecord::Migration[7.0]
   disable_ddl_transaction!
 
   def change
-    drop_view :city_scores, materialized: true, revert_to_version: 2
-
     create_table :city_scores do |t|
       t.integer :score
       t.references :city, null: false, foreign_key: true

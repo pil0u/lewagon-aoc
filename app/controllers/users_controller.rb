@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   private
 
   def cheating?
-    !params[:user][:batch_number].nil? || (current_user.batch.present? && !params[:user][:city_id].nil?)
+    !params[:user][:batch_number].nil? || (current_user.batch&.number? && !params[:user][:city_id].nil?)
   end
 
   def restrict_after_lock
@@ -73,10 +73,16 @@ class UsersController < ApplicationController
     @params = {
       accepted_coc: form_params[:accepted_coc],
       aoc_id: form_params[:aoc_id],
-      city: City.find_by(id: form_params[:city_id]),
       entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username]
     }.compact
+
+    if form_params[:city_id]
+      @batch = current_user.batch || Batch.new
+      @params[:batch] = @batch.update(city: City.find_by(id: form_params[:city_id]))
+    end
+
+    @params
   end
 
   def unlock_achievements
@@ -85,7 +91,7 @@ class UsersController < ApplicationController
 
   def form_params
     attributes = %i[accepted_coc aoc_id entered_hardcore username]
-    attributes << :city_id if current_user.batch.blank?
+    attributes << :city_id unless current_user.batch&.number?
     params.require(:user).permit(attributes)
   end
 end

@@ -1,0 +1,7 @@
+<%= render PageTitleComponent.new(title: "Achievements") %>
+
+<p class="my-4">Here are the <%= Achievement.total %> achievements currently unlockable.</p>
+
+<div class="my-4 flex flex-wrap sm:flex-col justify-around">
+    <%= render Achievements::AchievementComponent.with_collection(@achievements, user_achievements: @user_achievements) %>
+</div>

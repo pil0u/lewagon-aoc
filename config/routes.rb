@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     get     "/profile/:uid",        to: "users#show",       as: :profile
     get     "/settings",            to: "users#edit"
     patch   "/settings",            to: "users#update"
+    get     "/achievements",        to: "pages#achievements"
   end
 
   # Admin routes

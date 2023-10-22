@@ -78,14 +78,14 @@
   <% end %>
 </div>
 
-<h3 class="text-center">Achievements unlocked: <span class="strong"><%= @achievements.count %></span>/<%= Achievement.total %></h3>
+<%= link_to achievements_path, class: "group" do %>
+  <h3 class="text-center"><span class="strong group-hover:text-gold">Achievements</span> unlocked: <span class="strong"><%= @achievements.count %></span>/<%= Achievement.total %></h3>
+<% end %>
 
 <% if @achievements.any? %>
-
-<div class="my-4 flex flex-wrap gap-x-6 justify-center">
-  <%= render Achievements::UnlockedComponent.with_collection(@achievements) %>
-</div>
-
+  <div class="my-4 flex flex-wrap justify-around">
+    <%= render Achievements::UnlockedComponent.with_collection(@achievements) %>
+  </div>
 <% end %>
 
 <div class="my-4 pb-2 block overflow-x-auto max-w-full">

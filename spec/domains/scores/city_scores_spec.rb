@@ -6,7 +6,9 @@ RSpec.describe Scores::CityScores do
   let(:state) { create(:state) }
 
   let(:bordeaux) { create :city, name: "Bordeaux", size: 10 }
+  let(:bordeaux_batch) { create(:batch, number: 1, city: bordeaux) }
   let(:brussels) { create :city, name: "Brussels", size: 10 }
+  let(:brussels_batch) { create(:batch, number: 2, city: brussels) }
   let(:city_points) do
     [
       { day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96, score: 8.00 },
@@ -91,11 +93,11 @@ RSpec.describe Scores::CityScores do
       end
 
       context "when the users makeup of the city has changed in the meantime" do
-        let(:new_bordeaux_users) { create_list :user, 2, city: bordeaux }
+        # let(:new_bordeaux_users) { create_list :user, 2, batch: bordeaux_batch }
 
         before do
           travel 10.seconds # Specs go too fast, updated_at stays the same otherwise
-          new_bordeaux_users # creating after travel
+          create_list :user, 2, batch: bordeaux_batch # creating after travel
           allow(Scores::CityPoints).to receive(:get).and_return(new_city_points)
         end
 

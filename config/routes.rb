@@ -21,9 +21,9 @@ Rails.application.routes.draw do
 
   # Routes for authenticated + unconfirmed users
   authenticated :user, ->(user) { !user.confirmed? } do
-    get   "/",  to: "pages#setup", as: :setup
-    patch "/",  to: "users#update"
-    patch   "/settings",            to: "users#update"
+    get   "/",          to: "pages#setup", as: :setup
+    patch "/",          to: "users#update"
+    patch "/settings",  to: "users#update"
   end
 
   # Routes for authenticated + confirmed users
@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     delete  "/squad/leave",         to: "squads#leave",     as: :leave_squad
     get     "/profile/:uid",        to: "users#show",       as: :profile
     get     "/settings",            to: "users#edit"
+    patch   "/settings",            to: "users#update"
   end
 
   # Admin routes

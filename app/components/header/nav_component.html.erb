@@ -5,6 +5,7 @@
     <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
     <%= render NavTabComponent.new(link: { name: "scores", path: scores_path }) %>
     <%= render NavTabComponent.new(link: { name: "the wall", path: messages_path }) %>
+    <%= render NavTabComponent.new(link: { name: "<i class=\"fas fa-gear\"></i>".html_safe, path: settings_path }) %>
 
   <% else %>
 
@@ -13,7 +14,6 @@
 
   <% end %>
 
-  <%= render NavTabComponent.new(link: { name: "<i class=\"fas fa-gear\"></i>".html_safe, path: settings_path }) %>
   <%= link_to destroy_user_session_path, class: "hover:text-wagon-red" do %>
     <i class="fas fa-power-off"></i>
   <% end %>

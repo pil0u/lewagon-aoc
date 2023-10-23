@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   authenticated :user, ->(user) { !user.confirmed? } do
     get   "/",  to: "pages#setup", as: :setup
     patch "/",  to: "users#update"
-    get     "/settings",            to: "users#edit"
     patch   "/settings",            to: "users#update"
   end
 
@@ -47,6 +46,7 @@ Rails.application.routes.draw do
     post    "/squad/join",          to: "squads#join",      as: :join_squad
     delete  "/squad/leave",         to: "squads#leave",     as: :leave_squad
     get     "/profile/:uid",        to: "users#show",       as: :profile
+    get     "/settings",            to: "users#edit"
   end
 
   # Admin routes

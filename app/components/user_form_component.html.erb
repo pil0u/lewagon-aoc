@@ -1,0 +1,35 @@
+<%= render PageTitleComponent.new(title: "Account settings") %>
+
+<%= form_with model: @user, url: settings_path, class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :username %>
+    <%= f.text_field :username, value: @user.username, class: "input" %>
+  </div>
+
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :aoc_id %>
+    <%= f.number_field :aoc_id, value: @user.aoc_id, min: 1, class: "input", disabled: true %>
+  </div>
+
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :batch_number, "Batch #" %>
+    <%= f.number_field :batch_number, value: @user.batch&.number, min: 1, class: "input" %>
+  </div>
+
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :city_name, "City" %>
+    <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: @user.city_id }, class: "input") %>
+  </div>
+
+  <div class="flex items-center gap-x-3 w-48 sm:w-fit">
+    <%= f.label :entered_hardcore, "Join the Ladder of Insanity" %>
+    <%= f.check_box :entered_hardcore, checked: @user.entered_hardcore, class: "focus:no-ring", data: {
+          controller: "check-alert",
+          check_alert_target: "checkbox",
+          action: "change->check-alert#ping",
+          check_alert_message_value: "The Ladder of Insanity is opt-in. By December 9th, your choice will be immutable.\n\nIf you decide to join, you will appear in the specific ranking and be eligible to its rewards. However, you will lose eligibility to the rewards of the casual ranking."
+        } %>
+  </div>
+
+  <%= f.submit "Save", class: "button" %>
+<% end %>

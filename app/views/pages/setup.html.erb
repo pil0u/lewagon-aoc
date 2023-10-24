@@ -103,11 +103,15 @@
         </p>
         <p>
           In the meantime, don't hesitate to have a look at the
-          <%= link_to "FAQ", faq_path, class: "link-explicit link-internal" %>.
+          <%= link_to "FAQ", faq_path, class: "link-explicit link-internal" %> or play with your account settings down below.
         </p>
       </div>
     </li>
   </ol>
+</div>
+
+<div class="my-8">
+  <%= render UserFormComponent.new(user: current_user) %>
 </div>
 
 <p class="italic text-sm opacity-80">

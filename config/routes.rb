@@ -21,8 +21,9 @@ Rails.application.routes.draw do
 
   # Routes for authenticated + unconfirmed users
   authenticated :user, ->(user) { !user.confirmed? } do
-    get   "/",  to: "pages#setup", as: :setup
-    patch "/",  to: "users#update"
+    get   "/",          to: "pages#setup", as: :setup
+    patch "/",          to: "users#update"
+    patch "/settings",  to: "users#update"
   end
 
   # Routes for authenticated + confirmed users

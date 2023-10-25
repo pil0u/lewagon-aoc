@@ -25,7 +25,7 @@ export default class extends Controller {
       this.secondsTarget.innerHTML = this.format(Math.floor((timeDiff / 1000) % 60), 2)
       this.millisecondsTarget.innerHTML = this.format(Math.floor(timeDiff % 1000), 3)
 
-      if (Math.floor(timeDiff % 1000) == 0) {
+      if (Math.floor(timeDiff % 1000) % 100 == 0) {
         this.codeTarget.classList.remove("hidden")
       } else {
         this.codeTarget.classList.add("hidden")

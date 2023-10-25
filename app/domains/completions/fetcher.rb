@@ -57,7 +57,7 @@ module Completions
 
     def fetch_completions(id)
       Rails.logger.info "\tFetching data from leaderboard #{id}..."
-      url = URI("https://adventofcode.com/2022/leaderboard/private/view/#{id}.json")
+      url = URI("https://adventofcode.com/2023/leaderboard/private/view/#{id}.json")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true

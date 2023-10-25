@@ -15,7 +15,7 @@ class PagesController < ApplicationController
     ].map do |day|
       {
         parts_solved: user_completions[day] || 0,
-        release_time: Time.new(2022, 12, day, 0, 0, 0, "-05:00")
+        release_time: Time.new(2023, 12, day, 0, 0, 0, "-05:00")
       }
     end
 
@@ -87,6 +87,6 @@ class PagesController < ApplicationController
   end
 
   def render_countdown?
-    Time.now.utc < Aoc.launch_time && Rails.env.production? && !ENV["THIS_IS_STAGING"]
+    Time.now.utc < Aoc.lewagon_launch_time && Rails.env.production? && !ENV["THIS_IS_STAGING"]
   end
 end

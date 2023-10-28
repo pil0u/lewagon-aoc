@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_27_095046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -160,6 +160,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
     t.uuid "active_job_id", null: false
     t.datetime "created_at", null: false
     t.text "error"
+    t.integer "error_event", limit: 2
     t.datetime "finished_at"
     t.text "job_class"
     t.text "queue_name"
@@ -192,6 +193,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_211300) do
     t.datetime "cron_at"
     t.text "cron_key"
     t.text "error"
+    t.integer "error_event", limit: 2
     t.integer "executions_count"
     t.datetime "finished_at"
     t.boolean "is_discrete"

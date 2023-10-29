@@ -377,6 +377,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
     t.datetime "created_at", null: false
     t.boolean "entered_hardcore", default: false, null: false
     t.string "github_username"
+    t.string "private_leaderboard"
     t.string "provider"
     t.bigint "referrer_id"
     t.datetime "remember_created_at"

@@ -21,7 +21,7 @@ module Scores
         WHEN duration <= interval '24 hours'
           THEN 50
         WHEN duration <= '48 hours'
-          THEN 50 - (EXTRACT(EPOCH FROM (duration - interval '1 day')) / 3600)::integer
+          THEN 50 - CEILING(EXTRACT(EPOCH FROM (duration - interval '1 day')) / 3600)::integer
         ELSE
           25
         END AS score

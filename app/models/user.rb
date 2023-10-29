@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
-  MODERATORS = { pilou: "6788", aquaj: "449" }.freeze
+  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
 
   belongs_to :batch, optional: true
   belongs_to :squad, optional: true, touch: true
@@ -32,7 +32,7 @@ class User < ApplicationRecord
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) }
-  scope :moderators, -> { where(uid: MODERATORS.values) }
+  scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
 
   def self.from_kitt(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
@@ -60,8 +60,8 @@ class User < ApplicationRecord
     aoc_id.present? && accepted_coc && synced
   end
 
-  def moderator?
-    uid.in?(MODERATORS.values)
+  def contributor?
+    uid.in?(CONTRIBUTORS.values)
   end
 
   def solved?(day, challenge)

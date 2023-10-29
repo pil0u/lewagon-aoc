@@ -16,12 +16,12 @@ RSpec.describe Scores::DayScoresPresenter do
 
   let!(:completions) do
     [
-      create(:completion, user: user_1, day: 1, challenge: 1, completion_unix_time: 1_669_870_958),
-      create(:completion, user: user_1, day: 1, challenge: 2, completion_unix_time: 1_669_871_065),
-      create(:completion, user: user_1, day: 2, challenge: 1, completion_unix_time: 1_669_957_530),
+      create(:completion, user: user_1, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 158),
+      create(:completion, user: user_1, day: 1, challenge: 2, completion_unix_time: Aoc.begin_time + 265),
+      create(:completion, user: user_1, day: 2, challenge: 1, completion_unix_time: Aoc.begin_time + 86_730),
 
-      create(:completion, user: user_2, day: 1, challenge: 1, completion_unix_time: 1_669_870_974),
-      create(:completion, user: user_2, day: 2, challenge: 1, completion_unix_time: 1_669_957_738)
+      create(:completion, user: user_2, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 174),
+      create(:completion, user: user_2, day: 2, challenge: 1, completion_unix_time: Aoc.begin_time + 86_938)
     ]
   end
 

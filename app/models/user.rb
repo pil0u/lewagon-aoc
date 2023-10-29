@@ -34,6 +34,8 @@ class User < ApplicationRecord
   scope :insanity, -> { where(entered_hardcore: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
 
+  after_create :assign_private_leaderboard
+
   def self.from_kitt(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
       u.username = auth.info.github_nickname
@@ -93,7 +95,22 @@ class User < ApplicationRecord
     referrer&.referral_code
   end
 
+  private
+
   def not_referring_self
     errors.add(:referrer, "must not be you") if referrer == self
+  end
+
+  def assign_private_leaderboard
+    # Count existing users in each private leaderboard
+    leaderboards = User.group(:private_leaderboard).count
+
+    # Add the missing private leaderboards
+    Aoc.private_leaderboards.each { |leaderboard| leaderboards[leaderboard] ||= 0 }
+
+    # Take the private leaderboard with the least users and assign it to the user
+    user_leaderboard = leaderboards.min_by { |_, count| count }.first
+
+    update(private_leaderboard: user_leaderboard)
   end
 end

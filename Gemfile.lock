@@ -95,7 +95,7 @@ GEM
       chartkick (>= 5)
       railties (>= 6.1)
       safely_block (>= 0.4)
-    bootsnap (1.16.0)
+    bootsnap (1.17.0)
       msgpack (~> 1.2)
     brakeman (6.0.1)
     builder (3.2.4)

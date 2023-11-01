@@ -9,6 +9,7 @@ class User < ApplicationRecord
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
+  belongs_to :referrer, class_name: "User", optional: true
 
   has_many :completions, dependent: :destroy
   has_many :solo_points, class_name: "Cache::SoloPoint", dependent: :delete_all
@@ -18,6 +19,7 @@ class User < ApplicationRecord
   has_many :messages, dependent: :nullify
   has_many :snippets, dependent: :nullify
   has_many :achievements, dependent: :destroy
+  has_many :referrees, class_name: "User", inverse_of: :referrer, dependent: :nullify
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
@@ -70,5 +72,9 @@ class User < ApplicationRecord
     }
 
     css_class[sync_status]
+  end
+
+  def referrer_code
+    "R#{uid.to_s.rjust(5, '0')}"
   end
 end

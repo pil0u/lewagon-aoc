@@ -74,7 +74,8 @@ class UsersController < ApplicationController
       # validation), then the id of that instance is nil, which disappears with .compact below
       city: City.find_by(id: form_params[:city_id]),
       entered_hardcore: form_params[:entered_hardcore],
-      username: form_params[:username]
+      username: form_params[:username],
+      referrer: User.by_referrer_code(form_params[:referrer_code])
     }.compact
   end
 
@@ -83,6 +84,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username, :referrer_code)
   end
 end

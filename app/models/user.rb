@@ -41,6 +41,10 @@ class User < ApplicationRecord
     user
   end
 
+  def self.by_referrer_code(referrer_code)
+    User.find_by(uid: referrer_code&.gsub(/R0*/, "").to_i)
+  end
+
   def admin?
     uid.in?(ADMINS.values)
   end
@@ -75,6 +79,10 @@ class User < ApplicationRecord
   end
 
   def referrer_code
+    referrer&.referrement_code
+  end
+
+  def referrement_code
     "R#{uid.to_s.rjust(5, '0')}"
   end
 end

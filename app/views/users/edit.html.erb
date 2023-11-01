@@ -10,7 +10,7 @@
 
 <div class="my-4 flex flex-col justify-center gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
   <label for="referrer_url">Referrer link</label>
-  <input type="text" value="<%= current_user.referrement_code %>" class="input" disabled>
+  <input type="text" value="<%= current_user.referrement_code %>" class="input" disabled autocomplete="off">
   <button
     class="button"
     data-controller="clipboard"

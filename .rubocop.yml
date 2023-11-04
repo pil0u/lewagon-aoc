@@ -24,7 +24,7 @@ Rails/DangerousColumnNames:
     - "**/db/migrate/*"
 
 Rails/DynamicFindBy:
-  Whitelist: [
+  AllowedMethods: [
     "find_by_referral_code"
   ]
 

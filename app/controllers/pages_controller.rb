@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[code_of_conduct faq participation stats welcome]
-  before_action :render_countdown, only: %i[code_of_conduct faq participation stats welcome], if: :render_countdown?
+  skip_before_action  :authenticate_user!,  only: %i[code_of_conduct faq participation stats welcome]
+  before_action       :render_countdown,    only: %i[code_of_conduct faq participation stats welcome setup], if: :render_countdown?
 
   def calendar
     user_completions = current_user.completions.group(:day).count
@@ -15,7 +15,7 @@ class PagesController < ApplicationController
     ].map do |day|
       {
         parts_solved: user_completions[day] || 0,
-        release_time: Time.new(2022, 12, day, 0, 0, 0, "-05:00")
+        release_time: Aoc.begin_time + (day - 1).days
       }
     end
 
@@ -28,7 +28,7 @@ class PagesController < ApplicationController
   end
 
   def countdown
-    render "countdown", layout: false
+    render_countdown
   end
 
   def faq; end
@@ -91,6 +91,6 @@ class PagesController < ApplicationController
   end
 
   def render_countdown?
-    Time.now.utc < Aoc.launch_time && Rails.env.production? && !ENV["THIS_IS_STAGING"]
+    Time.now.utc < Aoc.lewagon_launch_time && Rails.env.production? && !ENV["THIS_IS_STAGING"]
   end
 end

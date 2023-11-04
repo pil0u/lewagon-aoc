@@ -14,11 +14,7 @@
 
   <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
     <header class="flex flex-col mx-auto">
-      <h1 class="my-8 text-center text-xl group">
-        <span class="text-wagon-red group-hover:text-shadow-red">Le Wagon</span>
-        <span class="group-hover:strong">x</span>
-        <span class="text-other-green group-hover:text-shadow-green">Advent of Code</span>
-      </h1>
+      <%= render Header::TitleComponent.new %>
     </header>
 
     <main class="m-auto">
@@ -31,8 +27,8 @@
         <span data-countdown-target="seconds"></span>
         <span data-countdown-target="milliseconds"></span>
 
-        <div data-countdown-target="code"
-             class="text-xs lg:text-lg text-justify pt-[50vh] pb-8 px-8">
+        <div data-countdown-target="code" class="hidden mt-16">
+          <%= image_tag "enigma.svg", alt: "enigma", class: "w-64 mx-auto opacity-70" %>
         </div>
       </div>
     </main>

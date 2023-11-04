@@ -24,6 +24,7 @@ class User < ApplicationRecord
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
+  validate :not_referring_self
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -87,5 +88,9 @@ class User < ApplicationRecord
 
   def referrer_code
     referrer&.referral_code
+  end
+
+  def not_referring_self
+    errors.add(:referrer, "must not be you") if referrer == self
   end
 end

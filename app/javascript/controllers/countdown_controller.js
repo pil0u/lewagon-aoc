@@ -48,6 +48,6 @@ export default class extends Controller {
   }
 
   format (integer, digits) {
-    return Number(integer).toString().padStart(digits, '0')
+    return integer.toString().padStart(digits, '0')
   }
 }

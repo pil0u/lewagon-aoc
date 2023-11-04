@@ -2,8 +2,8 @@
 version: "2"
 
 plugins:
-  duplication:
-    enabled: false
+  # duplication:
+  #   enabled: true
   eslint:
     enabled: true
     channel: "eslint-8"
@@ -12,8 +12,8 @@ plugins:
   # rubocop:
   #   enabled: true
   #   channel: "beta"
-  structure:
-    enabled: false
+  # structure:
+  #   enabled: true
   stylelint:
     enabled: true
     exclude_patterns:

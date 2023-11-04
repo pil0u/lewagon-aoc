@@ -47,12 +47,12 @@
 <p class="my-4">When you share the event to your friends, ask them to add this referral code during the setup. You will then become a patron.</p>
 
 <div class="my-4 flex flex-col justify-center gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
-  <input type="text" value="<%= current_user.referral_code %>" class="input" disabled autocomplete="off">
+  <input type="text" value="<%= "/?referral_code=#{current_user.referral_code}" %>" class="input w-max" disabled autocomplete="off">
   <button
     class="button"
     data-controller="clipboard"
     data-action="click->clipboard#copy"
-    data-clipboard-content-value="<%= current_user.referral_code %>">
+    data-clipboard-content-value="<%= "https://aoc.lewagon.community/?referral_code=#{current_user.referral_code}" %>">
     Copy
   </button>
 </div>

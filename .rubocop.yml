@@ -23,6 +23,11 @@ Rails/DangerousColumnNames:
   Exclude:
     - "**/db/migrate/*"
 
+Rails/DynamicFindBy:
+  Whitelist: [
+    "find_by_referral_code"
+  ]
+
 Style/NumericPredicate:
   EnforcedStyle: comparison
 

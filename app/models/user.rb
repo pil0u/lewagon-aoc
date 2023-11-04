@@ -41,7 +41,7 @@ class User < ApplicationRecord
     user
   end
 
-  def self.by_referral_code(code)
+  def self.find_by_referral_code(code)
     uid = code&.gsub(/R0*/, "")&.to_i
     return if uid.nil?
 

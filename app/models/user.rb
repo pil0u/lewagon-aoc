@@ -23,6 +23,7 @@ class User < ApplicationRecord
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
+  validate :no_current_batch_number
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -71,5 +72,11 @@ class User < ApplicationRecord
     }
 
     css_class[sync_status]
+  end
+
+  def no_current_batch_number
+    return unless batch_changed? && changes[:batch_id][0].present?
+
+    errors.add(:city, "can't be changed if you are part of an existing batch")
   end
 end

@@ -44,21 +44,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    set_updated_params
-
-    if current_user.update(@params)
+    if current_user.update(updated_params)
       unlock_achievements
-      redirect_back fallback_location: "/", notice: cheating? ? "Nice try" : "Your user information was updated"
+      redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
       redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s
     end
   end
 
   private
-
-  def cheating?
-    !params[:user][:batch_number].nil? || (current_user.batch&.number? && !params[:user][:city_id].nil?)
-  end
 
   def restrict_after_lock
     return unless Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore
@@ -69,20 +63,17 @@ class UsersController < ApplicationController
     )
   end
 
-  def set_updated_params
-    @params = {
+  def updated_params
+    batch = current_user.batch_id? && current_user.batch.number.nil? ? current_user.batch : Batch.new
+    batch.update(city: City.find_by(id: form_params[:city_id])) if form_params[:city_id]
+
+    {
       accepted_coc: form_params[:accepted_coc],
       aoc_id: form_params[:aoc_id],
       entered_hardcore: form_params[:entered_hardcore],
-      username: form_params[:username]
+      username: form_params[:username],
+      batch_id: batch.id
     }.compact
-
-    if form_params[:city_id]
-      @batch = current_user.batch || Batch.new
-      @params[:batch] = @batch.update(city: City.find_by(id: form_params[:city_id]))
-    end
-
-    @params
   end
 
   def unlock_achievements
@@ -90,8 +81,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    attributes = %i[accepted_coc aoc_id entered_hardcore username]
-    attributes << :city_id unless current_user.batch&.number?
-    params.require(:user).permit(attributes)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id)
   end
 end

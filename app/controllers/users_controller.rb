@@ -75,7 +75,7 @@ class UsersController < ApplicationController
       city: City.find_by(id: form_params[:city_id]),
       entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username],
-      referrer: form_params[:referrer_code] == current_user.referral_code ? nil : User.find_by_referral_code(form_params[:referrer_code])
+      referrer: (User.find_by_referral_code(form_params[:referrer_code]) unless form_params[:referrer_code] == current_user.referral_code)
     }.compact
   end
 

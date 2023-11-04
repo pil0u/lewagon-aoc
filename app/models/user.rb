@@ -41,8 +41,11 @@ class User < ApplicationRecord
     user
   end
 
-  def self.by_referrer_code(referrer_code)
-    User.find_by(uid: referrer_code&.gsub(/R0*/, "").to_i)
+  def self.by_referral_code(code)
+    uid = code&.gsub(/R0*/, "")&.to_i
+    return if uid.nil?
+
+    User.find_by(uid:)
   end
 
   def admin?

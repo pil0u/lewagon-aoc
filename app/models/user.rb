@@ -78,11 +78,11 @@ class User < ApplicationRecord
     css_class[sync_status]
   end
 
-  def referrer_code
-    referrer&.referrement_code
+  def referral_code
+    "R#{uid.to_s.rjust(5, '0')}"
   end
 
-  def referrement_code
-    "R#{uid.to_s.rjust(5, '0')}"
+  def referrer_code
+    referrer&.referral_code
   end
 end

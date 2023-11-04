@@ -14,14 +14,16 @@
 
   <ol start="0" class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
     <li>
-      <p>Got referred by a friend? Enter their referral code here:</p>
+      <div class="flex flex-col gap-y-2">
+        <p>(Optional) Got referred by a friend? Enter their referral code here:</p>
 
-      <%= form_with model: current_user, url: setup_path, class: "flex flex-col items-center gap-y-2" do |f| %>
-        <div class="flex items-center gap-x-2">
-          <%= f.text_field :referrer_code, class: "input", placeholder: "R00000" %>
-          <%= f.submit "Save", class: "button" %>
-        </div>
-      <% end %>
+        <%= form_with model: current_user, url: setup_path, class: "flex flex-col items-center gap-y-2" do |f| %>
+          <div class="flex items-center gap-x-2">
+            <%= f.text_field :referrer_code, class: "input", placeholder: "R00000" %>
+            <%= f.submit "Save", class: "button" %>
+          </div>
+        <% end %>
+      </div>
     </li>
     <li>
       <%= link_to(

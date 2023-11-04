@@ -4,24 +4,6 @@
 
 <hr class="my-4 border-aoc-gray-darker">
 
-<%= render PageTitleComponent.new(title: "Referrer code") %>
-
-<p>When you share the event to your friends, ask them to add this referral code during the setup. You will then become a patron..</p>
-
-<div class="my-4 flex flex-col justify-center gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
-  <label for="referrer_url">Referrer link</label>
-  <input type="text" value="<%= current_user.referrement_code %>" class="input" disabled autocomplete="off">
-  <button
-    class="button"
-    data-controller="clipboard"
-    data-action="click->clipboard#copy"
-    data-clipboard-content-value="<%= current_user.referrement_code %>">
-    Copy
-  </button>
-</div>
-
-<hr class="my-4 border-aoc-gray-darker">
-
 <%= render PageTitleComponent.new(title: "Squad settings") %>
 
 <% if current_user.squad_id.nil? %>
@@ -57,3 +39,20 @@
   <%= button_to "Leave squad", leave_squad_path, method: :delete, data: { turbo: false }, class: "my-4 flex w-max mx-auto button-red" %>
 
 <% end %>
+
+<hr class="my-4 border-aoc-gray-darker">
+
+<%= render PageTitleComponent.new(title: "Referral") %>
+
+<p class="my-4">When you share the event to your friends, ask them to add this referral code during the setup. You will then become a patron.</p>
+
+<div class="my-4 flex flex-col justify-center gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+  <input type="text" value="<%= current_user.referral_code %>" class="input" disabled autocomplete="off">
+  <button
+    class="button"
+    data-controller="clipboard"
+    data-action="click->clipboard#copy"
+    data-clipboard-content-value="<%= current_user.referral_code %>">
+    Copy
+  </button>
+</div>

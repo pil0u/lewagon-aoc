@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Scores::CityPoints do
-  let!(:state) { create :state }
+  let!(:state) { create :state, completions_fetched: solo_points.count, fetch_api_end: Time.zone.now }
   let(:brussels) { create(:city, name: "Brussels", size: 400) }
   let(:brussels_batch) { create(:batch, number: 1, city: brussels) }
   let(:brussels_users) { create_list(:user, 18, batch: brussels_batch) }
@@ -168,6 +168,7 @@ RSpec.describe Scores::CityPoints do
 
         before do
           travel 10.seconds # Specs go too fast, updated_at stays the same otherwise
+          create(:state, completions_fetched: 1, fetch_api_end: Time.zone.now)  # simulate new fetch
           new_bordeaux_users # creating after travel
           allow(Scores::SoloPoints).to receive(:get).and_return(new_solo_scores)
         end

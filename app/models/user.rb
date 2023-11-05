@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   belongs_to :batch, optional: true
   belongs_to :squad, optional: true, touch: true
+  belongs_to :referrer, class_name: "User", optional: true
 
   delegate :city, :city_id, to: :batch, allow_nil: true
 
@@ -19,11 +20,14 @@ class User < ApplicationRecord
   has_many :messages, dependent: :nullify
   has_many :snippets, dependent: :nullify
   has_many :achievements, dependent: :destroy
+  has_many :referrees, class_name: "User", inverse_of: :referrer, dependent: :nullify
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
+
   validate :no_current_batch_number
+  validate :not_referring_self
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -39,6 +43,13 @@ class User < ApplicationRecord
 
     user.update(github_username: auth.info.github_nickname)
     user
+  end
+
+  def self.find_by_referral_code(code)
+    uid = code&.gsub(/R0*/, "")&.to_i
+    return if uid.nil?
+
+    User.find_by(uid:)
   end
 
   def admin?
@@ -78,5 +89,17 @@ class User < ApplicationRecord
     return unless batch_changed? && changes[:batch_id][0].present?
 
     errors.add(:city, "can't be changed if you are part of an existing batch")
+  end
+
+  def referral_code
+    "R#{uid.to_s.rjust(5, '0')}"
+  end
+
+  def referrer_code
+    referrer&.referral_code
+  end
+
+  def not_referring_self
+    errors.add(:referrer, "must not be you") if referrer == self
   end
 end

@@ -72,7 +72,8 @@ class UsersController < ApplicationController
       aoc_id: form_params[:aoc_id],
       entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username],
-      batch_id: batch.id
+      batch_id: batch.id,
+      referrer: User.find_by_referral_code(form_params[:referrer_code])
     }.compact
   end
 
@@ -81,6 +82,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id, :referrer_code)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_28_203127) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -378,6 +378,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_28_203127) do
     t.boolean "entered_hardcore", default: false, null: false
     t.string "github_username"
     t.string "provider"
+    t.bigint "referrer_id"
     t.datetime "remember_created_at"
     t.text "remember_token"
     t.integer "squad_id"
@@ -387,6 +388,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_28_203127) do
     t.string "username"
     t.index ["aoc_id"], name: "index_users_on_aoc_id", unique: true
     t.index ["batch_id"], name: "index_users_on_batch_id"
+    t.index ["referrer_id"], name: "index_users_on_referrer_id"
   end
 
   add_foreign_key "achievements", "users"
@@ -403,4 +405,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_28_203127) do
   add_foreign_key "squad_points", "squads"
   add_foreign_key "squad_scores", "squads"
   add_foreign_key "users", "batches"
+  add_foreign_key "users", "users", column: "referrer_id"
 end

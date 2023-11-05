@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Scores::CityScores do
-  let(:state) { create(:state) }
+  let(:state) { create(:state, completions_fetched: 6, fetch_api_end: Time.zone.now) }
 
   let(:bordeaux) { create :city, name: "Bordeaux", size: 10 }
   let(:bordeaux_batch) { create(:batch, number: 1, city: bordeaux) }
@@ -20,6 +20,7 @@ RSpec.describe Scores::CityScores do
   end
 
   before do
+    freeze_time
     allow(Aoc).to receive(:latest_day).and_return(2)
     allow(Scores::CityPoints).to receive(:get).and_return(city_points).once
   end
@@ -64,7 +65,8 @@ RSpec.describe Scores::CityScores do
 
       context "when AOC state has been refetched in the meantime" do
         before do
-          create(:state, fetch_api_begin: state.fetch_api_end + 2.seconds)
+          travel 10.seconds
+          create(:state, fetch_api_begin: Time.zone.now, completions_fetched: 1)
           allow(Scores::CityPoints).to receive(:get).and_return(new_city_points)
         end
 
@@ -93,10 +95,9 @@ RSpec.describe Scores::CityScores do
       end
 
       context "when the users makeup of the city has changed in the meantime" do
-        # let(:new_bordeaux_users) { create_list :user, 2, batch: bordeaux_batch }
-
         before do
           travel 10.seconds # Specs go too fast, updated_at stays the same otherwise
+          create(:state, fetch_api_begin: Time.zone.now, completions_fetched: 1)
           create_list :user, 2, batch: bordeaux_batch # creating after travel
           allow(Scores::CityPoints).to receive(:get).and_return(new_city_points)
         end

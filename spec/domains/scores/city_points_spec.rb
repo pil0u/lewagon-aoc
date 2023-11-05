@@ -168,7 +168,7 @@ RSpec.describe Scores::CityPoints do
 
         before do
           travel 10.seconds # Specs go too fast, updated_at stays the same otherwise
-          create(:state, completions_fetched: 1, fetch_api_end: Time.zone.now)  # simulate new fetch
+          create(:state, completions_fetched: 1, fetch_api_end: Time.zone.now) # simulate new fetch
           new_bordeaux_users # creating after travel
           allow(Scores::SoloPoints).to receive(:get).and_return(new_solo_scores)
         end

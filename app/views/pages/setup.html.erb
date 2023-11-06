@@ -8,54 +8,61 @@
   </div>
 
   <p class="text-justify">
-    This platform is a wrapper around Advent of Code's puzzles, with additional, spicy features designed for Le Wagon
-    community. To access these custom features, you need to sync your account <em>on Advent of Code</em> with your
-    account <em>here</em>.
+    Welcome to our platform, designed to enhance your Advent of Code experience with exclusive features for the
+    <span class="hover:text-wagon-red">Le Wagon</span> community. To unlock these features, please follow these steps:
   </p>
 
-  <ol class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
+  <ol start="0" class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
+    <li>
+      <div class="flex flex-col gap-y-2">
+        <p>(Optional) Got referred by a friend? Enter their referral code here:</p>
+
+        <%= form_with model: current_user, url: setup_path, class: "flex flex-col items-center gap-y-2" do |f| %>
+          <div class="flex items-center gap-x-2">
+            <%= f.text_field :referrer_code, class: "input", placeholder: "R00000" %>
+            <%= f.submit "Save", class: "button" %>
+          </div>
+        <% end %>
+      </div>
+    </li>
     <li>
       <%= link_to(
             "Log in to Advent of Code",
             "https://adventofcode.com/auth/login",
             target: :ext,
             class: "link-explicit link-external"
-          ) %>, via GitHub or any other OAuth option.
+          ) %>, using either your GitHub account or another OAuth option.
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Once logged in, you need to join our private leaderboards there. The code to our private leaderboard is
-          <code class="strong"><%= @private_leaderboard %></code>.
-          Use it <%= link_to(
-                       "on this page",
-                       "https://adventofcode.com/leaderboard/private",
-                       target: :ext,
-                       class: "link-explicit link-external"
-                     ) %>, then click [Join].
+          After logging in, make sure to join our private leaderboard on Advent of Code.
+          <%= link_to(
+                "Go to this page",
+                "https://adventofcode.com/leaderboard/private",
+                target: :ext,
+                class: "link-explicit link-external"
+              ) %>, enter the following code <code class="strong"><%= @private_leaderboard %></code> and click [Join].
         </p>
         <p>
-          You should be prompted: <code>You have joined that private leaderboard.</code>
-        </p>
-        <p>
-          If the private leaderboard is full, reach out to us
-          <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %> and we will create a new one.
+          You should see a confirmation message: <code>You have joined that private leaderboard.</code>
         </p>
       </div>
     </li>
     <li>
-      We need to know your Advent of Code ID. You can find it in your
+      We also need your Advent of Code ID, which you can find in
       <%= link_to(
-            "settings",
+            "your settings",
             "https://adventofcode.com/settings",
             target: :ext,
             class: "link-explicit link-external"
-          ) %>, the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>.
+          ) %>. It's the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>.
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Paste that number below, <span class="line-through">read</span> approve the Code of Conduct and hit "Save":
+          Paste that number <span class="strong">XXXXXXX</span> below, read the Code of Conduct, approve it and click
+          "Save":
         </p>
 
         <%= form_with(
@@ -91,28 +98,29 @@
         <% end %>
 
         <p>
-          Your sync status at the top of this page should then switch to
-          <span class="text-aoc-atmospheric">Pending</span>.
+          Your sync status at the top of this page will change to <span class="text-aoc-atmospheric">Pending</span>.
         </p>
       </div>
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Just wait for the next update of the data and reload this page to discover what is behind the curtain ✨
+          Now, simply wait for the next data update, and refresh this page to reveal what's behind the curtain ✨
         </p>
         <p>
-          In the meantime, don't hesitate to have a look at the
-          <%= link_to "FAQ", faq_path, class: "link-explicit link-internal" %>.
+          While waiting, feel free to explore our <%= link_to "FAQ", faq_path, class: "link-explicit link-internal" %>
+          or customise your settings:
         </p>
       </div>
     </li>
   </ol>
 </div>
 
+<%= render UserFormComponent.new(user: current_user) %>
+
 <p class="italic text-sm opacity-80">
-  If you carefully followed each one of these steps and your status remains
-  <span class="not-italic text-aoc-atmospheric">Pending</span> after an update of the data, send me a message
-  <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %> with these:
+  If you have completed all these steps and your status remains
+  <span class="not-italic text-aoc-atmospheric">Pending</span> after a data update, please send me a message
+  <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %> with the following details:
   <code class="not-italic strong">id:<%= current_user.id %>;aoc_id:<%= current_user.aoc_id %></code>
 </p>

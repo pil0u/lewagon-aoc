@@ -7,23 +7,23 @@ class UsersController < ApplicationController
     @user = User.find_by!(uid: params[:uid])
 
     casual_scores = Scores::SoloScores.get
-    casual_presenter = Scores::UserRanksPresenter.new(casual_scores)
-    casual_participants = casual_presenter.ranks
+    casual_presenter = Scores::UserScoresPresenter.new(casual_scores)
+    casual_participants = casual_presenter.get
     @casual_stats = casual_participants.find { |h| h[:uid].to_s == @user.uid }
 
     insanity_scores = Scores::InsanityScores.get
-    insanity_presenter = Scores::UserRanksPresenter.new(insanity_scores)
-    insane_participants = insanity_presenter.ranks
+    insanity_presenter = Scores::UserScoresPresenter.new(insanity_scores)
+    insane_participants = insanity_presenter.get
     @insanity_stats = insane_participants.find { |h| h[:uid].to_s == @user.uid }
 
     squad_scores = Scores::SquadScores.get
-    squad_presenter = Scores::SquadRanksPresenter.new(squad_scores)
-    squads = squad_presenter.ranks
+    squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
+    squads = squad_presenter.get
     @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
 
     city_scores = Scores::CityScores.get
-    city_presenter = Scores::CityRanksPresenter.new(city_scores)
-    cities = city_presenter.ranks
+    city_presenter = Scores::CityScoresPresenter.new(city_scores)
+    cities = city_presenter.get
     @city_stats = cities.find { |h| h[:id] == @user.city_id }
 
     # Sort user achievements in the same order as in the YAML definition
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @latest_day = Aoc.latest_day
     @daily_completions = Array.new(@latest_day) { [nil, nil] }
 
-    Completion.where(user: @user).each do |completion|
+    Completion.where(user: @user).find_each do |completion|
       @daily_completions[@latest_day - completion.day][completion.challenge - 1] = completion
     end
   end
@@ -74,7 +74,8 @@ class UsersController < ApplicationController
       # validation), then the id of that instance is nil, which disappears with .compact below
       city: City.find_by(id: form_params[:city_id]),
       entered_hardcore: form_params[:entered_hardcore],
-      username: form_params[:username]
+      username: form_params[:username],
+      referrer: User.find_by_referral_code(form_params[:referrer_code])
     }.compact
   end
 
@@ -83,6 +84,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username, :referrer_code)
   end
 end

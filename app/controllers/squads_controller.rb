@@ -7,16 +7,16 @@ class SquadsController < ApplicationController
     @squad = Squad.find(params[:id])
 
     casual_scores = Scores::SoloScores.get
-    casual_presenter = Scores::UserRanksPresenter.new(casual_scores)
-    casual_participants = casual_presenter.ranks
+    casual_presenter = Scores::UserScoresPresenter.new(casual_scores)
+    casual_participants = casual_presenter.get
     squad_user_uids = @squad.users.pluck(:uid).map(&:to_i)
     @squad_users = casual_participants.select { |p| p[:uid].in? squad_user_uids }
                                       .sort_by { |p| p[:score] * -1 }
     compute_ranks_from_score(@squad_users)
 
     squad_scores = Scores::SquadScores.get
-    squad_presenter = Scores::SquadRanksPresenter.new(squad_scores)
-    squads = squad_presenter.ranks
+    squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
+    squads = squad_presenter.get
     @squad_stats = squads.find { |h| h[:id] == @squad.id }
     # TODO: remove when implemented
     @squad_stats[:silver_stars] = @squad_users.sum { |h| h[:silver_stars] }

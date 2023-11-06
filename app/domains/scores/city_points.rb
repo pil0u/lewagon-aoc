@@ -10,15 +10,10 @@ module Scores
 
     def cache_key
       @cache_key ||= [
-        State.maximum(:fetch_api_end),
+        State.with_changes.maximum(:fetch_api_end),
         City.maximum(:updated_at)
       ].join("-")
     end
-
-    RETURNED_ATTRIBUTES = %i[
-      city_id day challenge
-      score total_score contributor_count
-    ].freeze
 
     def compute
       points = Scores::SoloPoints.get

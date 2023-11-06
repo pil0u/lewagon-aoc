@@ -10,6 +10,7 @@ module Cache
       Scores::InsanityScores.get
       Scores::CityScores.get
       Scores::SquadScores.get
+      Scores::UserDayScores.get
     end
   end
 end

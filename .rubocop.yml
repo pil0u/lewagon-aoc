@@ -6,9 +6,6 @@ require:
 AllCops:
   NewCops: enable
 
-Layout/LineLength:
-  Enabled: false
-
 Lint/MissingSuper:
   Exclude:
     - "**/app/components/**/*"
@@ -16,32 +13,41 @@ Lint/MissingSuper:
 Lint/SymbolConversion:
   EnforcedStyle: consistent
 
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+  Exclude:
+    - "**/app/controllers/messages_controller.rb"
+    - "**/app/domains/completions/fetcher.rb"
+
+Rails/DangerousColumnNames:
+  Exclude:
+    - "**/db/migrate/*"
+
+Rails/DynamicFindBy:
+  AllowedMethods: [
+    "find_by_referral_code"
+  ]
+
+Style/NumericPredicate:
+  EnforcedStyle: comparison
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+
+## Disabled cops
+
+Layout/LineLength:
+  Enabled: false
+
 Metrics/AbcSize:
   Enabled: false
 
 Metrics/BlockLength:
   Enabled: false
 
-Metrics/ClassLength: # TODO: remove after old files are deprecated
-  Enabled: false
-
-Metrics/CyclomaticComplexity:
-  Exclude:
-    - "**/app/controllers/days_controller.rb"
-    - "**/app/controllers/users_controller.rb"
-
 Metrics/MethodLength:
   Enabled: false
-
-Metrics/PerceivedComplexity:
-  Exclude:
-    - "**/app/controllers/days_controller.rb"
-
-Naming/VariableNumber:
-  EnforcedStyle: snake_case
-  Exclude:
-    - "**/app/controllers/messages_controller.rb"
-    - "**/app/domains/completions/fetcher.rb"
 
 Rails/I18nLocaleTexts:
   Enabled: false
@@ -54,9 +60,3 @@ Rails/SkipsModelValidations:
 
 Style/Documentation:
   Enabled: false
-
-Style/NumericPredicate:
-  EnforcedStyle: comparison
-
-Style/StringLiterals:
-  EnforcedStyle: double_quotes

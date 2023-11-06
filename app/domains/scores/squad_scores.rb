@@ -3,7 +3,7 @@
 module Scores
   class SquadScores < CachedComputer
     def get
-      cache(Cache::SquadScore) { compute }
+      cache(Cache::SquadScore) { Ranks::SquadScores.rank_and_number(compute) }
     end
 
     private
@@ -15,8 +15,6 @@ module Scores
         Aoc.latest_day
       ].join("-")
     end
-
-    RETURNED_ATTRIBUTES = %i[score squad_id current_day_score].freeze
 
     def compute
       points = Scores::SquadPoints.get

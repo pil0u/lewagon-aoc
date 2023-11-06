@@ -10,7 +10,7 @@
         Solve puzzles 🧠 Earn points 💎 Win prizes 🎁
       </p>
       <p>
-        Every single challenge you solve <em>at any time</em> will give you, your city and your squad, points.
+        Every single challenge you solve <em>at any time</em> will give you, your campus and your squad, points.
       </p>
       <p>
         The <%= link_to "calendar", calendar_path, class: "link-explicit link-internal" %><sup>(*)</sup> starts on
@@ -51,7 +51,7 @@
       </p>
       <p>
         Solving any puzzle earns you points 💎, not only for you, but also for
-        <span class="strong">your campus city</span> @ <span class="text-wagon-red">Le Wagon</span> and your custom
+        <span class="strong">your campus</span> @ <span class="text-wagon-red">Le Wagon</span> and your custom
         <span class="strong">squad of 4</span>.
       </p>
     </div>
@@ -96,7 +96,7 @@
         <%= link_to "discuss it", Aoc.slack_channel, class: "link-explicit link-slack" %>
         with others! This event with <span class="text-wagon-red">Le Wagon</span> is, above all, a great opportunity
         <span class="strong">for sharing, learning and helping each other, regardless of your initial skill level</span>.
-        It's also a perfect moment to reconnect with your city/batch 🤙
+        It's also a perfect moment to reconnect with your campus/batch 🤙
       </p>
     </div>
   </details>
@@ -110,7 +110,7 @@
       </p>
       <p>
         Because @ <span class="text-wagon-red">Le Wagon</span> we like things spicy, we wanted to build scoreboards
-        <span class="strong">by campus city</span>. The leaderboard system on adventofcode.com is not flexible enough
+        <span class="strong">by campus</span>. The leaderboard system on adventofcode.com is not flexible enough
         for that.
       </p>
       <p>
@@ -178,15 +178,15 @@
         </ol>
       </p>
 
-      <span class="text-center underline">City scores</span>
+      <span class="text-center underline">Campus scores</span>
 
       <p>
-        Ranking cities is hard, because the number of Alumni per campus is very different.
+        Ranking campuses is hard, because the number of Alumni per campus is very different.
       </p>
       <p>
-        For <em>each challenge</em>, only the scores of your city's top contributors are taken into account. The number
-        of top contributors is determined by your <span class="strong">city's size</span>: it's either
-        <code class="strong">3%</code> of your city's size, or <code class="strong">10</code> contributors, whatever
+        For <em>each challenge</em>, only the scores of your campus's top contributors are taken into account. The number
+        of top contributors is determined by your <span class="strong">campus's size</span>: it's either
+        <code class="strong">3%</code> of your campus's size, or <code class="strong">10</code> contributors, whatever
         the <em>greatest</em>.
       </p>
       <p>
@@ -203,12 +203,12 @@
         </ul>
       </p>
       <p>
-        The number of top contributors will be set according to the number of Alumni per city ~ a week before December,
+        The number of top contributors will be set according to the number of Alumni per campus ~ a week before December,
         and will stay the same until the end of the event.
       </p>
       <p>
-        So, for <em>each challenge</em>, the score of a city is <span class="strong">the average of the individual scores from its top
-        contributors</span>. Finally, the global score of a city is the sum of these averages for all challenges.
+        So, for <em>each challenge</em>, the score of a campus is <span class="strong">the average of the individual scores from its top
+        contributors</span>. Finally, the global score of a campus is the sum of these averages for all challenges.
       </p>
       <p>
         Examples:
@@ -327,7 +327,7 @@
             <span class="text-aoc-gray-dark">greyed out</span> to have a quick overview of who's insane and who's not.
           </li>
           <li>
-            Whether you opt-in or not, your contributions to your squad or your city are always computed from your
+            Whether you opt-in or not, your contributions to your squad or your campus are always computed from your
             <span class="strong">casual score</span>.
           </li>
           <li>
@@ -474,9 +474,9 @@
       </p>
 
       <p>
-        The best <%= link_to "city", scores_cities_path, class: "link-internal link-explicit" %> will win
+        The best <%= link_to "campus", scores_campuses_path, class: "link-internal link-explicit" %> will win
         <span class="strong">a check from Le Wagon HQ to fund a huge party</span>/event in 2023. But most importantly,
-        the city will earn the most prestigious award: <span class="strong">the golden star</span> ⭐
+        the campus will earn the most prestigious award: <span class="strong">the golden star</span> ⭐
       </p>
     </div>
   </details>

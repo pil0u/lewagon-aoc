@@ -3,7 +3,7 @@
 module Scores
   class InsanityScores < CachedComputer
     def get
-      cache(Cache::InsanityScore) { compute }
+      cache(Cache::InsanityScore) { Ranks::InsanityScores.rank_and_number(compute) }
     end
 
     private
@@ -17,8 +17,6 @@ module Scores
         Aoc.latest_day
       ].join("-")
     end
-
-    RETURNED_ATTRIBUTES = %i[score user_id current_day_score].freeze
 
     def compute
       default_points = User.insanity.pluck(:id).index_with { |_u| [] } # No points by default

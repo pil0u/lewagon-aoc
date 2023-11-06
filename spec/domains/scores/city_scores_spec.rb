@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe Scores::CityScores do
   let(:state) { create(:state) }
 
-  let(:bordeaux) { create :city, name: "Bordeaux" }
-  let(:brussels) { create :city, name: "Brussels" }
+  let(:bordeaux) { create :city, name: "Bordeaux", size: 10 }
+  let(:brussels) { create :city, name: "Brussels", size: 10 }
   let(:city_points) do
     [
       { day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96, score: 8.00 },
@@ -34,6 +34,11 @@ RSpec.describe Scores::CityScores do
       hash_including(city_id: brussels.id, current_day_part_1_contributors: 2, current_day_part_2_contributors: 0),
       hash_including(city_id: bordeaux.id, current_day_part_1_contributors: 0, current_day_part_2_contributors: 0)
     )
+  end
+
+  it "ranks the scores" do
+    expect(Ranks::CityScores).to receive(:rank_and_number).and_call_original
+    described_class.get
   end
 
   describe "caching" do

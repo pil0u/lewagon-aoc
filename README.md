@@ -1,8 +1,8 @@
 ![Le Wagon x Advent of Code](public/thumbnail.png)
 
 ```
-Ruby    3.1.2  
-Rails   7.0.4
+Ruby    3.2.2  
+Rails   7.1.1
 ```
 
 Found a bug? Do not hesitate to [open an Issue](/../../issues/new).  
@@ -22,16 +22,16 @@ Upon Pull Requests (open, push), CI scripts are automatically run:
 - linters (RuboCop, ERBLint)
 - security tools (brakeman, bundler-audit)
 - tests (soon™)
-- auto-deploy ephemeral app (usually in 5 minutes, fails often)
+- ~~auto-deploy ephemeral app (usually in 5 minutes, fails often)~~
 
 Your PR should pass the linters, the security checks and the tests (soon™) to be merged.  
-The app is automatically deployed in a production-like environment with a fresh database where you can double-check your changes.
+~~The app is automatically deployed in a production-like environment with a fresh database where you can double-check your changes.~~
 
 ### Run on your machine
 
 1. Run `bin/setup` to install dependencies, create and seed the database
 2. [Ask me](slack://user?team=T02NE0241&id=URZ0F4TEF) for the credentials key and add it to `config/master.key`, required for Kitt OAuth
-3. Create a `.env` root file and add these keys with their [appropriate values](#required-env-variables): `AOC_ROOMS`, `EVENT_YEAR`, `SESSION_COOKIE`
+3. Create a `.env` root file and add these keys with their [appropriate values](#required-env-variables): `AOC_ROOMS`, `SESSION_COOKIE`
 4. Run `bin/dev`
 
 #### Required `ENV` variables
@@ -40,7 +40,6 @@ The app is automatically deployed in a production-like environment with a fresh 
 The `.env` file is used for development purposes only. It is _not_ versioned and never should.
 
 - `AOC_ROOMS` is a comma-separated list of [private leaderboard](https://adventofcode.com/leaderboard/private) IDs that _you belong_ to (e.g. `9999999-a0b1c2d3,7777777-e4f56789`)
-- (*deprecated*) ~~`EVENT_YEAR` can take any [existing event](https://adventofcode.com/events) value (e.g. `2021`)~~
 - `SESSION_COOKIE` is your own Advent of Code session cookie (valid ~ 1 month). You need to [log in](https://adventofcode.com/auth/login) to the platform, then retrieve the value of the `session` cookie (e.g. `436088a93cbdba07668e76df6d26c0dcb4ef3cbd5728069ffb647678ad38`)
 
 #### Overmind

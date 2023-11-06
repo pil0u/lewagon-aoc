@@ -64,12 +64,12 @@
   <table class="mx-auto text-right">
     <tr>
       <th class="min-w-[12rem] lg:min-w-[16rem]"></th>
-      <th class="min-w-[6rem] font-light text-aoc-silver">Part 1</th>
-      <th class="min-w-[6rem] font-light text-aoc-gold">Part 2</th>
-      <th class="min-w-[4rem] font-light strong">Score</th>
+      <th class="min-w-[6rem] font-light text-aoc-silver text-center">Part 1</th>
+      <th class="min-w-[6rem] font-light text-aoc-gold text-center">Part 2</th>
+      <th class="min-w-[6rem] font-light strong text-center">Score</th>
     </tr>
 
-    <%= render Scores::DailyUserRowComponent.with_collection(@users) %>
+    <%= render Scores::DailyUserRowComponent.with_collection(@participants, user: current_user) %>
   </table>
 </div>
 

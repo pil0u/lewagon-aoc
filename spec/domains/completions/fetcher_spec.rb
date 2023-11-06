@@ -63,7 +63,7 @@ RSpec.describe Completions::Fetcher do
 
   it "creates the completions with the appropriate data" do
     described_class.call
-    expect(aquaj.completions.map(&:attributes).map(&:symbolize_keys)).to contain_exactly(
+    expect(aquaj.completions.map { |x| x.attributes.symbolize_keys }).to contain_exactly(
       hash_including(day: 1, challenge: 1, completion_unix_time: 1_669_918_804),
       hash_including(day: 1, challenge: 2, completion_unix_time: 1_669_918_892),
       hash_including(day: 2, challenge: 1, completion_unix_time: 1_669_958_282),

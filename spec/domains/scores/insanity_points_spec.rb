@@ -16,7 +16,7 @@ RSpec.describe Scores::InsanityPoints do
   end
 
   def create_completion(day, challenge, user, duration)
-    completion_timestamp = DateTime.new(2022, 12, 0 + day, 6, 0, 0) + duration
+    completion_timestamp = Aoc.begin_time + (day - 1).days + duration
     create(:completion,
            day:,
            challenge:,

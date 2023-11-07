@@ -37,7 +37,7 @@ class KittScraperJob < ApplicationJob
 
     loop do
       data = JSON.parse(fetch("https://kitt.lewagon.com/api/v1/users?page=#{page}").read_body)
-      Rails.logger.info("Scraping page #{@page}/#{data['page_count']}...")
+      Rails.logger.info("Scraping page #{page}/#{data['page_count']}...")
 
       push_new_users(data["users"])
 

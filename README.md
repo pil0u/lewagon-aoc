@@ -6,7 +6,7 @@ Rails   7.1.1
 ```
 
 Found a bug? Do not hesitate to [open an Issue](/../../issues/new).  
-Have a feature request? Let's discuss it [on Slack](slack://user?team=T02NE0241&id=URZ0F4TEF). 
+Have a feature request? Let's discuss it [on Slack](slack://user?team=T02NE0241&id=URZ0F4TEF).
 
 ## Contribute
 
@@ -24,7 +24,7 @@ Upon Pull Requests (open, push), CI scripts are automatically run:
 - security tools (brakeman, bundler-audit)
 - tests
 
-Your PR should pass the linters, the security checks and the tests to be reviewed.  
+Your PR should pass the linters, the security checks and the tests to be reviewed.
 
 ### Run on your machine
 
@@ -35,19 +35,18 @@ Your PR should pass the linters, the security checks and the tests to be reviewe
 
 #### Required `ENV` variables
 
-> **Warning**  
+> **Warning**
 The `.env` file is used for development purposes only. It is _not_ versioned and never should.
 
 - `AOC_ROOMS` is a comma-separated list of [private leaderboard](https://adventofcode.com/leaderboard/private) IDs that _you belong_ to (e.g. `9999999-a0b1c2d3,7777777-e4f56789`)
 - `SESSION_COOKIE` is your own Advent of Code session cookie (valid ~ 1 month). You need to [log in](https://adventofcode.com/auth/login) to the platform, then retrieve the value of the `session` cookie (e.g. `436088a93cbdba07668e76df6d26c0dcb4ef3cbd5728069ffb647678ad38`)
 
-#### Overmind 
+#### Overmind
 
-> **Note**  
+> **Note**
 > Foreman is the default process manager through the `bin/dev` command. Overmind is an optional alternative.
 
-Overmind is a process manager for Procfile-based applications like ours, based on `tmux`.
-You can install the tool on your machine [following these instructions](https://github.com/DarthSim/overmind#installation).
+Overmind is a process manager for Procfile-based applications like ours, based on `tmux`. You can install the tool on your machine [following these instructions](https://github.com/DarthSim/overmind#installation).
 
 Add these lines to your local `.env` file:
 ``` zsh

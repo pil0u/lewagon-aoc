@@ -26,7 +26,6 @@ class User < ApplicationRecord
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
 
-  validate :no_current_batch_number
   validate :not_referring_self
 
   scope :admins, -> { where(uid: ADMINS.values) }
@@ -83,12 +82,6 @@ class User < ApplicationRecord
     }
 
     css_class[sync_status]
-  end
-
-  def no_current_batch_number
-    return unless batch_changed? && changes[:batch_id][0].present?
-
-    errors.add(:city, "can't be changed if you are part of an existing batch")
   end
 
   def referral_code

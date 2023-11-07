@@ -72,4 +72,4 @@ On `adventofcode.com`, a user can create one (and only one) private leaderboard.
 
 A JSON object containing scores can be fetched from a `GET` request that needs a session cookie to succeed. We store this session cookie in the `SESSION_COOKIE` environment variable (valid ~ 1 month).
 
-We use multiple private leaderboards to run the platform with more than 200 participants. We store their IDs in the `AOC_ROOMS` environment variable, comma-separated. One account joins all of them, amd we use its `SESSION_COOKIE`.
+We use multiple private leaderboards to run the platform with more than 200 participants. We store their IDs in the `AOC_ROOMS` environment variable, comma-separated. One account joins all of them, and we use this account's `SESSION_COOKIE`.

@@ -18,10 +18,6 @@ Rails.application.configure do
       lock_time_achievements: {
         cron: "30 18 9 12 *", # 9th December at 18:30
         class: "Achievements::LockTimeJob"
-      },
-      scrape_kitt: {
-        cron: "0 5 1 12 *", # December 1st 5am
-        class: "KittScraperJob"
       }
     }
   }

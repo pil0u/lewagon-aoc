@@ -6,13 +6,13 @@ Rails   7.1.1
 ```
 
 Found a bug? Do not hesitate to [open an Issue](/../../issues/new).  
-Have a feature request? Let's discuss it on Slack. 
+Have a feature request? Let's discuss it [on Slack](slack://user?team=T02NE0241&id=URZ0F4TEF). 
 
 ## Contribute
 
 If you want to help me fix a bug or implement a new requested feature:
 1. Make sure [an Issue exists](/../../issues) for it
-2. [Ask me](slack://user?team=T02NE0241&id=URZ0F4TEF) questions
+2. Ask me questions
 3. Fork the project
 4. Code the changes on your fork
 5. Create a Pull Request here from your fork
@@ -68,7 +68,7 @@ Then, find the local IP address of the computer you launch the server from (ex: 
 
 ## Advent of Code API
 
-On `adventofcode.com`, a user can create one (and only one) private leaderboard. Up to 200 users can join it using the generated code.
+On `adventofcode.com`, a user can create one (and only one) private leaderboard. Up to 200 users can join it using a unique generated code.
 
 A JSON object containing scores can be fetched from a `GET` request that needs a session cookie to succeed. We store this session cookie in the `SESSION_COOKIE` environment variable (valid ~ 1 month).
 

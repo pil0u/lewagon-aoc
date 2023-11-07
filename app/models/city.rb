@@ -8,10 +8,9 @@ class City < ApplicationRecord
   has_many :users, through: :batches
   has_many :completions, through: :users
 
-  before_validation :set_vanity_name_default_value
+  before_create :set_default_vanity_name
 
   validates :name, uniqueness: { case_sensitive: false }
-  validates :vanity_name, presence: true
 
   def self.find_by_slug(slug)
     find_by!("REPLACE(LOWER(name), ' ', '-') = ?", slug)
@@ -31,7 +30,7 @@ class City < ApplicationRecord
 
   private
 
-  def set_vanity_name_default_value
+  def set_default_vanity_name
     self.vanity_name ||= name
   end
 end

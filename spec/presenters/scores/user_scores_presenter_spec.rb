@@ -7,15 +7,14 @@ RSpec.describe Scores::UserScoresPresenter do
   let!(:bordeaux) { create :city, name: "Bordeaux" }
   let!(:squad_1) { create :squad, name: "The Killers" }
   let!(:squad_2) { create :squad, name: "Grouplove" }
-  let!(:batch_1) { create :batch, number: 1 }
-  let!(:batch_2) { create :batch, number: 2 }
-  let!(:batch_3) { create :batch, number: 3 }
+  let!(:batch_1) { create :batch, number: 1, city: paris }
+  let!(:batch_2) { create :batch, number: 2, city: bordeaux }
+  let!(:batch_3) { create :batch, number: 3, city: bordeaux }
 
   let!(:user_1) do
     create :user,
            id: 1,
            username: "Saunier",
-           city: paris,
            squad: squad_1,
            batch: batch_1,
            entered_hardcore: false
@@ -24,7 +23,6 @@ RSpec.describe Scores::UserScoresPresenter do
     create :user,
            id: 2,
            username: "pil0u",
-           city: bordeaux,
            squad: squad_2,
            batch: batch_2,
            entered_hardcore: true
@@ -66,7 +64,7 @@ RSpec.describe Scores::UserScoresPresenter do
       hash_including(
         uid: 1,
         username: "Saunier",
-        city_name: "Paris",
+        city_vanity_name: "Paris",
         batch_number: 1,
         squad_name: "The Killers",
         entered_hardcore: false
@@ -74,7 +72,7 @@ RSpec.describe Scores::UserScoresPresenter do
       hash_including(
         uid: 2,
         username: "pil0u",
-        city_name: "Bordeaux",
+        city_vanity_name: "Bordeaux",
         batch_number: 2,
         squad_name: "Grouplove",
         entered_hardcore: true
@@ -152,21 +150,10 @@ RSpec.describe Scores::UserScoresPresenter do
     end
   end
 
-  context "when user has no city" do
-    before do
-      user_1.update!(city: nil)
-    end
-
-    it "includes no info about it in the output" do
-      expect(described_class.new(input).get).to include(
-        hash_including(uid: 1, city_name: nil)
-      )
-    end
-  end
-
   context "when user has no batch" do
     before do
-      user_1.update!(batch: nil)
+      user_1.batch_id = nil
+      user_1.save(validate: false)
     end
 
     it "includes no info about it in the output" do

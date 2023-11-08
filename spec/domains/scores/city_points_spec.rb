@@ -3,9 +3,10 @@
 require "rails_helper"
 
 RSpec.describe Scores::CityPoints do
-  let!(:state) { create :state }
+  let!(:state) { create :state, completions_fetched: solo_points.count, fetch_api_end: Time.zone.now }
   let(:brussels) { create(:city, name: "Brussels", size: 400) }
-  let(:brussels_users) { create_list(:user, 18, city: brussels) }
+  let(:brussels_batch) { create(:batch, number: 1, city: brussels) }
+  let(:brussels_users) { create_list(:user, 18, batch: brussels_batch) }
   let(:brussels_points) do
     [
       { day: 1, challenge: 1, score: 50, user_id: brussels_users[0].id },
@@ -18,7 +19,8 @@ RSpec.describe Scores::CityPoints do
   end
 
   let(:bordeaux) { create(:city, name: "Bordeaux", size: 400) }
-  let(:bordeaux_users) { create_list(:user, 12, city: bordeaux) }
+  let(:bordeaux_batch) { create(:batch, number: 1, city: bordeaux) }
+  let(:bordeaux_users) { create_list(:user, 18, batch: bordeaux_batch) }
   let(:bordeaux_points) do
     [
       { day: 1, challenge: 1, score: 46, user_id: bordeaux_users[0].id }
@@ -162,10 +164,11 @@ RSpec.describe Scores::CityPoints do
       end
 
       context "when the users makeup of the city has changed in the meantime" do
-        let(:new_bordeaux_users) { create_list :user, 2, city: bordeaux }
+        let(:new_bordeaux_users) { create_list :user, 2, batch: bordeaux_batch }
 
         before do
           travel 10.seconds # Specs go too fast, updated_at stays the same otherwise
+          create(:state, completions_fetched: 1, fetch_api_end: Time.zone.now) # simulate new fetch
           new_bordeaux_users # creating after travel
           allow(Scores::SoloPoints).to receive(:get).and_return(new_solo_scores)
         end

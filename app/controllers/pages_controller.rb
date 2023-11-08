@@ -40,14 +40,14 @@ class PagesController < ApplicationController
 
       {
         slug: city.slug,
-        name: city.name,
+        vanity_name: city.vanity_name,
         size: city.size,
         n_participants:,
         participation_ratio: n_participants / city.size.to_f
       }
     end
 
-    @cities.sort_by! { |city| [city[:participation_ratio] * -1, city[:name]] }
+    @cities.sort_by! { |city| [city[:participation_ratio] * -1, city[:vanity_name]] }
   end
 
   def setup

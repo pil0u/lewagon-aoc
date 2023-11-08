@@ -7,9 +7,10 @@ class User < ApplicationRecord
   MODERATORS = { pilou: "6788", aquaj: "449" }.freeze
 
   belongs_to :batch, optional: true
-  belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
   belongs_to :referrer, class_name: "User", optional: true
+
+  delegate :city, :city_id, to: :batch, allow_nil: true
 
   has_many :completions, dependent: :destroy
   has_many :user_day_scores, class_name: "Cache::UserDayScore", dependent: :delete_all
@@ -25,6 +26,7 @@ class User < ApplicationRecord
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
+
   validate :not_referring_self
 
   scope :admins, -> { where(uid: ADMINS.values) }

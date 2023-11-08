@@ -28,9 +28,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
   end
 
   create_table "batches", force: :cascade do |t|
+    t.bigint "city_id"
     t.datetime "created_at", null: false
     t.integer "number"
+    t.integer "size"
     t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_batches_on_city_id"
   end
 
   create_table "blazer_audits", force: :cascade do |t|
@@ -94,6 +97,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
     t.string "name"
     t.integer "size"
     t.datetime "updated_at", null: false
+    t.string "vanity_name"
     t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
@@ -370,7 +374,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
     t.boolean "accepted_coc", default: false, null: false
     t.integer "aoc_id"
     t.bigint "batch_id"
-    t.bigint "city_id"
     t.datetime "created_at", null: false
     t.boolean "entered_hardcore", default: false, null: false
     t.string "github_username"
@@ -385,11 +388,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
     t.string "username"
     t.index ["aoc_id"], name: "index_users_on_aoc_id", unique: true
     t.index ["batch_id"], name: "index_users_on_batch_id"
-    t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["referrer_id"], name: "index_users_on_referrer_id"
   end
 
   add_foreign_key "achievements", "users"
+  add_foreign_key "batches", "cities"
   add_foreign_key "city_points", "cities"
   add_foreign_key "city_scores", "cities"
   add_foreign_key "completions", "users"
@@ -402,6 +405,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
   add_foreign_key "squad_points", "squads"
   add_foreign_key "squad_scores", "squads"
   add_foreign_key "users", "batches"
-  add_foreign_key "users", "cities"
   add_foreign_key "users", "users", column: "referrer_id"
 end

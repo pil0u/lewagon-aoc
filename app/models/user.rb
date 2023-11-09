@@ -109,8 +109,8 @@ class User < ApplicationRecord
     Aoc.private_leaderboards.each { |leaderboard| leaderboards[leaderboard] ||= 0 }
 
     # Take the private leaderboard with the least users and assign it to the user
-    user_leaderboard = leaderboards.min_by { |_, count| count }.first
+    assigned_leaderboard = leaderboards.min_by { |_, count| count }.first
 
-    update(private_leaderboard: user_leaderboard)
+    update(private_leaderboard: assigned_leaderboard)
   end
 end

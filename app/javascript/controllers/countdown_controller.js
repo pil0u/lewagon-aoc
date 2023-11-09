@@ -10,13 +10,13 @@ export default class extends Controller {
   }
 
   connect () {
-    if (new Date() < Date.parse('November 17 2023 08:30:00 +0100')) {
+    if (new Date() < Date.parse("November 17 2023 08:30:00 +0100")) {
       this.startRefreshing()
     }
   }
 
   updateClock () {
-    const timeDiff = Date.parse('November 17 2023 08:30:00 +0100') - (new Date()).getTime()
+    const timeDiff = Date.parse("November 17 2023 08:30:00 +0100") - (new Date()).getTime()
 
     if (timeDiff > 0) {
       this.daysTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 2)
@@ -48,6 +48,6 @@ export default class extends Controller {
   }
 
   format (integer, digits) {
-    return integer.toString().padStart(digits, '0')
+    return integer.toString().padStart(digits, "0")
   }
 }

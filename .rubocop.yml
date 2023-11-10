@@ -6,6 +6,14 @@ require:
 AllCops:
   NewCops: enable
 
+Layout/SpaceInsideArrayPercentLiteral:
+  Exclude:
+    - "**/app/controllers/pages_controller.rb"
+
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Exclude:
+    - "**/app/controllers/pages_controller.rb"
+
 Lint/MissingSuper:
   Exclude:
     - "**/app/components/**/*"

@@ -1,0 +1,29 @@
+<% if user_signed_in? %>
+
+<div class="my-2">
+  <%= link_to "Blazer", blazer_path, class: "button" %>
+  <%= link_to "GoodJob", good_job_path, class: "button" %>
+  <%= link_to "/participation", participation_path, class: "button" %>
+</div>
+
+<div class="my-2">
+  <%= form_with url: impersonate_path, method: :post do |form| %>
+    <%= form.label :user_id, "Sign in as:" %>
+    <%= form.text_field :user_id, placeholder: "id", class: "input" %>
+    <%= form.submit "Go", class: "button" %>
+  <% end %>
+</div>
+
+<% else %>
+
+<div class="my-2 mx-auto">
+  <%= button_to(
+        user_kitt_omniauth_authorize_path,
+        data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
+        class: "button"
+      ) do %>
+    Sign in with Kitt
+  <% end %>
+</div>
+
+<% end %>

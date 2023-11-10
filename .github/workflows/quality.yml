@@ -69,10 +69,10 @@ jobs:
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
         env:
-          DATABASE_URL: 'postgres://test:password@localhost/application_test'
+          DATABASE_URL: "postgres://test:password@localhost/application_test"
 
       - name: Run RSpec
         run: |
           bundle exec rspec
         env:
-          DATABASE_URL: 'postgres://test:password@localhost/application_test'
+          DATABASE_URL: "postgres://test:password@localhost/application_test"

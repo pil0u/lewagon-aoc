@@ -1,25 +1,25 @@
 ---
 EnableDefaultLinters: true
 exclude:
-  - '**/vendor/**/*'
-  - '**/___*' # Files to deprecate
+  - "**/vendor/**/*"
+  - "**/___*" # Files to deprecate
 
 linters:
   ErbSafety:
     exclude:
-      - '**/app/components/header/nav_component.html.erb'
-      - '**/app/components/scores/city_row_component.html.erb'
-      - '**/app/components/scores/squad_row_component.html.erb'
-      - '**/app/components/scores/user_row_component.html.erb'
-      - '**/app/components/snippets/box_component.html.erb'
-      - '**/app/views/pages/setup.html.erb'
+      - "**/app/components/header/nav_component.html.erb"
+      - "**/app/components/scores/city_row_component.html.erb"
+      - "**/app/components/scores/squad_row_component.html.erb"
+      - "**/app/components/scores/user_row_component.html.erb"
+      - "**/app/components/snippets/box_component.html.erb"
+      - "**/app/views/pages/setup.html.erb"
 
   # Disable "String not translated" errors while passing the --enable-all-linters flag
   HardCodedString:
     exclude:
-      - '**/app/components/**/*'
-      - '**/app/components/*' # https://github.com/Shopify/erb-lint/issues/265
-      - '**/app/views/**/*'
+      - "**/app/components/**/*"
+      - "**/app/components/*" # https://github.com/Shopify/erb-lint/issues/265
+      - "**/app/views/**/*"
 
   Rubocop:
     enabled: true

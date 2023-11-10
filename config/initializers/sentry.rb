@@ -5,12 +5,15 @@ Sentry.init do |config|
   config.breadcrumbs_logger = %i[monotonic_active_support_logger http_logger]
 
   # Current environments
-  #   development       default local value
-  #   fly               lewagon-aoc.fly.dev
-  #   fly-pr            lewagon-aoc-pr.fly.dev
-  #   heroku-staging    lewagon-aoc-staging.herokuapp.com
-  #   production        aoc.lewagon.community
-  config.enabled_environments = %w[production heroku-staging fly fly-pr]
+  #   KO  development       default local value
+  #   KO  fly               lewagon-aoc.fly.dev
+  #   KO  fly-pr            lewagon-aoc-pr.fly.dev
+  #   KO  heroku-staging    lewagon-aoc-staging.herokuapp.com
+  #   OK  production        aoc.lewagon.community
+  #   OK  staging           aoc-staging.lewagon.community
+  config.enabled_environments = %w[production staging]
+
+  config.environment = "staging" if ENV["THIS_IS_STAGING"]
 
   # Disable traces all the way
   config.traces_sample_rate = 0.0

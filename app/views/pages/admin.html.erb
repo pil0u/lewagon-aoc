@@ -14,6 +14,18 @@
   <% end %>
 </div>
 
+<div class="my-2">
+  <p>Useful commands:</p>
+
+  <ul>
+    <li><code>heroku run rails c -a lewagon-aoc</code> connects to the console</li>
+    <li><code>heroku logs --tail -a lewagon-aoc</code> shows the live logs</li>
+    <li><code>heroku pg:psql -a lewagon-aoc</code> connects to the database to run SQL</li>
+    <li><code>heroku pg:vacuum-stats DATABASE_URL -a lewagon-aoc</code> shows useful database stats</li>
+    <li><code>heroku config:get KEY -a lewagon-aoc</code> retrieves the value of KEY</li>
+  </ul>
+</div>
+
 <% else %>
 
 <div class="my-2 mx-auto">

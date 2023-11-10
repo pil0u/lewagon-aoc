@@ -50,6 +50,6 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem "rack-mini-profiler", "~> 3.1"
   gem "solargraph"
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  # Access an interactive console on exception pages or by calling "console" anywhere in the code.
   gem "web-console", "~> 4.2"
 end

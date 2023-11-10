@@ -54,13 +54,16 @@ class UsersController < ApplicationController
   end
 
   def impersonate
-    user = User.find_by(id: params[:user_id])
+    attribute_name = params.keys.grep(/^via_/).first
+
+    real_attribute_name = attribute_name.sub(/^via_/, "")
+    user = User.find_by(real_attribute_name => params[attribute_name])
 
     if user
       sign_in(user)
       redirect_to "/", alert: "You are now impersonating #{user.username} (id: #{user.id})"
     else
-      redirect_back fallback_location: "/", alert: "User (id: #{params[:user_id]}) not found"
+      redirect_back fallback_location: "/", alert: "User (#{real_attribute_name}: #{params[attribute_name]}) not found"
     end
   end
 

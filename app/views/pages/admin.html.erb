@@ -8,8 +8,24 @@
 
 <div class="my-2">
   <%= form_with url: impersonate_path, method: :post do |form| %>
-    <%= form.label :user_id, "Sign in as:" %>
-    <%= form.text_field :user_id, placeholder: "id", class: "input" %>
+    <%= form.label :via_id, "Sign in as:" %>
+    <%= form.text_field :via_id, placeholder: "id", class: "input" %>
+    <%= form.submit "Go", class: "button" %>
+  <% end %>
+</div>
+
+<div class="my-2">
+  <%= form_with url: impersonate_path, method: :post do |form| %>
+    <%= form.label :via_uid, "Sign in as:" %>
+    <%= form.text_field :via_uid, placeholder: "uid", class: "input" %>
+    <%= form.submit "Go", class: "button" %>
+  <% end %>
+</div>
+
+<div class="my-2">
+  <%= form_with url: impersonate_path, method: :post do |form| %>
+    <%= form.label :via_aoc_id, "Sign in as:" %>
+    <%= form.text_field :via_aoc_id, placeholder: "aoc_id", class: "input" %>
     <%= form.submit "Go", class: "button" %>
   <% end %>
 </div>

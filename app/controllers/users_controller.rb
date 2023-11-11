@@ -41,8 +41,6 @@ class UsersController < ApplicationController
 
   def edit
     @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
-    @squad_users_links = to_raw_links(@squad.users)
-    @referrees_links = to_raw_links(current_user.referrees)
   end
 
   def update
@@ -88,18 +86,5 @@ class UsersController < ApplicationController
 
   def form_params
     params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id, :referrer_code)
-  end
-
-  def to_raw_links(users)
-    links = users.map do |user|
-      "<a href='#{profile_path(user.uid)}' class='strong hover:text-gold'>#{user.username}</a>"
-    end
-
-    case links.length
-    when 0 then nil
-    when 1 then links.first
-    when 2 then "#{links.first} and #{links.second}"
-    else "#{links[0...-1].join(', ')} and #{links.last}"
-    end
   end
 end

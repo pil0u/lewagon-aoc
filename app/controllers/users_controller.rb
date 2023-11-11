@@ -41,6 +41,7 @@ class UsersController < ApplicationController
 
   def edit
     @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
+    @referees = current_user.referees
   end
 
   def update

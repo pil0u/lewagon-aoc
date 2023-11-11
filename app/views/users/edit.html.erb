@@ -44,7 +44,9 @@
 
 <%= render PageTitleComponent.new(title: "Referral") %>
 
-<p class="my-4">When you share the event to your friends, ask them to add this referral code during the setup. You will then become a patron.</p>
+<p class="my-4">
+  When you share the event to your friends, ask them to add this referral code during the setup. This will boost your aura.
+</p>
 
 <div class="my-4 flex flex-col justify-center gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
   <input type="text" value="<%= current_user.referral_code %>" class="input" disabled autocomplete="off">

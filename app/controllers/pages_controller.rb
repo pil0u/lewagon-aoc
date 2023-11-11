@@ -53,6 +53,8 @@ class PagesController < ApplicationController
   def setup
     @private_leaderboard = ENV.fetch("AOC_ROOMS").split(",").last
 
+    return if cookies[:referral_code].blank?
+
     current_user.update(referrer: User.find_by_referral_code(cookies[:referral_code]))
     cookies.delete(:referral_code)
   end
@@ -81,6 +83,7 @@ class PagesController < ApplicationController
 
   def welcome
     @total_users = User.count
+
     cookies[:referral_code] = params[:referral_code] if params[:referral_code].present?
   end
 

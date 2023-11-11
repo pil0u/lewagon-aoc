@@ -41,6 +41,18 @@ class UsersController < ApplicationController
 
   def edit
     @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
+
+    return if current_user.referrees.count == 0
+
+    links = current_user.referrees.map do |referree|
+      "<a href='#{profile_path(referree.uid)}' class='strong hover:text-gold'>#{referree.username}</a>"
+    end
+
+    @referrees_links = case links.count
+                       when 1 then links.first
+                       when 2 then "#{links.first} and #{links.second}"
+                       else "#{links[0...].join(', ')} and #{links.last}"
+                       end
   end
 
   def update

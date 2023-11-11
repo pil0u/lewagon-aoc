@@ -58,3 +58,10 @@
     Copy
   </button>
 </div>
+
+<% if @referrees_links %>
+  <p>
+    You already referred <%= current_user.referrees.count %> users:
+    <%= sanitize @referrees_links %>
+  </p>
+<% end %>

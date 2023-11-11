@@ -15,7 +15,7 @@
   </div>
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
-    <%= f.label :city_name, "City" %>
+    <%= f.label :city_name, "Campus" %>
     <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: @user.batch&.city_id }, class: "input", disabled: @user.batch&.city_id?) %>
   </div>
 

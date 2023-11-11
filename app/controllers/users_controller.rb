@@ -44,9 +44,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    set_updated_params
-
-    if current_user.update(@params)
+    if current_user.update(updated_params)
       unlock_achievements
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
@@ -65,16 +63,19 @@ class UsersController < ApplicationController
     )
   end
 
-  def set_updated_params
-    @params = {
+  def updated_params
+    batch = nil
+
+    if current_user.batch_id.nil? && form_params[:city_id] # rubocop:disable Style/IfUnlessModifier
+      batch = Batch.find_or_create_by(number: nil, city_id: form_params[:city_id])
+    end
+
+    {
       accepted_coc: form_params[:accepted_coc],
       aoc_id: form_params[:aoc_id],
-      batch_id: Batch.find_or_create_by(number: form_params[:batch_number].to_i).id,
-      # find_or_create_by always returns an instance of Batch, even if it failed to create. If creation did fail (from
-      # validation), then the id of that instance is nil, which disappears with .compact below
-      city: City.find_by(id: form_params[:city_id]),
       entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username],
+      batch_id: batch&.id,
       referrer: User.find_by_referral_code(form_params[:referrer_code])
     }.compact
   end
@@ -84,6 +85,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username, :referrer_code)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id, :referrer_code)
   end
 end

@@ -6,13 +6,13 @@
 @layer base {
   :root,
   :host {
-    --fa-font-brands: normal 400 1em/1 'Font Awesome 6 Brands';
-    --fa-font-regular: normal 400 1em/1 'Font Awesome 6 Free';
-    --fa-font-solid: normal 900 1em/1 'Font Awesome 6 Free';
+    --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+    --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free";
+    --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
   }
 
   .fa {
-    font-family: var(--fa-style-family, 'Font Awesome 6 Free');
+    font-family: var(--fa-style-family, "Font Awesome 6 Free");
     font-weight: var(--fa-style, 900);
   }
 
@@ -35,54 +35,54 @@
   /* --- Brands initialisation --- */
 
   @font-face {
-    font-family: 'Font Awesome 6 Brands';
+    font-family: "Font Awesome 6 Brands";
     font-style: normal;
     font-weight: 400;
     font-display: block;
     src:
-      local('Font Awesome 6 Brands'),
-      url('fa-brands-400.woff2') format('woff2');
+      local("Font Awesome 6 Brands"),
+      url("fa-brands-400.woff2") format("woff2");
   }
 
   .fab,
   .fa-brands {
-    font-family: 'Font Awesome 6 Brands'; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+    font-family: "Font Awesome 6 Brands"; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
     font-weight: 400;
   }
 
   /* --- Regular initialisation --- */
 
   @font-face {
-    font-family: 'Font Awesome 6 Free';
+    font-family: "Font Awesome 6 Free";
     font-style: normal;
     font-weight: 400;
     font-display: block;
     src:
-      local('Font Awesome 6 Free'),
-      url('fa-regular-400.woff2') format('woff2');
+      local("Font Awesome 6 Free"),
+      url("fa-regular-400.woff2") format("woff2");
   }
 
   .far,
   .fa-regular {
-    font-family: 'Font Awesome 6 Free'; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+    font-family: "Font Awesome 6 Free"; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
     font-weight: 400;
   }
 
   /* --- Solid initialisation --- */
 
   @font-face {
-    font-family: 'Font Awesome 6 Free';
+    font-family: "Font Awesome 6 Free";
     font-style: normal;
     font-weight: 900;
     font-display: block;
     src:
-      local('Font Awesome 6 Free'),
-      url('fa-solid-900.woff2') format('woff2');
+      local("Font Awesome 6 Free"),
+      url("fa-solid-900.woff2") format("woff2");
   }
 
   .fas,
   .fa-solid {
-    font-family: 'Font Awesome 6 Free'; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+    font-family: "Font Awesome 6 Free"; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
     font-weight: 900;
   }
 
@@ -105,18 +105,18 @@
   }
 
   .fa-github::before {
-    content: '\f09b';
+    content: "\f09b";
   }
 
   .fa-plus::before {
-    content: '\2b';
+    content: "\2b";
   }
 
   .fa-power-off::before {
-    content: '\f011';
+    content: "\f011";
   }
 
   .fa-times::before {
-    content: '\f00d';
+    content: "\f00d";
   }
 }

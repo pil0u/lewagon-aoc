@@ -69,8 +69,8 @@
 </div>
 
 <% if current_user.referrees.any? %>
-  <p>
-    You already referred <%= current_user.referrees.count %> users:
+  <p class="my-4">
+    You already referred <%= pluralize(current_user.referrees.count, "user") %>:
     <%= safe_join current_user.referrees.map { |user| link_to user.username, profile_path(user.uid), class: 'strong hover:text-gold' }, ', ' %>
   </p>
 <% end %>

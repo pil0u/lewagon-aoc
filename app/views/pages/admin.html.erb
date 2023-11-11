@@ -9,19 +9,22 @@
 <div class="my-2">
   <%= form_with url: impersonate_path, method: :post do |form| %>
     <%= form.label :via_id, "Sign in as:" %>
-    <%= form.text_field :via_id, placeholder: "id", class: "input" %>
+    <%= form.text_field :identifier, placeholder: "id", class: "input" %>
+    <%= form.hidden_field :attribute, value: "id" %>
     <%= form.submit "Go", class: "button" %>
   <% end %>
 
   <%= form_with url: impersonate_path, method: :post do |form| %>
     <%= form.label :via_uid, "Sign in as:" %>
-    <%= form.text_field :via_uid, placeholder: "uid", class: "input" %>
+    <%= form.text_field :uidentifier, placeholder: "uid", class: "input" %>
+    <%= form.hidden_field :attribute, value: "uid" %>
     <%= form.submit "Go", class: "button" %>
   <% end %>
 
   <%= form_with url: impersonate_path, method: :post do |form| %>
     <%= form.label :via_aoc_id, "Sign in as:" %>
-    <%= form.text_field :via_aoc_id, placeholder: "aoc_id", class: "input" %>
+    <%= form.text_field :aoc_identifier, placeholder: "aoc_id", class: "input" %>
+    <%= form.hidden_field :attribute, value: "aoc_id" %>
     <%= form.submit "Go", class: "button" %>
   <% end %>
 </div>

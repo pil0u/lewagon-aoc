@@ -28,6 +28,7 @@ class User < ApplicationRecord
   validates :username, presence: true
 
   validate :not_referring_self
+  validate :referrer_exists
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -98,7 +99,11 @@ class User < ApplicationRecord
   private
 
   def not_referring_self
-    errors.add(:referrer, "must not be you") if referrer == self
+    errors.add(:referrer, "can't be you") if referrer == self
+  end
+
+  def referrer_exists
+    errors.add(:referrer, "must exist") if referrer_id == 0
   end
 
   def assign_private_leaderboard

@@ -65,20 +65,22 @@ class UsersController < ApplicationController
   end
 
   def updated_params
-    batch = nil
-
-    if current_user.batch_id.nil? && form_params[:city_id] # rubocop:disable Style/IfUnlessModifier
-      batch = Batch.find_or_create_by(number: nil, city_id: form_params[:city_id])
-    end
-
-    {
+    params = {
       accepted_coc: form_params[:accepted_coc],
       aoc_id: form_params[:aoc_id],
       entered_hardcore: form_params[:entered_hardcore],
-      username: form_params[:username],
-      batch_id: batch&.id,
-      referrer: User.find_by_referral_code(form_params[:referrer_code])
+      username: form_params[:username]
     }.compact
+
+    if current_user.batch_id.nil? && form_params[:city_id] # rubocop:disable Style/IfUnlessModifier
+      params[:batch] = Batch.find_or_create_by(number: nil, city_id: form_params[:city_id])
+    end
+
+    if form_params[:referrer_code] # rubocop:disable Style/IfUnlessModifier
+      params[:referrer_id] = User.find_by_referral_code(form_params[:referrer_code])&.id.to_i
+    end
+
+    params
   end
 
   def unlock_achievements

@@ -61,7 +61,7 @@ class UsersController < ApplicationController
       redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s
     end
   end
-  
+
   def impersonate
     attribute_name = params[:attribute]
     identifier_value = params[:identifier]

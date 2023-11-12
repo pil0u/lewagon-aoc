@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :authenticate_admin, only: %i[impersonate]
   before_action :restrict_after_lock, only: %i[update]
 
   def show
@@ -53,7 +54,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def impersonate
+    attribute_name = params[:attribute]
+    identifier_value = params[:identifier]
+
+    user = User.find_by(attribute_name.to_sym => identifier_value)
+    if user
+      sign_in(user)
+      redirect_to "/", alert: "You are now impersonating #{user.username} (id: #{user.id})"
+    else
+      redirect_back fallback_location: "/", alert: "User (#{attribute_name}: #{identifier_value}) not found"
+    end
+  end
+
   private
+
+  def authenticate_admin
+    return if current_user.admin?
+
+    flash[:alert] = "You are not authorized to perform this action"
+    redirect_to root_path
+  end
 
   def restrict_after_lock
     return unless Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore

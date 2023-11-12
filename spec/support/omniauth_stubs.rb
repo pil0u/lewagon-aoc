@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Stubs as error or as success depending on `omniauth_response` type
 module OmniauthStubs
   def self.included(klass)
@@ -22,14 +24,14 @@ module OmniauthStubs
     end
   end
 
-  def with_omniauth_success(provider, callback, &block)
+  def with_omniauth_success(provider, callback)
     previous = OmniAuth.config.mock_auth[provider]
     OmniAuth.config.mock_auth[provider] = callback
     yield
     OmniAuth.config.mock_auth[provider] = previous
   end
 
-  def with_omniauth_failure(provider, callback_error, &block)
+  def with_omniauth_failure(provider, callback_error)
     OmniAuth.config.mock_auth[provider] = callback_error.message.to_sym
 
     default_failure_handler = OmniAuth.config.on_failure

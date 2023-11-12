@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   # Devise sign in and sign out with OmniAuth
-  devise_for :users, skip: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, skip: :omniauth_callbacks, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   # Needed because Devise is all-or-nothing wrt providers
   def omniauth_callbacks(provider)
     OmniAuth.config.path_prefix = "/users/auth"

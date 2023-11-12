@@ -1,7 +1,9 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe UsersController do
-  let(:user) { create :user, slack_id: 'ABCDF', slack_username: 'Hi' }
+  let(:user) { create :user, slack_id: "ABCDF", slack_username: "Hi" }
 
   describe "#unlink_slack" do
     before { sign_in user }
@@ -22,7 +24,7 @@ RSpec.describe UsersController do
 
       it "redirects with a flash about the errors" do
         delete :unlink_slack
-        expect(session.dig('flash', 'flashes', 'alert')).to match(/Slack can't be blank/)
+        expect(session.dig("flash", "flashes", "alert")).to match(/Slack can't be blank/)
       end
     end
   end

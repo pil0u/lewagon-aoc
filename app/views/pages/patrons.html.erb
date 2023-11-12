@@ -1,1 +1,33 @@
-Hello
+<%= render PageTitleComponent.new(title: "Patrons") %>
+
+<div class="my-4 flex flex-col gap-y-4">
+  <p>Test goes here</p>
+</div>
+
+<table class="block overflow-x-auto whitespace-nowrap w-full max-w-lg mx-auto">
+  <thead>
+    <tr class="border-b border-aoc-gray-darker">
+      <th class="font-light w-full"></th>
+      <th class="font-light min-w-[6rem]">Referrals</th>
+      <th class="font-light min-w-[6rem]">Aura</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr class="hover:bg-hover">
+        <td class="text-center">
+          <%= link_to user[:username], profile_path(user[:uid]), class: "strong hover:text-gold" %>
+        </td>
+
+        <td class="text-center">
+          <%= user[:referrals] %>
+        </td>
+
+        <td class="text-center">
+          <%= user[:aura].to_i %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

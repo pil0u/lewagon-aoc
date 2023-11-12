@@ -54,7 +54,7 @@ class User < ApplicationRecord
   before_validation :assign_private_leaderboard, on: :create
 
   def self.aura(referrals)
-    100 * Math.log(1 + referrals, Math::E)
+    (100 * Math.log(1 + referrals, Math::E)).ceil
   end
 
   def self.from_kitt(auth)

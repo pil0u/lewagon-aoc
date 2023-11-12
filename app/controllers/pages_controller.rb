@@ -2,7 +2,7 @@
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[admin code_of_conduct faq participation stats welcome]
-  before_action      :render_countdown,   only: %i[code_of_conduct faq participation setup stats welcome], if: :render_countdown?
+  before_action      :render_countdown,   only: %i[code_of_conduct faq participation patrons setup stats welcome], if: :render_countdown?
 
   def admin; end
 
@@ -51,6 +51,8 @@ class PagesController < ApplicationController
 
     @cities.sort_by! { |city| [city[:participation_ratio] * -1, city[:vanity_name]] }
   end
+
+  def patrons() end
 
   def setup
     @private_leaderboard = ENV.fetch("AOC_ROOMS").split(",").last

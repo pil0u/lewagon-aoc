@@ -77,7 +77,8 @@
 <%= render PageTitleComponent.new(title: "Referral") %>
 
 <p class="my-4">
-  When you share the event to your friends, ask them to add this referral code during the setup. This will boost your aura.
+  When you share the event to your friends, ask them to add this referral code during the setup. This will boost your
+  <%= link_to "aura", patrons_path, class: "strong hover:text-gold" %>.
 </p>
 
 <div class="my-4 flex flex-col justify-center gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">

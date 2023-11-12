@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
-  MODERATORS = { pilou: "6788", aquaj: "449" }.freeze
+  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
 
   belongs_to :batch, optional: true
   belongs_to :squad, optional: true, touch: true
@@ -32,7 +32,9 @@ class User < ApplicationRecord
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) }
-  scope :moderators, -> { where(uid: MODERATORS.values) }
+  scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
+
+  after_create :assign_private_leaderboard
 
   def self.from_kitt(auth)
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
@@ -64,8 +66,8 @@ class User < ApplicationRecord
     slack_id.present?
   end
 
-  def moderator?
-    uid.in?(MODERATORS.values)
+  def contributor?
+    uid.in?(CONTRIBUTORS.values)
   end
 
   def solved?(day, challenge)
@@ -97,7 +99,24 @@ class User < ApplicationRecord
     referrer&.referral_code
   end
 
+  private
+
   def not_referring_self
     errors.add(:referrer, "must not be you") if referrer == self
+  end
+
+  def assign_private_leaderboard
+    return if private_leaderboard.present?
+
+    # Count existing users in each private leaderboard
+    leaderboards = User.group(:private_leaderboard).count
+
+    # Add the missing private leaderboards
+    Aoc.private_leaderboards.each { |leaderboard| leaderboards[leaderboard] ||= 0 }
+
+    # Take the private leaderboard with the least users and assign it to the user
+    assigned_leaderboard = leaderboards.min_by { |_, count| count }.first
+
+    update(private_leaderboard: assigned_leaderboard)
   end
 end

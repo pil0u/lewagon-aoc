@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   # Routes for unauthenticated users
   unauthenticated do
     get "/", to: "pages#welcome"
+    get "/admin", to: "pages#admin"
   end
 
   authenticated :user do
@@ -79,6 +80,9 @@ Rails.application.routes.draw do
 
   # Admin routes
   authenticated :user, ->(user) { user.admin? } do
+    get "/admin",         to: "pages#admin"
+    post "/impersonate",  to: "users#impersonate", as: :impersonate
+
     mount Blazer::Engine,   at: "blazer"
     mount GoodJob::Engine,  at: "good_job"
   end

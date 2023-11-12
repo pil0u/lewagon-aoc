@@ -26,6 +26,8 @@ gem "strong_migrations", "~> 1.6"
 gem "tailwindcss-rails", "~> 2.0"
 gem "turbo-rails", "~> 1.4"
 gem "view_component", "~> 3.7"
+gem "slack-ruby-client"
+gem "omniauth-slack-openid"
 
 group :development, :test do
   gem "brakeman", "~> 6.0"

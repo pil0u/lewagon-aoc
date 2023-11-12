@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_12_025321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -381,6 +381,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
     t.bigint "referrer_id"
     t.datetime "remember_created_at"
     t.text "remember_token"
+    t.string "slack_id"
+    t.string "slack_username"
     t.integer "squad_id"
     t.boolean "synced", default: false, null: false
     t.string "uid"

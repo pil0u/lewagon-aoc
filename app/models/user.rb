@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
+  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
   MODERATORS = { pilou: "6788", aquaj: "449" }.freeze

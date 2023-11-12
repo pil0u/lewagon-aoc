@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  skip_before_action  :authenticate_user!,  only: %i[admin code_of_conduct faq participation       stats welcome]
-  before_action       :render_countdown,    only: %i[      code_of_conduct faq participation setup stats welcome], if: :render_countdown?
+  skip_before_action :authenticate_user!, only: %i[admin code_of_conduct faq participation stats welcome]
+  before_action      :render_countdown,   only: %i[code_of_conduct faq participation setup stats welcome], if: :render_countdown?
 
   def admin; end
 

@@ -72,7 +72,7 @@ class UsersController < ApplicationController
       username: form_params[:username]
     }.compact
 
-    if current_user.batch_id.nil? && form_params[:city_id] # rubocop:disable Style/IfUnlessModifier
+    if form_params[:city_id] # rubocop:disable Style/IfUnlessModifier
       params[:batch] = Batch.find_or_create_by(number: nil, city_id: form_params[:city_id])
     end
 

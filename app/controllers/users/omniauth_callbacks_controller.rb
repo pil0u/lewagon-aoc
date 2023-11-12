@@ -15,13 +15,19 @@ module Users
         redirect_back(fallback_location: "/",
                       alert: "For an unknown reason, we couldn't store your information in our database.")
       end
+    end
 
-      def failure # rubocop:disable Lint/NestedMethodDefinition
-        reason = request.env["omniauth.auth"]&.error_description
+    def failure # rubocop:disable Lint/NestedMethodDefinition
+      fail_auth(failure_message)
+    end
 
-        redirect_back(fallback_location: "/",
-                      alert: "Failed to sign in with Kitt (Reason: #{reason || 'Unknown'}).")
-      end
+    private
+
+    def fail_auth(reason)
+      provider = request.env["omniauth.strategy"]&.name || "unknown"
+
+      redirect_back(fallback_location: "/",
+        alert: "Failed to sign in with #{provider.titleize} (Reason: #{reason}).")
     end
   end
 end

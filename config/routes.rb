@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 
   authenticated :user do
     omniauth_callbacks(:slack_openid)
+
+    delete 'slack_omniauth', to: 'users#unlink_slack', as: :user_slack_omniauth_remove
   end
 
   # Routes for authenticated + unconfirmed users

@@ -72,13 +72,9 @@ class UsersController < ApplicationController
       username: form_params[:username]
     }.compact
 
-    if form_params[:city_id] # rubocop:disable Style/IfUnlessModifier
-      params[:batch] = Batch.find_or_create_by(number: nil, city_id: form_params[:city_id])
-    end
-
-    if form_params[:referrer_code] # rubocop:disable Style/IfUnlessModifier
-      params[:referrer_id] = User.find_by_referral_code(form_params[:referrer_code])&.id.to_i
-    end
+    params[:batch] = nil if form_params[:batch_number]
+    params[:batch] = Batch.find_or_create_by(number: nil, city_id: form_params[:city_id]) if form_params[:city_id]
+    params[:referrer_id] = User.find_by_referral_code(form_params[:referrer_code])&.id.to_i if form_params[:referrer_code]
 
     params
   end
@@ -88,6 +84,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id, :referrer_code)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :batch_number, :city_id, :referrer_code)
   end
 end

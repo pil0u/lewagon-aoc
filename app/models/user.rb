@@ -27,7 +27,7 @@ class User < ApplicationRecord
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
 
-  validate :city_cant_change
+  validate :batch_cant_change
   validate :not_referring_self
   validate :referrer_exists
 
@@ -99,8 +99,8 @@ class User < ApplicationRecord
 
   private
 
-  def city_cant_change
-    errors.add(:city, "can't change") if batch_changed? && batch_id_was.present?
+  def batch_cant_change
+    errors.add(:batch, " or City can't be changed") if batch_changed? && batch_id_was.present?
   end
 
   def not_referring_self

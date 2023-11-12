@@ -102,6 +102,8 @@ class User < ApplicationRecord
   end
 
   def assign_private_leaderboard
+    return if private_leaderboard.present?
+
     # Count existing users in each private leaderboard
     leaderboards = User.group(:private_leaderboard).count
 

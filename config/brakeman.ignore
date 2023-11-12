@@ -1,0 +1,29 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "c453ead0c5aa7e164c9fc8d4dfd2014bbeefabd31d4076e37d18d9a76b583668",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/users_controller.rb",
+      "line": 60,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "User.find_by(params[:attribute].to_sym => params[:identifier])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "UsersController",
+        "method": "impersonate"
+      },
+      "user_input": "params[:attribute].to_sym",
+      "confidence": "High",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    }
+  ],
+  "updated": "2023-11-12 00:39:59 +0100",
+  "brakeman_version": "6.0.1"
+}

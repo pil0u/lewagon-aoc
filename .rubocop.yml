@@ -24,9 +24,7 @@ Rails/DangerousColumnNames:
     - "**/db/migrate/*"
 
 Rails/DynamicFindBy:
-  AllowedMethods: [
-    "find_by_referral_code"
-  ]
+  AllowedMethods: ["find_by_referral_code"]
 
 Style/NumericPredicate:
   EnforcedStyle: comparison

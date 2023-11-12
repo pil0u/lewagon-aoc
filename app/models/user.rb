@@ -79,6 +79,10 @@ class User < ApplicationRecord
     uid.in?(ADMINS.values)
   end
 
+  def aura
+    100 * Math.log(1 + referees.count, Math::E)
+  end
+
   def confirmed?
     aoc_id.present? && accepted_coc && synced
   end

@@ -42,7 +42,7 @@
                 "https://adventofcode.com/leaderboard/private",
                 target: :ext,
                 class: "link-explicit link-external"
-              ) %>, enter the following code <code class="strong"><%= @private_leaderboard %></code> and click [Join].
+              ) %>, enter the following code <code class="strong"><%= current_user.private_leaderboard %></code> and click [Join].
         </p>
         <p>
           You should see a confirmation message: <code>You have joined that private leaderboard.</code>

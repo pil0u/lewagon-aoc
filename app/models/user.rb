@@ -53,6 +53,10 @@ class User < ApplicationRecord
 
   before_validation :assign_private_leaderboard, on: :create
 
+  def self.aura(referrals)
+    100 * Math.log(1 + referrals, Math::E)
+  end
+
   def self.from_kitt(auth)
     oldest_batch = auth.info&.schoolings&.min_by { |batch| batch.camp.starts_at }
 
@@ -77,10 +81,6 @@ class User < ApplicationRecord
 
   def admin?
     uid.in?(ADMINS.values)
-  end
-
-  def aura
-    100 * Math.log(1 + referees.count, Math::E)
   end
 
   def confirmed?

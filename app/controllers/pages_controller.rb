@@ -52,7 +52,14 @@ class PagesController < ApplicationController
     @cities.sort_by! { |city| [city[:participation_ratio] * -1, city[:vanity_name]] }
   end
 
-  def patrons() end
+  def patrons
+    @users = User
+             .select("users.username AS username, COUNT(referees.id) AS referrals")
+             .select("CASE WHEN COUNT(referees.id) > 0 THEN 100 * LN(4) ELSE 0 END AS aura")
+             .joins("LEFT JOIN users referees ON users.id = referees.referrer_id")
+             .group("users.id")
+             .order(aura: :desc)
+  end
 
   def setup
     @private_leaderboard = ENV.fetch("AOC_ROOMS").split(",").last

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
@@ -13,11 +14,10 @@ Devise.setup do |config|
                   Rails.application.credentials.dig(:kitt, :app_id),
                   Rails.application.credentials.dig(:kitt, :secret))
 
-
   config.omniauth(:slack_openid,
                   Rails.application.credentials.dig(:slack, :client_id),
                   Rails.application.credentials.dig(:slack, :client_secret),
-                  scope: %w[openid profile].join(','))
+                  scope: %w[openid profile].join(","))
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.

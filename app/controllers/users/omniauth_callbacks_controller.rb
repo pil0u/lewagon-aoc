@@ -5,18 +5,18 @@ module Users
     include Devise::Controllers::Rememberable
 
     def slack_openid
-      auth = request.env['omniauth.auth']
+      auth = request.env["omniauth.auth"]
       token = auth&.credentials&.token
 
       return fail_auth("Couldn't acquire token") unless token
       return fail_auth("Can't link to unauthentified user") unless current_user
 
-      client = Slack::Web::Client.new(token: token)
+      client = Slack::Web::Client.new(token:)
       user_data = client.openid_connect_userInfo
-      current_user.update(slack_id: user_data['https://slack.com/user_id'], slack_username: user_data['name'])
+      current_user.update(slack_id: user_data["https://slack.com/user_id"], slack_username: user_data["name"])
 
       flash.notice = "Successfully linked Slack account!"
-      redirect_to controller: '/users', action: 'edit'
+      redirect_to controller: "/users", action: "edit"
     rescue Slack::Web::Api::Errors::SlackError => e
       fail_auth("Info fetch failed - #{e.message}")
     end
@@ -34,7 +34,7 @@ module Users
       end
     end
 
-    def failure # rubocop:disable Lint/NestedMethodDefinition
+    def failure
       fail_auth(failure_message)
     end
 
@@ -44,7 +44,7 @@ module Users
       provider = request.env["omniauth.strategy"]&.name || "unknown"
 
       redirect_back(fallback_location: "/",
-        alert: "Failed to sign in with #{provider.titleize} (Reason: #{reason}).")
+                    alert: "Failed to sign in with #{provider.titleize} (Reason: #{reason}).")
     end
   end
 end

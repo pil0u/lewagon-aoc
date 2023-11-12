@@ -2,6 +2,22 @@
 
 <%= render UserFormComponent.new(user: current_user) %>
 
+<div class="w-max mx-auto">
+  <% if current_user.linked_slack? %>
+    You have linked the following Slack account:
+    <b><%= link_to '@'+current_user.slack_username, "slack://user?team=T02NE0241&id=#{current_user.slack_id}" %></b>
+    </span>
+  <% else %>
+    <%= button_to(
+      user_slack_openid_omniauth_authorize_path,
+      data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
+      class: "button"
+    ) do %>
+    Link Slack account
+    <% end %>
+  <% end %>
+</div>
+
 <hr class="my-4 border-aoc-gray-darker">
 
 <%= render PageTitleComponent.new(title: "Squad settings") %>

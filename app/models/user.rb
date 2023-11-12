@@ -60,6 +60,10 @@ class User < ApplicationRecord
     aoc_id.present? && accepted_coc && synced
   end
 
+  def linked_slack?
+    slack_id.present?
+  end
+
   def moderator?
     uid.in?(MODERATORS.values)
   end

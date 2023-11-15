@@ -60,7 +60,7 @@
   <% end %>
 
   <% if @city_stats.present? %>
-    <%= link_to city_path(@city_stats[:slug]), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
+    <%= link_to campus_path(@city_stats[:slug]), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
       <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
         <%= @city_stats[:name] %>
       </h3>

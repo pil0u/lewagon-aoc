@@ -19,7 +19,7 @@ module Scores
     def identity_of(city)
       {
         id: city.id,
-        name: city.name,
+        vanity_name: city.vanity_name,
         slug: city.slug
       }
     end

@@ -26,8 +26,8 @@ module Users
 
       if @user.persisted?
         remember_me(@user)
-        sign_in_and_redirect @user, event: :authentication
         flash.notice = "Successfully signed in with Kitt!"
+        sign_in_and_redirect @user, event: :authentication
       else
         redirect_back(fallback_location: "/",
                       alert: "For an unknown reason, we couldn't store your information in our database.")

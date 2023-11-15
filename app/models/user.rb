@@ -62,12 +62,16 @@ class User < ApplicationRecord
     aoc_id.present? && accepted_coc && synced
   end
 
+  def contributor?
+    uid.in?(CONTRIBUTORS.values)
+  end
+
   def linked_slack?
     slack_id.present?
   end
 
-  def contributor?
-    uid.in?(CONTRIBUTORS.values)
+  def slack_deep_link
+    "slack://user?team=T02NE0241&id=#{slack_id}"
   end
 
   def solved?(day, challenge)

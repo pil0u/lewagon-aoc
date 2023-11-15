@@ -118,7 +118,7 @@
 
 <%= render UserFormComponent.new(user: current_user) %>
 
-<p class="italic text-sm opacity-80">
+<p class="mt-4 italic text-sm opacity-80">
   If you have completed all these steps and your status remains
   <span class="not-italic text-aoc-atmospheric">Pending</span> after a data update, please send me a message
   <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %> with the following details:

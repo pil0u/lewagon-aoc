@@ -4,37 +4,6 @@
 
 <hr class="my-4 border-aoc-gray-darker">
 
-<%= render PageTitleComponent.new(title: "Slack integration") %>
-
-<p class="my-4">
-  To facilitate support and communication (e.g. for the rewards), you can link your Le Wagon Slack account with the
-  platform. You also might access to other cool features 👀<br>
-  Data we retrieve: <span class="strong">slack_id</span>, <span class="strong">slack_username</span>
-</p>
-
-<div class="w-max mx-auto">
-  <% if current_user.linked_slack? %>
-
-    <div class="flex items-center gap-x-3">
-      <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_deep_link, class: "link-slack" %>!</span>
-      <%= button_to "Unlink me", user_slack_omniauth_remove_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
-    </div>
-
-  <% else %>
-
-    <%= button_to(
-          user_slack_openid_omniauth_authorize_path,
-          data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
-          class: "button-slack"
-        ) do %>
-      Link Slack account <i class="fab fa-slack"></i>
-    <% end %>
-
-  <% end %>
-</div>
-
-<hr class="my-4 border-aoc-gray-darker">
-
 <%= render PageTitleComponent.new(title: "Squad settings") %>
 
 <div class="flex flex-col gap-y-2">
@@ -69,6 +38,37 @@
     <% end %>
 
     <%= button_to "Leave squad", leave_squad_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
+
+  <% end %>
+</div>
+
+<hr class="my-4 border-aoc-gray-darker">
+
+<%= render PageTitleComponent.new(title: "Slack integration") %>
+
+<p class="my-4">
+  To facilitate support and communication (e.g. for the rewards), you can link your Le Wagon Slack account with the
+  platform. You also might access to other cool features 👀<br>
+  Data we retrieve: <span class="strong">slack_id</span>, <span class="strong">slack_username</span>
+</p>
+
+<div class="w-max mx-auto">
+  <% if current_user.linked_slack? %>
+
+    <div class="flex items-center gap-x-3">
+      <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_deep_link, class: "link-slack" %>!</span>
+      <%= button_to "Unlink me", user_slack_omniauth_remove_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
+    </div>
+
+  <% else %>
+
+    <%= button_to(
+          user_slack_openid_omniauth_authorize_path,
+          data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
+          class: "button-slack"
+        ) do %>
+      Link Slack account <i class="fab fa-slack"></i>
+    <% end %>
 
   <% end %>
 </div>

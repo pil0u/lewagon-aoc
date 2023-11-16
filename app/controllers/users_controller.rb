@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     city_scores = Scores::CityScores.get
     city_presenter = Scores::CityScoresPresenter.new(city_scores)
     cities = city_presenter.get
-    @city_stats = cities.find { |h| h[:id] == @user.city_id }
+    @campus_stats = cities.find { |h| h[:id] == @user.city_id }
 
     # Sort user achievements in the same order as in the YAML definition
     @achievements = @user.achievements

@@ -62,7 +62,7 @@
   <% if @campus_stats.present? %>
     <%= link_to campus_path(@campus_stats[:slug]), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
       <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
-        <%= @campus_stats[:name] %>
+        <%= @campus_stats[:vanity_name] %>
       </h3>
 
       <div class="h-3/5 flex flex-col justify-around">

@@ -40,14 +40,14 @@ class User < ApplicationRecord
 
   def self.from_kitt(auth)
     batches = auth.info&.schoolings
-    oldest_batch = batches.sort_by { |batch| batch.camp.starts_at }.first
+    oldest_batch = batches.min_by { |batch| batch.camp.starts_at }
 
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
 
       u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug) do |b|
         city = oldest_batch&.city
-        b.city =  City.find_or_initialize_by(name: city&.slug, vanity_name: city&.name)
+        b.city = City.find_or_initialize_by(name: city&.slug, vanity_name: city&.name)
       end
 
       u.city = u.batch.city

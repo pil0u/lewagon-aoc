@@ -7,9 +7,9 @@ class ScoresController < ApplicationController
     scores = Scores::CityScores.get
     presenter = Scores::CityScoresPresenter.new(scores)
 
-    @cities = presenter.get
+    @campuses = presenter.get
 
-    add_display_rank(@cities)
+    add_display_rank(@campuses)
   end
 
   def insanity

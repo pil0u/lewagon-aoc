@@ -8,7 +8,7 @@ linters:
   ErbSafety:
     exclude:
       - "**/app/components/header/nav_component.html.erb"
-      - "**/app/components/scores/city_row_component.html.erb"
+      - "**/app/components/scores/campus_row_component.html.erb"
       - "**/app/components/scores/squad_row_component.html.erb"
       - "**/app/components/scores/user_row_component.html.erb"
       - "**/app/components/snippets/box_component.html.erb"

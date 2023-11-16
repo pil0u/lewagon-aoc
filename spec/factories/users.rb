@@ -5,5 +5,6 @@ FactoryBot.define do
     username { "pil0u" }
     synced { true }
     uid { id }
+    city_id { batch&.city_id }
   end
 end

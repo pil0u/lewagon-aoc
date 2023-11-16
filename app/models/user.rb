@@ -7,10 +7,10 @@ class User < ApplicationRecord
   CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
 
   belongs_to :batch, optional: true
+  belongs_to :city, optional: true
+  has_one :batch_city, through: :batch, source: :city
   belongs_to :squad, optional: true, touch: true
   belongs_to :referrer, class_name: "User", optional: true
-
-  delegate :city, :city_id, to: :batch, allow_nil: true
 
   has_many :completions, dependent: :destroy
   has_many :user_day_scores, class_name: "Cache::UserDayScore", dependent: :delete_all
@@ -28,6 +28,8 @@ class User < ApplicationRecord
   validates :username, presence: true
 
   validate :not_referring_self
+  validate :not_changing_cities
+  validate :city_must_match_batch
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -37,13 +39,24 @@ class User < ApplicationRecord
   after_create :assign_private_leaderboard
 
   def self.from_kitt(auth)
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
+    batches = auth.info&.schoolings
+    oldest_batch = batches.sort_by { |batch| batch.camp.starts_at }.first
+
+    user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
-      u.github_username = auth.info.github_nickname
-      u.batch_id = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i).id
+
+      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug) do |b|
+        city = oldest_batch&.city
+        b.city =  City.find_or_initialize_by(name: city&.slug, vanity_name: city&.name)
+      end
+
+      u.city = u.batch.city
     end
 
-    user.update(github_username: auth.info.github_nickname)
+    user.github_username = auth.info.github_nickname
+
+    user.save
+
     user
   end
 
@@ -99,6 +112,18 @@ class User < ApplicationRecord
 
   def not_referring_self
     errors.add(:referrer, "must not be you") if referrer == self
+  end
+
+  def not_changing_cities
+    return if city_id_was.blank?
+
+    errors.add(:city_id, "can't be modified") if city_id_changed?
+  end
+
+  def city_must_match_batch
+    return unless batch&.city_id?
+
+    errors.add(:city_id, "must match batch city") if city_id != batch.city_id
   end
 
   def assign_private_leaderboard

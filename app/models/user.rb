@@ -9,7 +9,6 @@ class User < ApplicationRecord
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true
-  has_one :batch_city, through: :batch, source: :city
   belongs_to :squad, optional: true, touch: true
   belongs_to :referrer, class_name: "User", optional: true
 
@@ -29,8 +28,6 @@ class User < ApplicationRecord
   validates :username, presence: true
 
   validate :not_referring_self
-  validate :not_changing_cities
-  validate :city_must_match_batch
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -46,9 +43,9 @@ class User < ApplicationRecord
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
 
-      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug) do |b|
+      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i) do |b|
         city = oldest_batch&.city
-        b.city = City.find_or_initialize_by(name: city&.slug, vanity_name: city&.name)
+        b.city = City.find_or_initialize_by(name: city&.slug)
       end
 
       u.city = u.batch.city
@@ -121,18 +118,6 @@ class User < ApplicationRecord
 
   def not_referring_self
     errors.add(:referrer, "must not be you") if referrer == self
-  end
-
-  def not_changing_cities
-    return if city_id_was.blank?
-
-    errors.add(:city_id, "can't be modified") if city_id_changed?
-  end
-
-  def city_must_match_batch
-    return unless batch&.city_id?
-
-    errors.add(:city_id, "must match batch city") if city_id != batch.city_id
   end
 
   def assign_private_leaderboard

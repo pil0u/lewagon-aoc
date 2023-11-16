@@ -11,7 +11,7 @@
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :batch_number, "Batch #" %>
-    <%= f.number_field :batch_number, value: @user.batch&.number, min: 1, class: "input", disabled: @user.batch_id? %>
+    <%= f.number_field :batch_number, value: @user.batch&.number, min: 1, class: "input", disabled: true %>
   </div>
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">

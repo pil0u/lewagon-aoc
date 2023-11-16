@@ -16,7 +16,20 @@ if Rails.env.development?
   Batch.destroy_all
 end
 
-KittScraperJob.perform_now(scrape_kitt: false)
+def fetch(url)
+  uri = URI(url)
+  https = Net::HTTP.new(uri.hostname, uri.port)
+  https.use_ssl = true
+
+  request = Net::HTTP::Get.new(uri)
+  request["Cookie"] = "_kitt2017_=#{ENV.fetch('KITT_SESSION_COOKIE')}"
+
+  https.request(request)
+end
+
+data = JSON.parse(fetch("https://kitt.lewagon.com/api/v1/users").read_body)
+cities = data["all_places"]
+cities.each { |city| City.find_or_create_by(name: city["label"], size: city["count"]) }
 
 Rails.logger.info "✔ Cities initialized"
 
@@ -26,49 +39,57 @@ if Rails.env.development?
   User.create!([
                  {
                    username: "test_1",
-                   batch: Batch.find_by(number: 343),
+                   batch: Batch.find_or_create_by(number: 343),
+                   city: City.find_by(name: "Paris"),
                    aoc_id: 151_323,
                    uid: 1
                  },
                  {
                    username: "test_2",
-                   batch: Batch.find_by(number: 454),
+                   batch: Batch.find_or_create_by(number: 454),
+                   city: City.find_by(name: "Paris"),
                    aoc_id: 1_095_582,
                    uid: 2
                  },
                  {
                    username: "test_3",
-                   batch: Batch.find_by(number: 123),
+                   batch: Batch.find_or_create_by(number: 123),
+                   city: City.find_by(name: "Bordeaux"),
                    aoc_id: 1_266_664,
                    uid: 3
                  },
                  {
                    username: "test_4",
-                   batch: Batch.find_by(number: 123),
+                   batch: Batch.find_or_create_by(number: 123),
+                   city: City.find_by(name: "London"),
                    aoc_id: 1_237_086,
                    uid: 4
                  },
                  {
                    username: "test_5",
-                   batch: Batch.find_by(number: 123),
+                   batch: Batch.find_or_create_by(number: 123),
+                   city: City.find_by(name: "London"),
                    aoc_id: 1_258_899,
                    uid: 5
                  },
                  {
                    username: "test_6",
-                   batch: Batch.find_by(number: 454),
+                   batch: Batch.find_or_create_by(number: 454),
+                   city: City.find_by(name: "Paris"),
                    aoc_id: 1_259_034,
                    uid: 6
                  },
                  {
                    username: "test_7",
-                   batch: Batch.find_by(number: 454),
+                   batch: Batch.find_or_create_by(number: 454),
+                   city: City.find_by(name: "Brussels"),
                    aoc_id: 1_259_062,
                    uid: 7
                  },
                  {
                    username: "test_8",
-                   batch: Batch.find_by(number: 343),
+                   batch: Batch.find_or_create_by(number: 343),
+                   city: City.find_by(name: "Paris"),
                    aoc_id: 1_259_379,
                    uid: 8
                  }

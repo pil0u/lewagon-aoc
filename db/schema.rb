@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_16_030521) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_16_174333) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -28,12 +28,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_030521) do
   end
 
   create_table "batches", force: :cascade do |t|
-    t.bigint "city_id"
     t.datetime "created_at", null: false
     t.integer "number"
-    t.integer "size"
     t.datetime "updated_at", null: false
-    t.index ["city_id"], name: "index_batches_on_city_id"
   end
 
   create_table "blazer_audits", force: :cascade do |t|
@@ -398,7 +395,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_030521) do
   end
 
   add_foreign_key "achievements", "users"
-  add_foreign_key "batches", "cities"
   add_foreign_key "city_points", "cities"
   add_foreign_key "city_scores", "cities"
   add_foreign_key "completions", "users"

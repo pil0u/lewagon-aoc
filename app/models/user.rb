@@ -8,7 +8,7 @@ class User < ApplicationRecord
   CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
 
   belongs_to :batch, optional: true
-  belongs_to :city, optional: true
+  belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
   belongs_to :referrer, class_name: "User", optional: true
 
@@ -42,13 +42,8 @@ class User < ApplicationRecord
 
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
-
-      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i) do |b|
-        city = oldest_batch&.city
-        b.city = City.find_or_initialize_by(name: city&.slug)
-      end
-
-      u.city = u.batch.city
+      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
+      u.city = City.find_or_initialize_by(name: oldest_batch&.city&.slug)
     end
 
     user.github_username = auth.info.github_nickname

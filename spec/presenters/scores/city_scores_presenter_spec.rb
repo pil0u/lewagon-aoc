@@ -4,15 +4,12 @@ require "rails_helper"
 
 RSpec.describe Scores::CityScoresPresenter do
   let!(:city_1) { create :city, id: 1, name: "Bordeaux", size: 200 }
-  let!(:batch_1) { create(:batch, number: 1, city: city_1) }
   let!(:city_2) { create :city, id: 2, name: "Rio de Janeiro", size: 100 }
-  let!(:batch_2) { create(:batch, number: 2, city: city_2) }
   let!(:city_3) { create :city, id: 3, name: "Paris", size: 500 }
-  let!(:batch_3) { create(:batch, number: 3, city: city_3) }
 
-  let!(:user_1) { create :user, id: 1, batch: batch_1 }
-  let!(:user_2) { create :user, id: 2, batch: batch_2 }
-  let!(:user_3) { create :user, id: 3, batch: batch_1 }
+  let!(:user_1) { create :user, id: 1, city: city_1 }
+  let!(:user_2) { create :user, id: 2, city: city_2 }
+  let!(:user_3) { create :user, id: 3, city: city_1 }
 
   let(:input) do
     [

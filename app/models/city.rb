@@ -4,8 +4,7 @@ class City < ApplicationRecord
   has_many :city_points, class_name: "Cache::CityPoint", dependent: :delete_all
   has_many :city_scores, class_name: "Cache::CityScore", dependent: :delete_all
 
-  has_many :batches, dependent: :nullify
-  has_many :users, through: :batches
+  has_many :users, dependent: :nullify
   has_many :completions, through: :users
 
   before_create :set_default_vanity_name

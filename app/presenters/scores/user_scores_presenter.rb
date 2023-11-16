@@ -12,7 +12,7 @@ module Scores
     def get
       @scores ||= User # rubocop:disable Naming/MemoizedInstanceVariableName
                   .where(id: scores_per_user.keys)
-                  .includes(:squad, :completions, batch: :city)
+                  .includes(:squad, :completions, :city)
                   .map { |user| { **identity_of(user), **stats_of(user) } }
                   .sort_by { |user| user[:order] || Float::INFINITY }
     end

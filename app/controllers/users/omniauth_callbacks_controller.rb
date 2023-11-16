@@ -35,8 +35,7 @@ module Users
         flash.notice = "Successfully signed in with Kitt!"
         sign_in_and_redirect @user, event: :authentication
       else
-        redirect_back(fallback_location: "/",
-                      alert: "For an unknown reason, we couldn't store your information in our database.")
+        fail_auth("Couldn't store information in database")
       end
     end
 

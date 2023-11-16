@@ -7,7 +7,7 @@ module Scores
     with_collection_parameter :city
 
     def initialize(city:, user:)
-      @city = city
+      @campus = city
       @user = user
     end
   end

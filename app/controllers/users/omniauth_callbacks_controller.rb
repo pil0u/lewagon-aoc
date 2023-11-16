@@ -13,7 +13,11 @@ module Users
 
       client = Slack::Web::Client.new(token:)
       user_data = client.openid_connect_userInfo
-      current_user.update!(slack_id: user_data["https://slack.com/user_id"], slack_username: user_data["name"])
+      current_user.update!(
+        slack_id: user_data["https://slack.com/user_id"],
+        slack_username: user_data["name"],
+        slack_access_token: token,
+      )
 
       flash.notice = "Successfully linked Slack account!"
       redirect_to controller: "/users", action: "edit"

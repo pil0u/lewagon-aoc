@@ -95,6 +95,12 @@ RSpec.describe Users::OmniauthCallbacksController, type: :request do
         .and change { user.reload.slack_username }.from(nil).to("Jeremie Bonal")
     end
 
+    it "stores the Slack acess token on the user" do
+      expect { omniauth_login }
+        .to change { user.reload.slack_access_token }
+        .from(nil).to("xoxp-2762002147-18186966370-6167705301863-6ac14f1d343cd9b611a2cb6a463fbb74")
+    end
+
     context "when the OAuth grant failed" do
       let(:omniauth_response) do
         OmniAuth::Strategies::OAuth2::CallbackError.new(

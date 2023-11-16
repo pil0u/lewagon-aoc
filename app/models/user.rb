@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
+  encrypts :slack_access_token
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
   CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze

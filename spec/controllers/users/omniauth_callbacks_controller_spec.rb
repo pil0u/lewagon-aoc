@@ -129,5 +129,19 @@ RSpec.describe Users::OmniauthCallbacksController, type: :request do
         expect(session.dig("flash", "flashes", "alert")).to match(/Info fetch failed.*token_revoked/)
       end
     end
+
+    context "when update of the user fails" do
+      before do
+        allow_any_instance_of(User).to receive(:update!) do |user|
+          user.errors.add(:slack_username, :taken)
+          raise ActiveRecord::RecordInvalid.new(user)
+        end
+      end
+
+      it "shows a flash explaining the error" do
+        omniauth_login
+        expect(session.dig("flash", "flashes", "alert")).to match(/Slack username .* taken/)
+      end
+    end
   end
 end

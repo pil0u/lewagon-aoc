@@ -17,6 +17,10 @@
     @apply form-element cursor-pointer hover:text-wagon-red;
   }
 
+  .button-slack {
+    @apply form-element cursor-pointer hover:text-aoc-atmospheric;
+  }
+
   .calendar-tile {
     @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-hover;
   }

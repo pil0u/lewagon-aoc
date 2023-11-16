@@ -108,12 +108,12 @@
     content: "\f09b";
   }
 
-  .fa-plus::before {
-    content: "\2b";
-  }
-
   .fa-power-off::before {
     content: "\f011";
+  }
+
+  .fa-slack::before {
+    content: "\f198";
   }
 
   .fa-times::before {

@@ -383,6 +383,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_030521) do
     t.bigint "referrer_id"
     t.datetime "remember_created_at"
     t.text "remember_token"
+    t.string "slack_access_token"
+    t.string "slack_id"
+    t.string "slack_username"
     t.integer "squad_id"
     t.boolean "synced", default: false, null: false
     t.string "uid"

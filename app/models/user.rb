@@ -43,7 +43,7 @@ class User < ApplicationRecord
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
       u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
-      u.city = City.find_or_initialize_by(name: oldest_batch&.city&.slug)
+      u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
     end
 
     user.github_username = auth.info.github_nickname

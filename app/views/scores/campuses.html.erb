@@ -3,7 +3,7 @@
 <%= render PageTitleComponent.new(title: "Campus scoreboard") %>
 
 <p class="my-4">
-  For each <em>challenge</em>, we compute the average score of the top contributors. The score of the city is the sum of
+  For each <em>challenge</em>, we compute the average score of the top contributors. The score of the campus is the sum of
   these averages. <%= link_to "More info", faq_path, class: "link-explicit link-internal" %>.
 </p>
 
@@ -14,11 +14,11 @@
       <th class="font-light w-full"></th>
       <th class="font-light min-w-[6rem]">Score</th>
       <th class="font-light min-w-[6rem]">Members</th>
-      <th class="font-light min-w-[7rem] hover:cursor-help" title="# of members who solved daily part 1&#10;# of members who solved daily part 2&#10;# of top contributors of the city">Daily contr.</th>
+      <th class="font-light min-w-[7rem] hover:cursor-help" title="# of members who solved daily part 1&#10;# of members who solved daily part 2&#10;# of top contributors of the campus">Daily contr.</th>
     </tr>
   </thead>
 
   <tbody>
-    <%= render Scores::CityRowComponent.with_collection(@cities, user: current_user) %>
+    <%= render Scores::CampusRowComponent.with_collection(@campuses, user: current_user) %>
   </tbody>
 </table>

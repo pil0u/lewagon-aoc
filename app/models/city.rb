@@ -9,7 +9,7 @@ class City < ApplicationRecord
 
   before_create :set_default_vanity_name
 
-  validates :name, uniqueness: { case_sensitive: false }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.find_by_slug(slug)
     find_by!("REPLACE(LOWER(name), ' ', '-') = ?", slug)

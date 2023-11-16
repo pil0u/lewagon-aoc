@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
+  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
+  encrypts :slack_access_token
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
   CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
@@ -64,6 +65,14 @@ class User < ApplicationRecord
 
   def contributor?
     uid.in?(CONTRIBUTORS.values)
+  end
+
+  def linked_slack?
+    slack_id.present?
+  end
+
+  def slack_deep_link
+    "slack://user?team=T02NE0241&id=#{slack_id}"
   end
 
   def solved?(day, challenge)

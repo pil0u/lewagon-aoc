@@ -54,6 +54,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def unlink_slack
+    if current_user.update(slack_id: nil, slack_username: nil)
+      redirect_back fallback_location: "/", notice: "Slack account successfully unlinked"
+    else
+      redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s
+    end
+  end
+
   def impersonate
     attribute_name = params[:attribute]
     identifier_value = params[:identifier]

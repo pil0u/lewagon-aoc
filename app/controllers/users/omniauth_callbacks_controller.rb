@@ -16,7 +16,7 @@ module Users
       current_user.update!(
         slack_id: user_data["https://slack.com/user_id"],
         slack_username: user_data["name"],
-        slack_access_token: token,
+        slack_access_token: token
       )
 
       flash.notice = "Successfully linked Slack account!"

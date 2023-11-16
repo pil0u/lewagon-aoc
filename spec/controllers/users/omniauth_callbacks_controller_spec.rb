@@ -140,7 +140,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :request do
       before do
         allow_any_instance_of(User).to receive(:update!) do |user|
           user.errors.add(:slack_username, :taken)
-          raise ActiveRecord::RecordInvalid.new(user)
+          raise ActiveRecord::RecordInvalid, user
         end
       end
 

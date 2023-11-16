@@ -18,7 +18,6 @@ end
 
 cities = [
   { name: "Amsterdam",        size: 666 },
-  { name: "Angers",           size: 0 },
   { name: "B2G Latam",        size: 105 },
   { name: "Bali",             size: 421 },
   { name: "Barcelona",        size: 610 },
@@ -28,7 +27,6 @@ cities = [
   { name: "Bordeaux",         size: 712 },
   { name: "Brasilia",         size: 134 },
   { name: "Brussels",         size: 837 },
-  { name: "Budapest",         size: 0 },
   { name: "Buenos Aires",     size: 397 },
   { name: "Cape Town",        size: 92 },
   { name: "Casablanca",       size: 143 },
@@ -38,9 +36,7 @@ cities = [
   { name: "Dubai",            size: 35 },
   { name: "Emil",             size: 172 },
   { name: "Essonne",          size: 16 },
-  { name: "Florianópolis",    size: 0 },
   { name: "For Business",     size: 217 },
-  { name: "For School",       size: 0 },
   { name: "Istanbul",         size: 30 },
   { name: "Kyoto",            size: 18 },
   { name: "Lausanne",         size: 191 },
@@ -63,17 +59,12 @@ cities = [
   { name: "Nantes",           size: 375 },
   { name: "Nice",             size: 200 },
   { name: "Online",           size: 1696 },
-  { name: "Online APAC",      size: 0 },
   { name: "Oslo",             size: 55 },
   { name: "Paris",            size: 4189 },
-  { name: "Playa del Carmen", size: 0 },
   { name: "Porto",            size: 53 },
-  { name: "Recife",           size: 0 },
   { name: "Rennes",           size: 77 },
-  { name: "Renova",           size: 0 },
   { name: "Rio de Janeiro",   size: 488 },
   { name: "Riyadh",           size: 74 },
-  { name: "Rome",             size: 0 },
   { name: "Santiago",         size: 98 },
   { name: "Seine et Marne",   size: 25 },
   { name: "Seoul",            size: 16 },
@@ -86,11 +77,8 @@ cities = [
   { name: "Tel Aviv",         size: 158 },
   { name: "Testville",        size: 7 },
   { name: "Tokyo",            size: 816 },
-  { name: "Toronto",          size: 0 },
   { name: "Toulouse",         size: 20 },
-  { name: "Tunis",            size: 0 },
-  { name: "Zurich",           size: 64 },
-  { name: "remote",           size: 0 }
+  { name: "Zurich",           size: 64 }
 ]
 cities.each do |city|
   c = City.find_or_create_by(name: city[:name])

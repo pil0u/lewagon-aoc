@@ -41,15 +41,15 @@ RSpec.describe Scores::CityScoresPresenter do
     )
   end
 
-  it "completes the city info" do
+  it "completes the campus info" do
     expect(described_class.new(input).get).to contain_exactly(
-      hash_including(id: 1, name: "Bordeaux", slug: "bordeaux"),
-      hash_including(id: 2, name: "Rio de Janeiro", slug: "rio-de-janeiro"),
-      hash_including(id: 3, name: "Paris", slug: "paris")
+      hash_including(id: 1, vanity_name: "Bordeaux", slug: "bordeaux"),
+      hash_including(id: 2, vanity_name: "Rio de Janeiro", slug: "rio-de-janeiro"),
+      hash_including(id: 3, vanity_name: "Paris", slug: "paris")
     )
   end
 
-  it "completes the city stats" do
+  it "completes the campus stats" do
     expect(described_class.new(input).get).to contain_exactly(
       hash_including(id: 1, total_members: 2, top_contributors: 10,
                      daily_contributors_part_1: 3, daily_contributors_part_2: 2),

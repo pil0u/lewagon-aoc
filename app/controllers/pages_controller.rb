@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  skip_before_action  :authenticate_user!,  only: %i[code_of_conduct faq participation stats welcome]
-  before_action       :render_countdown,    only: %i[code_of_conduct faq participation stats welcome setup], if: :render_countdown?
+  skip_before_action :authenticate_user!, only: %i[admin code_of_conduct faq participation stats welcome]
+  before_action      :render_countdown,   only: %i[code_of_conduct faq participation setup stats welcome], if: :render_countdown?
+
+  def admin; end
 
   def calendar
     user_completions = current_user.completions.group(:day).count
@@ -40,18 +42,23 @@ class PagesController < ApplicationController
 
       {
         slug: city.slug,
-        name: city.name,
+        vanity_name: city.vanity_name,
         size: city.size,
         n_participants:,
         participation_ratio: n_participants / city.size.to_f
       }
     end
 
-    @cities.sort_by! { |city| [city[:participation_ratio] * -1, city[:name]] }
+    @cities.sort_by! { |city| [city[:participation_ratio] * -1, city[:vanity_name]] }
   end
 
   def setup
     @private_leaderboard = ENV.fetch("AOC_ROOMS").split(",").last
+
+    return if cookies[:referral_code].blank?
+
+    current_user.update(referrer: User.find_by_referral_code(cookies[:referral_code]))
+    cookies.delete(:referral_code)
   end
 
   def stats
@@ -78,6 +85,8 @@ class PagesController < ApplicationController
 
   def welcome
     @total_users = User.count
+
+    cookies[:referral_code] = params[:referral_code] if params[:referral_code].present?
   end
 
   private

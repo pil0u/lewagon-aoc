@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :authenticate_admin, only: %i[impersonate]
   before_action :restrict_after_lock, only: %i[update]
 
   def show
@@ -24,7 +25,7 @@ class UsersController < ApplicationController
     city_scores = Scores::CityScores.get
     city_presenter = Scores::CityScoresPresenter.new(city_scores)
     cities = city_presenter.get
-    @city_stats = cities.find { |h| h[:id] == @user.city_id }
+    @campus_stats = cities.find { |h| h[:id] == @user.city_id }
 
     # Sort user achievements in the same order as in the YAML definition
     @achievements = @user.achievements
@@ -41,12 +42,11 @@ class UsersController < ApplicationController
 
   def edit
     @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
+    @referees = current_user.referees
   end
 
   def update
-    set_updated_params
-
-    if current_user.update(@params)
+    if current_user.update(updated_params)
       unlock_achievements
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
@@ -54,7 +54,35 @@ class UsersController < ApplicationController
     end
   end
 
+  def unlink_slack
+    if current_user.update(slack_id: nil, slack_username: nil)
+      redirect_back fallback_location: "/", notice: "Slack account successfully unlinked"
+    else
+      redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s
+    end
+  end
+
+  def impersonate
+    attribute_name = params[:attribute]
+    identifier_value = params[:identifier]
+
+    user = User.find_by(attribute_name.to_sym => identifier_value)
+    if user
+      sign_in(user)
+      redirect_to "/", alert: "You are now impersonating #{user.username} (id: #{user.id})"
+    else
+      redirect_back fallback_location: "/", alert: "User (#{attribute_name}: #{identifier_value}) not found"
+    end
+  end
+
   private
+
+  def authenticate_admin
+    return if current_user.admin?
+
+    flash[:alert] = "You are not authorized to perform this action"
+    redirect_to root_path
+  end
 
   def restrict_after_lock
     return unless Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore
@@ -65,16 +93,13 @@ class UsersController < ApplicationController
     )
   end
 
-  def set_updated_params
-    @params = {
+  def updated_params
+    {
       accepted_coc: form_params[:accepted_coc],
       aoc_id: form_params[:aoc_id],
-      batch_id: Batch.find_or_create_by(number: form_params[:batch_number].to_i).id,
-      # find_or_create_by always returns an instance of Batch, even if it failed to create. If creation did fail (from
-      # validation), then the id of that instance is nil, which disappears with .compact below
-      city: City.find_by(id: form_params[:city_id]),
       entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username],
+      city_id: form_params[:city_id],
       referrer: User.find_by_referral_code(form_params[:referrer_code])
     }.compact
   end
@@ -84,6 +109,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :batch_number, :city_id, :entered_hardcore, :username, :referrer_code)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id, :referrer_code)
   end
 end

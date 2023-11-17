@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
+  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
+  encrypts :slack_access_token
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
-  MODERATORS = { pilou: "6788", aquaj: "449" }.freeze
+  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
@@ -20,26 +21,35 @@ class User < ApplicationRecord
   has_many :messages, dependent: :nullify
   has_many :snippets, dependent: :nullify
   has_many :achievements, dependent: :destroy
-  has_many :referrees, class_name: "User", inverse_of: :referrer, dependent: :nullify
+  has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
+
   validate :not_referring_self
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) }
-  scope :moderators, -> { where(uid: MODERATORS.values) }
+  scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
+
+  after_create :assign_private_leaderboard
 
   def self.from_kitt(auth)
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
+    batches = auth.info&.schoolings
+    oldest_batch = batches.min_by { |batch| batch.camp.starts_at }
+
+    user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
-      u.github_username = auth.info.github_nickname
-      u.batch_id = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i).id
+      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
+      u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
     end
 
-    user.update(github_username: auth.info.github_nickname)
+    user.github_username = auth.info.github_nickname
+
+    user.save
+
     user
   end
 
@@ -58,8 +68,16 @@ class User < ApplicationRecord
     aoc_id.present? && accepted_coc && synced
   end
 
-  def moderator?
-    uid.in?(MODERATORS.values)
+  def contributor?
+    uid.in?(CONTRIBUTORS.values)
+  end
+
+  def linked_slack?
+    slack_id.present?
+  end
+
+  def slack_deep_link
+    "slack://user?team=T02NE0241&id=#{slack_id}"
   end
 
   def solved?(day, challenge)
@@ -91,7 +109,24 @@ class User < ApplicationRecord
     referrer&.referral_code
   end
 
+  private
+
   def not_referring_self
     errors.add(:referrer, "must not be you") if referrer == self
+  end
+
+  def assign_private_leaderboard
+    return if private_leaderboard.present?
+
+    # Count existing users in each private leaderboard
+    leaderboards = User.group(:private_leaderboard).count
+
+    # Add the missing private leaderboards
+    Aoc.private_leaderboards.each { |leaderboard| leaderboards[leaderboard] ||= 0 }
+
+    # Take the private leaderboard with the least users and assign it to the user
+    assigned_leaderboard = leaderboards.min_by { |_, count| count }.first
+
+    update(private_leaderboard: assigned_leaderboard)
   end
 end

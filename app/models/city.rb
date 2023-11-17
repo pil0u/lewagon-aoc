@@ -7,7 +7,9 @@ class City < ApplicationRecord
   has_many :users, dependent: :nullify
   has_many :completions, through: :users
 
-  validates :name, uniqueness: { case_sensitive: false }
+  before_create :set_default_vanity_name
+
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.find_by_slug(slug)
     find_by!("REPLACE(LOWER(name), ' ', '-') = ?", slug)
@@ -23,5 +25,11 @@ class City < ApplicationRecord
 
   def top_contributors
     [10, (size * 0.03).ceil].max
+  end
+
+  private
+
+  def set_default_vanity_name
+    self.vanity_name ||= name
   end
 end

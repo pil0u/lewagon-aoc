@@ -1,4 +1,4 @@
-<%= form_with model: @user, url: settings_path, class: "my-4 flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
+<%= form_with model: @user, url: settings_path, class: "flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :username %>
     <%= f.text_field :username, value: @user.username, class: "input" %>
@@ -11,12 +11,12 @@
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :batch_number, "Batch #" %>
-    <%= f.number_field :batch_number, value: @user.batch&.number, min: 1, class: "input" %>
+    <%= f.number_field :batch_number, value: @user.batch&.number, min: 1, class: "input", disabled: true %>
   </div>
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
-    <%= f.label :city_name, "City" %>
-    <%= f.collection_select(:city_id, City.order(:name), :id, :name, { prompt: "", selected: @user.city_id }, class: "input") %>
+    <%= f.label :campus_name, "Campus" %>
+    <%= f.collection_select(:city_id, City.order(:vanity_name), :id, :vanity_name, { prompt: "", selected: @user.city_id }, class: "input", disabled: @user.city_id?) %>
   </div>
 
   <div class="flex items-center gap-x-3 w-48 sm:w-fit">

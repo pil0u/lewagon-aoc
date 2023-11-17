@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_16_174333) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -94,6 +94,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
     t.string "name"
     t.integer "size"
     t.datetime "updated_at", null: false
+    t.string "vanity_name"
     t.index ["name"], name: "index_cities_on_name", unique: true
   end
 
@@ -374,10 +375,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_01_144409) do
     t.datetime "created_at", null: false
     t.boolean "entered_hardcore", default: false, null: false
     t.string "github_username"
+    t.string "private_leaderboard"
     t.string "provider"
     t.bigint "referrer_id"
     t.datetime "remember_created_at"
     t.text "remember_token"
+    t.string "slack_access_token"
+    t.string "slack_id"
+    t.string "slack_username"
     t.integer "squad_id"
     t.boolean "synced", default: false, null: false
     t.string "uid"

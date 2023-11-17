@@ -14,16 +14,20 @@ Devise.setup do |config|
                   Rails.application.credentials.dig(:kitt, :app_id),
                   Rails.application.credentials.dig(:kitt, :secret))
 
+  config.omniauth(:slack_openid,
+                  Rails.application.credentials.dig(:slack, :client_id),
+                  Rails.application.credentials.dig(:slack, :client_secret),
+                  scope: %w[openid profile].join(","))
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'b8c7e02c3318efcfd6cab4833a459c93b2ebc405e9ea5c0f5a16615e745880ed9ed4e94a9b384d08df750b5fa008b8438a7d7a630f8fac735c45a651baa7318a'
+  # config.secret_key = "b8c7e02c3318efcfd6cab4833a459c93b2ebc405e9ea5c0f5a16615e745880ed9ed4e94a9b384d08df750b5fa008b8438a7d7a630f8fac735c45a651baa7318a"
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
-  # config.parent_controller = 'DeviseController'
+  # config.parent_controller = "DeviseController"
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -32,10 +36,10 @@ Devise.setup do |config|
   config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  # config.mailer = "Devise::Mailer"
 
   # Configure the parent class responsible to send e-mails.
-  # config.parent_mailer = 'ActionMailer::Base'
+  # config.parent_mailer = "ActionMailer::Base"
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -89,8 +93,8 @@ Devise.setup do |config|
   # If 401 status code should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
 
-  # The realm used in Http Basic Authentication. 'Application' by default.
-  # config.http_authentication_realm = 'Application'
+  # The realm used in Http Basic Authentication. "Application" by default.
+  # config.http_authentication_realm = "Application"
 
   # It will change confirmation, password recovery and other workflows
   # to behave the same regardless if the e-mail provided was right or wrong.
@@ -131,7 +135,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '5ddd0bd597ce0faa76f8ab80920a56eeed9326b522cdc0bd77b0029a3dafe02f92d4c16fa67d842498f9171955aa897e57d5d34c4fe74abcfa4e68bb73e3d2fd'
+  # config.pepper = "5ddd0bd597ce0faa76f8ab80920a56eeed9326b522cdc0bd77b0029a3dafe02f92d4c16fa67d842498f9171955aa897e57d5d34c4fe74abcfa4e68bb73e3d2fd"
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -268,7 +272,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html]
+  # config.navigational_formats = ["*/*", :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :get
@@ -276,7 +280,7 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  # config.omniauth :github, "APP_ID", "APP_SECRET", scope: "user,public_repo"
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -292,14 +296,14 @@ Devise.setup do |config|
   # is mountable, there are some extra configurations to be taken into account.
   # The following options are available, assuming the engine is mounted as:
   #
-  #     mount MyEngine, at: '/my_engine'
+  #     mount MyEngine, at: "/my_engine"
   #
   # The router that invoked `devise_for`, in the example above, would be:
   # config.router_name = :my_engine
   #
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
-  # config.omniauth_path_prefix = '/my_engine/users/auth'
+  # config.omniauth_path_prefix = "/my_engine/users/auth"
 
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:

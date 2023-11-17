@@ -12,7 +12,7 @@
   <td class="py-1 max-w-[12rem]">
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center items-center truncate" do %>
       <%= @participant[:username] %>
-      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-2") if @participant[:uid].in?(User::MODERATORS.values.map(&:to_i)) %>
+      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-2") if @participant[:uid].in?(User::CONTRIBUTORS.values.map(&:to_i)) %>
     <% end %>
   </td>
 
@@ -48,7 +48,7 @@
 
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
-      <%= @participant[:city_name] || "&nbsp".html_safe %>
+      <%= @participant[:city_vanity_name] || "&nbsp".html_safe %>
     <% end %>
   </td>
 

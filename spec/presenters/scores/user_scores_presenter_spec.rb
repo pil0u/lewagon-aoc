@@ -15,18 +15,18 @@ RSpec.describe Scores::UserScoresPresenter do
     create :user,
            id: 1,
            username: "Saunier",
-           city: paris,
            squad: squad_1,
            batch: batch_1,
+           city: paris,
            entered_hardcore: false
   end
   let!(:user_2) do
     create :user,
            id: 2,
            username: "pil0u",
-           city: bordeaux,
            squad: squad_2,
            batch: batch_2,
+           city: bordeaux,
            entered_hardcore: true
   end
 
@@ -66,7 +66,7 @@ RSpec.describe Scores::UserScoresPresenter do
       hash_including(
         uid: 1,
         username: "Saunier",
-        city_name: "Paris",
+        city_vanity_name: "Paris",
         batch_number: 1,
         squad_name: "The Killers",
         entered_hardcore: false
@@ -74,7 +74,7 @@ RSpec.describe Scores::UserScoresPresenter do
       hash_including(
         uid: 2,
         username: "pil0u",
-        city_name: "Bordeaux",
+        city_vanity_name: "Bordeaux",
         batch_number: 2,
         squad_name: "Grouplove",
         entered_hardcore: true
@@ -159,7 +159,7 @@ RSpec.describe Scores::UserScoresPresenter do
 
     it "includes no info about it in the output" do
       expect(described_class.new(input).get).to include(
-        hash_including(uid: 1, city_name: nil)
+        hash_including(uid: 1, city_vanity_name: nil)
       )
     end
   end

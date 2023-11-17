@@ -27,6 +27,8 @@ class User < ApplicationRecord
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
 
+  validates :private_leaderboard, presence: true
+
   validate :not_referring_self
 
   scope :admins, -> { where(uid: ADMINS.values) }
@@ -34,7 +36,7 @@ class User < ApplicationRecord
   scope :insanity, -> { where(entered_hardcore: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
 
-  after_create :assign_private_leaderboard
+  before_validation :assign_private_leaderboard, on: :create
 
   def self.from_kitt(auth)
     batches = auth.info&.schoolings

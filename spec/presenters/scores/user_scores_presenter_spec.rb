@@ -7,9 +7,9 @@ RSpec.describe Scores::UserScoresPresenter do
   let!(:bordeaux) { create :city, name: "Bordeaux" }
   let!(:squad_1) { create :squad, name: "The Killers" }
   let!(:squad_2) { create :squad, name: "Grouplove" }
-  let!(:batch_1) { create :batch, number: 1, city: paris }
-  let!(:batch_2) { create :batch, number: 2, city: bordeaux }
-  let!(:batch_3) { create :batch, number: 3, city: bordeaux }
+  let!(:batch_1) { create :batch, number: 1 }
+  let!(:batch_2) { create :batch, number: 2 }
+  let!(:batch_3) { create :batch, number: 3 }
 
   let!(:user_1) do
     create :user,
@@ -17,6 +17,7 @@ RSpec.describe Scores::UserScoresPresenter do
            username: "Saunier",
            squad: squad_1,
            batch: batch_1,
+           city: paris,
            entered_hardcore: false
   end
   let!(:user_2) do
@@ -25,6 +26,7 @@ RSpec.describe Scores::UserScoresPresenter do
            username: "pil0u",
            squad: squad_2,
            batch: batch_2,
+           city: bordeaux,
            entered_hardcore: true
   end
 
@@ -150,10 +152,21 @@ RSpec.describe Scores::UserScoresPresenter do
     end
   end
 
+  context "when user has no city" do
+    before do
+      user_1.update!(city: nil)
+    end
+
+    it "includes no info about it in the output" do
+      expect(described_class.new(input).get).to include(
+        hash_including(uid: 1, city_vanity_name: nil)
+      )
+    end
+  end
+
   context "when user has no batch" do
     before do
-      user_1.batch_id = nil
-      user_1.save(validate: false)
+      user_1.update!(batch: nil)
     end
 
     it "includes no info about it in the output" do

@@ -8,10 +8,9 @@ class User < ApplicationRecord
   CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
 
   belongs_to :batch, optional: true
+  belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
   belongs_to :referrer, class_name: "User", optional: true
-
-  delegate :city, :city_id, to: :batch, allow_nil: true
 
   has_many :completions, dependent: :destroy
   has_many :user_day_scores, class_name: "Cache::UserDayScore", dependent: :delete_all
@@ -38,13 +37,19 @@ class User < ApplicationRecord
   after_create :assign_private_leaderboard
 
   def self.from_kitt(auth)
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
+    batches = auth.info&.schoolings
+    oldest_batch = batches.min_by { |batch| batch.camp.starts_at }
+
+    user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
-      u.github_username = auth.info.github_nickname
-      u.batch_id = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i).id
+      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
+      u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
     end
 
-    user.update(github_username: auth.info.github_nickname)
+    user.github_username = auth.info.github_nickname
+
+    user.save
+
     user
   end
 

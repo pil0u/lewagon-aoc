@@ -100,40 +100,39 @@
   </details>
 
   <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "Why two platforms?") %>
+    <%= render Faq::DetailsSummaryComponent.new(title: "What is a squad?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        Advent of Code hosts and presents the puzzles for solving.
+        A squad is a group of <span class="strong">up to 4</span> participants, and each participant can be part of 0 or
+        1 squad.
       </p>
       <p>
-        At <span class="text-wagon-red">Le Wagon</span> we like things spicy, we want
-        <span class="strong">campus-specific scoreboards</span>, which the adventofcode.com leaderboard system does not
-        support.
+        You build your squad by assembling your dream team (find people
+        <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %>) and create a squad in your
+        <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup> in 1 click.
       </p>
       <p>
-        So, we created a platform (this website), linking Kitt and Advent of Code, to build
-        <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %><sup>(*)</sup>.
+        Creating a squad generates a unique <span class="strong">PIN to share with your peers</span> for joining.
+      </p>
+      <p>
+        Squads have their own scoreboards, and the squad's score is
+        <span class="strong">the sum of its members' scores</span>.
+      </p>
+      <p>
+        ⚠️ Squads <span class="strong">lock</span> on
+        <%= "#{Aoc.lock_time.to_fs(:long_ordinal)} #{Aoc.lock_time.zone}" %>. No squad creation, joining or leaving is
+        possible after that. 
       </p>
     </div>
   </details>
 
   <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "Why are leaderboards different on adventofcode.com vs aoc.lewagon.community?") %>
+    <%= render Faq::DetailsSummaryComponent.new(title: "What are the prizes?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        During the setup process, you join a private leaderboard on adventofcode.com, capped at 200 members. As
-        participants <em>here</em> exceed this limit, multiple private leaderboards are created behind the scenes,
-        assigning each participant to one.
-      </p>
-      <p>
-        Your private leaderboard on adventofcode.com is meaningless, it's a random group of 200 Wagoners. 
-      </p>
-      <p>
-        Check our platform's
-        <%= link_to "scoreboards", scores_path, class: "link-explicit link-internal" %><sup>(*)</sup> instead, they
-        include everyone in the comunity!
+        Coming soon... 👀
       </p>
     </div>
   </details>
@@ -236,34 +235,6 @@
           <li>Total challenges solved in less than 24 hours by the top <code>N</code></li>
           <li>Total challenges solved in less than 48 hours by the top <code>N</code></li>
         </ol>
-      </p>
-    </div>
-  </details>
-
-  <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "What is a squad?") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p>
-        A squad is a group of <span class="strong">up to 4</span> participants, and each participant can be part of 0 or
-        1 squad.
-      </p>
-      <p>
-        You build your squad by assembling your dream team (find people
-        <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %>) and create a squad in your
-        <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup> in 1 click.
-      </p>
-      <p>
-        Creating a squad generates a unique <span class="strong">PIN to share with your peers</span> for joining.
-      </p>
-      <p>
-        Squads have their own scoreboards, and the squad's score is
-        <span class="strong">the sum of its members' scores</span>.
-      </p>
-      <p>
-        ⚠️ Squads <span class="strong">lock</span> on
-        <%= "#{Aoc.lock_time.to_fs(:long_ordinal)} #{Aoc.lock_time.zone}" %>. No squad creation, joining or leaving is
-        possible after that. 
       </p>
     </div>
   </details>
@@ -430,6 +401,45 @@
   </details>
 
   <details>
+    <%= render Faq::DetailsSummaryComponent.new(title: "Why two platforms?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        Advent of Code hosts and presents the puzzles for solving.
+      </p>
+      <p>
+        At <span class="text-wagon-red">Le Wagon</span> we like things spicy, we want
+        <span class="strong">campus-specific scoreboards</span>, which the adventofcode.com leaderboard system does not
+        support.
+      </p>
+      <p>
+        So, we created a platform (this website), linking Kitt and Advent of Code, to build
+        <%= link_to "custom agregated scoreboards", scores_path, class: "link-explicit link-internal" %><sup>(*)</sup>.
+      </p>
+    </div>
+  </details>
+
+  <details>
+    <%= render Faq::DetailsSummaryComponent.new(title: "Why are leaderboards different on adventofcode.com vs aoc.lewagon.community?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        During the setup process, you join a private leaderboard on adventofcode.com, capped at 200 members. As
+        participants <em>here</em> exceed this limit, multiple private leaderboards are created behind the scenes,
+        assigning each participant to one.
+      </p>
+      <p>
+        Your private leaderboard on adventofcode.com is meaningless, it's a random group of 200 Wagoners. 
+      </p>
+      <p>
+        Check our platform's
+        <%= link_to "scoreboards", scores_path, class: "link-explicit link-internal" %><sup>(*)</sup> instead, they
+        include everyone in the comunity!
+      </p>
+    </div>
+  </details>
+
+  <details>
     <%= render Faq::DetailsSummaryComponent.new(title: "When does the contest end?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
@@ -437,16 +447,6 @@
         <span class="strong"><%= "#{Aoc.lewagon_end_time.to_fs(:long_ordinal)} #{Aoc.lewagon_end_time.zone}" %></span>
         is the deadline for solving puzzles 🏁 At this point, all scores will freeze, and the results will be determined
         and announced.
-      </p>
-    </div>
-  </details>
-
-  <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "What are the prizes?") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p>
-        Coming soon...
       </p>
     </div>
   </details>

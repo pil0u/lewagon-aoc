@@ -16,7 +16,7 @@
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :campus_name, "Campus" %>
-    <%= f.collection_select(:city_id, City.order(:vanity_name), :id, :vanity_name, { prompt: "", selected: @user.batch&.city_id }, class: "input", disabled: @user.batch&.city_id?) %>
+    <%= f.collection_select(:city_id, City.order(:vanity_name), :id, :vanity_name, { prompt: "", selected: @user.city_id }, class: "input", disabled: @user.city_id?) %>
   </div>
 
   <div class="flex items-center gap-x-3 w-48 sm:w-fit">

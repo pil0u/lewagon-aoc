@@ -4,9 +4,7 @@ require "rails_helper"
 
 RSpec.describe Ranks::CityScores do
   let(:bordeaux) { create :city, name: "Bordeaux", size: 60 }
-  let(:bordeaux_batch) { create(:batch, number: 1, city: bordeaux) }
   let(:brussels) { create :city, name: "Brussels", size: 10 }
-  let(:brussels_batch) { create(:batch, number: 2, city: brussels) }
 
   let(:input) do
     [
@@ -34,10 +32,10 @@ RSpec.describe Ranks::CityScores do
 
     let!(:completions) do
       [
-        *create_list(:user, 11, batch: bordeaux_batch).map do |u|
+        *create_list(:user, 11, city: bordeaux).map do |u|
           create(:completion, user: u, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 23.hours)
         end,
-        *create_list(:user, 10, batch: brussels_batch).map do |u|
+        *create_list(:user, 10, city: brussels).map do |u|
           create(:completion, user: u, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 23.hours)
         end
       ]
@@ -60,17 +58,17 @@ RSpec.describe Ranks::CityScores do
 
       let!(:completions) do
         [
-          *create_list(:user, 12, batch: bordeaux_batch).map do |u|
+          *create_list(:user, 12, city: bordeaux).map do |u|
             create(:completion, user: u, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 23.hours)
           end,
-          *create_list(:user, 10, batch: brussels_batch).map do |u|
+          *create_list(:user, 10, city: brussels).map do |u|
             create(:completion, user: u, day: 1, challenge: 1, completion_unix_time: Aoc.begin_time + 23.hours)
           end,
 
-          *create_list(:user, 11, batch: bordeaux_batch).map do |u|
+          *create_list(:user, 11, city: bordeaux).map do |u|
             create(:completion, user: u, day: 1, challenge: 2, completion_unix_time: Aoc.begin_time + 40.hours)
           end,
-          *create_list(:user, 9, batch: brussels_batch).map do |u|
+          *create_list(:user, 9, city: brussels).map do |u|
             create(:completion, user: u, day: 1, challenge: 2, completion_unix_time: Aoc.begin_time + 40.hours)
           end
         ]

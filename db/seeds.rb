@@ -74,7 +74,6 @@ campuses = [
   { name: "Sydney",         size: 2 },
   { name: "São Paulo",      size: 1043 },
   { name: "Tel Aviv",       size: 158 },
-  { name: "Testville",      size: 7 },
   { name: "Tokyo",          size: 816 },
   { name: "Toulouse",       size: 20 },
   { name: "Zurich",         size: 64 }

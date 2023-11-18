@@ -8,10 +8,13 @@ class ApplicationRecord < ActiveRecord::Base
     cpp: "C++",
     crystal: "Crystal",
     csharp: "C#",
+    dart: "Dart",
+    elixir: "Elixir",
     go: "Go",
     haskell: "Haskell",
     java: "Java",
     javascript: "JavaScript",
+    kotlin: "Kotlin",
     matlab: "MATLAB",
     ocaml: "OCaml",
     pascal: "Pascal",
@@ -21,6 +24,7 @@ class ApplicationRecord < ActiveRecord::Base
     ruby: "Ruby",
     rust: "Rust",
     sql: "SQL",
+    swift: "Swift",
     typescript: "TypeScript"
   }.freeze
 end

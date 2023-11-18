@@ -103,7 +103,7 @@ class UsersController < ApplicationController
     }.compact
 
     params[:batch] = nil if form_params[:batch_number]
-    params[:referrer_id] = User.find_by_referral_code(form_params[:referrer_code])&.id.to_i if form_params[:referrer_code]
+    params[:referrer] = User.find_by_referral_code(form_params[:referrer_code]) if form_params[:referrer_code]
 
     params
   end

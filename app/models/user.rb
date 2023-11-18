@@ -23,8 +23,10 @@ class User < ApplicationRecord
   has_many :achievements, dependent: :destroy
   has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
 
+  validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
-  validates :username, :private_leaderboard, presence: true
+  validates :username, presence: true
+  validates :private_leaderboard, presence: true
 
   validate :city_cant_change
   validate :batch_cant_change
@@ -47,7 +49,9 @@ class User < ApplicationRecord
       u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
     end
 
-    user.update(github_username: auth.info.github_nickname)
+    user.github_username = auth.info.github_nickname
+
+    user.save
 
     user
   end

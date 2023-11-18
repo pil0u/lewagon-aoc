@@ -14,6 +14,10 @@ Devise.setup do |config|
                   Rails.application.credentials.dig(:kitt, :app_id),
                   Rails.application.credentials.dig(:kitt, :secret))
 
+  config.omniauth(:slack_openid,
+                  Rails.application.credentials.dig(:slack, :client_id),
+                  Rails.application.credentials.dig(:slack, :client_secret),
+                  scope: %w[openid profile].join(","))
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt]
+  devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
+  encrypts :slack_access_token
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
   CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
 
   belongs_to :batch, optional: true
+  belongs_to :city, optional: true, touch: true
   belongs_to :squad, optional: true, touch: true
   belongs_to :referrer, class_name: "User", optional: true
-
-  delegate :city, :city_id, to: :batch, allow_nil: true
 
   has_many :completions, dependent: :destroy
   has_many :user_day_scores, class_name: "Cache::UserDayScore", dependent: :delete_all
@@ -23,10 +23,10 @@ class User < ApplicationRecord
   has_many :achievements, dependent: :destroy
   has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
 
-  validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
-  validates :username, presence: true
+  validates :username, :private_leaderboard, presence: true
 
+  validate :city_cant_change
   validate :batch_cant_change
   validate :not_referring_self
   validate :referrer_exists
@@ -36,24 +36,24 @@ class User < ApplicationRecord
   scope :insanity, -> { where(entered_hardcore: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
 
-  after_create :assign_private_leaderboard
+  before_validation :assign_private_leaderboard, on: :create
 
   def self.from_kitt(auth)
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
+    oldest_batch = auth.info&.schoolings&.min_by { |batch| batch.camp.starts_at }
+
+    user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
-      u.github_username = auth.info.github_nickname
-      u.batch_id = Batch.find_or_create_by(number: auth.info.last_batch_slug.to_i).id
+      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
+      u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
     end
 
     user.update(github_username: auth.info.github_nickname)
+
     user
   end
 
   def self.find_by_referral_code(code)
-    uid = code&.gsub(/R0*/, "")&.to_i
-    return if uid.nil?
-
-    User.find_by(uid:)
+    User.find_by(uid: code.gsub(/R0*/, "").to_i)
   end
 
   def admin?
@@ -66,6 +66,14 @@ class User < ApplicationRecord
 
   def contributor?
     uid.in?(CONTRIBUTORS.values)
+  end
+
+  def linked_slack?
+    slack_id.present?
+  end
+
+  def slack_deep_link
+    "slack://user?team=T02NE0241&id=#{slack_id}"
   end
 
   def solved?(day, challenge)
@@ -100,7 +108,11 @@ class User < ApplicationRecord
   private
 
   def batch_cant_change
-    errors.add(:batch, " or City can't be changed") if batch_changed? && batch_id_was.present?
+    errors.add(:batch, "can't be changed") if batch_changed?
+  end
+
+  def city_cant_change
+    errors.add(:city, "can't be changed") if city_changed? && city_id_was.present?
   end
 
   def not_referring_self

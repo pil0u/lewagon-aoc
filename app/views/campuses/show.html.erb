@@ -1,24 +1,24 @@
 <div class="text-lg flex flex-wrap flex-col sm:flex-row items-center sm:justify-between">
   <div class="flex flex-wrap gap-x-6">
-    <h2 class="strong"><%= @city.vanity_name %></h2>
+    <h2 class="strong"><%= @campus.vanity_name %></h2>
   </div>
 
   <div class="flex gap-x-6">
     <span>
-      <% if @city_stats[:silver_stars] > 0 %>
-        <span class="text-aoc-silver"><%= @city_stats[:silver_stars] %>*</span>
+      <% if @campus_stats[:silver_stars] > 0 %>
+        <span class="text-aoc-silver"><%= @campus_stats[:silver_stars] %>*</span>
       <% end %>
-      <span class="text-aoc-gold"><%= @city_stats[:gold_stars] %>*</span>
+      <span class="text-aoc-gold"><%= @campus_stats[:gold_stars] %>*</span>
     </span>
     <span>·</span>
-    <span class="text-aoc-atmospheric"><%= @city_stats[:score] %> pts</span>
+    <span class="text-aoc-atmospheric"><%= @campus_stats[:score] %> pts</span>
     <span>·</span>
-    <span><%= @city_stats[:rank] %><sup><%= @city_stats[:rank].ordinal %></sup></span>
+    <span><%= @campus_stats[:rank] %><sup><%= @campus_stats[:rank].ordinal %></sup></span>
   </div>
 </div>
 
 <p class="my-4">
-  The scores of the <span class="strong">top <%= @city_stats[:top_contributors] %> contributors</span> are averaged to build the score of <%= @city.name %>.
+  The scores of the <span class="strong">top <%= @campus_stats[:top_contributors] %> contributors</span> are averaged to build the score of <%= @campus.name %>.
 </p>
 
 <table class="block overflow-x-auto whitespace-nowrap w-full max-w-2xl mx-auto">
@@ -33,6 +33,6 @@
   </thead>
 
   <tbody>
-    <%= render Scores::UserRowComponent.with_collection(@city_users, user: current_user) %>
+    <%= render Scores::UserRowComponent.with_collection(@campus_users, user: current_user) %>
   </tbody>
 </table>

@@ -2,7 +2,28 @@
 
 Rails.application.routes.draw do
   # Devise sign in and sign out with OmniAuth
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, skip: :omniauth_callbacks, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+
+  # Needed because Devise is all-or-nothing wrt providers
+  def omniauth_callbacks(provider)
+    OmniAuth.config.path_prefix = "/users/auth"
+
+    devise_scope :user do
+      with_devise_exclusive_scope "users", "user", {} do
+        match "auth/#{provider}",
+              to: "users/omniauth_callbacks#passthru",
+              as: "#{provider}_omniauth_authorize",
+              via: OmniAuth.config.allowed_request_methods
+
+        match "auth/#{provider}/callback",
+              to: "users/omniauth_callbacks##{provider}",
+              as: "#{provider}_omniauth_callback",
+              via: %i[get post]
+      end
+    end
+  end
+
+  omniauth_callbacks(:kitt)
 
   devise_scope :user do
     get "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
@@ -17,6 +38,13 @@ Rails.application.routes.draw do
   # Routes for unauthenticated users
   unauthenticated do
     get "/", to: "pages#welcome"
+    get "/admin", to: "pages#admin"
+  end
+
+  authenticated :user do
+    omniauth_callbacks(:slack_openid)
+
+    delete "slack_omniauth", to: "users#unlink_slack", as: :user_slack_omniauth_remove
   end
 
   # Routes for authenticated + unconfirmed users
@@ -30,7 +58,7 @@ Rails.application.routes.draw do
   authenticated :user, ->(user) { user.confirmed? } do
     get     "/",                    to: "pages#calendar", as: :calendar
     get     "/countdown",           to: "pages#countdown"
-    get     "/campuses/:slug",      to: "campuses#show",  as: :campus
+    get     "/campus/:slug",        to: "campuses#show",  as: :campus
     get     "/city/:slug",          to: "campuses#show",  as: :city # Retrocompat in case of old links
     get     "/day/:day",            to: "days#show",      as: :day,     day: /[1-9]|1\d|2[0-5]/
     get     "/day/:day/:challenge", to: "snippets#show",  as: :snippet, day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: SolvedPuzzleConstraint.new
@@ -54,6 +82,9 @@ Rails.application.routes.draw do
 
   # Admin routes
   authenticated :user, ->(user) { user.admin? } do
+    get "/admin",         to: "pages#admin"
+    post "/impersonate",  to: "users#impersonate", as: :impersonate
+
     mount Blazer::Engine,   at: "blazer"
     mount GoodJob::Engine,  at: "good_job"
   end

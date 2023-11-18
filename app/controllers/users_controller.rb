@@ -99,11 +99,11 @@ class UsersController < ApplicationController
       aoc_id: form_params[:aoc_id],
       entered_hardcore: form_params[:entered_hardcore],
       username: form_params[:username],
-      city_id: form_params[:city_id]
+      city_id: form_params[:city_id],
+      referrer_id: (User.find_by_referral_code(form_params[:referrer_code])&.id.to_i if form_params[:referrer_code])
     }.compact
 
     params[:batch] = nil if form_params[:batch_number]
-    params[:referrer] = User.find_by_referral_code(form_params[:referrer_code]) if form_params[:referrer_code]
 
     params
   end

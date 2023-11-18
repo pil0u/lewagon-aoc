@@ -26,8 +26,9 @@ class User < ApplicationRecord
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
-
   validates :private_leaderboard, presence: true
+  validates :favourite_language, inclusion: { in: LANGUAGES.keys.map(&:to_s) }, allow_nil: true
+
 
   validate :not_referring_self
 

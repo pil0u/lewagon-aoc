@@ -29,7 +29,6 @@ class User < ApplicationRecord
   validates :private_leaderboard, presence: true
   validates :favourite_language, inclusion: { in: LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
-
   validate :not_referring_self
 
   scope :admins, -> { where(uid: ADMINS.values) }

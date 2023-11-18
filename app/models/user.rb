@@ -112,11 +112,11 @@ class User < ApplicationRecord
   private
 
   def batch_cannot_change
-    errors.add(:batch, "can't be changed") if batch_changed? && batch_id_was.present?
+    errors.add(:batch, "can't be changed") if batch_id_changed? && batch_id_was.present?
   end
 
   def city_cannot_change
-    errors.add(:city, "can't be changed") if city_changed? && city_id_was.present?
+    errors.add(:city, "can't be changed") if city_id_changed? && city_id_was.present?
   end
 
   def not_referring_self

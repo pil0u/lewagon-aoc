@@ -103,7 +103,10 @@ class UsersController < ApplicationController
       referrer_id: (User.find_by_referral_code(form_params[:referrer_code])&.id.to_i if form_params[:referrer_code])
     }.compact
 
-    params[:batch] = nil if form_params[:batch_number]
+    # Validation only works if User does not have a batch yet otherwise it breaks during registration.
+    # But some users never have a batch so to avoid having them be able to change once, we always set the new batch to be nil.
+    # Full explanation https://github.com/pil0u/lewagon-aoc/pull/318#issuecomment-1817549538
+    params[:batch_id] = nil if form_params[:batch_number]
 
     params
   end

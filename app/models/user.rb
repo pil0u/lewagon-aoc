@@ -57,6 +57,8 @@ class User < ApplicationRecord
   end
 
   def self.find_by_referral_code(code)
+    return unless code&.match?(/R\d{5}/)
+
     User.find_by(uid: code.gsub(/R0*/, "").to_i)
   end
 
@@ -124,7 +126,7 @@ class User < ApplicationRecord
   end
 
   def referrer_exists
-    errors.add(:referrer, "must exist") if referrer_id == 0
+    errors.add(:referrer, "must exist") if referrer_id_changed? && referrer_id.nil?
   end
 
   def assign_private_leaderboard

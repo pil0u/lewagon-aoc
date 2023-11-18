@@ -46,7 +46,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user.update(updated_params)
+    # Validation only works if User does not have a batch yet otherwise it breaks during registration.
+    # But some users never have a batch so to avoid having them be able to change once, we always set the new batch to be nil.
+    # Full explanation https://github.com/pil0u/lewagon-aoc/pull/318#issuecomment-1817549538
+    current_user.batch_id = nil if params[:user][:batch_number]
+
+    current_user.referrer_id = User.find_by_referral_code(params[:user][:referrer_code])&.id if params[:user][:referrer_code]
+
+    if current_user.update(form_params)
       unlock_achievements
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
@@ -93,29 +100,11 @@ class UsersController < ApplicationController
     )
   end
 
-  def updated_params
-    params = {
-      accepted_coc: form_params[:accepted_coc],
-      aoc_id: form_params[:aoc_id],
-      entered_hardcore: form_params[:entered_hardcore],
-      username: form_params[:username],
-      city_id: form_params[:city_id],
-      referrer_id: (User.find_by_referral_code(form_params[:referrer_code])&.id.to_i if form_params[:referrer_code])
-    }.compact
-
-    # Validation only works if User does not have a batch yet otherwise it breaks during registration.
-    # But some users never have a batch so to avoid having them be able to change once, we always set the new batch to be nil.
-    # Full explanation https://github.com/pil0u/lewagon-aoc/pull/318#issuecomment-1817549538
-    params[:batch_id] = nil if form_params[:batch_number]
-
-    params
-  end
-
   def unlock_achievements
     Achievements::UnlockJob.perform_later(:city_join, current_user.id)
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :batch_number, :city_id, :referrer_code)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id)
   end
 end

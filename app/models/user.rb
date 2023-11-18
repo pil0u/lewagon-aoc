@@ -108,7 +108,7 @@ class User < ApplicationRecord
   private
 
   def batch_cant_change
-    errors.add(:batch, "can't be changed") if batch_changed?
+    errors.add(:batch, "can't be changed") if batch_changed? && batch_id_was.present?
   end
 
   def city_cant_change

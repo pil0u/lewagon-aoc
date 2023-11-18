@@ -28,8 +28,8 @@ class User < ApplicationRecord
   validates :username, presence: true
   validates :private_leaderboard, presence: true
 
-  validate :city_cant_change
-  validate :batch_cant_change
+  validate :city_cannot_change
+  validate :batch_cannot_change
   validate :not_referring_self
   validate :referrer_exists
 
@@ -111,11 +111,11 @@ class User < ApplicationRecord
 
   private
 
-  def batch_cant_change
+  def batch_cannot_change
     errors.add(:batch, "can't be changed") if batch_changed? && batch_id_was.present?
   end
 
-  def city_cant_change
+  def city_cannot_change
     errors.add(:city, "can't be changed") if city_changed? && city_id_was.present?
   end
 

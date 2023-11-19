@@ -46,7 +46,12 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user.update(updated_params)
+    current_user.batch_id = -1 if params.dig(:user, :batch_number) # Set impossible value to trigger validation
+
+    referrer_code = params.dig(:user, :referrer_code)
+    current_user.referrer_id = User.find_by_referral_code(referrer_code)&.id || -1 if referrer_code
+
+    if current_user.update(user_params)
       unlock_achievements
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
@@ -85,7 +90,7 @@ class UsersController < ApplicationController
   end
 
   def restrict_after_lock
-    return unless Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore
+    return unless Time.now.utc > Aoc.lock_time && (user_params[:entered_hardcore] == "1") != current_user.entered_hardcore
 
     redirect_back(
       fallback_location: "/",
@@ -93,23 +98,11 @@ class UsersController < ApplicationController
     )
   end
 
-  def updated_params
-    {
-      accepted_coc: form_params[:accepted_coc],
-      aoc_id: form_params[:aoc_id],
-      entered_hardcore: form_params[:entered_hardcore],
-      username: form_params[:username],
-      city_id: form_params[:city_id],
-      referrer: User.find_by_referral_code(form_params[:referrer_code]),
-      favourite_language: form_params[:favourite_language]
-    }.compact
-  end
-
   def unlock_achievements
     Achievements::UnlockJob.perform_later(:city_join, current_user.id)
   end
 
-  def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id, :referrer_code, :favourite_language)
+  def user_params
+    params.require(:user).permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :favourite_language, :username)
   end
 end

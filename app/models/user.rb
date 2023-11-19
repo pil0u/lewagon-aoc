@@ -29,7 +29,10 @@ class User < ApplicationRecord
   validates :private_leaderboard, presence: true
   validates :favourite_language, inclusion: { in: LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
-  validate :not_referring_self
+  validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
+  validate :city_cannot_be_changed_if_present, on: :update, if: :city_id_changed?
+  validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
+  validate :referrer_cannot_be_self,           on: :update
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -39,11 +42,11 @@ class User < ApplicationRecord
   before_validation :assign_private_leaderboard, on: :create
 
   def self.from_kitt(auth)
-    batches = auth.info&.schoolings
-    oldest_batch = batches.min_by { |batch| batch.camp.starts_at }
+    oldest_batch = auth.info&.schoolings&.min_by { |batch| batch.camp.starts_at }
 
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
+
       u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
       u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
     end
@@ -51,15 +54,13 @@ class User < ApplicationRecord
     user.github_username = auth.info.github_nickname
 
     user.save
-
     user
   end
 
   def self.find_by_referral_code(code)
-    uid = code&.gsub(/R0*/, "")&.to_i
-    return if uid.nil?
+    return unless code&.match?(/R\d{5}/)
 
-    User.find_by(uid:)
+    User.find_by(uid: code.gsub(/R0*/, "").to_i)
   end
 
   def admin?
@@ -113,8 +114,20 @@ class User < ApplicationRecord
 
   private
 
-  def not_referring_self
-    errors.add(:referrer, "must not be you") if referrer == self
+  def batch_cannot_be_changed
+    errors.add(:batch, "can't be changed")
+  end
+
+  def city_cannot_be_changed_if_present
+    errors.add(:city, "can't be changed") if city_id_was.present?
+  end
+
+  def referrer_must_exist
+    errors.add(:referrer, "must exist") unless User.exists?(referrer_id)
+  end
+
+  def referrer_cannot_be_self
+    errors.add(:referrer, "can't be you (nice try!)") if referrer == self
   end
 
   def assign_private_leaderboard

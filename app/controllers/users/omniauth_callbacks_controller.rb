@@ -46,7 +46,7 @@ module Users
     private
 
     def fail_auth(reason)
-      provider = request.env["omniauth.strategy"]&.name || "unknown"
+      provider = request.env["omniauth.strategy"]&.name&.to_s || "unknown"
 
       redirect_back(fallback_location: "/",
                     alert: "Failed to sign in with #{provider.titleize} (Reason: #{reason}).")

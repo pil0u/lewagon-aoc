@@ -38,6 +38,19 @@ class User < ApplicationRecord
   scope :insanity, -> { where(entered_hardcore: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
 
+  enum :event_awareness, {
+    slack_aoc: 0,
+    slack_general: 1,
+    slack_campus: 2,
+    slack_batch: 3,
+    newsletter: 4,
+    linkedin: 5,
+    facebook: 6,
+    instagram: 7,
+    event_brussels: 8,
+    event_london: 9
+  }
+
   before_validation :assign_private_leaderboard, on: :create
 
   def self.from_kitt(auth)

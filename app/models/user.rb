@@ -110,7 +110,7 @@ class User < ApplicationRecord
     referrer&.referral_code
   end
 
-  def assign_referrer(referral_code)
+  def referrer_valid?(referral_code)
     # Do nothing and return true if no referral code is provided
     return true if referral_code.nil?
 

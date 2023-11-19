@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     referral_code = params.dig(:user, :referrer_code)
     current_user.batch_id = -1 if params.dig(:user, :batch_number) # Set impossible value to trigger validation
 
-    if current_user.assign_referrer(referral_code) && current_user.update(user_params)
+    if current_user.referrer_valid?(referral_code) && current_user.update(user_params)
       unlock_achievements
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else

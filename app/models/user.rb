@@ -28,8 +28,8 @@ class User < ApplicationRecord
   validates :username, presence: true
   validates :private_leaderboard, presence: true
 
-  validate :batch_cannot_be_changed, if: :batch_id_changed?
-  validate :city_cannot_be_changed_if_present, if: :city_id_changed?
+  validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
+  validate :city_cannot_be_changed_if_present, on: :update, if: :city_id_changed?
   validate :referrer_cannot_be_self
 
   scope :admins, -> { where(uid: ADMINS.values) }

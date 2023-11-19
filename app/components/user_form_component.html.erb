@@ -19,6 +19,11 @@
     <%= f.collection_select(:city_id, City.order(:vanity_name), :id, :vanity_name, { prompt: "", selected: @user.city_id }, class: "input", disabled: @user.city_id?) %>
   </div>
 
+  <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+    <%= f.label :event_awareness, "How did you hear about this event ?" %>
+    <%= f.select :event_awareness, @awareness_options.invert.to_a, { prompt: "", selected: @user.event_awareness }, class: "input pr-8 text-ellipsis" %>
+  </div>
+
   <div class="flex items-center gap-x-3 w-48 sm:w-fit">
     <%= f.label :entered_hardcore, "Join the Ladder of Insanity" %>
     <%= f.check_box :entered_hardcore, checked: @user.entered_hardcore, class: "focus:no-ring", data: {

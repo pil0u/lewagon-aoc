@@ -98,6 +98,7 @@ class UsersController < ApplicationController
       accepted_coc: form_params[:accepted_coc],
       aoc_id: form_params[:aoc_id],
       entered_hardcore: form_params[:entered_hardcore],
+      event_awareness: form_params[:event_awareness],
       username: form_params[:username],
       city_id: form_params[:city_id],
       referrer: User.find_by_referral_code(form_params[:referrer_code])
@@ -109,6 +110,6 @@ class UsersController < ApplicationController
   end
 
   def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id, :referrer_code)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :event_awareness, :username, :city_id, :referrer_code)
   end
 end

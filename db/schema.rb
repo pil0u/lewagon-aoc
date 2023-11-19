@@ -374,7 +374,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_19_105530) do
     t.bigint "city_id"
     t.datetime "created_at", null: false
     t.boolean "entered_hardcore", default: false, null: false
-    t.string "event_awareness"
+    t.integer "event_awareness"
     t.string "github_username"
     t.string "private_leaderboard"
     t.string "provider"

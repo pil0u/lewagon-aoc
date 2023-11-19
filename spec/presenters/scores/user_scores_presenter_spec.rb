@@ -154,7 +154,8 @@ RSpec.describe Scores::UserScoresPresenter do
 
   context "when user has no city" do
     before do
-      user_1.update!(city: nil)
+      user_1.city = nil
+      user_1.save(validate: false)
     end
 
     it "includes no info about it in the output" do
@@ -166,7 +167,8 @@ RSpec.describe Scores::UserScoresPresenter do
 
   context "when user has no batch" do
     before do
-      user_1.update!(batch: nil)
+      user_1.batch = nil
+      user_1.save(validate: false)
     end
 
     it "includes no info about it in the output" do

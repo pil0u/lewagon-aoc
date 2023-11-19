@@ -13,6 +13,10 @@ Lint/MissingSuper:
 Lint/SymbolConversion:
   EnforcedStyle: consistent
 
+Metrics/ClassLength:
+  Exclude:
+    - "**/app/models/user.rb"
+
 Naming/VariableNumber:
   EnforcedStyle: snake_case
   Exclude:

@@ -46,14 +46,9 @@ class UsersController < ApplicationController
   end
 
   def update
-    # Validation only works if User does not have a batch yet otherwise it breaks during registration.
-    # But some users never have a batch so to avoid having them be able to change once, we always set the new batch to be nil.
-    # Full explanation https://github.com/pil0u/lewagon-aoc/pull/318#issuecomment-1817549538
-    current_user.batch_id = nil if params[:user][:batch_number]
+    referral_code = params.dig(:user, :referrer_code)
 
-    current_user.referrer_id = User.find_by_referral_code(params[:user][:referrer_code])&.id if params[:user][:referrer_code]
-
-    if current_user.update(form_params)
+    if current_user.update_referrer(referral_code) && current_user.update(user_params)
       unlock_achievements
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
@@ -92,7 +87,7 @@ class UsersController < ApplicationController
   end
 
   def restrict_after_lock
-    return unless Time.now.utc > Aoc.lock_time && (form_params[:entered_hardcore] == "1") != current_user.entered_hardcore
+    return unless Time.now.utc > Aoc.lock_time && (user_params[:entered_hardcore] == "1") != current_user.entered_hardcore
 
     redirect_back(
       fallback_location: "/",
@@ -104,7 +99,7 @@ class UsersController < ApplicationController
     Achievements::UnlockJob.perform_later(:city_join, current_user.id)
   end
 
-  def form_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :entered_hardcore, :username, :city_id)
+  def user_params
+    params.require(:user).permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :username)
   end
 end

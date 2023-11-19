@@ -28,10 +28,8 @@ class User < ApplicationRecord
   validates :username, presence: true
   validates :private_leaderboard, presence: true
 
-  validate :city_cannot_change
-  validate :batch_cannot_change
-  validate :not_referring_self
-  validate :referrer_exists
+  validate :city_cannot_be_changed_if_present, if: :city_id_changed?
+  validate :referrer_cannot_be_self
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -111,22 +109,37 @@ class User < ApplicationRecord
     referrer&.referral_code
   end
 
+  def update_referrer(referral_code)
+    # Do nothing and return true if no referral code is provided
+    return true if referral_code.nil?
+
+    # If the provided referral code is empty, remove the referrer
+    if referral_code == ""
+      self.referrer_id = nil
+      return true
+    end
+
+    # If there is a non-empty referral code, try and find the associated user
+    referrer = User.find_by_referral_code(referral_code)
+
+    # If the user does not exist, add an error and return false
+    if referrer.nil?
+      errors.add(:referrer, "must exist")
+      return false
+    end
+
+    self.referrer_id = referrer.id
+    true
+  end
+
   private
 
-  def batch_cannot_change
-    errors.add(:batch, "can't be changed") if batch_id_changed? && batch_id_was.present?
+  def city_cannot_be_changed_if_present
+    errors.add(:city, "can't be changed") if city_id_was.present?
   end
 
-  def city_cannot_change
-    errors.add(:city, "can't be changed") if city_id_changed? && city_id_was.present?
-  end
-
-  def not_referring_self
-    errors.add(:referrer, "can't be you") if referrer == self
-  end
-
-  def referrer_exists
-    errors.add(:referrer, "must exist") if referrer_id_changed? && referrer_id.nil?
+  def referrer_cannot_be_self
+    errors.add(:referrer, "can't be you (nice try!)") if referrer == self
   end
 
   def assign_private_leaderboard

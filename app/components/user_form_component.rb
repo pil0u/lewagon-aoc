@@ -2,16 +2,16 @@
 
 class UserFormComponent < ApplicationComponent
   AWARENESS_OPTIONS = {
-    slack_aoc: "Slack channel #aoc",
-    slack_general: "Slack channel #general",
-    slack_campus: "Slack channel of your campus",
-    slack_batch: "Slack channel of your batch",
+    slack_aoc: "Channel #aoc on Slack ",
+    slack_general: "Channel #general on Slack ",
+    slack_campus: "Your campus channel on Slack ",
+    slack_batch: "Your batch channel on Slack",
     newsletter: "Email newsletter",
-    linkedin: "Linkedin",
+    linkedin: "LinkedIn",
     facebook: "Facebook",
     instagram: "Instagram",
-    brussels_event: "Launch party in Brussels",
-    london_event: "Testing workshop in London"
+    event_brussels: "At Brussels' launch party",
+    event_london: "At London's workshop in testing"
   }.freeze
 
   def initialize(user:)

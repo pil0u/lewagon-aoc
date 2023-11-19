@@ -47,8 +47,8 @@ class User < ApplicationRecord
     linkedin: 5,
     facebook: 6,
     instagram: 7,
-    brussels_event: 8,
-    london_event: 9
+    event_brussels: 8,
+    event_london: 9
   }
 
   before_validation :assign_private_leaderboard, on: :create

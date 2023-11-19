@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 
   def update
     referral_code = params.dig(:user, :referrer_code)
-    current_user.batch_id = -1 if params.dig(:user, :batch_number) # Change with impossible value to trigger validation
+    current_user.batch_id = -1 if params.dig(:user, :batch_number) # Set impossible value to trigger validation
 
     if current_user.assign_referrer(referral_code) && current_user.update(user_params)
       unlock_achievements

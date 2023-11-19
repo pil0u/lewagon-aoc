@@ -21,7 +21,7 @@
 
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :favourite_language %>
-    <%= f.select :favourite_language, ApplicationRecord::LANGUAGES.invert.to_a, { prompt: "", selected: @user.favourite_language }, class: "input" %>
+    <%= f.select :favourite_language, Snippet::LANGUAGES.invert.to_a, { prompt: "", selected: @user.favourite_language }, class: "input" %>
   </div>
 
   <div class="flex items-center gap-x-3 w-48 sm:w-fit">

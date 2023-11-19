@@ -27,7 +27,7 @@ class User < ApplicationRecord
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
   validates :private_leaderboard, presence: true
-  validates :favourite_language, inclusion: { in: LANGUAGES.keys.map(&:to_s) }, allow_nil: true
+  validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
   validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
   validate :city_cannot_be_changed_if_present, on: :update, if: :city_id_changed?

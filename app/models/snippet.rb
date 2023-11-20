@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Snippet < ApplicationRecord
+  # All snippets are technically Markdown (cf. http://github.github.com/gfm/)
+  # but they have a declared language to be categorized and filtered
   LANGUAGES = {
     c: "C",
     cpp: "C++",

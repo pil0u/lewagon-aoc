@@ -95,8 +95,12 @@
     @apply fas fa-angles-up text-aoc-green text-opacity-50;
   }
 
+  .scrollbar-aoc::-webkit-scrollbar {
+    @apply h-1.5 w-1.5;
+  }
+
   .scrollbar-aoc::-webkit-scrollbar-thumb {
-    @apply bg-aoc-gray-dark rounded-full group-hover:bg-aoc-gray;
+    @apply bg-aoc-gray-dark rounded-full;
   }
 
   .strong {

@@ -5,7 +5,10 @@
       <%= Snippet::LANGUAGES[@snippet.language.to_sym] %>
     </span>
   </div>
-  <pre class="code-highlight text-sm pb-2 scrollbar-aoc overflow-x-scroll"><%= raw rouge(@snippet.code, @snippet.language) %></pre>
+  
+  <pre class="code-highlight text-sm scrollbar-aoc overflow-x-hidden group-hover:overflow-x-scroll">
+      <%= raw rouge(@snippet.code, @snippet.language) %>
+  </pre>
 
   <div class="flex justify-end gap-x-2">
     <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>

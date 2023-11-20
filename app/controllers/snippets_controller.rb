@@ -5,12 +5,12 @@ class SnippetsController < ApplicationController
     @day = params[:day]
     @challenge = params[:challenge]
 
-    @snippet = Snippet.new
+    @snippet = Snippets::Builder.call(language: current_user.favourite_language, code: "Paste here")
     @snippets = Snippet.includes(:user).where(day: @day, challenge: @challenge).order(created_at: :desc)
   end
 
   def create
-    snippet = Snippet.new(
+    snippet = Snippets::Builder.call(
       code: snippet_params[:code],
       language: snippet_params[:language],
       user: current_user,

@@ -29,7 +29,7 @@
       <%= link_to(
             "Log in to Advent of Code",
             "https://adventofcode.com/auth/login",
-            target: :ext,
+            target: :_blank,
             class: "link-explicit link-external"
           ) %>, using either your GitHub account or another OAuth option.
     </li>
@@ -40,7 +40,7 @@
           <%= link_to(
                 "Go to this page",
                 "https://adventofcode.com/leaderboard/private",
-                target: :ext,
+                target: :_blank,
                 class: "link-explicit link-external"
               ) %>, enter the following code <code class="strong"><%= current_user.private_leaderboard %></code> and click [Join].
         </p>
@@ -54,7 +54,7 @@
       <%= link_to(
             "your settings",
             "https://adventofcode.com/settings",
-            target: :ext,
+            target: :_blank,
             class: "link-explicit link-external"
           ) %>. It's the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>.
     </li>

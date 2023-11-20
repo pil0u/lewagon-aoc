@@ -104,6 +104,9 @@ GEM
       thor (~> 1.0)
     byebug (11.1.3)
     chartkick (5.0.4)
+    commonmarker (1.0.0.pre11-arm64-darwin)
+    commonmarker (1.0.0.pre11-x86_64-darwin)
+    commonmarker (1.0.0.pre11-x86_64-linux)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crack (0.4.5)
@@ -466,6 +469,7 @@ DEPENDENCIES
   brakeman (~> 6.0)
   bundler-audit (~> 0.9)
   byebug
+  commonmarker (>= 1.0.0.pre11, < 2)
   devise (~> 4.9)
   dotenv-rails (~> 2.8)
   erb_lint (~> 0.5)

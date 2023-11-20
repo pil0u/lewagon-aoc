@@ -30,6 +30,7 @@
             "Log in to Advent of Code",
             "https://adventofcode.com/auth/login",
             target: :_blank,
+            rel: "noopener",
             class: "link-explicit link-external"
           ) %>, using either your GitHub account or another OAuth option.
     </li>
@@ -41,6 +42,7 @@
                 "Go to this page",
                 "https://adventofcode.com/leaderboard/private",
                 target: :_blank,
+                rel: "noopener",
                 class: "link-explicit link-external"
               ) %>, enter the following code <code class="strong"><%= current_user.private_leaderboard %></code> and click [Join].
         </p>
@@ -55,6 +57,7 @@
             "your settings",
             "https://adventofcode.com/settings",
             target: :_blank,
+            rel: "noopener",
             class: "link-explicit link-external"
           ) %>. It's the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>.
     </li>

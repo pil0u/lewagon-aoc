@@ -122,8 +122,9 @@
 <%= render UserFormComponent.new(user: current_user) %>
 
 <p class="mt-4 italic text-sm opacity-80">
-  If you have completed all these steps and your status remains
-  <span class="not-italic text-aoc-atmospheric">Pending</span> after a data update, please send me a message
-  <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %> with the following details:
+  If you have completed all these steps, <b>waited 10 minutes</b>, and your status remains
+  <span class="not-italic text-aoc-atmospheric">Pending</span>, please send a message in this
+  <%= link_to "Slack thread", "https://lewagon-alumni.slack.com/archives/C02PN711H09/p1700598449505399", class: "link-explicit link-slack" %>
+  with the following details:
   <code class="not-italic strong">id:<%= current_user.id %>;aoc_id:<%= current_user.aoc_id %></code>
 </p>

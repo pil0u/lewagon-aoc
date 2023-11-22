@@ -96,7 +96,7 @@
     class="button"
     data-controller="clipboard"
     data-action="click->clipboard#copy"
-    data-clipboard-content-value="<%= "#{request.base_url}/?referral_code=#{current_user.referral_code}" %>">
+    data-clipboard-content-value="<%= current_user.referral_link(request) %>">
     Copy invite link
   </button>
 </div>

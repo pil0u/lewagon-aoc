@@ -120,6 +120,10 @@ class User < ApplicationRecord
     "R#{uid.to_s.rjust(5, '0')}"
   end
 
+  def referral_link(request)
+    "#{request.base_url}/?referral_code=#{referral_code}"
+  end
+
   def referrer_code
     referrer&.referral_code
   end

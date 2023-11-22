@@ -55,7 +55,7 @@ class PagesController < ApplicationController
   def patrons
     @users = User
              .select("users.uid AS uid, users.username AS username, COUNT(referees.id) AS referrals")
-             .select("CASE WHEN COUNT(referees.id) > 0 THEN CEIL(100 * LN(4)) ELSE 0 END AS aura")
+             .select("CEIL(100 * LN(COUNT(referees.id) + 1)) AS aura")
              .joins("LEFT JOIN users referees ON users.id = referees.referrer_id")
              .group("users.id")
              .order(aura: :desc)

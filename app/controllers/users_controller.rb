@@ -103,6 +103,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :event_awareness, :username)
+    params.require(:user).permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :event_awareness, :favourite_language, :username)
   end
 end

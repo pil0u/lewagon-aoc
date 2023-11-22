@@ -42,7 +42,7 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        <%= link_to "Advent of Code", "https://adventofcode.com/", target: :_blank, rel: "noopener", class: "link-explicit link-external" %>
+        <%= link_to "Advent of Code", "https://adventofcode.com/", target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
         is an Advent calendar of small programming puzzles that you can solve in any programming language.
       </p>
       <p>
@@ -72,7 +72,7 @@
       </p>
       <p>
         Puzzles from past editions are available
-        <%= link_to "here", "https://adventofcode.com/events", target: :ext, class: "link-explicit link-external" %>.
+        <%= link_to "here", "https://adventofcode.com/events", target: :_blank, rel: :noopener, class: "link-explicit link-external" %>.
       </p>
     </div>
   </details>
@@ -92,8 +92,8 @@
       </p>
       <p>
         If you get stuck on a puzzle, you can always
-        <%= link_to "discuss with other Wagoners", Aoc.slack_channel, class: "link-explicit link-slack" %>! This event
-        is about <span class="strong">sharing, learning, and mutual help, irrespective of your skill level</span>.
+        <%= link_to "discuss with other Wagoners", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>!
+        This event is about <span class="strong">sharing, learning, and mutual help, irrespective of your skill level</span>.
         It's also a perfect time to reconnect with your campus/batch 🤙
       </p>
     </div>
@@ -109,7 +109,7 @@
       </p>
       <p>
         You build your squad by assembling your dream team (find people
-        <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %>) and create a squad in your
+        <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>) and create a squad in your
         <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup> in 1 click.
       </p>
       <p>

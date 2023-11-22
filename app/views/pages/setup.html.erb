@@ -30,7 +30,7 @@
             "Log in to Advent of Code",
             "https://adventofcode.com/auth/login",
             target: :_blank,
-            rel: "noopener",
+            rel: :noopener,
             class: "link-explicit link-external"
           ) %>, using either your GitHub account or another OAuth option.
     </li>
@@ -42,7 +42,7 @@
                 "Go to this page",
                 "https://adventofcode.com/leaderboard/private",
                 target: :_blank,
-                rel: "noopener",
+                rel: :noopener,
                 class: "link-explicit link-external"
               ) %>, enter the following code <code class="strong"><%= current_user.private_leaderboard %></code> and click [Join].
         </p>
@@ -57,7 +57,7 @@
             "your settings",
             "https://adventofcode.com/settings",
             target: :_blank,
-            rel: "noopener",
+            rel: :noopener,
             class: "link-explicit link-external"
           ) %>. It's the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>.
     </li>
@@ -124,7 +124,7 @@
 <p class="mt-4 italic text-sm opacity-80">
   If you have completed all these steps, <b>waited 10 minutes</b>, and your status remains
   <span class="not-italic text-aoc-atmospheric">Pending</span>, please send a message in this
-  <%= link_to "Slack thread", "https://lewagon-alumni.slack.com/archives/C02PN711H09/p1700598449505399", class: "link-explicit link-slack" %>
+  <%= link_to "Slack thread", "https://lewagon-alumni.slack.com/archives/C02PN711H09/p1700598449505399", target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
   with the following details:
   <code class="not-italic strong">id:<%= current_user.id %>;aoc_id:<%= current_user.aoc_id %></code>
 </p>

@@ -3,5 +3,5 @@
   <%= link_to "stats", stats_path, class: "link-explicit" %>
   <%= link_to "patrons", patrons_path, class: "link-explicit" %>
   <%= link_to "the wall", messages_path, class: "link-explicit" %>
-  <%= link_to "community", Aoc.slack_channel, class: "link-explicit link-slack" %>
+  <%= link_to "community", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
 </nav>

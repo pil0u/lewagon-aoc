@@ -1,7 +1,36 @@
 <%= render PageTitleComponent.new(title: "Patrons") %>
 
 <div class="my-4 flex flex-col gap-y-4">
-  <p>Test goes here</p>
+  <p>
+    Influencers of Le Wagon, this is your moment.
+  </p>
+
+  <p>
+    Your referral code <code><%= current_user.referral_code %></code> is your fame booster. Share it everywhere to your
+    fellow Wagoners: your batch channel <%= link_to "on Slack", Aoc.slack_channel, class: "link-explicit link-slack" %>,
+    your WhatsApp groups, by mail or pigeon, whatever feels right. You even have a personal link you can share:
+  </p>
+
+  <code
+    class="w-max mx-auto hover:cursor-pointer hover:text-gold active:text-aoc-gray"
+    data-controller="clipboard"
+    data-action="click->clipboard#copy"
+    data-clipboard-content-value="<%= current_user.referral_link(request) %>">
+    <%= current_user.referral_link(request) %>
+  </code>
+
+  <p>
+    Every time someone signs up using your code, you will increase your <span class="strong">aura</span>. Finding people
+    who solve a few puzzles can only help your <span class="strong">aura</span> as well.
+  </p>
+
+  <p>
+    One more thing. The top referrer by December 8th wins a <code>100€</code> Amazon voucher 💸
+  </p>
+
+  <p>
+    Good luck!
+  </p>
 </div>
 
 <table class="block overflow-x-auto whitespace-nowrap w-full max-w-lg mx-auto">
@@ -17,14 +46,14 @@
     <% @users.each do |user| %>
       <tr class="hover:bg-hover">
         <td class="text-center">
-          <%= link_to user[:username], profile_path(user[:uid]), class: "strong hover:text-gold" %>
+          <%= link_to user[:username], profile_path(user[:uid]), class: "hover:text-gold" %>
         </td>
 
         <td class="text-center">
           <%= user[:referrals] %>
         </td>
 
-        <td class="text-center">
+        <td class="text-center strong">
           <%= user[:aura].to_i %>
         </td>
       </tr>

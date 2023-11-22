@@ -2,7 +2,7 @@
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[admin code_of_conduct faq participation stats welcome]
-  before_action      :render_countdown,   only: %i[code_of_conduct faq participation setup stats welcome], if: :render_countdown?
+  before_action      :render_countdown,   only: %i[code_of_conduct faq participation patrons setup stats welcome], if: :render_countdown?
 
   def admin; end
 
@@ -50,6 +50,15 @@ class PagesController < ApplicationController
     end
 
     @cities.sort_by! { |city| [city[:participation_ratio] * -1, city[:vanity_name]] }
+  end
+
+  def patrons
+    @users = User
+             .select("users.uid, users.username, COUNT(referees.id) AS referrals")
+             .select("CEIL(100 * LN(COUNT(referees.id) + 1)) AS aura")
+             .joins("LEFT JOIN users referees ON users.id = referees.referrer_id")
+             .group("users.id")
+             .order(aura: :desc)
   end
 
   def setup

@@ -1,8 +1,8 @@
 <% if user_signed_in? %>
 
 <div class="my-2">
-  <%= link_to "Blazer", target: :_blank, rel: :noopener, blazer_path, class: "button" %>
-  <%= link_to "GoodJob", target: :_blank, rel: :noopener, good_job_path, class: "button" %>
+  <%= link_to "Blazer", blazer_path, target: :_blank, rel: :noopener, class: "button" %>
+  <%= link_to "GoodJob", good_job_path, target: :_blank, rel: :noopener, class: "button" %>
   <%= link_to "/participation", participation_path, class: "button" %>
 </div>
 

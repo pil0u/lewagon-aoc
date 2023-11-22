@@ -85,7 +85,7 @@
   <input type="text" value="<%= current_user.referral_code %>" class="input" disabled autocomplete="off">
 
   <button
-    class="button"
+    class="button active:text-aoc-gray"
     data-controller="clipboard"
     data-action="click->clipboard#copy"
     data-clipboard-content-value="<%= current_user.referral_code %>">
@@ -93,7 +93,7 @@
   </button>
 
   <button
-    class="button"
+    class="button active:text-aoc-gray"
     data-controller="clipboard"
     data-action="click->clipboard#copy"
     data-clipboard-content-value="<%= current_user.referral_link(request) %>">

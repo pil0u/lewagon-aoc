@@ -58,7 +58,8 @@ class PagesController < ApplicationController
              .select("CEIL(100 * LN(COUNT(referees.id) + 1)) AS aura")
              .joins("LEFT JOIN users referees ON users.id = referees.referrer_id")
              .group("users.id")
-             .order(aura: :desc)
+             .having("CEIL(100 * LN(COUNT(referees.id) + 1)) > 0")
+             .order(aura: :desc, referrals: :desc)
   end
 
   def setup

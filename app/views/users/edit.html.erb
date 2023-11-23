@@ -55,7 +55,7 @@
   <% if current_user.linked_slack? %>
 
     <div class="flex items-center gap-x-3">
-      <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_deep_link, class: "link-slack" %>!</span>
+      <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_link, target: :_blank, rel: :noopener, class: "link-slack" %>!</span>
       <%= button_to "Unlink me", user_slack_omniauth_remove_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
     </div>
 

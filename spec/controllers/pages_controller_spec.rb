@@ -15,15 +15,13 @@ RSpec.describe PagesController do
       expect(response).to have_http_status :redirect
     end
 
-    it "queries the username, the amount of referees and the aura for every User" do
+    it "queries the username, the amount of referees and the aura for every User with positive aura" do
       sign_in(referrer)
       get :patrons
 
       expect(@controller.instance_variable_get(:@users).map(&:as_json)).to contain_exactly(
         hash_including("uid" => "1", "username" => "pil0u", "referrals" => 2, "aura" => 110.0),
-        hash_including("uid" => "2", "username" => "Aquaj", "referrals" => 1, "aura" => 70.0),
-        hash_including("uid" => "3", "username" => "wJoenn", "referrals" => 0, "aura" => 0.0),
-        hash_including("uid" => "4", "username" => "Aurrou", "referrals" => 0, "aura" => 0.0)
+        hash_including("uid" => "2", "username" => "Aquaj", "referrals" => 1, "aura" => 70.0)
       )
     end
   end

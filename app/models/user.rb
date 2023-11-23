@@ -26,24 +26,40 @@ class User < ApplicationRecord
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
-
   validates :private_leaderboard, presence: true
+  validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
-  validate :not_referring_self
+  validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
+  validate :city_cannot_be_changed_if_present, on: :update, if: :city_id_changed?
+  validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
+  validate :referrer_cannot_be_self,           on: :update
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
 
+  enum :event_awareness, {
+    slack_aoc: 0,
+    slack_general: 1,
+    slack_campus: 2,
+    slack_batch: 3,
+    newsletter: 4,
+    linkedin: 5,
+    facebook: 6,
+    instagram: 7,
+    event_brussels: 8,
+    event_london: 9
+  }
+
   before_validation :assign_private_leaderboard, on: :create
 
   def self.from_kitt(auth)
-    batches = auth.info&.schoolings
-    oldest_batch = batches.min_by { |batch| batch.camp.starts_at }
+    oldest_batch = auth.info&.schoolings&.min_by { |batch| batch.camp.starts_at }
 
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
+
       u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
       u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
     end
@@ -51,15 +67,13 @@ class User < ApplicationRecord
     user.github_username = auth.info.github_nickname
 
     user.save
-
     user
   end
 
   def self.find_by_referral_code(code)
-    uid = code&.gsub(/R0*/, "")&.to_i
-    return if uid.nil?
+    return unless code&.match?(/R\d{5}/)
 
-    User.find_by(uid:)
+    User.find_by(uid: code.gsub(/R0*/, "").to_i)
   end
 
   def admin?
@@ -78,8 +92,8 @@ class User < ApplicationRecord
     slack_id.present?
   end
 
-  def slack_deep_link
-    "slack://user?team=T02NE0241&id=#{slack_id}"
+  def slack_link
+    "https://lewagon-alumni.slack.com/team/#{slack_id}"
   end
 
   def solved?(day, challenge)
@@ -107,14 +121,30 @@ class User < ApplicationRecord
     "R#{uid.to_s.rjust(5, '0')}"
   end
 
+  def referral_link(request)
+    "#{request.base_url}/?referral_code=#{referral_code}"
+  end
+
   def referrer_code
     referrer&.referral_code
   end
 
   private
 
-  def not_referring_self
-    errors.add(:referrer, "must not be you") if referrer == self
+  def batch_cannot_be_changed
+    errors.add(:batch, "can't be changed")
+  end
+
+  def city_cannot_be_changed_if_present
+    errors.add(:city, "can't be changed") if city_id_was.present?
+  end
+
+  def referrer_must_exist
+    errors.add(:referrer, "must exist") unless User.exists?(referrer_id)
+  end
+
+  def referrer_cannot_be_self
+    errors.add(:referrer, "can't be you (nice try!)") if referrer == self
   end
 
   def assign_private_leaderboard

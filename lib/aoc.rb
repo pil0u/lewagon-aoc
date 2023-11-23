@@ -50,7 +50,7 @@ class Aoc
   end
 
   def self.slack_channel
-    "slack://channel?team=T02NE0241&id=C02PN711H09"
+    "https://lewagon-alumni.slack.com/archives/C02PN711H09"
   end
 
   def self.url(day)

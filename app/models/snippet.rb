@@ -6,10 +6,13 @@ class Snippet < ApplicationRecord
     cpp: "C++",
     crystal: "Crystal",
     csharp: "C#",
+    dart: "Dart",
+    elixir: "Elixir",
     go: "Go",
     haskell: "Haskell",
     java: "Java",
     javascript: "JavaScript",
+    kotlin: "Kotlin",
     matlab: "MATLAB",
     ocaml: "OCaml",
     pascal: "Pascal",
@@ -19,6 +22,7 @@ class Snippet < ApplicationRecord
     ruby: "Ruby",
     rust: "Rust",
     sql: "SQL",
+    swift: "Swift",
     typescript: "TypeScript"
   }.freeze
 

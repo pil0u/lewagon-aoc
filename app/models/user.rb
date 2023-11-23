@@ -92,8 +92,8 @@ class User < ApplicationRecord
     slack_id.present?
   end
 
-  def slack_deep_link
-    "slack://user?team=T02NE0241&id=#{slack_id}"
+  def slack_link
+    "https://lewagon-alumni.slack.com/team/#{slack_id}"
   end
 
   def solved?(day, challenge)

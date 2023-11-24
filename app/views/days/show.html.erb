@@ -4,7 +4,7 @@
 
     <% if @day <= Aoc.latest_day %>
       <span>·</span>
-      <%= link_to "link to puzzle", Aoc.url(@day), target: :ext, class: "link-explicit link-external" %>
+      <%= link_to "link to puzzle", Aoc.url(@day), target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
     <% end %>
   </div>
 

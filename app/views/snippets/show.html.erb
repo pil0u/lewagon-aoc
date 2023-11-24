@@ -9,7 +9,7 @@
 <%= form_with model: @snippet, url: snippet_path, class: "my-8 w-full flex flex-col gap-y-2" do |f| %>
   <%= f.text_area :code, placeholder: "Paste your code here", rows: 8, class: "w-full text-sm resize input", wrap: :off %>
   <div class="flex gap-x-2">
-    <%= f.select(:language, Snippet::LANGUAGES.invert.to_a, { prompt: "What language?" }, class: "input") %>
+    <%= f.select(:language, Snippet::LANGUAGES.invert.to_a, { prompt: "What language?", selected: current_user.favourite_language }, class: "input") %>
     <%= f.submit "Submit", class: "w-fit self-end button" %>
   </div>
 <% end %>

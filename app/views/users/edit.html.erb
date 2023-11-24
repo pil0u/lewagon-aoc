@@ -55,7 +55,7 @@
   <% if current_user.linked_slack? %>
 
     <div class="flex items-center gap-x-3">
-      <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_deep_link, class: "link-slack" %>!</span>
+      <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_link, target: :_blank, rel: :noopener, class: "link-slack" %>!</span>
       <%= button_to "Unlink me", user_slack_omniauth_remove_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
     </div>
 
@@ -77,14 +77,15 @@
 <%= render PageTitleComponent.new(title: "Referral") %>
 
 <p class="my-4">
-  When you share the event to your friends, ask them to add this referral code during the setup. This will boost your aura.
+  When you share the event to your friends, ask them to add this referral code during the setup. This will boost your
+  <%= link_to "aura", patrons_path, class: "strong hover:text-gold" %>.
 </p>
 
 <div class="my-4 flex flex-col justify-center gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
   <input type="text" value="<%= current_user.referral_code %>" class="input" disabled autocomplete="off">
 
   <button
-    class="button"
+    class="button active:text-aoc-gray"
     data-controller="clipboard"
     data-action="click->clipboard#copy"
     data-clipboard-content-value="<%= current_user.referral_code %>">
@@ -92,10 +93,10 @@
   </button>
 
   <button
-    class="button"
+    class="button active:text-aoc-gray"
     data-controller="clipboard"
     data-action="click->clipboard#copy"
-    data-clipboard-content-value="<%= "#{request.base_url}/?referral_code=#{current_user.referral_code}" %>">
+    data-clipboard-content-value="<%= current_user.referral_link(request) %>">
     Copy invite link
   </button>
 </div>

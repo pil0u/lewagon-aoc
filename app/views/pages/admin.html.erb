@@ -1,8 +1,8 @@
 <% if user_signed_in? %>
 
 <div class="my-2">
-  <%= link_to "Blazer", blazer_path, class: "button" %>
-  <%= link_to "GoodJob", good_job_path, class: "button" %>
+  <%= link_to "Blazer", blazer_path, target: :_blank, rel: :noopener, class: "button" %>
+  <%= link_to "GoodJob", good_job_path, target: :_blank, rel: :noopener, class: "button" %>
   <%= link_to "/participation", participation_path, class: "button" %>
 </div>
 
@@ -16,14 +16,14 @@
 
   <%= form_with url: impersonate_path, method: :post do |form| %>
     <%= form.label :via_uid, "Sign in as:" %>
-    <%= form.text_field :uidentifier, placeholder: "uid", class: "input" %>
+    <%= form.text_field :identifier, placeholder: "uid", class: "input" %>
     <%= form.hidden_field :attribute, value: "uid" %>
     <%= form.submit "Go", class: "button" %>
   <% end %>
 
   <%= form_with url: impersonate_path, method: :post do |form| %>
     <%= form.label :via_aoc_id, "Sign in as:" %>
-    <%= form.text_field :aoc_identifier, placeholder: "aoc_id", class: "input" %>
+    <%= form.text_field :identifier, placeholder: "aoc_id", class: "input" %>
     <%= form.hidden_field :attribute, value: "aoc_id" %>
     <%= form.submit "Go", class: "button" %>
   <% end %>

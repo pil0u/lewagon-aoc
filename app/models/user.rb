@@ -27,6 +27,7 @@ class User < ApplicationRecord
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
   validates :private_leaderboard, presence: true
+  validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
   validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
   validate :city_cannot_be_changed_if_present, on: :update, if: :city_id_changed?
@@ -37,6 +38,19 @@ class User < ApplicationRecord
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
+
+  enum :event_awareness, {
+    slack_aoc: 0,
+    slack_general: 1,
+    slack_campus: 2,
+    slack_batch: 3,
+    newsletter: 4,
+    linkedin: 5,
+    facebook: 6,
+    instagram: 7,
+    event_brussels: 8,
+    event_london: 9
+  }
 
   before_validation :assign_private_leaderboard, on: :create
 
@@ -78,8 +92,8 @@ class User < ApplicationRecord
     slack_id.present?
   end
 
-  def slack_deep_link
-    "slack://user?team=T02NE0241&id=#{slack_id}"
+  def slack_link
+    "https://lewagon-alumni.slack.com/team/#{slack_id}"
   end
 
   def solved?(day, challenge)
@@ -105,6 +119,10 @@ class User < ApplicationRecord
 
   def referral_code
     "R#{uid.to_s.rjust(5, '0')}"
+  end
+
+  def referral_link(request)
+    "#{request.base_url}/?referral_code=#{referral_code}"
   end
 
   def referrer_code

@@ -100,10 +100,6 @@
     content: "\3d";
   }
 
-  .fa-gear::before {
-    content: "\f013";
-  }
-
   .fa-github::before {
     content: "\f09b";
   }

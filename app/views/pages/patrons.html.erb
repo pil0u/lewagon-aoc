@@ -54,15 +54,15 @@
     <% @users.each do |user| %>
       <tr class="hover:bg-hover">
         <td class="text-center">
-          <%= link_to user[:username], profile_path(user[:uid]), class: "hover:text-gold" %>
+          <%= link_to user["username"], profile_path(user["uid"]), class: "hover:text-gold" %>
         </td>
 
         <td class="text-center">
-          <%= user[:referrals] %>
+          <%= user["referrals"] %>
         </td>
 
         <td class="text-center strong">
-          <%= user[:aura].to_i %>
+          <%= user["aura"].to_i %>
         </td>
       </tr>
     <% end %>

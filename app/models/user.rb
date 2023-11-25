@@ -76,6 +76,32 @@ class User < ApplicationRecord
     User.find_by(uid: code.gsub(/R0*/, "").to_i)
   end
 
+  def self.with_aura
+    query = <<-SQL.squish
+      SELECT
+        users.uid,
+        users.username,
+        COUNT(DISTINCT referees.id) AS referrals,
+        CEIL(100 * (
+          LN(COUNT(DISTINCT referees.id) + 1) +
+          2 * LN(COUNT(CASE WHEN referees_with_completion.completions_count = 1 THEN referees.id END) + 1) +
+          3 * LN(COUNT(CASE WHEN referees_with_completion.completions_count = 2 THEN referees.id END) + 1) +
+          5 * LN(COUNT(CASE WHEN referees_with_completion.completions_count > 2 THEN referees.id END) + 1)
+        )) AS aura
+      FROM users
+      LEFT JOIN users referees ON users.id = referees.referrer_id
+      LEFT JOIN (
+        SELECT user_id, COUNT(id) AS completions_count
+        FROM completions
+        GROUP BY user_id
+      ) referees_with_completion ON referees.id = referees_with_completion.user_id
+      GROUP BY users.id
+      HAVING COUNT(referees.id) > 0;
+    SQL
+
+    ActiveRecord::Base.connection.exec_query(query, "SQL")
+  end
+
   def admin?
     uid.in?(ADMINS.values)
   end

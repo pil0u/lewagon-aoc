@@ -11,7 +11,8 @@ module Scores
 
     def get
       @scores ||= City # rubocop:disable Naming/MemoizedInstanceVariableName
-                  .includes(:users)
+                  .joins(:users)
+                  .distinct
                   .map { |city| { **identity_of(city), **stats_of(city) } }
                   .sort_by { |city| city[:order] || Float::INFINITY }
     end

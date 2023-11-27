@@ -2,5 +2,8 @@
 
 module Footer
   class NavComponent < ApplicationComponent
+    def initialize(user:)
+      @user = user
+    end
   end
 end

@@ -65,7 +65,7 @@ class User < ApplicationRecord
     end
 
     user.github_username = auth.info.github_nickname
-    user.original_city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
+    user.original_city_id = City.find_or_initialize_by(name: oldest_batch&.city&.name).id
 
     user.save
     user

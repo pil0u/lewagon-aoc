@@ -31,7 +31,6 @@ class User < ApplicationRecord
   validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
   validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
-  validate :city_cannot_be_changed_if_present, on: :update, if: :city_id_changed?
   validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
   validate :referrer_cannot_be_self,           on: :update
 
@@ -135,10 +134,6 @@ class User < ApplicationRecord
 
   def batch_cannot_be_changed
     errors.add(:batch, "can't be changed")
-  end
-
-  def city_cannot_be_changed_if_present
-    errors.add(:city, "can't be changed") if city_id_was.present?
   end
 
   def referrer_must_exist

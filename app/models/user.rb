@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
+  belongs_to :original_city, class_name: "City", inverse_of: :original_users, optional: true
   belongs_to :squad, optional: true, touch: true
   belongs_to :referrer, class_name: "User", optional: true
 
@@ -30,7 +31,6 @@ class User < ApplicationRecord
   validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
   validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
-  validate :city_cannot_be_changed_if_present, on: :update, if: :city_id_changed?
   validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
   validate :referrer_cannot_be_self,           on: :update
 
@@ -55,7 +55,7 @@ class User < ApplicationRecord
   before_validation :assign_private_leaderboard, on: :create
 
   def self.from_kitt(auth)
-    oldest_batch = auth.info&.schoolings&.min_by { |batch| batch.camp.starts_at }
+    oldest_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
 
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
@@ -65,6 +65,7 @@ class User < ApplicationRecord
     end
 
     user.github_username = auth.info.github_nickname
+    user.original_city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
 
     user.save
     user
@@ -133,10 +134,6 @@ class User < ApplicationRecord
 
   def batch_cannot_be_changed
     errors.add(:batch, "can't be changed")
-  end
-
-  def city_cannot_be_changed_if_present
-    errors.add(:city, "can't be changed") if city_id_was.present?
   end
 
   def referrer_must_exist

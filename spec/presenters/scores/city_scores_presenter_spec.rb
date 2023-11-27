@@ -31,7 +31,7 @@ RSpec.describe Scores::CityScoresPresenter do
     ]
   end
 
-  it "filters campuses that don't have at leats one member" do
+  it "filters out campuses without any member" do
     expect(described_class.new(input).get.length).to eq 2
   end
 

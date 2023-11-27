@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
+  belongs_to :original_city, class_name: "City", inverse_of: :original_users, optional: true
   belongs_to :squad, optional: true, touch: true
   belongs_to :referrer, class_name: "User", optional: true
 

@@ -13,7 +13,7 @@ module Scores
       @scores ||= City # rubocop:disable Naming/MemoizedInstanceVariableName
                   .includes(:users)
                   .filter_map { |city| { **identity_of(city), **stats_of(city) } if city.users.any? }
-                  .sort_by { |city| city[:order] || Float::INFINITY }
+                  .sort_by { |city| city[:order] || (city[:top_contributors].to_f / city[:total_members]) }
     end
 
     def identity_of(city)

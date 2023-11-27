@@ -55,17 +55,17 @@ class User < ApplicationRecord
   before_validation :assign_private_leaderboard, on: :create
 
   def self.from_kitt(auth)
-    oldest_batch = auth.info&.schoolings&.min_by { |batch| batch.camp.starts_at }
+    oldest_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
 
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
 
       u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
       u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
-      u.original_city = u.city
     end
 
     user.github_username = auth.info.github_nickname
+    user.original_city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
 
     user.save
     user

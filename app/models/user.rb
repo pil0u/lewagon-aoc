@@ -63,6 +63,7 @@ class User < ApplicationRecord
 
       u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
       u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
+      u.original_city = u.city
     end
 
     user.github_username = auth.info.github_nickname

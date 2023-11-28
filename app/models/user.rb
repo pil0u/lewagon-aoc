@@ -77,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def self.with_aura
-    query = <<-SQL.squish
+    query = <<~SQL.squish
       SELECT
         users.uid,
         users.username,

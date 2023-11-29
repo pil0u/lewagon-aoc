@@ -7,13 +7,15 @@
   </p>
 </div>
 
-<table class="block overflow-x-auto whitespace-nowrap w-full max-w-lg mx-auto">
+<table class="block overflow-x-auto whitespace-nowrap w-full mx-auto">
   <thead>
     <tr class="border-b border-aoc-gray-darker">
       <th class="font-light w-full"></th>
-      <th class="font-light min-w-[6rem]">Alumni</th>
-      <th class="font-light min-w-[6rem]">Participants</th>
-      <th class="font-light min-w-[6rem]">%</th>
+      <th class="font-light min-w-[8rem]">Participants</th>
+      <th class="font-light min-w-[8rem]">Required</th>
+      <th class="font-light min-w-[8rem]">%</th>
+      <th class="font-light min-w-[8rem]">Total Alumni</th>
+      <th class="font-light min-w-[8rem]">%</th>
     </tr>
   </thead>
 
@@ -25,11 +27,22 @@
         </td>
 
         <td class="text-center">
-          <%= city[:size] %>
+          <%= city[:n_participants] %>
         </td>
 
         <td class="text-center">
-          <%= city[:n_participants] %>
+          <%= city[:top_contributors] %>
+        </td>
+
+        <td class="py-1 strong text-center">
+          <%= number_to_percentage(
+                city[:top_contributors_ratio] * 100,
+                precision: city[:top_contributors_ratio] == 0 ? 0 : 2
+              ) %>
+        </td>
+
+        <td class="text-center">
+          <%= city[:size] %>
         </td>
 
         <td class="py-1 strong text-center">

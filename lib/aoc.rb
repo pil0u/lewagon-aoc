@@ -2,11 +2,11 @@
 
 class Aoc
   def self.begin_time
-    Time.new(2023, 12, 1, 0, 0, 0, "-05:00")
+    Time.new(2023, 12, 1, 0, 0, 0, Time.find_zone!("EST"))
   end
 
   def self.end_time
-    Time.new(2023, 12, 25, 23, 59, 59, "-05:00")
+    Time.new(2023, 12, 25, 23, 59, 59, Time.find_zone!("EST"))
   end
 
   def self.in_progress?
@@ -28,12 +28,12 @@ class Aoc
     Time.new(2023, 11, 17, 8, 30, 0, Time.find_zone!("CET"))
   end
 
-  def self.lewagon_end_time
-    Time.new(2023, 12, 31, 11, 30, 0, Time.find_zone!("CET"))
+  def self.lewagon_lock_time
+    Time.new(2023, 12, 8, 17, 30, 0, Time.find_zone!("CET"))
   end
 
-  def self.lock_time
-    Time.new(2023, 12, 8, 17, 30, 0, Time.find_zone!("CET"))
+  def self.lewagon_end_time
+    Time.new(2023, 12, 31, 11, 30, 0, Time.find_zone!("CET"))
   end
 
   def self.next_puzzle_time

@@ -56,16 +56,18 @@ OVERMIND_PROCFILE=Procfile.dev
 
 Then, instead of the usual `bin/dev`, you have to run `overmind s`.
 
-#### Use SSL
+#### Use SSL (on macOS)
 
 In short: create an SSL certificate for your localhost, store it in your keychain and run the server using that certificate.
 
 ```zsh
 mkcert localhost
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ./localhost.pem
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ./localhost.pem # macOS-specific
 mv localhost* tmp/ # this is the tmp folder in the project root
 bin/dev ssl
 ```
+
+Untested on Linux.
 
 ### Launch webapp on local mobile browser
 

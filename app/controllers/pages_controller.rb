@@ -17,7 +17,7 @@ class PagesController < ApplicationController
     ].map do |day|
       {
         parts_solved: user_completions[day] || 0,
-        release_time: Aoc.begin_time.change(day:)
+        release_time: Aoc.release_time(day)
       }
     end
 

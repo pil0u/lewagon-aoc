@@ -45,6 +45,10 @@ class Aoc
     (now + 1.day).midnight
   end
 
+  def self.release_time(day)
+    Time.new(2023, 12, day, 0, 0, 0, Time.find_zone!("EST"))
+  end
+
   def self.private_leaderboards
     ENV.fetch("AOC_ROOMS").split(",")
   end

@@ -22,7 +22,7 @@ class PagesController < ApplicationController
     end
 
     @next_puzzle_time = Aoc.next_puzzle_time
-    @now = Time.now.getlocal("-05:00")
+    @now = Aoc.event_timezone.now
   end
 
   def code_of_conduct

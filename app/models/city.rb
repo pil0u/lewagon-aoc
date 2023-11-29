@@ -24,10 +24,6 @@ class City < ApplicationRecord
     self.class.slugify(name)
   end
 
-  def top_contributors
-    [10, (size * 0.03).ceil].max
-  end
-
   private
 
   def set_default_vanity_name

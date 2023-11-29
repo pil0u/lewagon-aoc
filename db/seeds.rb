@@ -82,7 +82,7 @@ campuses = [
 
 campuses.each do |campus|
   c = City.find_or_create_by(name: campus[:name])
-  c.update(size: campus[:size])
+  c.update(size: campus[:size], top_contributors: campus[:top_contributors])
 end
 Rails.logger.info "✔ Campuses initialized"
 

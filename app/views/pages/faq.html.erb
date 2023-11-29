@@ -175,32 +175,34 @@
       <span class="text-center underline">Campus scores</span>
 
       <p>
-        Ranking campuses is hard, because Alumni per campus vary a lot.
+        Ranking campuses is hard, because the number of Alumni per campus varies a lot.
       </p>
       <p>
         For <em>each challenge</em>, the campus' top <code class="strong">N</code> individual scores are taken into
-        account.
+        account - also called the <span class="strong">top contributors</span>.
       </p>
       <p>
-        <code>N</code> is determined by your <span class="strong">campus' size</span>: it's equals either to
-        <code class="strong">3%</code> of your campus' size, or <code class="strong">10</code>, whichever is
-        <em>greater</em>.
+        <code>N</code> depends on your <span class="strong">campus' size</span>: it's equal either to
+        <code class="strong">5% * 2023 Alumni + 3% * 2022 Alumni + 1% * remaining Alumni</code> of your campus, or
+        <code class="strong">10</code>, whichever is <em>greater</em>.
       </p>
       <p>
         Examples:
         <ul class="list-disc list-inside">
           <li>
-            Berlin's campus has graduated <code>1839</code> Alumni. 3% of 1839 is 55.17 (ceiled to <code>56</code>),
-            thus Berlin's <code>N</code> is equal to <code class="strong">56</code>.
+            Suppose campus A has graduated 600 Alumni: 300 in 2023, 200 in 2022 and 100 between 2018 and
+            2021. 5% * 300 + 3% * 200 + 1% * 100 = 15 + 6 + 1 = <code>22</code>, thus this campus' <code>N</code> is
+            equal to <code class="strong">22</code>.
           </li>
           <li>
-            Stockholm's campus has graduated <code>51</code> Alumni. 3% of 51 is 1.53 (ceiled to <code>2</code>), thus
-            Stockholm's <code>N</code> is equal to <code class="strong">10</code>.
+            Suppose campus B opened in 2023 and has graduated <code>51</code> Alumni already.
+            5% * 51 + 3% * 0 + 1% * 0 = <code>2.55</code>, thus this campus' <code>N</code> is equal to
+            <code class="strong">10</code>.
           </li>
         </ul>
       </p>
       <p>
-        Campus score, for <em>each challenge</em>, is
+        The campus score, for <em>each challenge</em>, is
         <span class="strong">the average of the top <code>N</code> individual scores</span>. The global campus score is
         the sum of these averages for all challenges.
       </p>
@@ -208,11 +210,11 @@
         Examples:
         <ul class="list-disc list-inside">
           <li>
-            Stockholm's <code>N</code> is equal to <code>10</code>.<br>
-            12 people from Stockholm join the event with these scores:<br>
+            Campus A's <code>N</code> is equal to <code>10</code>.<br>
+            12 people from campus A join the event with these scores:<br>
             <code>day 1 part 1 | [50, 50, 50, 48, 48, 45, 36, 25, 25, 25, 25, 0]</code><br>
             <code>day 1 part 2 | [50, 50, 50, 50, 40, 25, 25, 0, 0, 0, 0, 0]</code><br>
-            Stockholm's score is the sum of each challenge average of the 10 participants with the highest scores among
+            Campus A's score is the sum of each challenge average of the 10 participants with the highest scores among
             the 12 participants, so
             <code>
               <span class="strong">40.2</span> for day 1 part 1 + <span class="strong">29</span> for day 1 part 2 =
@@ -220,11 +222,11 @@
             </code>.
           </li>
           <li>
-            Berlin's <code>N</code> is equal to <code>56</code>.<br>
-            12 people from Berlin join the event with these scores:<br>
+            Campus B's <code>N</code> is equal to <code>22</code>.<br>
+            12 people from campus B join the event with these scores:<br>
             <code>day 1 part 1 | [50, 50, 50, 48, 48, 45, 36, 25, 25, 25, 25, 0]</code><br>
             <code>day 1 part 2 | [50, 50, 50, 50, 40, 25, 25, 0, 0, 0, 0, 0]</code><br>
-            Berlin's score is <code class="strong">13</code>.
+            Campus B's score is <code class="strong">33</code>.
           </li>
         </ul>
       </p>

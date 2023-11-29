@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 # Initialize unique state row
-State.create!(
-  {
-    fetch_api_begin: Time.at(0).utc,
-    fetch_api_end: Time.at(0).utc
-  }
-)
-Rails.logger.info "✔ States initialized"
+unless State.exists?
+  State.create!(
+    {
+      fetch_api_begin: Time.at(0).utc,
+      fetch_api_end: Time.at(0).utc
+    }
+  )
+  Rails.logger.info "✔ States initialized"
+end
 
 # Initialize campuses
 if Rails.env.development?
@@ -84,7 +86,7 @@ campuses.each do |campus|
   c = City.find_or_create_by(name: campus[:name])
   c.update(size: campus[:size], top_contributors: campus[:top_contributors])
 end
-Rails.logger.info "✔ Campuses initialized"
+Rails.logger.info "✔ Campuses upserted"
 
 # Initialize some users in development
 if Rails.env.development?

@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :completion do
-    day { (1..25).sample }
-    challenge { (1..2).to_a.sample }
+    day { rand(1..25) }
+    challenge { rand(1..2) }
     association :user
   end
 end

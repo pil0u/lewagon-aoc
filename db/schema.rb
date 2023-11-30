@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_19_105530) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_27_171245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -377,6 +377,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_19_105530) do
     t.integer "event_awareness"
     t.string "favourite_language"
     t.string "github_username"
+    t.bigint "original_city_id"
     t.string "private_leaderboard"
     t.string "provider"
     t.bigint "referrer_id"
@@ -393,6 +394,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_19_105530) do
     t.index ["aoc_id"], name: "index_users_on_aoc_id", unique: true
     t.index ["batch_id"], name: "index_users_on_batch_id"
     t.index ["city_id"], name: "index_users_on_city_id"
+    t.index ["original_city_id"], name: "index_users_on_original_city_id"
     t.index ["referrer_id"], name: "index_users_on_referrer_id"
   end
 
@@ -410,5 +412,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_19_105530) do
   add_foreign_key "squad_scores", "squads"
   add_foreign_key "users", "batches"
   add_foreign_key "users", "cities"
+  add_foreign_key "users", "cities", column: "original_city_id"
   add_foreign_key "users", "users", column: "referrer_id"
 end

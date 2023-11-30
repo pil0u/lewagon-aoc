@@ -106,6 +106,5 @@ class UsersController < ApplicationController
     params
       .require(:user)
       .permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :event_awareness, :favourite_language, :username)
-      .compact_blank
   end
 end

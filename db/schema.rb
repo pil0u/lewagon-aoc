@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_27_171245) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_30_162723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -258,6 +258,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_27_171245) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "reactions", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.bigint "snippet_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["snippet_id"], name: "index_reactions_on_snippet_id"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
+  end
+
   create_table "snippets", force: :cascade do |t|
     t.integer "challenge"
     t.text "code"
@@ -405,6 +415,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_27_171245) do
   add_foreign_key "insanity_points", "users"
   add_foreign_key "insanity_scores", "users"
   add_foreign_key "messages", "users"
+  add_foreign_key "reactions", "snippets"
+  add_foreign_key "reactions", "users"
   add_foreign_key "snippets", "users"
   add_foreign_key "solo_points", "users"
   add_foreign_key "solo_scores", "users"

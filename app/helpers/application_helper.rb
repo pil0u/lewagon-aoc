@@ -19,6 +19,6 @@ module ApplicationHelper
   DEFAULT_THEME = "base16-ocean.dark"
 
   def render_markdown(commonmarkdown)
-    Commonmarker.to_html(@snippet.code, plugins: { syntax_highlighter: { theme: DEFAULT_THEME } })
+    Commonmarker.to_html(commonmarkdown, plugins: { syntax_highlighter: { theme: DEFAULT_THEME } })
   end
 end

@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Ranks::CityScores do
-  let(:bordeaux) { create :city, name: "Bordeaux", size: 60 }
-  let(:brussels) { create :city, name: "Brussels", size: 10 }
+  let(:bordeaux) { create :city, name: "Bordeaux", size: 60, top_contributors: 10 }
+  let(:brussels) { create :city, name: "Brussels", size: 10, top_contributors: 10 }
 
   let(:input) do
     [

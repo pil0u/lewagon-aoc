@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe Scores::CityScores do
   let(:state) { create(:state, completions_fetched: 6, fetch_api_end: Time.zone.now) }
 
-  let(:bordeaux) { create :city, name: "Bordeaux", size: 10 }
-  let(:brussels) { create :city, name: "Brussels", size: 10 }
+  let(:bordeaux) { create :city, name: "Bordeaux", size: 10, top_contributors: 10 }
+  let(:brussels) { create :city, name: "Brussels", size: 10, top_contributors: 10 }
   let(:city_points) do
     [
       { day: 1, challenge: 1, city_id: brussels.id, contributor_count: 2, total_score: 96, score: 8.00 },

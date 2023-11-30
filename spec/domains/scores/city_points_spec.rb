@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Scores::CityPoints do
   let!(:state) { create :state, completions_fetched: solo_points.count, fetch_api_end: Time.zone.now }
-  let(:brussels) { create(:city, name: "Brussels", size: 400) }
+  let(:brussels) { create(:city, name: "Brussels", size: 400, top_contributors: 12) }
   let(:brussels_users) { create_list(:user, 18, city: brussels) }
   let(:brussels_points) do
     [
@@ -17,7 +17,7 @@ RSpec.describe Scores::CityPoints do
     ]
   end
 
-  let(:bordeaux) { create(:city, name: "Bordeaux", size: 400) }
+  let(:bordeaux) { create(:city, name: "Bordeaux", size: 400, top_contributors: 12) }
   let(:bordeaux_users) { create_list(:user, 18, city: bordeaux) }
   let(:bordeaux_points) do
     [
@@ -71,20 +71,15 @@ RSpec.describe Scores::CityPoints do
       ]
     end
 
-    before do
-      brussels.update!(size: 380)
-    end
-
-    # 3% == 11.4 -> 12 for size == 380
-    it "averages the top 3% of alumni scores for each challenge" do
+    it "averages the scores of the top contributors for each challenge" do
       expect(described_class.get).to contain_exactly(
-        # (50 + 46).to_f / (380 * .03)
+        # (50 + 46).to_f / 12
         hash_including(day: 1, challenge: 1, city_id: brussels.id, total_score: 96, score: 8.00, contributor_count: 2),
-        # (48).to_f / (380 * .03)
+        # (48).to_f / 12
         hash_including(day: 1, challenge: 2, city_id: brussels.id, total_score: 48, score: 4.00, contributor_count: 1),
-        # (30 + 48).to_f / (380 * .03)
+        # (30 + 48).to_f / 12
         hash_including(day: 2, challenge: 1, city_id: brussels.id, total_score: 78, score: 6.50, contributor_count: 2),
-        # (20 * 12).to_f / (380 * .03) -- checks we're properly limiting the sum to the top N
+        # (20 * 12).to_f / 12 -- checks we're properly limiting the sum to the top N
         hash_including(day: 3, challenge: 1, city_id: brussels.id, total_score: 360, score: 30, contributor_count: 14)
       )
     end
@@ -94,10 +89,9 @@ RSpec.describe Scores::CityPoints do
     let(:solo_points) { brussels_points }
 
     before do
-      brussels.update!(size: 80)
+      brussels.update!(size: 80, top_contributors: 10)
     end
 
-    # 3% == 2.4 -> 3 for size == 80
     it "averages the top 10 alumni scores for each challenge" do
       expect(described_class.get).to contain_exactly(
         # (50 + 46).to_f / 10

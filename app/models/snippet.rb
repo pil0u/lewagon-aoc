@@ -15,6 +15,7 @@ class Snippet < ApplicationRecord
     java: "Java",
     javascript: "JavaScript",
     kotlin: "Kotlin",
+    markdown: "Markdown",
     matlab: "MATLAB",
     ocaml: "OCaml",
     pascal: "Pascal",

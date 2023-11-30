@@ -14,7 +14,7 @@ module Snippets
     end
 
     def markdown_wrapped(code, source_language:)
-      return code if code.match?(/```/)
+      return code if code.match?(/```/) || source_language&.to_sym == :markdown
 
       <<~CODE
         ```#{source_language}

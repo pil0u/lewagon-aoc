@@ -6,7 +6,7 @@ class Reaction < ApplicationRecord
 
   validates :content, presence: true, inclusion: %w[clapping learning mind_blown]
 
-  # validate :cannot_vote_for_self
+  validate :cannot_vote_for_self
   validate :max_one_reaction_per_snippet_per_user
 
   def cannot_vote_for_self

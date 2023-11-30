@@ -103,6 +103,14 @@
     @apply bg-aoc-gray-dark rounded-full group-hover:bg-aoc-gray;
   }
 
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   .strong {
     @apply text-white;
 

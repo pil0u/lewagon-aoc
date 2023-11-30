@@ -9,9 +9,9 @@
 
   <div class="pt-8 w-full flex items-center justify-between">
     <div class="flex items-center gap-4">
-      <%= render Snippets::ReactionComponent.new(snippet: @snippet, emote: :clapping, user: @user) %>
-      <%= render Snippets::ReactionComponent.new(snippet: @snippet, emote: :learning, user: @user) %>
-      <%= render Snippets::ReactionComponent.new(snippet: @snippet, emote: :mind_blown, user: @user) %>
+      <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: :clapping, user: @user) %>
+      <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: :learning, user: @user) %>
+      <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: :mind_blown, user: @user) %>
     </div>
 
     <div class="flex justify-end gap-x-2">

@@ -35,6 +35,6 @@ class ReactionsController < ApplicationController
   end
 
   def reaction_params
-    params.require(:reaction).permit(:content)
+    params.require(:reaction).permit(:reaction_type)
   end
 end

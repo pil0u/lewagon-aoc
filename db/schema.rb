@@ -259,8 +259,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_162723) do
   end
 
   create_table "reactions", force: :cascade do |t|
-    t.string "content"
     t.datetime "created_at", null: false
+    t.string "reaction_type"
     t.bigint "snippet_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false

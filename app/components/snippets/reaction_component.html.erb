@@ -1,23 +1,23 @@
 <div class="relative group/reaction">
   <div class="absolute bg-aoc-gray-darker bottom-full hidden mb-1 px-2 py-0.5 right-1/2 rounded shadow-black shadow-lg text-xs translate-x-1/2 w-max group-hover/reaction:block">
-    <%= EMOTES[@content][:tooltip] %>
+    <%= EMOTES[@reaction_type][:tooltip] %>
   </div>
 
   <% if @reactions.pluck(:user_id).include?(@user.id) %>
-    <%= button_to "#{EMOTES[@content][:emote]} #{@reactions.count}",
+    <%= button_to "#{EMOTES[@reaction_type][:emote]} #{@reactions.count}",
                   delete_reaction_path(id: @reactions.find_by(user: @user).id),
                   method: :delete,
                   class: "border border-aoc-green cursor-pointer duration-300 px-1.5 rounded-full transition-colors hover:bg-aoc-gray-darker" %>
   <% elsif @snippet.reactions.pluck(:user_id).include?(@user.id) %>
-    <%= button_to "#{EMOTES[@content][:emote]} #{@reactions.count}",
+    <%= button_to "#{EMOTES[@reaction_type][:emote]} #{@reactions.count}",
                   update_reaction_path(id: @snippet.reactions.find_by(user: @user).id),
-                  params: { reaction: { content: @content } },
+                  params: { reaction: { reaction_type: @reaction_type } },
                   method: :patch,
                   class: "border border-aoc-gray-dark cursor-pointer duration-300 px-1.5 rounded-full transition-colors hover:bg-aoc-gray-darker" %>
   <% else %>
-    <%= button_to "#{EMOTES[@content][:emote]} #{@reactions.count}",
+    <%= button_to "#{EMOTES[@reaction_type][:emote]} #{@reactions.count}",
                   reactions_path(@snippet.id),
-                  params: { reaction: { content: @content } },
+                  params: { reaction: { reaction_type: @reaction_type } },
                   class: "border border-aoc-gray-dark px-1.5 duration-300 rounded-full transition-colors #{'cursor-pointer hover:bg-aoc-gray-darker' unless @snippet.reactions.pluck(:user_id).include?(@user.id)}" %>
   <% end %>
 </div>

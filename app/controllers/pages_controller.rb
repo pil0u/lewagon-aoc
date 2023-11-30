@@ -17,12 +17,12 @@ class PagesController < ApplicationController
     ].map do |day|
       {
         parts_solved: user_completions[day] || 0,
-        release_time: Aoc.begin_time.change(day:)
+        release_time: Aoc.release_time(day)
       }
     end
 
     @next_puzzle_time = Aoc.next_puzzle_time
-    @now = Time.now.getlocal("-05:00")
+    @now = Aoc.event_timezone.now
   end
 
   def code_of_conduct

@@ -5,22 +5,19 @@
 
   <% if @reactions.pluck(:user_id).include?(@user.id) %>
     <%= button_to "#{EMOTES[@content][:emote]} #{@reactions.count}",
-      delete_reaction_path(id: @reactions.find_by(user: @user).id),
-      method: :delete,
-      class: "border border-aoc-green cursor-pointer duration-300 px-1.5 rounded-full transition-colors hover:bg-aoc-gray-darker"
-    %>
+                  delete_reaction_path(id: @reactions.find_by(user: @user).id),
+                  method: :delete,
+                  class: "border border-aoc-green cursor-pointer duration-300 px-1.5 rounded-full transition-colors hover:bg-aoc-gray-darker" %>
   <% elsif @snippet.reactions.pluck(:user_id).include?(@user.id) %>
     <%= button_to "#{EMOTES[@content][:emote]} #{@reactions.count}",
-      update_reaction_path(id: @snippet.reactions.find_by(user: @user).id),
-      params: { reaction: { content: @content } },
-      method: :patch,
-      class: "border border-aoc-gray-dark cursor-pointer duration-300 px-1.5 rounded-full transition-colors hover:bg-aoc-gray-darker"
-    %>
+                  update_reaction_path(id: @snippet.reactions.find_by(user: @user).id),
+                  params: { reaction: { content: @content } },
+                  method: :patch,
+                  class: "border border-aoc-gray-dark cursor-pointer duration-300 px-1.5 rounded-full transition-colors hover:bg-aoc-gray-darker" %>
   <% else %>
     <%= button_to "#{EMOTES[@content][:emote]} #{@reactions.count}",
-      reactions_path(@snippet.id),
-      params: { reaction: { content: @content } },
-      class: "border border-aoc-gray-dark px-1.5 duration-300 rounded-full transition-colors #{"cursor-pointer hover:bg-aoc-gray-darker" unless @snippet.reactions.pluck(:user_id).include?(@user.id)}"
-    %>
+                  reactions_path(@snippet.id),
+                  params: { reaction: { content: @content } },
+                  class: "border border-aoc-gray-dark px-1.5 duration-300 rounded-full transition-colors #{'cursor-pointer hover:bg-aoc-gray-darker' unless @snippet.reactions.pluck(:user_id).include?(@user.id)}" %>
   <% end %>
 </div>

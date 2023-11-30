@@ -34,6 +34,8 @@ class User < ApplicationRecord
   validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
   validate :referrer_cannot_be_self,           on: :update
 
+  before_validation :blank_language_to_nil
+
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) }
@@ -160,6 +162,12 @@ class User < ApplicationRecord
 
   def batch_cannot_be_changed
     errors.add(:batch, "can't be changed")
+  end
+
+  def blank_language_to_nil
+    return if favourite_language.present?
+
+    self.favourite_language = nil
   end
 
   def referrer_must_exist

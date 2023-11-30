@@ -17,9 +17,9 @@ module Snippets
       return code if code.match?(/```/) || source_language&.to_sym == :markdown
 
       <<~CODE
-        ```#{source_language}
-          #{code}
-        ```
+      ```#{source_language}
+        #{code}
+      ```
       CODE
     end
 

@@ -7,11 +7,19 @@
   </div>
   <pre class="code-highlight text-sm whitespace-pre-wrap overflow-x-auto"><%= raw rouge(@snippet.code, @snippet.language) %></pre>
 
-  <div class="flex justify-end gap-x-2">
-    <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+  <div class="pt-8 w-full flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <%= render Snippets::ReactionComponent.new(snippet: @snippet, emote: :clapping, user: @user) %>
+      <%= render Snippets::ReactionComponent.new(snippet: @snippet, emote: :learning, user: @user) %>
+      <%= render Snippets::ReactionComponent.new(snippet: @snippet, emote: :mind_blown, user: @user) %>
+    </div>
 
-    <em class="text-sm text-aoc-gray-dark">
-      - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
-    </em>
+    <div class="flex justify-end gap-x-2">
+      <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+
+      <em class="text-sm text-aoc-gray-dark">
+        - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
+      </em>
+    </div>
   </div>
 </div>

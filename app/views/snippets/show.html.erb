@@ -15,5 +15,5 @@
 <% end %>
 
 <div class="flex flex-col gap-y-3">
-  <%= render Snippets::BoxComponent.with_collection(@snippets) %>
+  <%= render Snippets::BoxComponent.with_collection(@snippets, user: current_user) %>
 </div>

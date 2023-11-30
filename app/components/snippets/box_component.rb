@@ -6,7 +6,8 @@ module Snippets
 
     with_collection_parameter :snippet
 
-    def initialize(snippet:)
+    def initialize(snippet:, user:)
+      @user = user
       @snippet = snippet
     end
   end

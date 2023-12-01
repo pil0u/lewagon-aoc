@@ -1,12 +1,14 @@
 <%= render PageTitleComponent.new(title: "Account settings") %>
 
-<%= render UserFormComponent.new(user: current_user) %>
+<div class="my-4">
+  <%= render UserFormComponent.new(user: current_user) %>
+</div>
 
 <hr class="my-4 border-aoc-gray-darker">
 
 <%= render PageTitleComponent.new(title: "Squad settings") %>
 
-<div class="flex flex-col gap-y-2">
+<div class="my-4 flex flex-col gap-y-2">
   <% if current_user.squad_id.nil? %>
 
     <%= form_with model: @squad, url: join_squad_path, class: "flex w-max mx-auto items-end gap-x-2" do |f| %>
@@ -46,64 +48,68 @@
 
 <%= render PageTitleComponent.new(title: "Slack integration") %>
 
-<p class="my-4">
-  To facilitate support and communication (e.g. for the rewards), you can link your Le Wagon Slack account with the
-  platform. You might also gain access to other cool features 👀
-</p>
+<div class="my-4 flex flex-col gap-y-4">
+  <p>
+    To facilitate support and communication (e.g. for the rewards), you can link your Le Wagon Slack account with the
+    platform. You might also gain access to other cool features 👀
+  </p>
 
-<div class="w-max mx-auto">
-  <% if current_user.linked_slack? %>
+  <div class="w-max mx-auto">
+    <% if current_user.linked_slack? %>
 
-    <div class="flex items-center gap-x-3">
-      <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_link, target: :_blank, rel: :noopener, class: "link-slack" %>!</span>
-      <%= button_to "Unlink me", user_slack_omniauth_remove_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
-    </div>
+      <div class="flex items-center gap-x-3">
+        <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_link, target: :_blank, rel: :noopener, class: "link-slack" %>!</span>
+        <%= button_to "Unlink me", user_slack_omniauth_remove_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
+      </div>
 
-  <% else %>
+    <% else %>
 
-    <%= button_to(
-          user_slack_openid_omniauth_authorize_path,
-          data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
-          class: "button-slack"
-        ) do %>
-      Link Slack account <i class="fab fa-slack"></i>
+      <%= button_to(
+            user_slack_openid_omniauth_authorize_path,
+            data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
+            class: "button-slack"
+          ) do %>
+        Link Slack account <i class="fab fa-slack"></i>
+      <% end %>
+
     <% end %>
-
-  <% end %>
+  </div>
 </div>
 
 <hr class="my-4 border-aoc-gray-darker">
 
 <%= render PageTitleComponent.new(title: "Referral") %>
 
-<p class="my-4">
-  When you share the event to your friends, ask them to add this referral code during the setup. This will boost your
-  <%= link_to "aura", patrons_path, class: "strong hover:text-gold" %>.
-</p>
-
-<div class="my-4 flex flex-col justify-center gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
-  <input type="text" value="<%= current_user.referral_code %>" class="input" disabled autocomplete="off">
-
-  <button
-    class="button active:text-aoc-gray"
-    data-controller="clipboard"
-    data-action="click->clipboard#copy"
-    data-clipboard-content-value="<%= current_user.referral_code %>">
-    Copy code
-  </button>
-
-  <button
-    class="button active:text-aoc-gray"
-    data-controller="clipboard"
-    data-action="click->clipboard#copy"
-    data-clipboard-content-value="<%= current_user.referral_link(request) %>">
-    Copy invite link
-  </button>
-</div>
-
-<% if @referees.any? %>
-  <p class="my-4">
-    You already referred <%= pluralize(@referees.count, "user") %>:
-    <%= safe_join @referees.map { |user| link_to user.username, profile_path(user.uid), class: "strong hover:text-gold" }, ", " %>
+<div class="my-4 flex flex-col gap-y-4">
+  <p>
+    When you share the event to your friends, ask them to add this referral code during the setup. This will boost your
+    <%= link_to "aura", patrons_path, class: "link-explicit link-internal" %>.
   </p>
-<% end %>
+
+  <div class="flex flex-col justify-center items-center gap-y-1 sm:flex-row sm:gap-x-3">
+    <input type="text" value="<%= current_user.referral_code %>" class="input w-48 text-center" disabled autocomplete="off">
+
+    <button
+      class="button w-48 active:text-aoc-gray"
+      data-controller="clipboard"
+      data-action="click->clipboard#copy"
+      data-clipboard-content-value="<%= current_user.referral_code %>">
+      Copy code
+    </button>
+
+    <button
+      class="button w-48 active:text-aoc-gray flex-none"
+      data-controller="clipboard"
+      data-action="click->clipboard#copy"
+      data-clipboard-content-value="<%= current_user.referral_link(request) %>">
+      Copy invite link
+    </button>
+  </div>
+
+  <% if @referees.any? %>
+    <p>
+      You already referred <%= pluralize(@referees.count, "user") %>:
+      <%= safe_join @referees.map { |user| link_to user.username, profile_path(user.uid), class: "strong hover:text-gold" }, ", " %>
+    </p>
+  <% end %>
+</div>

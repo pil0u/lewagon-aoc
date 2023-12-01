@@ -7,7 +7,7 @@
 </h2>
 
 <%= form_with model: @snippet, url: snippet_path, class: "my-8 w-full flex flex-col gap-y-2" do |f| %>
-  <%= f.text_area :code, placeholder: "Paste your code here", rows: 8, class: "w-full text-sm resize input", wrap: :off %>
+  <%= f.text_area :code, placeholder: @text_area_placeholder, rows: 8, class: "w-full text-sm resize input", wrap: :off %>
   <div class="flex gap-x-2">
     <%= f.select(:language, Snippet::LANGUAGES.invert.to_a, { prompt: "What language?", selected: current_user.favourite_language }, class: "input") %>
     <%= f.submit "Submit", class: "w-fit self-end button" %>
@@ -17,5 +17,5 @@
 <hr class="border-aoc-gray-darker">
 
 <div class="my-8 flex flex-col gap-y-4">
-  <%= render Snippets::BoxComponent.with_collection(@snippets) %>
+  <%= render Snippets::BoxComponent.with_collection(@snippets, user: current_user) %>
 </div>

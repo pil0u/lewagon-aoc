@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :snippets, dependent: :nullify
   has_many :achievements, dependent: :destroy
   has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
+  has_many :reactions, dependent: :destroy
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
@@ -99,7 +100,8 @@ class User < ApplicationRecord
         GROUP BY user_id
       ) referees_with_completion ON referees.id = referees_with_completion.user_id
       GROUP BY users.id
-      HAVING COUNT(referees.id) > 0;
+      HAVING COUNT(referees.id) > 0
+      ORDER BY aura DESC;
     SQL
 
     ActiveRecord::Base.connection.exec_query(query, "SQL")

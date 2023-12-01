@@ -1,6 +1,5 @@
 @import "fonts";
 @import "font_awesome";
-@import "rouge";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
@@ -25,8 +24,26 @@
     @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-hover;
   }
 
-  code {
+  code:not(pre code) {
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
+  }
+
+  .code-highlight pre {
+    @apply px-6 py-4 border border-aoc-gray-darker rounded;
+    @apply bg-dark !important;
+
+    position: relative;
+  }
+
+  .code-highlight pre::before {
+    content: attr(lang);
+    text-transform: capitalize;
+
+    position: absolute;
+    top: -1px;
+    right: -1px;
+
+    @apply px-2 border border-aoc-gray-darker text-aoc-gray font-medium text-sm rounded-tr;
   }
 
   details > summary {
@@ -95,12 +112,20 @@
     @apply fas fa-angles-up text-aoc-green text-opacity-50;
   }
 
-  .chrome-scrollbar::-webkit-scrollbar {
+  .scrollbar-chrome::-webkit-scrollbar {
     @apply h-1.5 w-1.5;
   }
 
-  .chrome-scrollbar::-webkit-scrollbar-thumb {
+  .scrollbar-chrome::-webkit-scrollbar-thumb {
     @apply bg-aoc-gray-dark rounded-full group-hover:bg-aoc-gray;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 
   .strong {

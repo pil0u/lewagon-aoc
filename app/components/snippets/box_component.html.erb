@@ -1,20 +1,25 @@
 <div id="<%= @snippet.id %>" class="w-full px-4 py-2 flex flex-col self-center gap-y-1 bg-aoc-gray-darkest border border-aoc-gray-dark group">
   <div class="flex justify-end text-sm gap-x-3">
     <%= link_to "⚓", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id) %>
-    <span class="px-2 bg-aoc-gray text-aoc-gray-darker font-semibold">
-      <%= Snippet::LANGUAGES[@snippet.language.to_sym] %>
-    </span>
   </div>
 
-  <pre class="code-highlight chrome-scrollbar text-sm overflow-x-auto">
-      <%= raw rouge(@snippet.code, @snippet.language) %>
+  <pre class="code-highlight scrollbar-chrome text-sm overflow-x-auto" data-language="<%= @snippet.language %>">
+    <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
   </pre>
 
-  <div class="flex justify-end gap-x-2">
-    <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+  <div class="pt-8 w-full flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <% Reaction::TYPES.each do |type| %>
+        <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
+      <% end %>
+    </div>
 
-    <em class="text-sm text-aoc-gray-dark">
-      - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
-    </em>
+    <div class="flex justify-end gap-x-2">
+      <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+
+      <em class="text-sm text-aoc-gray-dark">
+        - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
+      </em>
+    </div>
   </div>
 </div>

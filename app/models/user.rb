@@ -100,7 +100,8 @@ class User < ApplicationRecord
         GROUP BY user_id
       ) referees_with_completion ON referees.id = referees_with_completion.user_id
       GROUP BY users.id
-      HAVING COUNT(referees.id) > 0;
+      HAVING COUNT(referees.id) > 0
+      ORDER BY aura DESC;
     SQL
 
     ActiveRecord::Base.connection.exec_query(query, "SQL")

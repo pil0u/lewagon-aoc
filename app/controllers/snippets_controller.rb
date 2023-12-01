@@ -5,7 +5,7 @@ class SnippetsController < ApplicationController
     @day = params[:day]
     @challenge = params[:challenge]
 
-    @snippet = Snippets::Builder.call(language: current_user.favourite_language, code: "Paste here")
+    @snippet = Snippets::Builder.call(language: current_user.favourite_language)
     @snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge).order(created_at: :desc)
 
     @text_area_placeholder = <<~TEXT

@@ -2,6 +2,9 @@
 
 module Snippets
   class Builder
+
+    FENCE_TYPES = ["```", "~~~"].freeze
+
     def self.call(...)
       new(...).call
     end
@@ -15,7 +18,10 @@ module Snippets
     end
 
     def markdown_wrapped(code, source_language:)
-      return code if code.include?("```") || source_language&.to_sym == :markdown
+      implicitly_markdown = FENCE_TYPES.any? { |fence| code.include?(fence) }
+      explicitly_markdown = source_language&.to_sym == :markdown
+
+      return code if implicitly_markdown || explicitly_markdown
 
       <<~CODE
         ```#{source_language}

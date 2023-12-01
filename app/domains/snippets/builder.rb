@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Snippets
   class Builder
     def self.call(...)
@@ -9,11 +11,11 @@ module Snippets
 
       code = markdown_wrapped(code, source_language: @attributes[:language]) if code.present?
 
-      Snippet.new(**@attributes, code: code)
+      Snippet.new(**@attributes, code:)
     end
 
     def markdown_wrapped(code, source_language:)
-      return code if code.match?(/```/) || source_language&.to_sym == :markdown
+      return code if code.include?("```") || source_language&.to_sym == :markdown
 
       <<~CODE
         ```#{source_language}

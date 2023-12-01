@@ -18,7 +18,17 @@ module ApplicationHelper
 
   DEFAULT_THEME = "base16-ocean.dark"
 
-  def render_markdown(commonmarkdown)
-    Commonmarker.to_html(commonmarkdown, plugins: { syntax_highlighter: { theme: DEFAULT_THEME } })
+  def render_markdown(commonmarkdown, default_language: nil)
+    config = {}
+
+    config[:options] = {}
+    config[:options][:parse] = { default_info_string: default_language }.compact
+    config[:options][:render] = { escape: true, github_pre_lang: true }
+
+    config[:plugins] = {
+      syntax_highlighter: { theme: DEFAULT_THEME }
+    }
+
+    Commonmarker.to_html(commonmarkdown, **config)
   end
 end

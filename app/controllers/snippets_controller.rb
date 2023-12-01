@@ -6,7 +6,7 @@ class SnippetsController < ApplicationController
     @challenge = params[:challenge]
 
     @snippet = Snippets::Builder.call(language: current_user.favourite_language, code: "Paste here")
-    @snippets = Snippet.includes(:user).where(day: @day, challenge: @challenge).order(created_at: :desc)
+    @snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge).order(created_at: :desc)
   end
 
   def create

@@ -17,5 +17,5 @@
 <hr class="border-aoc-gray-darker">
 
 <div class="my-8 flex flex-col gap-y-4">
-  <%= render Snippets::BoxComponent.with_collection(@snippets) %>
+  <%= render Snippets::BoxComponent.with_collection(@snippets, user: current_user) %>
 </div>

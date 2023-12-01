@@ -6,15 +6,23 @@
     </span>
   </div>
 
-  <pre class="code-highlight chrome-scrollbar text-sm overflow-x-auto">
+  <pre class="code-highlight scrollbar-chrome text-sm overflow-x-auto">
     <%= raw render_markdown @snippet.code %>
   </pre>
 
-  <div class="flex justify-end gap-x-2">
-    <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+  <div class="pt-8 w-full flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <% Reaction::TYPES.each do |type| %>
+        <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
+      <% end %>
+    </div>
 
-    <em class="text-sm text-aoc-gray-dark">
-      - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
-    </em>
+    <div class="flex justify-end gap-x-2">
+      <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+
+      <em class="text-sm text-aoc-gray-dark">
+        - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
+      </em>
+    </div>
   </div>
 </div>

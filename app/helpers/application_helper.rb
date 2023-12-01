@@ -16,9 +16,9 @@ module ApplicationHelper
     sanitize(text, tags: %w[b em del span sub sup], attributes: %w[style])
   end
 
-  def rouge(text, language)
-    formatter = Rouge::Formatters::HTML.new
-    lexer = Rouge::Lexer.find(language)
-    formatter.format(lexer.lex(text))
+  DEFAULT_THEME = "base16-ocean.dark"
+
+  def render_markdown(commonmarkdown)
+    Commonmarker.to_html(commonmarkdown, plugins: { syntax_highlighter: { theme: DEFAULT_THEME } })
   end
 end

@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :snippets, dependent: :nullify
   has_many :achievements, dependent: :destroy
   has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
+  has_many :reactions, dependent: :destroy
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
@@ -33,6 +34,8 @@ class User < ApplicationRecord
   validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
   validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
   validate :referrer_cannot_be_self,           on: :update
+
+  before_validation :blank_language_to_nil
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -75,6 +78,32 @@ class User < ApplicationRecord
     return unless code&.match?(/R\d{5}/)
 
     User.find_by(uid: code.gsub(/R0*/, "").to_i)
+  end
+
+  def self.with_aura
+    query = <<~SQL.squish
+      SELECT
+        users.uid,
+        users.username,
+        COUNT(DISTINCT referees.id) AS referrals,
+        CEIL(100 * (
+          LN(COUNT(DISTINCT referees.id) + 1) +
+          2 * LN(COUNT(CASE WHEN referees_with_completion.completions_count = 1 THEN referees.id END) + 1) +
+          3 * LN(COUNT(CASE WHEN referees_with_completion.completions_count = 2 THEN referees.id END) + 1) +
+          5 * LN(COUNT(CASE WHEN referees_with_completion.completions_count > 2 THEN referees.id END) + 1)
+        )) AS aura
+      FROM users
+      LEFT JOIN users referees ON users.id = referees.referrer_id
+      LEFT JOIN (
+        SELECT user_id, COUNT(id) AS completions_count
+        FROM completions
+        GROUP BY user_id
+      ) referees_with_completion ON referees.id = referees_with_completion.user_id
+      GROUP BY users.id
+      HAVING COUNT(referees.id) > 0;
+    SQL
+
+    ActiveRecord::Base.connection.exec_query(query, "SQL")
   end
 
   def admin?
@@ -134,6 +163,12 @@ class User < ApplicationRecord
 
   def batch_cannot_be_changed
     errors.add(:batch, "can't be changed")
+  end
+
+  def blank_language_to_nil
+    return if favourite_language.present?
+
+    self.favourite_language = nil
   end
 
   def referrer_must_exist

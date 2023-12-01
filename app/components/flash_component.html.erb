@@ -1,7 +1,16 @@
-<% @flash.each do |type, message| %>
+<% @flash.each do |type, messages| %>
   <div data-controller="flash" data-action="click->flash#close"
        class="absolute top-1 right-3 flex items-center gap-x-8 px-2 py-1 <%= @flash_type_css_class[type] %> rounded-sm cursor-pointer">
-    <p class="text-sm font-semibold"><%= message %></p>
+      <p class="text-sm font-semibold">
+        <% Array.wrap(messages).each do |message| %>
+          <% lines = message.split("\n") # rubocop:disable Lint/UselessAssignment %>
+          <% lines.each do |line| %>
+            <%= line %>
+            <br>
+          <% end %>
+          <% lines.last %>
+        <% end %>
+      </p>
     <i class="fas fa-times"></i>
   </div>
 <% end %>

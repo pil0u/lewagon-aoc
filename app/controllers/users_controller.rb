@@ -90,11 +90,11 @@ class UsersController < ApplicationController
   end
 
   def restrict_after_lock
-    return unless Time.now.utc > Aoc.lock_time && (user_params[:entered_hardcore] == "1") != current_user.entered_hardcore
+    return unless Time.now.utc > Aoc.lewagon_lock_time && (user_params[:entered_hardcore] == "1") != current_user.entered_hardcore
 
     redirect_back(
       fallback_location: "/",
-      alert: "You cannot join or leave the Ladder of Insanity since #{Aoc.lock_time.to_fs(:long_ordinal)} (see FAQ)"
+      alert: "You cannot join or leave the Ladder of Insanity since #{Aoc.lewagon_lock_time.to_fs(:long_ordinal)} (see FAQ)"
     )
   end
 
@@ -103,6 +103,8 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :event_awareness, :favourite_language, :username)
+    params
+      .require(:user)
+      .permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :event_awareness, :favourite_language, :username)
   end
 end

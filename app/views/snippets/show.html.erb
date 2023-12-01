@@ -6,14 +6,16 @@
   <span>Part <%= @challenge %></span>
 </h2>
 
-<%= form_with model: @snippet, url: snippet_path, class: "my-4 mx-auto w-full max-w-md flex flex-col gap-y-2" do |f| %>
-  <%= f.text_area :code, placeholder: "Paste your code here", rows: 6, class: "w-full input" %>
-  <div class="flex justify-between">
-    <%= f.select(:language, Snippet::LANGUAGES.invert.to_a, { prompt: "", selected: current_user.favourite_language }, class: "input") %>
+<%= form_with model: @snippet, url: snippet_path, class: "my-8 w-full flex flex-col gap-y-2" do |f| %>
+  <%= f.text_area :code, placeholder: @text_area_placeholder, rows: 8, class: "w-full text-sm resize input", wrap: :off %>
+  <div class="flex gap-x-2">
+    <%= f.select(:language, Snippet::LANGUAGES.invert.to_a, { prompt: "What language?", selected: current_user.favourite_language }, class: "input") %>
     <%= f.submit "Submit", class: "w-fit self-end button" %>
   </div>
 <% end %>
 
-<div class="flex flex-col gap-y-3">
-  <%= render Snippets::BoxComponent.with_collection(@snippets) %>
+<hr class="border-aoc-gray-darker">
+
+<div class="my-8 flex flex-col gap-y-4">
+  <%= render Snippets::BoxComponent.with_collection(@snippets, user: current_user) %>
 </div>

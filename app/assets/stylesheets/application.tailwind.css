@@ -1,6 +1,5 @@
 @import "fonts";
 @import "font_awesome";
-@import "rouge";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
@@ -25,8 +24,12 @@
     @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-hover;
   }
 
-  code {
+  code:not(pre code) {
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
+  }
+
+  .code-highlight pre {
+    @apply px-1 border border-aoc-gray-darker rounded;
   }
 
   details > summary {
@@ -93,6 +96,22 @@
 
   .rank-up {
     @apply fas fa-angles-up text-aoc-green text-opacity-50;
+  }
+
+  .scrollbar-chrome::-webkit-scrollbar {
+    @apply h-1.5 w-1.5;
+  }
+
+  .scrollbar-chrome::-webkit-scrollbar-thumb {
+    @apply bg-aoc-gray-dark rounded-full group-hover:bg-aoc-gray;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 
   .strong {

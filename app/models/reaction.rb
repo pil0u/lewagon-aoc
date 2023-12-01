@@ -6,7 +6,6 @@ class Reaction < ApplicationRecord
   belongs_to :user
   belongs_to :snippet
 
-
   validates :user, uniqueness: { scope: :snippet_id, message: "cannot react multiple times to the same code snippet" }
   validates :reaction_type, presence: true, inclusion: TYPES
 

@@ -23,6 +23,7 @@ class User < ApplicationRecord
   has_many :snippets, dependent: :nullify
   has_many :achievements, dependent: :destroy
   has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
+  has_many :reactions, dependent: :destroy
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }

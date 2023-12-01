@@ -7,6 +7,13 @@ class SnippetsController < ApplicationController
 
     @snippet = Snippets::Builder.call(language: current_user.favourite_language, code: "Paste here")
     @snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge).order(created_at: :desc)
+
+    @text_area_placeholder = <<~TEXT
+      This box is super smart.
+      Paste your code directly here, it will work.
+      Write a super nice guide in Markdown, it will work too.
+      If your Markdown tutorial features Python code, choose Python as a language.
+    TEXT
   end
 
   def create

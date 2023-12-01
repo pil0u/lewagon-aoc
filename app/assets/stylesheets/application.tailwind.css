@@ -29,7 +29,7 @@
   }
 
   *:not(pre) code {
-    @apply px-1 border bg-aoc-gray-darker border-aoc-gray-darker rounded;
+    @apply px-1 bg-aoc-gray-darker border border-aoc-gray-darker rounded;
   }
 
   details > summary {

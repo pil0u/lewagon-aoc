@@ -8,15 +8,15 @@ Rails.application.configure do
     enable_cron: true,
     cron: {
       refresh_completions: {
-        cron: "*/10 * 1-30 11-12 *", # every 10th minute between November 1st and December 30th
+        cron: "*/10 * 1-30 11-12 *", # every 10 minutes between November 1st and December 30th
         class: "InsertNewCompletionsJob"
       },
       auto_cleanup: {
-        cron: "55 5 * * *", # every day at 5:55
+        cron: "55 23 * * * on America/New_York", # every day before a new puzzle
         class: "Cache::CleanupJob"
       },
       lock_time_achievements: {
-        cron: "30 18 9 12 *", # 9th December at 18:30
+        cron: "30 17 8 12 * Europe/Paris", # on lock tim
         class: "Achievements::LockTimeJob"
       }
     }

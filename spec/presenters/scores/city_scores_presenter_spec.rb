@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe Scores::CityScoresPresenter do
-  let!(:city_1) { create :city, id: 1, name: "Bordeaux", size: 200 }
-  let!(:city_2) { create :city, id: 2, name: "Rio de Janeiro", size: 100 }
-  let!(:city_3) { create :city, id: 3, name: "Paris", size: 500 }
+  let!(:city_1) { create :city, id: 1, name: "Bordeaux", size: 200, top_contributors: 10 }
+  let!(:city_2) { create :city, id: 2, name: "Rio de Janeiro", size: 100, top_contributors: 10 }
+  let!(:city_3) { create :city, id: 3, name: "Paris", size: 500, top_contributors: 15 }
 
   let!(:user_1) { create :user, id: 1, city: city_1 }
   let!(:user_2) { create :user, id: 2, city: city_2 }

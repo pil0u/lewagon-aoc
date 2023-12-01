@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_162723) do
     t.datetime "created_at", null: false
     t.string "name"
     t.integer "size"
+    t.integer "top_contributors"
     t.datetime "updated_at", null: false
     t.string "vanity_name"
     t.index ["name"], name: "index_cities_on_name", unique: true

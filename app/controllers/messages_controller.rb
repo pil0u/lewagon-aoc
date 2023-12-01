@@ -30,7 +30,7 @@ class MessagesController < ApplicationController
   private
 
   def set_restricted
-    today = Time.now.getlocal("-05:00").beginning_of_day
+    today = Aoc.event_timezone.now.beginning_of_day
 
     @restricted = current_user.messages.where("created_at > ?", today).count != 0
   end

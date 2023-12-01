@@ -6,4 +6,9 @@ then
   gem install foreman
 fi
 
-foreman start -f Procfile.dev
+if [ "$1" == "ssl" ]
+then
+  foreman start -f Procfile.dev.ssl
+else
+  foreman start -f Procfile.dev
+fi

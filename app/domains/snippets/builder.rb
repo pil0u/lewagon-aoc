@@ -2,7 +2,6 @@
 
 module Snippets
   class Builder
-
     FENCE_TYPES = ["```", "~~~"].freeze
 
     def self.call(...)

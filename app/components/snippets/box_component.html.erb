@@ -3,7 +3,7 @@
     <%= link_to "⚓", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id) %>
   </div>
 
-  <pre class="code-highlight scrollbar-chrome text-sm overflow-x-auto" data-language=<%= @snippet.language %>>
+  <pre class="code-highlight scrollbar-chrome text-sm overflow-x-auto" data-language="<%= @snippet.language %>">
     <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
   </pre>
 

@@ -4,7 +4,7 @@ class ReactionsController < ApplicationController
   before_action :set_reaction, only: %i[update destroy]
 
   def create
-    reaction = current_user.reactions.build(snippet_id: params[:snippet_id])
+    reaction = current_user.reactions.build(reaction_params.merge(snippet_id: params[:snippet_id]))
 
     if reaction.save
       redirect_back fallback_location: "/"

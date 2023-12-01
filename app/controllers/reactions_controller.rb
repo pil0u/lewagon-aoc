@@ -9,7 +9,7 @@ class ReactionsController < ApplicationController
     if reaction.save
       redirect_back fallback_location: "/"
     else
-      redirect_back fallback_location: "/", alert: reaction.errors.full_messages[0].to_s
+      redirect_back fallback_location: "/", alert: reaction.errors.full_messages
     end
   end
 
@@ -17,7 +17,7 @@ class ReactionsController < ApplicationController
     if @reaction.update(reaction_params)
       redirect_back fallback_location: "/"
     else
-      redirect_back fallback_location: "/", alert: reaction.errors.full_messages[0].to_s
+      redirect_back fallback_location: "/", alert: reaction.errors.full_messages
     end
   end
 

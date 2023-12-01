@@ -1,6 +1,5 @@
 @import "fonts";
 @import "font_awesome";
-@import "rouge";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
@@ -25,8 +24,12 @@
     @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-hover;
   }
 
-  code {
+  code:not(pre code) {
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
+  }
+
+  .code-highlight pre {
+    @apply px-1 border border-aoc-gray-darker rounded;
   }
 
   details > summary {

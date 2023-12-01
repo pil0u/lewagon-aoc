@@ -7,7 +7,7 @@
   </div>
 
   <pre class="code-highlight scrollbar-chrome text-sm overflow-x-auto">
-      <%= raw rouge(@snippet.code, @snippet.language) %>
+    <%= raw render_markdown @snippet.code %>
   </pre>
 
   <div class="pt-8 w-full flex items-center justify-between">

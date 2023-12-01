@@ -5,26 +5,25 @@ module Snippets
     end
 
     def call
-      language = @attributes[:language]
       code = @attributes[:code]
 
-      @attributes[:code] = markdown_wrapped(code, source_language: language) if code.present?
+      code = markdown_wrapped(code, source_language: @attributes[:language]) if code.present?
 
-      Snippet.new(**@attributes)
+      Snippet.new(**@attributes, code: code)
     end
 
     def markdown_wrapped(code, source_language:)
       return code if code.match?(/```/) || source_language&.to_sym == :markdown
 
       <<~CODE
-      ```#{source_language}
+        ```#{source_language}
         #{code}
-      ```
+        ```
       CODE
     end
 
     def initialize(**attrs)
-      @attributes = attrs.deep_dup
+      @attributes = attrs
     end
   end
 end

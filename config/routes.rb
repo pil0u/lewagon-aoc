@@ -79,9 +79,9 @@ Rails.application.routes.draw do
     get     "/profile/:uid",                    to: "users#show",       as: :profile
     get     "/settings",                        to: "users#edit"
     patch   "/settings",                        to: "users#update"
-    post    "/snippets/:snippet_id/reactions",  to: "reactions#create",  as: :reactions,       constraints: AllowedToSeeSolutionsConstraint.new
-    patch   "/reactions/:id",                   to: "reactions#update",  as: :update_reaction, constraints: AllowedToSeeSolutionsConstraint.new
-    delete  "/reactions/:id",                   to: "reactions#destroy", as: :delete_reaction, constraints: AllowedToSeeSolutionsConstraint.new
+    post    "/snippets/:snippet_id/reactions",  to: "reactions#create",  as: :reactions
+    patch   "/reactions/:id",                   to: "reactions#update",  as: :update_reaction
+    delete  "/reactions/:id",                   to: "reactions#destroy", as: :delete_reaction
   end
 
   # Admin routes

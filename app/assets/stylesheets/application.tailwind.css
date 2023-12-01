@@ -24,7 +24,7 @@
     @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-hover;
   }
 
-  *:not(pre) code {
+  code:not(pre code) {
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
   }
 

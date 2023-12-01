@@ -267,6 +267,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_01_004728) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "reactions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "reaction_type", null: false
+    t.bigint "snippet_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["snippet_id"], name: "index_reactions_on_snippet_id"
+    t.index ["user_id", "snippet_id"], name: "index_reactions_on_user_id_and_snippet_id", unique: true
+    t.index ["user_id"], name: "index_reactions_on_user_id"
+  end
+
   create_table "snippets", force: :cascade do |t|
     t.integer "challenge"
     t.text "code"
@@ -414,6 +425,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_01_004728) do
   add_foreign_key "insanity_points", "users"
   add_foreign_key "insanity_scores", "users"
   add_foreign_key "messages", "users"
+  add_foreign_key "reactions", "snippets"
+  add_foreign_key "reactions", "users"
   add_foreign_key "snippets", "users"
   add_foreign_key "solo_points", "users"
   add_foreign_key "solo_scores", "users"

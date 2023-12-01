@@ -45,7 +45,7 @@ module Buddies
       @users_to_match = Set.new(user_ids)
       @buddies = []
 
-      # Iterate over possible pairs to find matches
+      # Iterate once over possible pairs to find matches
       @possible_pairs.each do |pair|
         # If a pair contains two available IDs, it's a match!
         if pair.all? { |id| @users_to_match.include?(id) }

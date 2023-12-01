@@ -261,11 +261,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_162723) do
 
   create_table "reactions", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "reaction_type"
+    t.string "reaction_type", null: false
     t.bigint "snippet_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["snippet_id"], name: "index_reactions_on_snippet_id"
+    t.index ["user_id", "snippet_id"], name: "index_reactions_on_user_id_and_snippet_id", unique: true
     t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 

@@ -5,9 +5,11 @@ class CreateReactions < ActiveRecord::Migration[7.1]
     create_table :reactions do |t|
       t.references :user, null: false, foreign_key: true
       t.references :snippet, null: false, foreign_key: true
-      t.string :reaction_type
+      t.string :reaction_type, null: false
 
       t.timestamps
     end
+
+    add_index :reactions, [:user_id, :snippet_id], unique: true
   end
 end

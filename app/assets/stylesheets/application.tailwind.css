@@ -29,7 +29,21 @@
   }
 
   .code-highlight pre {
-    @apply px-1 border border-aoc-gray-darker rounded;
+    @apply px-6 py-4 border border-aoc-gray-darker rounded;
+    @apply bg-dark !important;
+
+    position: relative;
+  }
+
+  .code-highlight pre:before {
+    content: attr(lang);
+    text-transform: capitalize;
+
+    position: absolute;
+    top: -1px;
+    right: -1px;
+
+    @apply px-2 border border-aoc-gray-darker text-aoc-gray font-medium text-sm rounded-tr;
   }
 
   details > summary {

@@ -23,7 +23,7 @@ module ApplicationHelper
 
     config[:options] = {}
     config[:options][:parse] = { default_info_string: default_language }.compact
-    config[:options][:render] = { escape: true }
+    config[:options][:render] = { escape: true, github_pre_lang: true }
 
     config[:plugins] = {
       syntax_highlighter: { theme: DEFAULT_THEME }

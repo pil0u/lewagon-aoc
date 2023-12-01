@@ -4,6 +4,7 @@ module Snippets
   class ReactionComponent < ApplicationComponent
     include ApplicationHelper
 
+    # We might be able to move this to locales(? config for the emojis?) and make it fully dynamic
     EMOTES = {
       clapping: { emote: "👏", tooltip: "Nice solution, well done" },
       learning: { emote: "🎓", tooltip: "Outstanding solution to help others learn" },

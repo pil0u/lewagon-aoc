@@ -29,15 +29,15 @@
   }
 
   .code-highlight h1 {
-    @apply border-aoc-gray-darker border-b font-semibold mb-4 pb-2 text-4xl
+    @apply my-4 border-b border-aoc-gray-darker pb-2 font-semibold text-4xl
   }
 
   .code-highlight h2 {
-    @apply border-aoc-gray-darker border-b font-semibold my-4 pb-1.5 text-2xl
+    @apply my-4 border-b border-aoc-gray-darker pb-1.5 font-semibold text-2xl
   }
 
   .code-highlight h3 {
-    @apply font-semibold my-4 text-lg
+    @apply my-4 font-semibold text-lg
   }
 
   .code-highlight pre {

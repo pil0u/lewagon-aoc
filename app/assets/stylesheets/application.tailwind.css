@@ -41,11 +41,11 @@
   }
 
   .code-highlight pre {
-    @apply !bg-dark border border-aoc-gray-darker rounded;
+    @apply relative pt-4 !bg-dark border border-aoc-gray-darker rounded;
   }
 
   .code-highlight pre::before {
-    @apply float-right border-b border-l rounded-bl border-aoc-gray-darker px-2 capitalize font-semibold;
+    @apply absolute top-0 right-0 border-b border-l rounded-bl border-aoc-gray-darker px-2 capitalize font-semibold;
 
     content: attr(lang);
   }

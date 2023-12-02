@@ -7,6 +7,8 @@
     <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
   </pre>
 
+  <hr class="border-aoc-gray-darker">
+
   <div class="w-full flex items-center justify-between">
     <div class="flex items-center gap-4">
       <% Reaction::TYPES.each do |type| %>

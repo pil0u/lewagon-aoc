@@ -10,7 +10,7 @@
   <hr class="border-aoc-gray-darker">
 
   <div class="w-full flex items-center justify-between">
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-x-4">
       <% Reaction::TYPES.each do |type| %>
         <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
       <% end %>

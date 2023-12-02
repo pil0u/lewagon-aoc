@@ -52,7 +52,7 @@
   }
 
   .code-highlight pre code {
-    @apply block pb-4 pt-6 px-6 overflow-x-scroll scrollbar-chrome w-full;
+    @apply block w-full p-4 overflow-x-auto scrollbar-chrome text-xs;
   }
 
   details > summary {

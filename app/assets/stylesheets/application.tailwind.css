@@ -28,10 +28,6 @@
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
   }
 
-  .code-highlight * {
-    @apply last:mb-0
-  }
-
   .code-highlight h1 {
     @apply border-aoc-gray-darker border-b font-semibold mb-4 pb-2 text-4xl
   }
@@ -45,7 +41,7 @@
   }
 
   .code-highlight pre {
-    @apply !bg-dark border border-aoc-gray-darker my-4 rounded relative;
+    @apply !bg-dark border border-aoc-gray-darker rounded relative;
   }
 
   .code-highlight pre::before {

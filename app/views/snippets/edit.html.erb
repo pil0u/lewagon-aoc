@@ -1,0 +1,21 @@
+<h2 class="flex flex-wrap gap-x-6">
+  <span class="strong">Solutions</span>
+  <span>·</span>
+  <%= link_to "Day #{@day}", day_path(@day), class: "link-explicit link-internal" %>
+  <span>·</span>
+  <span>Part <%= @challenge %></span>
+</h2>
+
+<%= form_with model: @snippet, url: update_snippet_path(day: @day, challenges: @challenge, id: @snippet.id), class: "my-8 w-full flex flex-col gap-y-2" do |f| %>
+  <%= f.text_area :code, placeholder: @text_area_placeholder, rows: 8, class: "w-full text-sm resize input", wrap: :off %>
+  <div class="flex gap-x-2">
+    <%= f.select(:language, Snippet::LANGUAGES.invert.to_a, { prompt: "What language?", selected: @snippet.language }, class: "input", disabled: true) %>
+    <%= f.submit "Submit", class: "w-fit self-end button" %>
+  </div>
+<% end %>
+
+<hr class="border-aoc-gray-darker">
+
+<div class="my-8 flex flex-col gap-y-4">
+  <%= render Snippets::BoxComponent.with_collection(@snippets, user: current_user) %>
+</div>

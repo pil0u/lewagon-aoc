@@ -17,9 +17,9 @@
 <hr class="border-aoc-gray-darker">
 
 <h3 class="mb-2 mt-4">Filter by language</h3>
-<div class="flex items-center gap-4">
+<div class="flex items-center gap-4 flex-wrap">
   <% @languages.each do |language| %>
-    <%= link_to snippet_path(day: @day, challenge: @challenge, id: @snippet.id, language: @language == language ? nil : language), class: "h-8" do %>
+    <%= link_to snippet_path(day: @day, challenge: @challenge, id: @snippet.id, language: @language == language ? nil : language), class: "h-4 md:h-8" do %>
       <%= image_tag "languages/#{language}.png", class: "h-full #{'opacity-50' if @language.present? && @language != language}" %>
     <% end %>
   <% end %>

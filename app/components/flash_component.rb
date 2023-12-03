@@ -4,7 +4,7 @@ class FlashComponent < ApplicationComponent
   def initialize(flash:)
     @flash = flash
     @flash_type_css_class = {
-      "alert" => "text-wagon-red border border-wagon-red",
+      "alert" => "bg-dark text-wagon-red border border-wagon-red",
       "notice" => "bg-aoc-gray text-dark"
     }
   end

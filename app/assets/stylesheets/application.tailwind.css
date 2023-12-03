@@ -28,22 +28,34 @@
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
   }
 
-  .code-highlight pre {
-    @apply px-6 py-4 border border-aoc-gray-darker rounded;
-    @apply bg-dark !important;
+  .code-highlight * {
+    @apply last:mb-0
+  }
 
-    position: relative;
+  .code-highlight h1 {
+    @apply my-4 border-b border-aoc-gray-darker pb-2 font-semibold text-4xl
+  }
+
+  .code-highlight h2 {
+    @apply my-4 border-b border-aoc-gray-darker pb-1.5 font-semibold text-2xl
+  }
+
+  .code-highlight h3 {
+    @apply my-4 font-semibold text-lg
+  }
+
+  .code-highlight pre {
+    @apply my-4 relative pt-2 !bg-dark border border-aoc-gray-darker rounded;
   }
 
   .code-highlight pre::before {
+    @apply absolute top-0 right-0 border-b border-l rounded-bl border-aoc-gray-darker px-2 capitalize font-semibold;
+
     content: attr(lang);
-    text-transform: capitalize;
+  }
 
-    position: absolute;
-    top: -1px;
-    right: -1px;
-
-    @apply px-2 border border-aoc-gray-darker text-aoc-gray font-medium text-sm rounded-tr;
+  .code-highlight pre code {
+    @apply block w-full p-4 overflow-x-auto scrollbar-chrome text-xs;
   }
 
   details > summary {

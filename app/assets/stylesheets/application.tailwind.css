@@ -1,5 +1,6 @@
 @import "fonts";
 @import "font_awesome";
+@import "rouge";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
@@ -49,7 +50,7 @@
   }
 
   .code-highlight pre::before {
-    @apply absolute top-0 right-0 border-b border-l rounded-bl border-aoc-gray-darker px-2 capitalize font-semibold;
+    @apply absolute top-0 right-0 border-b border-l rounded-bl border-aoc-gray-darker px-2 font-semibold;
 
     content: attr(lang);
   }

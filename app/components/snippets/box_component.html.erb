@@ -1,6 +1,10 @@
 <div id="<%= @snippet.id %>" class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group">
   <div class="flex text-xs gap-x-3">
     <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
+
+    <% if @user_can_edit_snippet %>
+      <%= link_to "edit", edit_snippet_path(day: @snippet.day, challenge: @snippet.challenge, id: @snippet.id), class: "link-explicit" %>
+    <% end %>
   </div>
 
   <pre class="code-highlight break-words text-sm whitespace-normal" data-language="<%= @snippet.language %>">

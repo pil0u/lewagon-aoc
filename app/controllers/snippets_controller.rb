@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SnippetsController < ApplicationController
+  before_action :set_snippet, only: %i[edit update]
+
   def show
     @day = params[:day]
     @challenge = params[:challenge]
@@ -16,6 +18,8 @@ class SnippetsController < ApplicationController
     TEXT
   end
 
+  def edit; end
+
   def create
     snippet = Snippets::Builder.call(
       code: snippet_params[:code],
@@ -28,11 +32,23 @@ class SnippetsController < ApplicationController
     if snippet.save
       redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), notice: "Your solution was published"
     else
-      redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: snippet.errors.full_messages[0].to_s
+      redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: snippet.errors.full_messages
+    end
+  end
+
+  def update
+    if @snippet.update(snippet_params)
+      redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), notice: "Your solution was edited"
+    else
+      redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), alert: @snippet.errors.full_messages
     end
   end
 
   private
+
+  def set_snippet
+    @snippet = current_user.snippets.find(params[:id])
+  end
 
   def snippet_params
     params.require(:snippet).permit(:code, :language)

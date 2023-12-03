@@ -18,7 +18,7 @@ class SnippetsController < ApplicationController
     TEXT
   end
 
-  def edit() end
+  def edit; end
 
   def create
     snippet = Snippets::Builder.call(
@@ -32,7 +32,7 @@ class SnippetsController < ApplicationController
     if snippet.save
       redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), notice: "Your solution was published"
     else
-      redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: snippet.errors.full_messages[0].to_s
+      redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: snippet.errors.full_messages
     end
   end
 
@@ -40,7 +40,7 @@ class SnippetsController < ApplicationController
     if @snippet.update(snippet_params)
       redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), notice: "Your solution was edited"
     else
-      redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), alert: @snippet.errors.full_messages[0].to_s
+      redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), alert: @snippet.errors.full_messages
     end
   end
 

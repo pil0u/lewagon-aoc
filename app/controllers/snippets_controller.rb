@@ -4,11 +4,11 @@ class SnippetsController < ApplicationController
   def show
     @day = params[:day]
     @challenge = params[:challenge]
+    @language = params[:language]
 
     @snippet = Snippets::Builder.call(language: current_user.favourite_language)
     @snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge).order(created_at: :desc)
 
-    @language = params[:language]
     @languages = @snippets.pluck(:language).uniq.sort
     @snippets = @snippets.where(language: @language) if @language
 

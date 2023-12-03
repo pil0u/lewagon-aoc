@@ -2,7 +2,7 @@
   <div class="flex text-xs gap-x-3">
     <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
 
-    <% if @snippet.user == @user && Time.now.utc < Aoc.release_time(@snippet.day) + 48.hours %>
+    <% if @user_can_edit_snippet %>
       <%= link_to "edit", edit_snippet_path(day: @snippet.day, challenge: @snippet.challenge, id: @snippet.id), class: "link-explicit" %>
     <% end %>
   </div>

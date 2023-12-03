@@ -1,7 +1,7 @@
 <div id="<%= @snippet.id %>" class="w-full px-4 py-2 flex flex-col self-center gap-y-1 bg-aoc-gray-darkest border border-aoc-gray-dark group">
   <div class="flex justify-end text-sm gap-x-3">
-    <% if @snippet.user == @user && Time.now.utc < Aoc.release_time(@day) + 48.hours %>
-      <%= link_to "edit", edit_snippet_path(day: @snippet.day, challenge: @snippet.challenge, id: @snippet.id) %>
+    <% if @snippet.user == @user && Time.now.utc < Aoc.release_time(@snippet.day) + 48.hours %>
+      <%= link_to "edit", edit_snippet_path(day: @snippet.day, challenge: @snippet.challenge, id: @snippet.id), class: "link-explicit" %>
     <% end %>
 
     <%= link_to "⚓", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id) %>

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SnippetsController < ApplicationController
-  before_action :set_snippet, only: %i[edit create]
+  before_action :set_snippet, only: %i[edit update]
 
   def show
     @day = params[:day]
@@ -18,12 +18,7 @@ class SnippetsController < ApplicationController
     TEXT
   end
 
-  def edit
-    @day = params[:day]
-    @challenge = params[:challenge]
-
-    @snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge).order(created_at: :desc)
-  end
+  def edit() end
 
   def create
     snippet = Snippets::Builder.call(
@@ -43,9 +38,9 @@ class SnippetsController < ApplicationController
 
   def update
     if @snippet.update(snippet_params)
-      redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), notice: "Your solution was edited"
+      redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), notice: "Your solution was edited"
     else
-      redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: @snippet.errors.full_messages[0].to_s
+      redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), alert: @snippet.errors.full_messages[0].to_s
     end
   end
 

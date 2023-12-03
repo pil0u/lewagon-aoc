@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "aoc"
+
 Rails.application.configure do
   config.good_job = {
     execution_mode: :external,
@@ -11,9 +13,14 @@ Rails.application.configure do
         cron: "*/10 * 1-30 11-12 *",
         class: "InsertNewCompletionsJob"
       },
-      auto_cleanup: { # every day before a new puzzle
-        cron: "55 23 * * * on America/New_York",
+      auto_cleanup: { # every day of december, just before a new puzzle
+        cron: "55 23 * 12 * America/New_York",
         class: "Cache::CleanupJob"
+      },
+      generate_buddies: { # every puzzle day, just after a new puzzle
+        cron: "5 0 1-25 12 * America/New_York",
+        class: "Buddies::GenerateDailyPairsJob",
+        args: [Aoc.latest_day]
       },
       unlock_lock_time_achievements: {
         cron: "30 17 8 12 * Europe/Paris",

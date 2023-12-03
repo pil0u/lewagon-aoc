@@ -8,6 +8,10 @@ class SnippetsController < ApplicationController
     @snippet = Snippets::Builder.call(language: current_user.favourite_language)
     @snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge).order(created_at: :desc)
 
+    @language = params[:language]
+    @languages = @snippets.pluck(:language).uniq.sort
+    @snippets = @snippets.where(language: @language) if @language
+
     @text_area_placeholder = <<~TEXT
       This box is super smart.
       Paste your code directly here, it will work.

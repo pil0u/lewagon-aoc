@@ -9,20 +9,20 @@ Rails.application.configure do
     shutdown_timeout: 30,
     enable_cron: true,
     cron: {
-      refresh_completions: { # every 10 minutes between November 1st and December 30th
+      refresh_completions: {                      # every 10 minutes between November 1st and December 30th
         cron: "*/10 * 1-30 11-12 *",
         class: "InsertNewCompletionsJob"
       },
-      auto_cleanup: { # every day of december, just before a new puzzle
-        cron: "55 23 * 12 * America/New_York",
+      auto_cleanup: {                             # every puzzle day, just before a new puzzle
+        cron: "55 23 1-25 12 * America/New_York",
         class: "Cache::CleanupJob"
       },
-      generate_buddies: { # every puzzle day, just after a new puzzle
+      generate_buddies: {                         # every puzzle day, just after a new puzzle
         cron: "5 0 1-25 12 * America/New_York",
         class: "Buddies::GenerateDailyPairsJob",
         args: [Aoc.latest_day]
       },
-      unlock_lock_time_achievements: {
+      unlock_lock_time_achievements: {            # once at lock time
         cron: "30 17 8 12 * Europe/Paris",
         class: "Achievements::LockTimeJob"
       }

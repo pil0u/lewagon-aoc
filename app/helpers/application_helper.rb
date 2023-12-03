@@ -19,16 +19,22 @@ module ApplicationHelper
   DEFAULT_THEME = "base16-ocean.dark"
 
   def render_markdown(commonmarkdown, default_language: nil)
-    config = {}
+    ast = CommonMarker.render_doc(commonmarkdown)
+    ast.walk do |node|
+      next unless node.type == :code_block
 
-    config[:options] = {}
-    config[:options][:parse] = { default_info_string: default_language }.compact
-    config[:options][:render] = { escape: true, github_pre_lang: true }
+      language = node.fence_info.presence || default_language
+      lexer = ::Rouge::Lexer.find_fancy(language) || ::Rouge::Lexers::PlainText.new
 
-    config[:plugins] = {
-      syntax_highlighter: { theme: DEFAULT_THEME }
-    }
+      formatter = Rouge::Formatters::HTML.new
+      code_html = formatter.format(lexer.lex(node.string_content))
+      html = %(<pre class="code-highlighter" lang="#{lexer.class.title}">#{code_html}</pre>)
+      new_node = ::CommonMarker::Node.new(:html)
+      new_node.string_content = html
 
-    Commonmarker.to_html(commonmarkdown, **config)
+      node.insert_before(new_node)
+      node.delete
+    end
+    ast.to_html(:UNSAFE)
   end
 end

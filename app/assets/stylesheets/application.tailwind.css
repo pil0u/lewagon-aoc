@@ -44,6 +44,14 @@
     @apply my-4 font-semibold text-lg
   }
 
+  .snippet p {
+    @apply leading-6
+  }
+
+  .snippet p code {
+    @apply text-xs bg-dark px-1 py-0.5 border border-aoc-gray-darker rounded
+  }
+
   .snippet pre {
     @apply my-4 relative pt-2 !bg-dark border border-aoc-gray-darker rounded;
   }

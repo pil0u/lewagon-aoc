@@ -16,6 +16,16 @@
 
 <hr class="border-aoc-gray-darker">
 
+<div class="mt-4 flex items-center gap-4 flex-wrap">
+  <h3>Filter by language</h3>
+
+  <% @languages.each do |language| %>
+    <%= link_to snippet_path(day: @day, challenge: @challenge, id: @snippet.id, language: @language == language ? nil : language), class: "h-4 lg:h-8" do %>
+      <%= image_tag "languages/#{language}.png", class: "h-full transition-all hover:opacity-100 #{'opacity-50' if @language.present? && @language != language}" %>
+    <% end %>
+  <% end %>
+</div>
+
 <div class="my-8 flex flex-col gap-y-4">
   <%= render Snippets::BoxComponent.with_collection(@snippets, user: current_user) %>
 </div>

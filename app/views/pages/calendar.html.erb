@@ -2,6 +2,20 @@
   Welcome, <%= link_to current_user.username, profile_path(current_user.uid), class: "strong hover:text-gold" %>
 </p>
 
+<% if @daily_buddy.present? %>
+
+  <p class="text-center">
+    Your daily buddy is
+
+    <% if @daily_buddy.slack_id.present? %>
+      <%= link_to "@#{@daily_buddy.slack_username}", @daily_buddy.slack_link, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
+    <% else %>
+      <%= link_to @daily_buddy.username, profile_path(@daily_buddy.uid), class: "link-explicit" %>
+    <% end %>
+  </p>
+
+<% end %>
+
 <div class="mx-auto my-4 w-max grid grid-cols-5 gap-2 lg:gap-3">
   <%= render Calendar::AdventDayComponent.with_collection(@advent_days, now: @now) %>
 </div>

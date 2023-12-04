@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "aoc"
+
 Rails.application.configure do
   config.good_job = {
     execution_mode: :external,
@@ -7,16 +9,21 @@ Rails.application.configure do
     shutdown_timeout: 30,
     enable_cron: true,
     cron: {
-      refresh_completions: {
-        cron: "*/10 * 1-30 11-12 *", # every 10th minute between November 1st and December 30th
+      refresh_completions: {                      # every 10 minutes between November 1st and December 30th
+        cron: "*/10 * 1-30 11-12 *",
         class: "InsertNewCompletionsJob"
       },
-      auto_cleanup: {
-        cron: "55 5 * * *", # every day at 5:55
+      auto_cleanup: {                             # every puzzle day, just before a new puzzle
+        cron: "55 23 1-25 12 * America/New_York",
         class: "Cache::CleanupJob"
       },
-      lock_time_achievements: {
-        cron: "30 18 9 12 *", # 9th December at 18:30
+      generate_buddies: {                         # every puzzle day, just after a new puzzle
+        cron: "5 0 1-25 12 * America/New_York",
+        class: "Buddies::GenerateDailyPairsJob",
+        args: [Aoc.latest_day]
+      },
+      unlock_lock_time_achievements: {            # once at lock time
+        cron: "30 17 8 12 * Europe/Paris",
         class: "Achievements::LockTimeJob"
       }
     }

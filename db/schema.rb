@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_30_162723) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_01_004728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -87,6 +87,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_30_162723) do
     t.string "status"
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
+  end
+
+  create_table "buddies", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "day"
+    t.integer "id_1"
+    t.integer "id_2"
+    t.datetime "updated_at", null: false
   end
 
   create_table "cities", force: :cascade do |t|

@@ -1,14 +1,20 @@
-<div id="<%= @snippet.id %>" class="w-full px-4 py-2 flex flex-col self-center gap-y-1 bg-aoc-gray-darkest border border-aoc-gray-dark group">
-  <div class="flex justify-end text-sm gap-x-3">
-    <%= link_to "⚓", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id) %>
+<div id="<%= @snippet.id %>" class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group">
+  <div class="flex text-xs gap-x-3">
+    <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
+
+    <% if @user_can_edit_snippet %>
+      <%= link_to "edit", edit_snippet_path(day: @snippet.day, challenge: @snippet.challenge, id: @snippet.id), class: "link-explicit" %>
+    <% end %>
   </div>
 
-  <pre class="code-highlight scrollbar-chrome text-sm overflow-x-auto" data-language="<%= @snippet.language %>">
+  <pre class="code-highlight break-words text-sm whitespace-normal" data-language="<%= @snippet.language %>">
     <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
   </pre>
 
-  <div class="pt-8 w-full flex items-center justify-between">
-    <div class="flex items-center gap-4">
+  <hr class="border-aoc-gray-darker">
+
+  <div class="w-full flex items-center justify-between">
+    <div class="flex items-center gap-x-4">
       <% Reaction::TYPES.each do |type| %>
         <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
       <% end %>

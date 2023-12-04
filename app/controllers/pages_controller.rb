@@ -21,6 +21,7 @@ class PagesController < ApplicationController
       }
     end
 
+    @daily_buddy = Buddy.of_the_day(current_user)
     @next_puzzle_time = Aoc.next_puzzle_time
     @now = Aoc.event_timezone.now
   end

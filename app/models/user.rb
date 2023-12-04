@@ -41,6 +41,7 @@ class User < ApplicationRecord
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) }
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
+  scope :slack_linked, -> { where.not(slack_id: nil) }
 
   enum :event_awareness, {
     slack_aoc: 0,

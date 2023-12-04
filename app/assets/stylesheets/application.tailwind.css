@@ -32,10 +32,6 @@
     @apply last:mb-0
   }
 
-  pre.code-highlighter {
-    @apply px-6 py-4 border border-aoc-gray-darker rounded;
-  }
-
   .snippet h1 {
     @apply my-4 border-b border-aoc-gray-darker pb-2 font-semibold text-4xl
   }
@@ -52,7 +48,7 @@
     @apply my-4 relative pt-2 !bg-dark border border-aoc-gray-darker rounded;
   }
 
-  pre.code-highlighter::before {
+  .snippet pre.code-highlighter::before {
     @apply absolute top-0 right-0 border-b border-l rounded-bl border-aoc-gray-darker px-2 font-semibold;
 
     content: attr(lang);

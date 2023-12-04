@@ -32,6 +32,10 @@
     @apply last:mb-0
   }
 
+  .snippet code {
+    @apply text-xs bg-dark px-1 py-0.5 border border-aoc-gray-darker rounded
+  }
+
   .snippet h1 {
     @apply my-4 border-b border-aoc-gray-darker pb-2 font-semibold text-4xl
   }
@@ -42,6 +46,10 @@
 
   .snippet h3 {
     @apply my-4 font-semibold text-lg
+  }
+
+  .snippet p {
+    @apply leading-6
   }
 
   .snippet pre {

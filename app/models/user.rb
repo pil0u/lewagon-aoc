@@ -119,7 +119,7 @@ class User < ApplicationRecord
     uid.in?(CONTRIBUTORS.values)
   end
 
-  def linked_slack?
+  def slack_linked?
     slack_id.present?
   end
 

@@ -16,8 +16,6 @@ module ApplicationHelper
     sanitize(text, tags: %w[b em del span sub sup], attributes: %w[style])
   end
 
-  DEFAULT_THEME = "base16-ocean.dark"
-
   def render_markdown(commonmarkdown, default_language: nil)
     ast = CommonMarker.render_doc(commonmarkdown)
     ast.walk do |node|

@@ -28,33 +28,41 @@
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
   }
 
-  .code-highlight * {
+  .snippet * {
     @apply last:mb-0
   }
 
-  .code-highlight h1 {
+  .snippet code {
+    @apply text-xs bg-dark px-1 py-0.5 border border-aoc-gray-darker rounded
+  }
+
+  .snippet h1 {
     @apply my-4 border-b border-aoc-gray-darker pb-2 font-semibold text-4xl
   }
 
-  .code-highlight h2 {
+  .snippet h2 {
     @apply my-4 border-b border-aoc-gray-darker pb-1.5 font-semibold text-2xl
   }
 
-  .code-highlight h3 {
+  .snippet h3 {
     @apply my-4 font-semibold text-lg
   }
 
-  .code-highlight pre {
+  .snippet p {
+    @apply leading-6
+  }
+
+  .snippet pre {
     @apply my-4 relative pt-2 !bg-dark border border-aoc-gray-darker rounded;
   }
 
-  .code-highlight pre::before {
-    @apply absolute top-0 right-0 border-b border-l rounded-bl border-aoc-gray-darker px-2 capitalize font-semibold;
+  .snippet pre.code-highlighter::before {
+    @apply absolute top-0 right-0 border-b border-l rounded-bl border-aoc-gray-darker px-2 font-semibold;
 
     content: attr(lang);
   }
 
-  .code-highlight pre code {
+  pre.code-highlighter {
     @apply block w-full p-4 overflow-x-auto scrollbar-chrome text-xs;
   }
 

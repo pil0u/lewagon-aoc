@@ -7,7 +7,7 @@
     <% end %>
   </div>
 
-  <pre class="code-highlight break-words text-sm whitespace-normal" data-language="<%= @snippet.language %>">
+  <pre class="snippet break-words text-sm whitespace-normal" data-language="<%= @snippet.language %>">
     <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
   </pre>
 

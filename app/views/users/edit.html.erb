@@ -55,7 +55,7 @@
   </p>
 
   <div class="w-max mx-auto">
-    <% if current_user.linked_slack? %>
+    <% if current_user.slack_linked? %>
 
       <div class="flex items-center gap-x-3">
         <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_link, target: :_blank, rel: :noopener, class: "link-slack" %>!</span>

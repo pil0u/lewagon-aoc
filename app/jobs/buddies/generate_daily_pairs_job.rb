@@ -12,7 +12,7 @@ module Buddies
         return
       end
 
-      retrieve_confirmed_users
+      retrieve_users_with_slack_linked
       handle_odd_number_of_users
       generate_possible_pairs_of_buddies
 
@@ -26,8 +26,8 @@ module Buddies
 
     private
 
-    def retrieve_confirmed_users
-      @user_ids = User.confirmed.order(:id).pluck(:id)
+    def retrieve_users_with_slack_linked
+      @user_ids = User.slack_linked.order(:id).pluck(:id)
     end
 
     def handle_odd_number_of_users

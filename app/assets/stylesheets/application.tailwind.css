@@ -48,6 +48,10 @@
     @apply my-4 font-semibold text-lg
   }
 
+  .snippet ul {
+    @apply leading-6
+  }
+
   .snippet p {
     @apply leading-6
   }
@@ -60,6 +64,10 @@
     @apply absolute top-0 right-0 border-b border-l rounded-bl border-aoc-gray-darker px-2 font-semibold;
 
     content: attr(lang);
+  }
+
+  .snippet ul {
+    @apply list-disc ml-6
   }
 
   pre.code-highlighter {

@@ -26,7 +26,7 @@ module ApplicationHelper
 
       formatter = Rouge::Formatters::HTML.new
       code_html = formatter.format(lexer.lex(node.string_content))
-      html = %(<pre class="code-highlighter" lang="#{lexer.class.title}">#{code_html}</pre>)
+      html = %(<pre class="code-highlighter" lang="#{lexer.class.title}"><div class="scrollable">#{code_html}</div></pre>)
       new_node = ::CommonMarker::Node.new(:html)
       new_node.string_content = html
 

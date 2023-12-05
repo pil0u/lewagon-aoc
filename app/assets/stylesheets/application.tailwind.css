@@ -63,7 +63,11 @@
   }
 
   pre.code-highlighter {
-    @apply block w-full p-4 overflow-x-auto scrollbar-chrome text-xs;
+    @apply block w-full p-4 text-xs;
+  }
+
+  .scrollable {
+    @apply scrollbar-chrome overflow-x-auto;
   }
 
   details > summary {

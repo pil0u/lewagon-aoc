@@ -20,7 +20,7 @@ Rails.application.configure do
       generate_buddies: {                         # every puzzle day, just after a new puzzle
         cron: "5 0 1-25 12 * America/New_York",
         class: "Buddies::GenerateDailyPairsJob",
-        args: [Aoc.latest_day]
+        args: -> { [Aoc.latest_day] }
       },
       unlock_lock_time_achievements: {            # once at lock time
         cron: "30 17 8 12 * Europe/Paris",

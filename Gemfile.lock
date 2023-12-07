@@ -260,7 +260,7 @@ GEM
     raabro (1.4.0)
     racc (1.7.3)
     rack (2.2.8)
-    rack-mini-profiler (3.1.1)
+    rack-mini-profiler (3.3.0)
       rack (>= 1.2.0)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
@@ -482,7 +482,7 @@ DEPENDENCIES
   omniauth-slack-openid
   pg (~> 1.5)
   puma (~> 6.4)
-  rack-mini-profiler (~> 3.1)
+  rack-mini-profiler (~> 3.3)
   rails (= 7.1.1)
   rouge (~> 4.2)
   rspec-rails (~> 6.0)

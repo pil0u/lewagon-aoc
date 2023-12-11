@@ -69,7 +69,7 @@
       <th class="min-w-[6rem] font-light strong text-center">Score</th>
     </tr>
 
-    <%= render Scores::DailyUserRowComponent.with_collection(@participants, user: current_user) %>
+    <%= render Scores::DailyUserRowComponent.with_collection(@participants, user: current_user, colorize_hardcore: true) %>
   </table>
 </div>
 

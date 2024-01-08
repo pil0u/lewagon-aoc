@@ -26,7 +26,7 @@ gem "slack-ruby-client"
 gem "sprockets-rails", "~> 3.4"
 gem "stimulus-rails", "~> 1.2"
 gem "strong_migrations", "~> 1.6"
-gem "tailwindcss-rails", "~> 2.0"
+gem "tailwindcss-rails", "~> 2.2"
 gem "turbo-rails", "~> 1.4"
 gem "view_component", "~> 3.7"
 

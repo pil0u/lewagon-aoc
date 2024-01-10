@@ -28,7 +28,7 @@ gem "stimulus-rails", "~> 1.2"
 gem "strong_migrations", "~> 1.6"
 gem "tailwindcss-rails", "~> 2.0"
 gem "turbo-rails", "~> 1.4"
-gem "view_component", "~> 3.7"
+gem "view_component", "~> 3.10"
 
 group :development, :test do
   gem "brakeman", "~> 6.0"

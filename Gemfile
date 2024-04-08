@@ -31,7 +31,7 @@ gem "turbo-rails", "~> 1.4"
 gem "view_component", "~> 3.7"
 
 group :development, :test do
-  gem "brakeman", "~> 6.0"
+  gem "brakeman", "~> 6.1"
   gem "bundler-audit", "~> 0.9"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails", "~> 2.8"

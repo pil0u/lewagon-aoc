@@ -97,7 +97,8 @@ GEM
       safely_block (>= 0.4)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
-    brakeman (6.0.1)
+    brakeman (6.1.2)
+      racc
     builder (3.2.4)
     bundler-audit (0.9.1)
       bundler (>= 1.2.0, < 3)
@@ -464,7 +465,7 @@ PLATFORMS
 DEPENDENCIES
   blazer (~> 3.0)
   bootsnap
-  brakeman (~> 6.0)
+  brakeman (~> 6.1)
   bundler-audit (~> 0.9)
   byebug
   commonmarker (~> 0.23.10, < 1)

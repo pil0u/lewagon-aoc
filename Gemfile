@@ -11,7 +11,7 @@ gem "bootsnap", require: false # Reduces boot times through caching; required in
 gem "commonmarker", "~> 0.23.10", "< 1"
 gem "devise", "~> 4.9"
 gem "good_job", "~> 3.21"
-gem "humanize", "~> 2.5"
+gem "humanize", "~> 3.0"
 gem "importmap-rails", "~> 1.2"
 gem "jbuilder", "~> 2.11"
 gem "omniauth-kitt", "~> 0.1"

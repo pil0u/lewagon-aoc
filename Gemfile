@@ -8,7 +8,7 @@ gem "rails", "7.1.1"
 
 gem "blazer", "~> 3.0"
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
-gem "commonmarker", "~> 0.23.10", "< 1"
+gem "commonmarker", "~> 1.0.4"
 gem "devise", "~> 4.9"
 gem "good_job", "~> 3.21"
 gem "humanize", "~> 2.5"

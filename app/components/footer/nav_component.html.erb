@@ -1,18 +1,10 @@
 <nav>
 
+  <%= link_to "code of conduct", code_of_conduct_path, class: "link-explicit" %>
+  <%= link_to "stats", stats_path, class: "link-explicit" %>
+
   <% if @user && @user.confirmed? %>
-
-    <%= link_to "code of conduct", code_of_conduct_path, class: "link-explicit" %>
-    <%= link_to "stats", stats_path, class: "link-explicit" %>
     <%= link_to "the wall", messages_path, class: "link-explicit" %>
-    <%= link_to "community", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
-
-  <% else %>
-
-    <%= link_to "code of conduct", code_of_conduct_path, class: "link-explicit" %>
-    <%= link_to "stats", stats_path, class: "link-explicit" %>
-    <%= link_to "community", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
-
   <% end %>
 
 </nav>

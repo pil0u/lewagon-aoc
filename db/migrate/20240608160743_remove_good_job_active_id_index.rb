@@ -6,15 +6,11 @@ class RemoveGoodJobActiveIdIndex < ActiveRecord::Migration[7.1]
   def change
     reversible do |dir|
       dir.up do
-        if connection.index_name_exists?(:good_jobs, :index_good_jobs_on_active_job_id)
-          remove_index :good_jobs, name: :index_good_jobs_on_active_job_id
-        end
+        remove_index :good_jobs, name: :index_good_jobs_on_active_job_id if connection.index_name_exists?(:good_jobs, :index_good_jobs_on_active_job_id)
       end
 
       dir.down do
-        unless connection.index_name_exists?(:good_jobs, :index_good_jobs_on_active_job_id)
-          add_index :good_jobs, :active_job_id, name: :index_good_jobs_on_active_job_id
-        end
+        add_index :good_jobs, :active_job_id, name: :index_good_jobs_on_active_job_id unless connection.index_name_exists?(:good_jobs, :index_good_jobs_on_active_job_id)
       end
     end
   end

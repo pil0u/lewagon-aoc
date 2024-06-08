@@ -1,7 +1,13 @@
-<h1 class="my-8 text-center text-xl group">
-  <%= link_to "/" do %>
-    <span class="text-wagon-red group-hover:text-shadow-red">Le Wagon</span>
-    <span class="group-hover:strong">x</span>
-    <span class="text-other-green group-hover:text-shadow-green">Advent of Code</span>
+<div>
+  <h1 class="my-8 text-center text-xl group">
+    <%= link_to "/" do %>
+      <span class="text-wagon-red group-hover:text-shadow-red">Le Wagon</span>
+      <span class="group-hover:strong">x</span>
+      <span class="text-other-green group-hover:text-shadow-green">Advent of Code</span>
+    <% end %>
+  </h1>
+
+  <% if current_page?("/") %>
+    <%= link_to "#aoc on Slack!", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "hidden lg:block absolute top-9 right-9 -rotate-[8deg] text-sm link-slack" %>
   <% end %>
-</h1>
+</div>

@@ -32,7 +32,6 @@ Rails.application.routes.draw do
   # Public routes
   get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/faq",             to: "pages#faq"
-  get "/participation",   to: "pages#participation"
   get "/stats",           to: "pages#stats"
 
   # Routes for unauthenticated users
@@ -90,6 +89,7 @@ Rails.application.routes.draw do
     get   "/scores/squads",   to: "scores#squads"
     get   "/scores/campuses", to: "scores#campuses"
     get   "/scores/insanity", to: "scores#insanity"
+    get   "/participation",   to: "pages#participation"
 
     mount Blazer::Engine,     at: "blazer"
     mount GoodJob::Engine,    at: "good_job"

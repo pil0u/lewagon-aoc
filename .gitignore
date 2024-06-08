@@ -26,3 +26,7 @@ config/master.key
 !/app/assets/builds/.keep
 
 coverage
+
+# SSH Keypair for GitHub Action
+gha_ed25519
+gha_ed25519.pub

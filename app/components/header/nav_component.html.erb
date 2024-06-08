@@ -5,6 +5,7 @@
     <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
     <%= render NavTabComponent.new(link: { name: "faq", path: faq_path }) %>
     <%= render NavTabComponent.new(link: { name: "settings", path: settings_path }) %>
+    <%= render NavTabComponent.new(link: { name: "patrons", path: patrons_path }) %>
     <%= render NavTabComponent.new(link: { name: "admin", path: admin_path }) if @user.admin? %>
 
   <% else %>

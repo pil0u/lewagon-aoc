@@ -29,13 +29,28 @@ RSpec.describe User do
       referee_three = create(:user, username: "Aurrou", uid: "4", referrer:)
       create(:user, username: "Nikos", uid: "5", referrer: referee_one)
 
-      create_list(:completion, 1, user: referee_one)
-      create_list(:completion, 2, user: referee_two)
-      create_list(:completion, 3, user: referee_three)
+      build_list(:completion, 3, user: referee_one) do |completion, i|
+        completion.day = i + 1
+        completion.save!
+      end
+      build_list(:completion, 5, user: referee_two) do |completion, i|
+        completion.day = i + 1
+        completion.save!
+      end
+      build_list(:completion, 8, user: referee_three) do |completion, i|
+        completion.day = i + 1
+        completion.save!
+      end
+
+      create(:snippet, user: referee_one, language: "ruby", code: "some code")
+      create(:snippet, user: referee_one, language: "python", code: "some code")
+      create(:snippet, user: referee_two, language: "ruby", code: "some code")
+      create(:snippet, user: referee_two, language: "python", code: "some code")
+      create(:snippet, user: referee_two, language: "javascript", code: "some code")
 
       expect(User.with_aura).to contain_exactly(
-        hash_including("uid" => "1", "username" => "pil0u", "referrals" => 3, "aura" => 832.0), # (100 * (ln(3 + 1) + 2 * (1 + 1) + 3 * (1 + 1) + 5 * (1 + 1))).ceil
-        hash_including("uid" => "2", "username" => "Aquaj", "referrals" => 1, "aura" => 70.0) # (100 * (ln(1 + 1) + 2 * (0 + 1) + 3 * (0 + 1) + 5 * (0 + 1))).ceil
+        hash_including("uid" => "1", "username" => "pil0u", "referrals" => 3, "aura" => 1919),  # (100 * (ln(3+1) + (ln(3+1) + ln(5+1) + ln(8+1)) + 5 * (ln(2+1) + ln(3+1)))).ceil
+        hash_including("uid" => "2", "username" => "Aquaj", "referrals" => 1, "aura" => 70)     # (100 * (ln(1+1) + 0                             + 5 * 0)).ceil
       )
     end
   end

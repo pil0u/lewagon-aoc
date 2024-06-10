@@ -28,8 +28,8 @@
   </code>
 
   <p>
-    Every time someone signs up using your code, you will increase your <span class="strong">aura</span>. Finding people
-    who solve a few puzzles can only help your <span class="strong">aura</span> as well.
+    Every signup using your code will increase your <span class="strong">aura</span>. Referring people who solve a few
+    puzzles or share their solution can only help your <span class="strong">aura</span> as well.
   </p>
 
   <p>
@@ -41,11 +41,10 @@
   </p>
 </div>
 
-<table class="block overflow-x-auto whitespace-nowrap w-full max-w-lg mx-auto">
+<table class="block overflow-x-auto whitespace-nowrap w-full max-w-md mx-auto">
   <thead>
     <tr class="border-b border-aoc-gray-darker">
       <th class="font-light w-full"></th>
-      <th class="font-light min-w-[6rem]">Referrals</th>
       <th class="font-light min-w-[6rem]">Aura</th>
     </tr>
   </thead>
@@ -57,12 +56,8 @@
           <%= link_to user["username"], profile_path(user["uid"]), class: "hover:text-gold" %>
         </td>
 
-        <td class="text-center">
-          <%= user["referrals"] %>
-        </td>
-
         <td class="text-center strong">
-          <%= user["aura"].to_i %>
+          <%= user["aura"] %>
         </td>
       </tr>
     <% end %>

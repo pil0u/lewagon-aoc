@@ -84,25 +84,23 @@ class User < ApplicationRecord
   def self.with_aura
     query = <<~SQL.squish
       SELECT
-        users.uid,
-        users.username,
-        COUNT(DISTINCT referees.id) AS referrals,
-        CEIL(100 * (
-          LN(COUNT(DISTINCT referees.id) + 1) +
-          2 * LN(COUNT(CASE WHEN referees_with_completion.completions_count = 1 THEN referees.id END) + 1) +
-          3 * LN(COUNT(CASE WHEN referees_with_completion.completions_count = 2 THEN referees.id END) + 1) +
-          5 * LN(COUNT(CASE WHEN referees_with_completion.completions_count > 2 THEN referees.id END) + 1)
-        )) AS aura
+          referrers.uid,
+          referrers.username,
+          COUNT(users.id) AS referrals,
+          CEIL(100 * (
+              LN(COUNT(users.id) + 1) +                       /* SIGNUPS */
+              SUM(LN(COALESCE(completions.total, 0) + 1)) +   /* COMPLETIONS */
+              5 * SUM(LN(COALESCE(snippets.total, 0) + 1))    /* CONTRIBUTIONS */
+          ))::int AS aura
       FROM users
-      LEFT JOIN users referees ON users.id = referees.referrer_id
-      LEFT JOIN (
-        SELECT user_id, COUNT(id) AS completions_count
-        FROM completions
-        GROUP BY user_id
-      ) referees_with_completion ON referees.id = referees_with_completion.user_id
-      GROUP BY users.id
-      HAVING COUNT(referees.id) > 0
-      ORDER BY aura DESC;
+      LEFT JOIN users AS referrers
+          ON users.referrer_id = referrers.id
+      LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM completions GROUP BY user_id) AS completions
+          ON users.id = completions.user_id
+      LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM snippets GROUP BY user_id) AS snippets
+          ON users.id = snippets.user_id
+      WHERE users.referrer_id IS NOT NULL
+      GROUP BY 1, 2;
     SQL
 
     ActiveRecord::Base.connection.exec_query(query, "SQL")

@@ -88,7 +88,7 @@ class User < ApplicationRecord
           referrers.username,
           COUNT(referees.id) AS referrals,
           CEIL(100 * (
-              LN(COUNT(referees.id) + 1) +                       /* SIGNUPS */
+              LN(COUNT(referees.id) + 1) +                    /* SIGNUPS */
               SUM(LN(COALESCE(completions.total, 0) + 1)) +   /* COMPLETIONS */
               5 * SUM(LN(COALESCE(snippets.total, 0) + 1))    /* CONTRIBUTIONS */
           ))::int AS aura

@@ -2,25 +2,21 @@
 
 <div class="my-4 flex flex-col gap-y-4">
   <p>
-    Influencers of Le Wagon, this is your moment.
+    This page lists the greatest influencers of Le Wagon.
   </p>
 
   <p>
-    Your referral code
+    You can become one, by sharing your personal referral code
     <code
-      class="hover:cursor-pointer hover:text-gold active:text-aoc-gray"
+      class="text-other-green hover:cursor-pointer hover:text-aoc-green active:text-other-green"
       data-controller="clipboard"
       data-action="click->clipboard#copy"
       data-clipboard-content-value="<%= current_user.referral_code %>"><%= current_user.referral_code %></code>
-    is your fame booster. Share it everywhere to your fellow Wagoners: your batch channel
-    <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>,
-    your WhatsApp groups, by mail, pigeon, or even in the
-    <%= link_to "#general", "https://lewagon-alumni.slack.com/archives/C02NE024R", target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
-    Slack channel if you dare. Here is your personal referral link:
+    or URL (click to copy)
   </p>
 
   <code
-    class="w-max mx-auto hover:cursor-pointer hover:text-gold active:text-aoc-gray"
+    class="w-max mx-auto text-other-green hover:cursor-pointer hover:text-aoc-green active:text-other-green"
     data-controller="clipboard"
     data-action="click->clipboard#copy"
     data-clipboard-content-value="<%= current_user.referral_link(request) %>">
@@ -28,16 +24,16 @@
   </code>
 
   <p>
+    Share this link everywhere to your fellow Wagoners: your batch channel
+    <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>,
+    your WhatsApp groups, by mail, pigeon, or even in the
+    <%= link_to "#general", "https://lewagon-alumni.slack.com/archives/C02NE024R", target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
+    Slack channel if you dare.
+  </p>
+
+  <p>
     Every signup using your code will increase your <span class="strong">aura</span>. Referring people who solve a few
     puzzles or share their solution can only help your <span class="strong">aura</span> as well.
-  </p>
-
-  <p>
-    One more thing. The top referrer by December 8th wins a <code>100€</code> Amazon voucher 💸
-  </p>
-
-  <p>
-    Good luck!
   </p>
 </div>
 
@@ -45,6 +41,7 @@
   <thead>
     <tr class="border-b border-aoc-gray-darker">
       <th class="font-light w-full"></th>
+      <th class="font-light min-w-[6rem]">Referrals</th>
       <th class="font-light min-w-[6rem]">Aura</th>
     </tr>
   </thead>
@@ -54,6 +51,10 @@
       <tr class="hover:bg-hover">
         <td class="text-center">
           <%= link_to user["username"], profile_path(user["uid"]), class: "hover:text-gold" %>
+        </td>
+
+        <td class="text-center">
+          <%= user["referrals"] %>
         </td>
 
         <td class="text-center strong">

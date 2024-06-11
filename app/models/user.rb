@@ -86,20 +86,20 @@ class User < ApplicationRecord
       SELECT
           referrers.uid,
           referrers.username,
-          COUNT(users.id) AS referrals,
+          COUNT(referees.id) AS referrals,
           CEIL(100 * (
-              LN(COUNT(users.id) + 1) +                       /* SIGNUPS */
+              LN(COUNT(referees.id) + 1) +                       /* SIGNUPS */
               SUM(LN(COALESCE(completions.total, 0) + 1)) +   /* COMPLETIONS */
               5 * SUM(LN(COALESCE(snippets.total, 0) + 1))    /* CONTRIBUTIONS */
           ))::int AS aura
-      FROM users
+      FROM users AS referees
       LEFT JOIN users AS referrers
-          ON users.referrer_id = referrers.id
+          ON referees.referrer_id = referrers.id
       LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM completions GROUP BY user_id) AS completions
-          ON users.id = completions.user_id
+          ON referees.id = completions.user_id
       LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM snippets GROUP BY user_id) AS snippets
-          ON users.id = snippets.user_id
-      WHERE users.referrer_id IS NOT NULL
+          ON referees.id = snippets.user_id
+      WHERE referees.referrer_id IS NOT NULL
       GROUP BY 1, 2;
     SQL
 

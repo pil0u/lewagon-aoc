@@ -10,7 +10,7 @@ gem "blazer", "~> 3.0.4"
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
 gem "commonmarker", "~> 0.23.10", "< 1"
 gem "devise", "~> 4.9.4"
-gem "good_job", "~> 3.29.3"
+gem "good_job", "~> 3.99.x"
 gem "humanize", "~> 3.1.0"
 gem "importmap-rails", "~> 2.0.1"
 gem "jbuilder", "~> 2.12.0"
@@ -38,7 +38,7 @@ group :development, :test do
   gem "erb_lint", "~> 0.5", require: false
   gem "factory_bot_rails", "~> 6.4.3"
   gem "rspec-rails", "~> 6.1.2"
-  gem "rubocop", "~> 1.64.1", require: false
+  gem "rubocop", "~> 1.66.1", require: false
   gem "rubocop-performance", "~> 1.21.0", require: false
   gem "rubocop-rails", "~> 2.25.1", require: false
   gem "rubocop-rspec", "~> 2.31.0", require: false

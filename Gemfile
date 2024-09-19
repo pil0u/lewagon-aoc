@@ -35,7 +35,7 @@ group :development, :test do
   gem "bundler-audit", "~> 0.9.1"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv", "~> 3.1.2"
-  gem "erb_lint", "~> 0.5", require: false
+  gem "erb_lint", "~> 0.6", require: false
   gem "factory_bot_rails", "~> 6.4.3"
   gem "rspec-rails", "~> 6.1.2"
   gem "rubocop", "~> 1.66.1", require: false

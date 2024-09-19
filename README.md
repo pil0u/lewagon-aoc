@@ -17,14 +17,14 @@ If you want to help me fix a bug or implement a new requested feature:
 4. Code the changes on your fork
 5. Create a Pull Request here from your fork
 
-## CI with GitHub Action
+## CI with GitHub Actions
 
 Upon Pull Request actions (open, push), CI scripts are automatically run tests, linters and security tools. **All the checks shall pass for your PR to be reviewed.**
 
 ## Run on your machine
 
 1. Run `bin/setup` to install dependencies, create and seed the database
-2. Ask me for the credentials key and add it to `config/master.key`, required for Kitt OAuth
+2. Ask me for the credentials key on Slack and add it to `config/master.key` (required for Kitt OAuth)
 3. Create a `.env` root file and add these keys with their [appropriate values](#required-env-variables): `AOC_ROOMS`, `SESSION_COOKIE`
 4. Run `bin/dev`
 
@@ -51,7 +51,7 @@ OVERMIND_PROCFILE=Procfile.dev
 
 Then, instead of the usual `bin/dev`, you have to run `overmind s`.
 
-### Use SSL (on macOS)
+### Use SSL
 
 In short: create an SSL certificate for your localhost, store it in your keychain and run the server using that certificate.
 
@@ -62,16 +62,20 @@ mv localhost* tmp/ # this is the tmp folder in the project root
 bin/dev ssl
 ```
 
-Untested on Linux.
+> **Note**
+> Tested on macOS only.
 
 ## Launch the webapp on local mobile browser
 
-Because the OAuth will not work on your local IP, you have to bypass authentication. For example, you could **temporarily** add this linein the `welcome` controller method:
+Because the OAuth will not work on your local IP, you have to bypass authentication. For example, you could **temporarily** add this line in the `welcome` controller method:
 ```ruby
 sign_in(User.find_by(github_username: "your_username"))
 ```
 
 Then, find the local IP address of the computer you launch the server from (ex: `192.168.1.14`) and open the app on your mobile browser from that IP (ex: `http://192.168.1.14:3000`)
+
+> **Warning**
+> Bypassing authentication, even temporarily, can pose significant security risks. Only use this method in a controlled development environment and never in production.
 
 # Advent of Code API
 
@@ -80,3 +84,7 @@ On `adventofcode.com`, a user can create one (and only one) private leaderboard.
 A JSON object containing scores can be fetched from a `GET` request that needs a session cookie to succeed. We store this session cookie in the `SESSION_COOKIE` environment variable (valid ~ 1 month).
 
 We use multiple private leaderboards to run the platform with more than 200 participants. We store their IDs in the `AOC_ROOMS` environment variable, comma-separated. One account joins all of them, and we use this account's `SESSION_COOKIE`.
+
+# License
+
+[MIT](LICENSE)

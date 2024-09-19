@@ -32,7 +32,7 @@ gem "view_component", "~> 3.12.1"
 
 group :development, :test do
   gem "brakeman", "~> 6.1.2"
-  gem "bundler-audit", "~> 0.9.1"
+  gem "bundler-audit", "~> 0.9.2"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv", "~> 3.1.2"
   gem "erb_lint", "~> 0.5", require: false

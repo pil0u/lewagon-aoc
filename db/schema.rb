@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_08_160747) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_19_205503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -169,6 +169,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_08_160747) do
   create_table "good_job_executions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "active_job_id", null: false
     t.datetime "created_at", null: false
+    t.interval "duration"
     t.text "error"
     t.text "error_backtrace", array: true
     t.integer "error_event", limit: 2

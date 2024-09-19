@@ -40,7 +40,7 @@ group :development, :test do
   gem "rspec-rails", "~> 6.1.2"
   gem "rubocop", "~> 1.66.1", require: false
   gem "rubocop-performance", "~> 1.21.0", require: false
-  gem "rubocop-rails", "~> 2.25.1", require: false
+  gem "rubocop-rails", "~> 2.26.1", require: false
   gem "rubocop-rspec", "~> 2.31.0", require: false
   gem "simplecov", "~> 0.22.0"
   gem "webmock", "~> 3.23.1"

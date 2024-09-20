@@ -104,10 +104,6 @@
     content: "\f09b";
   }
 
-  .fa-power-off::before {
-    content: "\f011";
-  }
-
   .fa-slack::before {
     content: "\f198";
   }

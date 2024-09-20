@@ -32,6 +32,4 @@
       <span class="basis-1/3">/<%= @campus[:top_contributors] %></span>
     <% end %>
   </td>
-
-  <%= render Scores::RankEvolutionCellComponent.new(previous_rank: @campus[:previous_rank], current_rank: @campus[:rank]) %>
 </tr>

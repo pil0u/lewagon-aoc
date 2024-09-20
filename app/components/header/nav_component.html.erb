@@ -13,8 +13,8 @@
   <% end %>
 
   <%= render NavTabComponent.new(link: { name: "faq", path: faq_path }) %>
-  <%= link_to destroy_user_session_path, class: "hover:text-wagon-red" do %>
-    <i class="fas fa-power-off"></i>
+  <%= link_to destroy_user_session_path, class: "hover:text-wagon-red", data: { turbo: false } do %>
+    <%= inline_svg_tag "icons/power.svg", class: "w-5 h-5 inline-block" %>
   <% end %>
 
   <%= render NavTabComponent.new(link: { name: "admin", path: admin_path }) if @user.admin? %>

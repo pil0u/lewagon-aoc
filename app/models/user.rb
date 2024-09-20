@@ -39,7 +39,7 @@ class User < ApplicationRecord
 
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
-  scope :insanity, -> { where(entered_hardcore: true) }
+  scope :insanity, -> { where(entered_hardcore: true) } # All users are 'hardcore' since 2024 edition
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
   scope :slack_linked, -> { where.not(slack_id: nil) }
 

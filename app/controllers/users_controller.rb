@@ -2,7 +2,6 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_admin, only: %i[impersonate]
-  before_action :restrict_after_lock, only: %i[update]
 
   def show
     @user = User.find_by!(uid: params[:uid])
@@ -89,15 +88,6 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  def restrict_after_lock
-    return unless Time.now.utc > Aoc.lewagon_lock_time && (user_params[:entered_hardcore] == "1") != current_user.entered_hardcore
-
-    redirect_back(
-      fallback_location: "/",
-      alert: "You cannot join or leave the Ladder of Insanity since #{Aoc.lewagon_lock_time.to_fs(:long_ordinal)} (see FAQ)"
-    )
-  end
-
   def unlock_achievements
     Achievements::UnlockJob.perform_later(:city_join, current_user.id)
   end
@@ -105,6 +95,6 @@ class UsersController < ApplicationController
   def user_params
     params
       .require(:user)
-      .permit(:accepted_coc, :aoc_id, :city_id, :entered_hardcore, :event_awareness, :favourite_language, :username)
+      .permit(:accepted_coc, :aoc_id, :city_id, :event_awareness, :favourite_language, :username)
   end
 end

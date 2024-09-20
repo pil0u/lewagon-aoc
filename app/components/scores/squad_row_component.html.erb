@@ -30,6 +30,4 @@
       <%= @squad[:daily_score] || 0 %>
     <% end %>
   </td>
-
-  <%= render Scores::RankEvolutionCellComponent.new(previous_rank: @squad[:previous_rank], current_rank: @squad[:rank]) %>
 </tr>

@@ -26,9 +26,9 @@ RSpec.describe Scores::InsanityPoints do
 
   it "computes the points for users for each challenge" do
     expect(described_class.get).to contain_exactly(
-      { score: 2, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
-      { score: 2, user_id: 1, day: 1, challenge: 2, completion_id: completions[1].id },
-      { score: 1, user_id: 2, day: 1, challenge: 1, completion_id: completions[2].id }
+      { score: 5, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
+      { score: 5, user_id: 1, day: 1, challenge: 2, completion_id: completions[1].id },
+      { score: 4, user_id: 2, day: 1, challenge: 1, completion_id: completions[2].id }
     )
   end
 
@@ -36,6 +36,8 @@ RSpec.describe Scores::InsanityPoints do
     let!(:user_3) { create(:user, id: 3, entered_hardcore: true) }
     let!(:user_4) { create(:user, id: 4, entered_hardcore: true) }
     let!(:user_5) { create(:user, id: 5, entered_hardcore: true) }
+    let!(:user_6) { create(:user, id: 6, entered_hardcore: true) }
+    let!(:user_7) { create(:user, id: 7, entered_hardcore: true) }
 
     let!(:completions) do
       [
@@ -43,22 +45,26 @@ RSpec.describe Scores::InsanityPoints do
         create_completion(1, 1, user_2, 1.day + 2.hours),
         create_completion(1, 1, user_3, 3.hours + 26.minutes),
         create_completion(1, 1, user_4, 3.days + 1.minute),
-        create_completion(1, 1, user_5, 4.hours)
+        create_completion(1, 1, user_5, 4.hours),
+        create_completion(1, 1, user_6, 4.hours + 3.minutes),
+        create_completion(1, 1, user_7, 4.hours + 5.minutes)
       ]
     end
 
-    it "gives the first user to complete the challenge as many points as there are players" do
+    it "grants the first 5 users who completed the challenge respectively 5, 4, 3, 2 and 1 points" do
       expect(described_class.get).to include(
-        { score: 5, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id }
+        { score: 5, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
+        { score: 4, user_id: 3, day: 1, challenge: 1, completion_id: completions[2].id },
+        { score: 3, user_id: 5, day: 1, challenge: 1, completion_id: completions[4].id },
+        { score: 2, user_id: 6, day: 1, challenge: 1, completion_id: completions[5].id },
+        { score: 1, user_id: 7, day: 1, challenge: 1, completion_id: completions[6].id }
       )
     end
 
-    it "gives each player one less point per player ahead of them" do
+    it "grants 0 point to any other user who completed the challenge after the 5th" do
       expect(described_class.get).to include(
-        { score: 4, user_id: 3, day: 1, challenge: 1, completion_id: completions[2].id },
-        { score: 3, user_id: 5, day: 1, challenge: 1, completion_id: completions[4].id },
-        { score: 2, user_id: 2, day: 1, challenge: 1, completion_id: completions[1].id },
-        { score: 1, user_id: 4, day: 1, challenge: 1, completion_id: completions[3].id }
+        { score: 0, user_id: 2, day: 1, challenge: 1, completion_id: completions[1].id },
+        { score: 0, user_id: 4, day: 1, challenge: 1, completion_id: completions[3].id }
       )
     end
 
@@ -69,10 +75,12 @@ RSpec.describe Scores::InsanityPoints do
 
       it "does not include them in the computation" do
         expect(described_class.get).to contain_exactly(
-          { score: 4, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
-          { score: 3, user_id: 3, day: 1, challenge: 1, completion_id: completions[2].id },
-          { score: 2, user_id: 2, day: 1, challenge: 1, completion_id: completions[1].id },
-          { score: 1, user_id: 4, day: 1, challenge: 1, completion_id: completions[3].id }
+          { score: 5, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
+          { score: 4, user_id: 3, day: 1, challenge: 1, completion_id: completions[2].id },
+          { score: 3, user_id: 6, day: 1, challenge: 1, completion_id: completions[5].id },
+          { score: 2, user_id: 7, day: 1, challenge: 1, completion_id: completions[6].id },
+          { score: 1, user_id: 2, day: 1, challenge: 1, completion_id: completions[1].id },
+          { score: 0, user_id: 4, day: 1, challenge: 1, completion_id: completions[3].id }
         )
       end
     end

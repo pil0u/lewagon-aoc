@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/faq",             to: "pages#faq"
   get "/stats",           to: "pages#stats"
+  get "/scores/insanity", to: "scores#insanity"
 
   # Routes for unauthenticated users
   unauthenticated do
@@ -88,7 +89,6 @@ Rails.application.routes.draw do
     get   "/scores/solo",     to: "scores#solo"
     get   "/scores/squads",   to: "scores#squads"
     get   "/scores/campuses", to: "scores#campuses"
-    get   "/scores/insanity", to: "scores#insanity"
     get   "/participation",   to: "pages#participation"
 
     mount Blazer::Engine,     at: "blazer"

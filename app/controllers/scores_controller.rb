@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ScoresController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[insanity]
+
   def campuses
     session[:last_score_page] = "campuses"
 

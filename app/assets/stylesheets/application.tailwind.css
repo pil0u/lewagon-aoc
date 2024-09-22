@@ -1,5 +1,4 @@
 @import "fonts";
-@import "font_awesome";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
@@ -134,18 +133,6 @@
 
   .no-ring {
     @apply ring-transparent ring-offset-transparent;
-  }
-
-  .rank-down {
-    @apply fas fa-angles-down text-wagon-red text-opacity-50;
-  }
-
-  .rank-equal {
-    @apply fas fa-equals text-aoc-gray-darker text-opacity-50;
-  }
-
-  .rank-up {
-    @apply fas fa-angles-up text-aoc-green text-opacity-50;
   }
 
   .scrollbar-chrome::-webkit-scrollbar {

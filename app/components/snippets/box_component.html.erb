@@ -14,7 +14,11 @@
   <hr class="border-aoc-gray-darker">
 
   <div class="w-full flex items-center justify-between">
-    <div class="flex items-center gap-x-4">
+    <div
+      class="flex items-center gap-x-4"
+      data-controller="reactions"
+      data-reactions-snippet-id-value="<%= @snippet.id %>"
+      data-reactions-vote-value="<%= @snippet.reactions.find_by(user_id: @user.id).to_json %>">
       <% Reaction::TYPES.each do |type| %>
         <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
       <% end %>

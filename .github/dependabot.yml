@@ -1,4 +1,3 @@
----
 version: 2
 updates:
   - package-ecosystem: "bundler"
@@ -7,3 +6,6 @@ updates:
       interval: "daily"
       time: "17:00"
       timezone: "Europe/Paris"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-minor", "version-update:semver-patch"]

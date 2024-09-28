@@ -24,16 +24,6 @@
     <%= f.select :favourite_language, Snippet::LANGUAGES.invert.to_a, { prompt: "", selected: @user.favourite_language }, class: "input self-end" %>
   </div>
 
-  <div class="flex items-center gap-x-3">
-    <%= f.label :entered_hardcore, "Join the Ladder of Insanity" %>
-    <%= f.check_box :entered_hardcore, checked: @user.entered_hardcore, class: "focus:no-ring", data: {
-          controller: "check-alert",
-          check_alert_target: "checkbox",
-          action: "change->check-alert#ping",
-          check_alert_message_value: "The Ladder of Insanity is opt-in. By #{@lock_day}, your choice will be immutable.\n\nIf you decide to join, you will appear in the specific ranking and be eligible to its rewards. However, you will lose eligibility to the rewards of the casual ranking."
-        } %>
-  </div>
-
   <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
     <%= f.label :event_awareness, "How did you hear about us? 💡" %>
     <%= f.select :event_awareness, UserFormComponent::AWARENESS_OPTIONS.invert.to_a, { prompt: "", selected: @user.event_awareness }, class: "input self-end pr-8 text-ellipsis" %>

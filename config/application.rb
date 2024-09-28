@@ -40,5 +40,8 @@ module LewagonAoc
 
     # Use GoodJob as ActiveJob backend
     config.active_job.queue_adapter = :good_job
+
+    # Disable partial writes when changing default values
+    config.active_record.partial_inserts = false
   end
 end

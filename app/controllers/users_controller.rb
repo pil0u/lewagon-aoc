@@ -6,11 +6,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by!(uid: params[:uid])
 
-    casual_scores = Scores::SoloScores.get
-    casual_presenter = Scores::UserScoresPresenter.new(casual_scores)
-    casual_participants = casual_presenter.get
-    @casual_stats = casual_participants.find { |h| h[:uid].to_s == @user.uid }
-
     insanity_scores = Scores::InsanityScores.get
     insanity_presenter = Scores::UserScoresPresenter.new(insanity_scores)
     insane_participants = insanity_presenter.get
@@ -20,16 +15,6 @@ class UsersController < ApplicationController
     squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
     squads = squad_presenter.get
     @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
-
-    city_scores = Scores::CityScores.get
-    city_presenter = Scores::CityScoresPresenter.new(city_scores)
-    cities = city_presenter.get
-    @campus_stats = cities.find { |h| h[:id] == @user.city_id }
-
-    # Sort user achievements in the same order as in the YAML definition
-    @achievements = @user.achievements
-                         .pluck(:nature)
-                         .sort_by { |nature| Achievement.keys.index(nature.to_sym) }
 
     @latest_day = Aoc.latest_day
     @daily_completions = Array.new(@latest_day) { [nil, nil] }

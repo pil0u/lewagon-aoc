@@ -6,11 +6,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by!(uid: params[:uid])
 
-    insanity_scores = Scores::InsanityScores.get
-    insanity_presenter = Scores::UserScoresPresenter.new(insanity_scores)
-    insane_participants = insanity_presenter.get
-    @insanity_stats = insane_participants.find { |h| h[:uid].to_s == @user.uid }
-
     squad_scores = Scores::SquadScores.get
     squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
     squads = squad_presenter.get

@@ -5,7 +5,7 @@ class User < ApplicationRecord
   encrypts :slack_access_token
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
-  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
+  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049" }.freeze
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true

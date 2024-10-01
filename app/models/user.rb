@@ -5,7 +5,7 @@ class User < ApplicationRecord
   encrypts :slack_access_token
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
-  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
+  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049" }.freeze
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
@@ -28,6 +28,7 @@ class User < ApplicationRecord
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
+  validates :username, length: { maximum: 16 }
   validates :private_leaderboard, presence: true
   validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 

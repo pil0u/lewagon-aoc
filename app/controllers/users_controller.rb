@@ -6,10 +6,12 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by!(uid: params[:uid])
 
-    squad_scores = Scores::SquadScores.get
-    squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
-    squads = squad_presenter.get
-    @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
+    if @user.squad_id.present?
+      squad_scores = Scores::SquadScores.get
+      squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
+      squads = squad_presenter.get
+      @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
+    end
 
     @latest_day = Aoc.latest_day
     @daily_completions = Array.new(@latest_day) { [nil, nil] }

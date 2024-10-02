@@ -27,9 +27,9 @@ RSpec.describe Scores::InsanityPoints do
   describe "#get" do
     it "computes the points for users for each challenge" do
       expect(described_class.get).to contain_exactly(
-        { score: 5, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
-        { score: 5, user_id: 1, day: 1, challenge: 2, completion_id: completions[1].id },
-        { score: 4, user_id: 2, day: 1, challenge: 1, completion_id: completions[2].id }
+        { score: 5, user_id: 1, day: 1, challenge: 1, duration: 3.hours + 25.minutes, completion_id: completions[0].id },
+        { score: 5, user_id: 1, day: 1, challenge: 2, duration: 1.day + 12.minutes, completion_id: completions[1].id },
+        { score: 4, user_id: 2, day: 1, challenge: 1, duration: 3.days + 1.minute, completion_id: completions[2].id }
       )
     end
   end
@@ -55,18 +55,18 @@ RSpec.describe Scores::InsanityPoints do
 
     it "awards points to the first 5 users who completed the challenge" do
       expect(described_class.get).to include(
-        { score: 5, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
-        { score: 4, user_id: 3, day: 1, challenge: 1, completion_id: completions[2].id },
-        { score: 3, user_id: 5, day: 1, challenge: 1, completion_id: completions[4].id },
-        { score: 2, user_id: 6, day: 1, challenge: 1, completion_id: completions[5].id },
-        { score: 1, user_id: 7, day: 1, challenge: 1, completion_id: completions[6].id }
+        { score: 5, user_id: 1, day: 1, challenge: 1, duration: 3.hours + 25.minutes, completion_id: completions[0].id },
+        { score: 4, user_id: 3, day: 1, challenge: 1, duration: 3.hours + 26.minutes, completion_id: completions[2].id },
+        { score: 3, user_id: 5, day: 1, challenge: 1, duration: 4.hours, completion_id: completions[4].id },
+        { score: 2, user_id: 6, day: 1, challenge: 1, duration: 4.hours + 3.minutes, completion_id: completions[5].id },
+        { score: 1, user_id: 7, day: 1, challenge: 1, duration: 4.hours + 5.minutes, completion_id: completions[6].id }
       )
     end
 
     it "awards 0 points to users who completed the challenge after the 5th position" do
       expect(described_class.get).to include(
-        { score: 0, user_id: 2, day: 1, challenge: 1, completion_id: completions[1].id },
-        { score: 0, user_id: 4, day: 1, challenge: 1, completion_id: completions[3].id }
+        { score: 0, user_id: 2, day: 1, challenge: 1, duration: 1.day + 2.hours, completion_id: completions[1].id },
+        { score: 0, user_id: 4, day: 1, challenge: 1, duration: 3.days + 1.minute, completion_id: completions[3].id }
       )
     end
 
@@ -75,12 +75,12 @@ RSpec.describe Scores::InsanityPoints do
 
       it "excludes non-insanity users from the computation" do
         expect(described_class.get).to contain_exactly(
-          { score: 5, user_id: 1, day: 1, challenge: 1, completion_id: completions[0].id },
-          { score: 4, user_id: 3, day: 1, challenge: 1, completion_id: completions[2].id },
-          { score: 3, user_id: 6, day: 1, challenge: 1, completion_id: completions[5].id },
-          { score: 2, user_id: 7, day: 1, challenge: 1, completion_id: completions[6].id },
-          { score: 1, user_id: 2, day: 1, challenge: 1, completion_id: completions[1].id },
-          { score: 0, user_id: 4, day: 1, challenge: 1, completion_id: completions[3].id }
+          { score: 5, user_id: 1, day: 1, challenge: 1, duration: 3.hours + 25.minutes, completion_id: completions[0].id },
+          { score: 4, user_id: 3, day: 1, challenge: 1, duration: 3.hours + 26.minutes, completion_id: completions[2].id },
+          { score: 3, user_id: 6, day: 1, challenge: 1, duration: 4.hours + 3.minutes, completion_id: completions[5].id },
+          { score: 2, user_id: 7, day: 1, challenge: 1, duration: 4.hours + 5.minutes, completion_id: completions[6].id },
+          { score: 1, user_id: 2, day: 1, challenge: 1, duration: 1.day + 2.hours, completion_id: completions[1].id },
+          { score: 0, user_id: 4, day: 1, challenge: 1, duration: 3.days + 1.minute, completion_id: completions[3].id }
         )
       end
     end

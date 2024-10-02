@@ -6,9 +6,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by!(uid: params[:uid])
 
-    completions = @user.completions.group_by(&:challenge).transform_values(&:count)
-    @gold_stars = completions[2] || 0
-    @silver_stars = (completions[1] || 0) - @gold_stars
+    insanity_scores = Scores::InsanityScores.get
+    insanity_presenter = Scores::UserScoresPresenter.new(insanity_scores)
+    insane_participants = insanity_presenter.get
+    @insanity_stats = insane_participants.find { |h| h[:uid].to_s == @user.uid }
 
     if @user.squad_id.present?
       squad_scores = Scores::SquadScores.get

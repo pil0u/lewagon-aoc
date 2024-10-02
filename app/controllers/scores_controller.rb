@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ScoresController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[insanity]
+  skip_before_action :authenticate_user!, only: %i[insanity squads]
 
   def insanity
     scores = Scores::InsanityScores.get

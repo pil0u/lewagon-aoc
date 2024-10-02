@@ -4,11 +4,11 @@
 
     <% if @day <= Aoc.latest_day %>
       <span>·</span>
-      <%= link_to "link to puzzle", Aoc.url(@day), target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
+      <%= link_to "puzzle", Aoc.url(@day), target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
 
       <% if @puzzle.present? %>
         <span>·</span>
-        <%= link_to "link to slack thread", @puzzle.slack_url, target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
+        <%= link_to "slack thread", @puzzle.slack_url, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
       <% end %>
     <% end %>
   </div>

@@ -30,15 +30,15 @@ Upon Pull Request actions (open, push), CI scripts are automatically run tests, 
 
 ### Required `ENV` variables
 
-> **Warning**
-The `.env` file is used for development purposes only. It is _not_ versioned and never should.
+> [!CAUTION]
+> The `.env` file is used for development purposes only. It is _not_ versioned and never should.
 
 - `AOC_ROOMS` is a comma-separated list of [private leaderboard](https://adventofcode.com/leaderboard/private) IDs that _you belong_ to (e.g. `9999999-a0b1c2d3,7777777-e4f56789`)
 - `SESSION_COOKIE` is your own Advent of Code session cookie (valid ~ 1 month). You need to [log in](https://adventofcode.com/auth/login) to the platform, then retrieve the value of the `session` cookie (e.g. `436088a9...9ffb6476`)
 
 ### Overmind (optional)
 
-> **Note**
+> [!NOTE]
 > Foreman is the default process manager through the `bin/dev` command. Overmind is an optional alternative.
 
 Overmind is a process manager for Procfile-based applications like ours, based on `tmux`. You can install the tool on your machine [following these instructions](https://github.com/DarthSim/overmind#installation).
@@ -55,15 +55,23 @@ Then, instead of the usual `bin/dev`, you have to run `overmind s`.
 
 In short: create an SSL certificate for your localhost, store it in your keychain and run the server using that certificate.
 
+On macOS:
 ```zsh
 mkcert localhost
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ./localhost.pem # macOS-specific
-mv localhost* tmp/ # this is the tmp folder in the project root
-bin/dev ssl
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ./localhost.pem
 ```
 
-> **Note**
-> Tested on macOS only.
+On Ubuntu:
+```zsh
+sudo apt install openssl
+openssl req -x509 -newkey rsa:2048 -nodes -keyout localhost-key.pem -out localhost.pem -days 365 -subj "/C=FR/ST=State/L=Locality/O=Organization/CN=localhost"
+```
+
+Finally, move the generated files to the `tmp` folder in the project root and start the server with `bin/dev ssl`.
+```zsh
+mv localhost* tmp/
+bin/dev ssl
+```     
 
 ## Launch the webapp on local mobile browser
 
@@ -74,7 +82,7 @@ sign_in(User.find_by(github_username: "your_username"))
 
 Then, find the local IP address of the computer you launch the server from (ex: `192.168.1.14`) and open the app on your mobile browser from that IP (ex: `http://192.168.1.14:3000`)
 
-> **Warning**
+> [!CAUTION]
 > Bypassing authentication, even temporarily, can pose significant security risks. Only use this method in a controlled development environment and never in production.
 
 # Advent of Code API

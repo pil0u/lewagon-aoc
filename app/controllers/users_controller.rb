@@ -5,38 +5,18 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by!(uid: params[:uid])
-
-    casual_scores = Scores::SoloScores.get
-    casual_presenter = Scores::UserScoresPresenter.new(casual_scores)
-    casual_participants = casual_presenter.get
-    @casual_stats = casual_participants.find { |h| h[:uid].to_s == @user.uid }
-
-    insanity_scores = Scores::InsanityScores.get
-    insanity_presenter = Scores::UserScoresPresenter.new(insanity_scores)
-    insane_participants = insanity_presenter.get
-    @insanity_stats = insane_participants.find { |h| h[:uid].to_s == @user.uid }
-
-    squad_scores = Scores::SquadScores.get
-    squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
-    squads = squad_presenter.get
-    @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
-
-    city_scores = Scores::CityScores.get
-    city_presenter = Scores::CityScoresPresenter.new(city_scores)
-    cities = city_presenter.get
-    @campus_stats = cities.find { |h| h[:id] == @user.city_id }
-
-    # Sort user achievements in the same order as in the YAML definition
-    @achievements = @user.achievements
-                         .pluck(:nature)
-                         .sort_by { |nature| Achievement.keys.index(nature.to_sym) }
-
+    @user_squad = @user.squad
     @latest_day = Aoc.latest_day
-    @daily_completions = Array.new(@latest_day) { [nil, nil] }
 
-    Completion.where(user: @user).find_each do |completion|
-      @daily_completions[@latest_day - completion.day][completion.challenge - 1] = completion
+    user_completions = Scores::InsanityPoints.get.select { |completion| completion[:user_id] == @user.id }
+
+    @daily_completions = Array.new(@latest_day) { [nil, nil] }
+    user_completions.each do |completion|
+      @daily_completions[@latest_day - completion[:day]][completion[:challenge] - 1] = completion
     end
+
+    @silver_stars = @daily_completions.count { |day| day[0] && !day[1] }
+    @gold_stars = @daily_completions.count { |day| day[1] }
   end
 
   def edit

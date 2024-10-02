@@ -35,9 +35,9 @@
     </div>
 
     <div class="flex flex-wrap gap-x-6">
-      <% if @squad_stats.present? %>
-        <%= link_to squad_path(@squad_stats[:id]), class: "link-explicit" do %>
-          <%= @squad_stats[:name] %>
+      <% if @user_squad.present? %>
+        <%= link_to squad_path(@user_squad.id), class: "link-explicit" do %>
+          <%= @user_squad.name %>
         <% end %>
       <% end %>
     </div>

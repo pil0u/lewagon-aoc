@@ -5,14 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by!(uid: params[:uid])
-
-    if @user.squad_id.present?
-      squad_scores = Scores::SquadScores.get
-      squad_presenter = Scores::SquadScoresPresenter.new(squad_scores)
-      squads = squad_presenter.get
-      @squad_stats = squads.find { |h| h[:id] == @user.squad_id }
-    end
-
+    @user_squad = @user.squad
     @latest_day = Aoc.latest_day
 
     user_completions = Scores::InsanityPoints.get.select { |completion| completion[:user_id] == @user.id }

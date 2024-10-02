@@ -3,20 +3,7 @@
 class ScoresController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[insanity]
 
-  def campuses
-    session[:last_score_page] = "campuses"
-
-    scores = Scores::CityScores.get
-    presenter = Scores::CityScoresPresenter.new(scores)
-
-    @campuses = presenter.get
-
-    add_display_rank(@campuses)
-  end
-
   def insanity
-    session[:last_score_page] = "insanity"
-
     scores = Scores::InsanityScores.get
     presenter = Scores::UserScoresPresenter.new(scores)
 
@@ -25,26 +12,31 @@ class ScoresController < ApplicationController
     add_display_rank(@participants)
   end
 
-  def solo
-    session[:last_score_page] = "solo"
-
-    scores = Scores::SoloScores.get
-    presenter = Scores::UserScoresPresenter.new(scores)
-
-    @participants = presenter.get
-
-    add_display_rank(@participants)
-  end
-
   def squads
-    session[:last_score_page] = "squads"
-
     scores = Scores::SquadScores.get
     presenter = Scores::SquadScoresPresenter.new(scores)
 
     @squads = presenter.get
 
     add_display_rank(@squads)
+  end
+
+  def campuses
+    scores = Scores::CityScores.get
+    presenter = Scores::CityScoresPresenter.new(scores)
+
+    @campuses = presenter.get
+
+    add_display_rank(@campuses)
+  end
+
+  def solo
+    scores = Scores::SoloScores.get
+    presenter = Scores::UserScoresPresenter.new(scores)
+
+    @participants = presenter.get
+
+    add_display_rank(@participants)
   end
 
   private

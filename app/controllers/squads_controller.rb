@@ -46,11 +46,6 @@ class SquadsController < ApplicationController
       return
     end
 
-    if @squad.users.count >= 4
-      redirect_to settings_path, alert: "This squad is full"
-      return
-    end
-
     current_user.update(squad_id: @squad.id)
     redirect_to settings_path, notice: "Squad successfully joined!"
   end

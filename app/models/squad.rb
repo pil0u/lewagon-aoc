@@ -6,7 +6,7 @@ class Squad < ApplicationRecord
   has_many :users, dependent: :nullify
   has_many :completions, through: :users
 
-  validates :name, presence: true, uniqueness: { case_sensitive: false }, length: { in: 3..24 }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }, length: { in: 3..16 }
 
   before_validation :generate_pin_and_name, on: :create
 
@@ -17,6 +17,6 @@ class Squad < ApplicationRecord
     pin = rand(100_000..999_999) while Squad.exists?(pin:)
 
     self.pin = pin
-    self.name ||= "Squad #{Squad.any? ? Squad.last.id.next : 1}-#{SecureRandom.hex(4)}"
+    self.name ||= "sq#{Squad.any? ? Squad.last.id.next : 1} - #{SecureRandom.hex(3)}"
   end
 end

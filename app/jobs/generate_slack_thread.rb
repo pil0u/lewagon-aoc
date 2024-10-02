@@ -8,7 +8,7 @@ class GenerateSlackThread < ApplicationJob
   def perform(date)
     @puzzle = Puzzle.find_or_create_by(date:)
 
-    if (@puzzle.title = title)
+    if @puzzle.title ||= title_scraped
       post_message
       @puzzle.slack_url = save_permalink
       @puzzle.save
@@ -38,8 +38,8 @@ class GenerateSlackThread < ApplicationJob
     slack_thread[:permalink] || "https://lewagon-alumni.slack.com/archives/C02PN711H09/p1700598449505399"
   end
 
-  def title
-    @title ||= @puzzle.title || begin
+  def title_scraped
+    @title_scraped ||= begin
       html = URI.parse(@puzzle.url).open
       doc = Nokogiri::HTML(html)
       titles = doc.css("h2").map(&:text)

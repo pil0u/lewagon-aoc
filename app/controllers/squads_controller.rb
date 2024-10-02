@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SquadsController < ApplicationController
-  before_action :restrict_after_lock, only: %i[create join leave]
-
   def show
     @squad = Squad.find(params[:id])
 
@@ -84,15 +82,6 @@ class SquadsController < ApplicationController
         elem_b[:display_rank] = true
       end
     end
-  end
-
-  def restrict_after_lock
-    return unless Time.now.utc > Aoc.lewagon_lock_time
-
-    redirect_to(
-      settings_path,
-      alert: "You cannot #{action_name} Squads since #{Aoc.lewagon_lock_time.to_fs(:long_ordinal)} (see FAQ)"
-    )
   end
 
   def squad_params

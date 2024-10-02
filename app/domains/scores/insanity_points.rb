@@ -28,7 +28,7 @@ module Scores
 
       completions.map do |completion|
         completion.attributes.symbolize_keys
-                  .slice(:score, :user_id, :day, :challenge)
+                  .slice(:score, :user_id, :day, :challenge, :duration)
                   .merge(completion_id: completion.id)
       end
     end

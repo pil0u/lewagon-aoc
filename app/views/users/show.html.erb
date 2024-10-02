@@ -16,14 +16,10 @@
 
     <div class="flex flex-wrap gap-x-6">
       <span>
-        <% if @insanity_stats.present? %>
-          <% if @insanity_stats[:silver_stars] > 0 %>
-            <span class="text-aoc-silver"><%= @insanity_stats[:silver_stars] %>*</span>
-          <% end %>
-          <span class="text-aoc-gold"><%= @insanity_stats[:gold_stars] %>*</span>
-        <% else %>
-          <span class="text-aoc-gold">0*</span>
+        <% if @silver_stars > 0 %>
+          <span class="text-aoc-silver"><%= @silver_stars %>*</span>
         <% end %>
+        <span class="text-aoc-gold"><%= @gold_stars %>*</span>
       </span>
     </div>
   </div>
@@ -67,8 +63,8 @@
         <th class="font-light"><%= @latest_day - day %></th>
         <% [0, 1].each do |part| %>
           <% if completion[part] %>
-            <td><%= duration_as_text(completion[part].duration) %></td>
-            <td></td>
+            <td><%= duration_as_text(completion[part][:duration]) %></td>
+            <td><%= completion[part][:score] %></td>
           <% else %>
             <td colspan="2">-</td>
           <% end %>

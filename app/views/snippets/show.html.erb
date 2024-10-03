@@ -21,7 +21,7 @@
 
   <% @languages.each do |language| %>
     <%= link_to snippet_path(day: @day, challenge: @challenge, id: @snippet.id, language: @language == language ? nil : language), class: "h-4 lg:h-8" do %>
-      <%= image_tag "languages/#{language}.png", class: "h-full transition-all hover:opacity-100 #{'opacity-50' if @language.present? && @language != language}" %>
+      <%= inline_svg_tag "languages/#{language}.svg", class: "h-full hover:opacity-100 #{'opacity-50' if @language.present? && @language != language}" %>
     <% end %>
   <% end %>
 </div>

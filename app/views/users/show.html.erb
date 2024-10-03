@@ -10,7 +10,7 @@
 
       <% if @user.favourite_language.present? %>
         <span>·</span>
-        <%= image_tag "languages/#{@user.favourite_language}.png", class: "h-6 self-center transition-all opacity-80" %>
+        <%= inline_svg_tag "languages/#{@user.favourite_language}.svg", class: "h-6 self-center", title: @user.favourite_language %>
       <% end %>
     </div>
 

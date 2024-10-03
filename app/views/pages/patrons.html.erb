@@ -37,6 +37,13 @@
   </p>
 </div>
 
+<% if @current_user_referees.any? %>
+  <p>
+    You already referred <%= pluralize(@current_user_referees.count, "user") %>:
+    <%= safe_join @current_user_referees.map { |user| link_to user.username, profile_path(user.uid), class: "strong hover:text-gold" }, ", " %>
+  </p>
+<% end %>
+
 <table class="block overflow-x-auto whitespace-nowrap w-full max-w-md mx-auto">
   <thead>
     <tr class="border-b border-aoc-gray-darker">

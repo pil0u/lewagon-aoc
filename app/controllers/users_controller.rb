@@ -22,7 +22,6 @@ class UsersController < ApplicationController
     return unless @user == current_user
 
     @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
-    @referees = current_user.referees
   end
 
   def update

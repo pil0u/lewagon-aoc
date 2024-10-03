@@ -130,44 +130,6 @@
     </div>
   </div>
 
-  <hr class="my-4 border-aoc-gray-darker">
-
-  <%= render PageTitleComponent.new(title: "Referral") %>
-
-  <div class="my-4 flex flex-col gap-y-4">
-    <p>
-      When you share the event to your friends, ask them to add this referral code during the setup. This will boost your
-      <%= link_to "aura", patrons_path, class: "link-explicit link-internal" %>.
-    </p>
-
-    <div class="flex flex-col justify-center items-center gap-y-1 sm:flex-row sm:gap-x-3">
-      <input type="text" value="<%= current_user.referral_code %>" class="input w-48 text-center" disabled autocomplete="off">
-
-      <button
-        class="button w-48 active:text-aoc-gray"
-        data-controller="clipboard"
-        data-action="click->clipboard#copy"
-        data-clipboard-content-value="<%= current_user.referral_code %>">
-        Copy code
-      </button>
-
-      <button
-        class="button w-48 active:text-aoc-gray flex-none"
-        data-controller="clipboard"
-        data-action="click->clipboard#copy"
-        data-clipboard-content-value="<%= current_user.referral_link(request) %>">
-        Copy invite link
-      </button>
-    </div>
-
-    <% if @referees.any? %>
-      <p>
-        You already referred <%= pluralize(@referees.count, "user") %>:
-        <%= safe_join @referees.map { |user| link_to user.username, profile_path(user.uid), class: "strong hover:text-gold" }, ", " %>
-      </p>
-    <% end %>
-  </div>
-
 <% end %>
 
 <%# DAILY COMPLETIONS %>

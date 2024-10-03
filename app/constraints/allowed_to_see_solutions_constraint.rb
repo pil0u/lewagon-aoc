@@ -2,8 +2,7 @@
 
 class AllowedToSeeSolutionsConstraint
   def matches?(request)
-    return true if Time.now.utc > Aoc.release_time(request.params[:day]) + 48.hours
-
-    request.env["warden"]&.user&.solved?(request.params[:day], request.params[:challenge])
+    Completion.where(day: request.params[:day], challenge: request.params[:challenge])
+              .count >= 5
   end
 end

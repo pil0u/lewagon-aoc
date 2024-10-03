@@ -18,7 +18,6 @@ class Snippet < ApplicationRecord
     markdown: "Markdown",
     matlab: "MATLAB",
     ocaml: "OCaml",
-    pascal: "Pascal",
     php: "PHP",
     python: "Python",
     r: "R",

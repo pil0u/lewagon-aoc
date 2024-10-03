@@ -50,6 +50,8 @@
 
 <% if @user == current_user %>
 
+  <hr class="my-4 border-aoc-gray-darker">
+
   <%= render PageTitleComponent.new(title: "Account settings") %>
 
   <div class="my-4">
@@ -169,6 +171,8 @@
 <% end %>
 
 <%# DAILY COMPLETIONS %>
+
+<hr class="my-4 border-aoc-gray-darker">
 
 <div class="my-4 pb-2 block overflow-x-auto max-w-full">
   <table class="mx-auto text-right leading-tight">

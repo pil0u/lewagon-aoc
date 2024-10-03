@@ -1,3 +1,5 @@
+<%# HEADER %>
+
 <div class="my-4 flex flex-col gap-y-2">
   <div class="text-xl flex justify-between">
     <div class="flex flex-wrap gap-x-6">
@@ -43,6 +45,130 @@
     </div>
   </div>
 </div>
+
+<%# ACCOUNT SETTINGS %>
+
+<% if @user == current_user %>
+
+  <%= render PageTitleComponent.new(title: "Account settings") %>
+
+  <div class="my-4">
+    <%= render Users::AccountSettingsComponent.new(user: current_user) %>
+  </div>
+
+  <hr class="my-4 border-aoc-gray-darker">
+
+  <%= render PageTitleComponent.new(title: "Squad settings") %>
+
+  <div class="my-4 flex flex-col gap-y-2">
+    <% if current_user.squad_id.nil? %>
+
+      <%= form_with model: @squad, url: join_squad_path, class: "flex w-max mx-auto items-end gap-x-2" do |f| %>
+        <%= f.number_field :pin, placeholder: "Squad PIN", class: "input w-32" %>
+
+        <%= f.submit "Join squad", class: "button" %>
+      <% end %>
+
+      <%= form_with model: @squad, url: create_squad_path, class: "w-max mx-auto" do |f| %>
+        <%= f.submit "Create new squad", class: "button w-64" %>
+      <% end %>
+
+    <% else %>
+
+      <p class="my-4">Members: <%= safe_join @squad.users.map { |user| link_to user.username, profile_path(user.uid), class: "strong hover:text-gold" }, ", " %></p>
+
+      <%= form_with model: @squad, url: update_squad_path(@squad), class: "flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
+        <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+          <%= f.label :pin %>
+          <%= f.number_field :pin, value: @squad.pin, class: "input", disabled: true %>
+        </div>
+
+        <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+          <%= f.label :name %>
+          <%= f.text_field :name, value: @squad.name, class: "input" %>
+        </div>
+
+        <%= f.submit "Save", class: "button" %>
+      <% end %>
+
+      <%= button_to "Leave squad", leave_squad_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
+
+    <% end %>
+  </div>
+
+  <hr class="my-4 border-aoc-gray-darker">
+
+  <%= render PageTitleComponent.new(title: "Slack integration") %>
+
+  <div class="my-4 flex flex-col gap-y-4">
+    <p>
+      To facilitate support and communication (e.g. for the rewards), you can link your Le Wagon Slack account with the
+      platform. You might also gain access to other cool features 👀
+    </p>
+
+    <div class="w-max mx-auto">
+      <% if current_user.slack_linked? %>
+
+        <div class="flex items-center gap-x-3">
+          <span>You are linked, <%= link_to "@#{current_user.slack_username}", current_user.slack_link, target: :_blank, rel: :noopener, class: "link-slack" %>!</span>
+          <%= button_to "Unlink me", user_slack_omniauth_remove_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
+        </div>
+
+      <% else %>
+
+        <%= button_to(
+              user_slack_openid_omniauth_authorize_path,
+              data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
+              class: "button-slack"
+            ) do %>
+          Link Slack account
+        <% end %>
+
+      <% end %>
+    </div>
+  </div>
+
+  <hr class="my-4 border-aoc-gray-darker">
+
+  <%= render PageTitleComponent.new(title: "Referral") %>
+
+  <div class="my-4 flex flex-col gap-y-4">
+    <p>
+      When you share the event to your friends, ask them to add this referral code during the setup. This will boost your
+      <%= link_to "aura", patrons_path, class: "link-explicit link-internal" %>.
+    </p>
+
+    <div class="flex flex-col justify-center items-center gap-y-1 sm:flex-row sm:gap-x-3">
+      <input type="text" value="<%= current_user.referral_code %>" class="input w-48 text-center" disabled autocomplete="off">
+
+      <button
+        class="button w-48 active:text-aoc-gray"
+        data-controller="clipboard"
+        data-action="click->clipboard#copy"
+        data-clipboard-content-value="<%= current_user.referral_code %>">
+        Copy code
+      </button>
+
+      <button
+        class="button w-48 active:text-aoc-gray flex-none"
+        data-controller="clipboard"
+        data-action="click->clipboard#copy"
+        data-clipboard-content-value="<%= current_user.referral_link(request) %>">
+        Copy invite link
+      </button>
+    </div>
+
+    <% if @referees.any? %>
+      <p>
+        You already referred <%= pluralize(@referees.count, "user") %>:
+        <%= safe_join @referees.map { |user| link_to user.username, profile_path(user.uid), class: "strong hover:text-gold" }, ", " %>
+      </p>
+    <% end %>
+  </div>
+
+<% end %>
+
+<%# DAILY COMPLETIONS %>
 
 <div class="my-4 pb-2 block overflow-x-auto max-w-full">
   <table class="mx-auto text-right leading-tight">

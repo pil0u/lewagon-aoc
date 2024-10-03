@@ -17,9 +17,10 @@ class UsersController < ApplicationController
 
     @silver_stars = @daily_completions.count { |day| day[0] && !day[1] }
     @gold_stars = @daily_completions.count { |day| day[1] }
-  end
 
-  def edit
+    # Account settings
+    return unless @user == current_user
+
     @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
     @referees = current_user.referees
   end

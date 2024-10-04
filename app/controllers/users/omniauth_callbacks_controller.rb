@@ -20,7 +20,7 @@ module Users
       )
 
       flash.notice = "Successfully linked Slack account!"
-      redirect_to profile_path(current_user.uid)
+      redirect_to request.env["omniauth.origin"] || "/"
     rescue Slack::Web::Api::Errors::SlackError => e
       fail_auth("Slack API error - #{e.message}")
     rescue ActiveRecord::RecordInvalid => e

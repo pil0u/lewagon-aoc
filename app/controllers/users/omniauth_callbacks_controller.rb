@@ -20,7 +20,7 @@ module Users
       )
 
       flash.notice = "Successfully linked Slack account!"
-      redirect_to controller: "/users", action: "edit"
+      redirect_to profile_path(current_user.uid)
     rescue Slack::Web::Api::Errors::SlackError => e
       fail_auth("Info fetch failed - #{e.message}")
     rescue ActiveRecord::RecordInvalid => e

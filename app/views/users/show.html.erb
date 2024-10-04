@@ -30,10 +30,15 @@
     <div class="flex flex-wrap gap-x-6">
       <% if @user.batch_id.present? %>
         <span>#<%= @user.batch.number %></span>
+      <% end %>
+
+      <% if @user.batch_id.present? && @user.original_city.present? %>
         <span>·</span>
       <% end %>
 
-      <span><%= @user.city.vanity_name %></span>
+      <% if @user.original_city.present? %>
+        <span><%= @user.original_city.vanity_name %></span>
+      <% end %>
     </div>
 
     <div class="flex flex-wrap gap-x-6">

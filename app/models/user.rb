@@ -49,12 +49,7 @@ class User < ApplicationRecord
     slack_general: 1,
     slack_campus: 2,
     slack_batch: 3,
-    newsletter: 4,
-    linkedin: 5,
-    facebook: 6,
-    instagram: 7,
-    event_brussels: 8,
-    event_london: 9
+    newsletter: 4
   }
 
   before_validation :assign_private_leaderboard, on: :create

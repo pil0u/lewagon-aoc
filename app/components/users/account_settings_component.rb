@@ -7,12 +7,7 @@ module Users
       slack_general: "Channel #general on Slack",
       slack_campus: "Your campus channel on Slack",
       slack_batch: "Your batch channel on Slack",
-      newsletter: "Email newsletter",
-      linkedin: "LinkedIn",
-      facebook: "Facebook",
-      instagram: "Instagram",
-      event_brussels: "At Brussels' launch party",
-      event_london: "At London's workshop in testing"
+      newsletter: "Email newsletter"
     }.freeze
 
     def initialize(user:)

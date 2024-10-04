@@ -12,6 +12,7 @@ module Users
 
     def initialize(user:)
       @user = user
+      @form_awareness_options = AWARENESS_OPTIONS.invert.to_a
     end
   end
 end

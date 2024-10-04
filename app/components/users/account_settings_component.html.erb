@@ -11,11 +11,6 @@
     </div>
 
     <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
-      <%= f.label :batch_number, "Batch #" %>
-      <%= f.number_field :batch_number, value: @user.batch&.number, min: 1, class: "input self-end", disabled: true %>
-    </div>
-
-    <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
       <%= f.label :campus_name, "Campus" %>
       <%= f.collection_select(:city_id, City.order(:vanity_name), :id, :vanity_name, { prompt: "", selected: @user.city_id }, class: "input self-end") %>
     </div>

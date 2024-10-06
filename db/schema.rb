@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_28_145617) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_02_165818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -245,6 +245,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_28_145617) do
     t.bigint "completion_id"
     t.datetime "created_at", null: false
     t.integer "day"
+    t.interval "duration"
     t.integer "score"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -413,7 +414,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_28_145617) do
     t.bigint "batch_id"
     t.bigint "city_id"
     t.datetime "created_at", null: false
-    t.boolean "entered_hardcore", default: false, null: false
+    t.boolean "entered_hardcore", default: true, null: false
     t.integer "event_awareness"
     t.string "favourite_language"
     t.string "github_username"

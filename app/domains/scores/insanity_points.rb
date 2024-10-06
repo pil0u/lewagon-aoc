@@ -19,15 +19,16 @@ module Scores
       completions = Completion
                     .joins(:user).merge(User.insanity)
                     .select(Arel.sql("completions.*"), Arel.sql(<<~SQL.squish))
-                      (SELECT COUNT(*) FROM users WHERE entered_hardcore AND synced)
-                      - (rank() OVER (PARTITION BY day, challenge ORDER BY completion_unix_time ASC))
-                      + 1
-                      AS score
+                      CASE
+                        WHEN rank() OVER (PARTITION BY day, challenge ORDER BY completion_unix_time ASC) <= 5 THEN
+                          6 - rank() OVER (PARTITION BY day, challenge ORDER BY completion_unix_time ASC)
+                        ELSE 0
+                      END AS score
                     SQL
 
       completions.map do |completion|
         completion.attributes.symbolize_keys
-                  .slice(:score, :user_id, :day, :challenge)
+                  .slice(:score, :user_id, :day, :challenge, :duration)
                   .merge(completion_id: completion.id)
       end
     end

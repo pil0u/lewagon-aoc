@@ -1,131 +1,73 @@
-<div class="text-lg flex flex-wrap flex-col sm:flex-row items-center sm:justify-between">
-  <div class="flex flex-wrap gap-x-6">
-    <h2 class="strong"><%= @user.username %></h2>
+<div class="my-4 flex flex-col gap-y-2">
+  <div class="text-xl flex justify-between">
+    <div class="flex flex-wrap gap-x-6">
+      <h2 class="strong"><%= @user.username %></h2>
 
-    <% if @user.batch_id.present? %>
-      <span>·</span>
-      <span>batch #<%= @user.batch.number %></span>
-    <% end %>
-  </div>
-
-  <div class="flex gap-x-6">
-    <span>
-      <% if @casual_stats[:silver_stars] > 0 %>
-        <span class="text-aoc-silver"><%= @casual_stats[:silver_stars] %>*</span>
+      <% if @user.slack_id.present? %>
+        <span>·</span>
+        <%= link_to "@#{@user.slack_username}", @user.slack_link, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
       <% end %>
-      <span class="text-aoc-gold"><%= @casual_stats[:gold_stars] %>*</span>
-    </span>
-    <span>·</span>
-    <span class="text-aoc-atmospheric"><%= @casual_stats[:score] %> pts</span>
-    <span>·</span>
-    <span><%= @casual_stats[:rank] %><sup><%= @casual_stats[:rank].ordinal %></sup></span>
+
+      <% if @user.favourite_language.present? %>
+        <span>·</span>
+        <%= image_tag "languages/#{@user.favourite_language}.png", class: "h-6 self-center transition-all opacity-80" %>
+      <% end %>
+    </div>
+
+    <div class="flex flex-wrap gap-x-6">
+      <span>
+        <% if @silver_stars > 0 %>
+          <span class="text-aoc-silver"><%= @silver_stars %>*</span>
+        <% end %>
+        <span class="text-aoc-gold"><%= @gold_stars %>*</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="flex justify-between">
+    <div class="flex flex-wrap gap-x-6">
+      <% if @user.batch_id.present? %>
+        <span>#<%= @user.batch.number %></span>
+        <span>·</span>
+      <% end %>
+
+      <span><%= @user.city.vanity_name %></span>
+    </div>
+
+    <div class="flex flex-wrap gap-x-6">
+      <% if @user_squad.present? %>
+        <%= link_to squad_path(@user_squad.id), class: "link-explicit" do %>
+          <%= @user_squad.name %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
-
-<div class="my-4 flex flex-wrap justify-center gap-2">
-  <% if @user.entered_hardcore? %>
-    <div class="w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darker">
-      <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
-        insanity
-      </h3>
-
-      <div class="h-3/5 flex flex-col justify-around">
-        <span class="flex items-center justify-center text-aoc-atmospheric text-lg">
-          <%= @insanity_stats[:score] %> pts
-        </span>
-
-        <span class="flex items-center justify-center text-lg">
-          <%= @insanity_stats[:rank] %><sup><%= @insanity_stats[:rank].ordinal %></sup>
-        </span>
-      </div>
-    </div>
-  <% end %>
-
-  <% if @squad_stats.present? %>
-    <%= link_to squad_path(@squad_stats[:id]), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
-      <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
-        <%= @squad_stats[:name] %>
-      </h3>
-
-      <div class="h-3/5 flex flex-col justify-around">
-        <span class="flex items-center justify-center text-aoc-atmospheric text-lg">
-          <%= @squad_stats[:score] %> pts
-        </span>
-
-        <span class="flex items-center justify-center text-lg">
-          <%= @squad_stats[:rank] %><sup><%= @squad_stats[:rank].ordinal %></sup>
-        </span>
-      </div>
-    <% end %>
-  <% end %>
-
-  <% if @campus_stats.present? %>
-    <%= link_to campus_path(@campus_stats[:slug]), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
-      <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
-        <%= @campus_stats[:vanity_name] %>
-      </h3>
-
-      <div class="h-3/5 flex flex-col justify-around">
-        <span class="flex items-center justify-center text-aoc-atmospheric text-lg">
-          <%= @campus_stats[:score] %> pts
-        </span>
-
-        <span class="flex items-center justify-center text-lg">
-          <%= @campus_stats[:rank] %><sup><%= @campus_stats[:rank].ordinal %></sup>
-        </span>
-      </div>
-    <% end %>
-  <% end %>
-</div>
-
-<h3 class="text-center">Achievements unlocked: <span class="strong"><%= @achievements.count %></span>/<%= Achievement.total %></h3>
-
-<% if @achievements.any? %>
-
-<div class="my-4 flex flex-wrap gap-x-6 justify-center">
-  <%= render Achievements::UnlockedComponent.with_collection(@achievements) %>
-</div>
-
-<% end %>
 
 <div class="my-4 pb-2 block overflow-x-auto max-w-full">
-  <table class="w-[30rem] mx-auto text-right leading-tight">
+  <table class="mx-auto text-right leading-tight">
     <tr>
       <th rowspan="2" class="align-bottom font-light">Day</th>
-      <th colspan="3" class="font-light text-aoc-silver">----- Part 1 -----</th>
-      <th colspan="3" class="font-light text-aoc-gold">----- Part 2 -----</th>
+      <th colspan="2" class="font-light text-aoc-silver">- Part 1 -</th>
+      <th colspan="2" class="font-light text-aoc-gold">- Part 2 -</th>
     </tr>
     <tr>
-      <th class="w-24 font-light text-aoc-silver">Time</th>
-      <th class="w-16 font-light text-aoc-silver">Rank</th>
-      <th class="w-16 font-light text-aoc-silver">Score</th>
-      <th class="w-24 font-light text-aoc-gold">Time</th>
-      <th class="w-16 font-light text-aoc-gold">Rank</th>
-      <th class="w-16 font-light text-aoc-gold">Score</th>
+      <th class="w-24 font-light">Time</th>
+      <th class="w-16 font-light">Score</th>
+      <th class="w-24 font-light">Time</th>
+      <th class="w-16 font-light">Score</th>
     </tr>
 
     <% @daily_completions.each_with_index do |completion, day| %>
       <tr>
         <th class="font-light"><%= @latest_day - day %></th>
-
-        <% if completion[0] %>
-          <td><%= duration_as_text(completion[0].duration) %></td>
-          <td><%= "" %></td>
-          <td><%= "" %></td>
-        <% else %>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        <% end %>
-
-        <% if completion[1] %>
-          <td><%= duration_as_text(completion[1].duration) %></td>
-          <td><%= "" %></td>
-          <td><%= "" %></td>
-        <% else %>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
+        <% [0, 1].each do |part| %>
+          <% if completion[part] %>
+            <td><%= duration_as_text(completion[part][:duration]) %></td>
+            <td><%= completion[part][:score] %></td>
+          <% else %>
+            <td colspan="2">-</td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>

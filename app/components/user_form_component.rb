@@ -16,6 +16,5 @@ class UserFormComponent < ApplicationComponent
 
   def initialize(user:)
     @user = user
-    @lock_day = "December #{Aoc.lewagon_lock_time.day.ordinalize}"
   end
 end

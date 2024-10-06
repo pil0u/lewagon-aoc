@@ -1,3 +1,7 @@
+<p class="text-lg">
+  Welcome, <%= link_to current_user.username, profile_path(current_user.uid), class: "strong hover:text-gold" %>
+</p>
+
 <% if @daily_buddy.present? %>
 
   <p class="text-center">

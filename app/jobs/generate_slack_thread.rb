@@ -35,7 +35,7 @@ class GenerateSlackThread < ApplicationJob
       message_ts: @message["message"]["ts"]
     )
 
-    slack_thread[:permalink] || "https://lewagon-alumni.slack.com/archives/C02PN711H09/p1700598449505399"
+    slack_thread[:permalink] || Aoc.slack_channel
   end
 
   def title_scraped

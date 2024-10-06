@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :authenticate_admin, only: %i[impersonate]
 
   def show
+    # Profile details
     @user = User.find_by!(uid: params[:uid])
     @user_squad = @user.squad
     @latest_day = Aoc.latest_day
@@ -17,11 +18,11 @@ class UsersController < ApplicationController
 
     @silver_stars = @daily_completions.count { |day| day[0] && !day[1] }
     @gold_stars = @daily_completions.count { |day| day[1] }
-  end
 
-  def edit
-    @squad = Squad.find_or_initialize_by(id: current_user.squad_id)
-    @referees = current_user.referees
+    # Account settings
+    return unless @user == current_user
+
+    @account_squad = Squad.find_or_initialize_by(id: current_user.squad_id)
   end
 
   def update

@@ -16,7 +16,7 @@
   }
 
   .button-slack {
-    @apply form-element cursor-pointer hover:text-aoc-atmospheric;
+    @apply form-element cursor-pointer text-aoc-atmospheric hover:border-aoc-atmospheric/50;
   }
 
   .calendar-tile {

@@ -21,7 +21,7 @@ module Scores
     end
 
     def compute
-      points = Scores::SoloPoints.get
+      points = Scores::InsanityPoints.get
 
       grouped = points.group_by { |point| [point[:day], point[:user_id]] }
       grouped.filter_map do |(day, user_id), day_points|

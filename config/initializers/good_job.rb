@@ -13,11 +13,16 @@ Rails.application.configure do
         cron: "*/10 * 1-30 11-12 *",
         class: "InsertNewCompletionsJob"
       },
-      cache_cleanup: {                            # every puzzle day, just before a new puzzle
+      cache_cleanup: {                            # every puzzle day, 5 minutes before a new puzzle is released
         cron: "55 23 1-25 12 * America/New_York",
         class: "Cache::CleanupJob"
       },
-      buddies_generate_daily_pairs: {             # every puzzle day, just after a new puzzle
+      generate_slack_thread: {                    # every puzzle day, 1 minutes after a new puzzle is released
+        cron: "1 0 1-25 12 * America/New_York",
+        class: "GenerateSlackThread",
+        args: -> { [Time.current] }
+      },
+      buddies_generate_daily_pairs: {             # every puzzle day, 5 minutes after a new puzzle is released
         cron: "5 0 1-25 12 * America/New_York",
         class: "Buddies::GenerateDailyPairsJob",
         args: -> { [Aoc.latest_day] }

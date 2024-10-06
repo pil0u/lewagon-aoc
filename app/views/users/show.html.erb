@@ -1,3 +1,5 @@
+<%# HEADER %>
+
 <div class="my-4 flex flex-col gap-y-2">
   <div class="text-xl flex justify-between">
     <div class="flex flex-wrap gap-x-6">
@@ -10,7 +12,7 @@
 
       <% if @user.favourite_language.present? %>
         <span>·</span>
-        <%= image_tag "languages/#{@user.favourite_language}.png", class: "h-6 self-center transition-all opacity-80" %>
+        <%= inline_svg_tag "languages/#{@user.favourite_language}.svg", class: "h-6 self-center", title: @user.favourite_language %>
       <% end %>
     </div>
 
@@ -28,10 +30,15 @@
     <div class="flex flex-wrap gap-x-6">
       <% if @user.batch_id.present? %>
         <span>#<%= @user.batch.number %></span>
+      <% end %>
+
+      <% if @user.batch_id.present? && @user.original_city.present? %>
         <span>·</span>
       <% end %>
 
-      <span><%= @user.city.vanity_name %></span>
+      <% if @user.original_city.present? %>
+        <span><%= @user.original_city.vanity_name %></span>
+      <% end %>
     </div>
 
     <div class="flex flex-wrap gap-x-6">
@@ -43,6 +50,64 @@
     </div>
   </div>
 </div>
+
+<%# ACCOUNT SETTINGS %>
+
+<% if @user == current_user %>
+
+  <hr class="my-4 border-aoc-gray-darker">
+
+  <%= render PageTitleComponent.new(title: "Account settings") %>
+
+  <div class="my-4">
+    <%= render Users::AccountSettingsComponent.new(user: current_user) %>
+  </div>
+
+  <hr class="my-4 border-aoc-gray-darker">
+
+  <%= render PageTitleComponent.new(title: "Squad settings") %>
+
+  <div class="my-4 flex flex-col gap-y-2">
+    <% if current_user.squad_id.nil? %>
+
+      <%= form_with model: @account_squad, url: join_squad_path, class: "flex w-max mx-auto items-end gap-x-2" do |f| %>
+        <%= f.number_field :pin, placeholder: "Squad PIN", class: "input w-32" %>
+
+        <%= f.submit "Join squad", class: "button" %>
+      <% end %>
+
+      <%= form_with model: @account_squad, url: create_squad_path, class: "w-max mx-auto" do |f| %>
+        <%= f.submit "Create new squad", class: "button w-64" %>
+      <% end %>
+
+    <% else %>
+
+      <p class="my-4">Members: <%= safe_join @account_squad.users.map { |user| link_to user.username, profile_path(user.uid), class: "strong hover:text-gold" }, ", " %></p>
+
+      <%= form_with model: @account_squad, url: update_squad_path(@account_squad), class: "flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
+        <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+          <%= f.label :pin %>
+          <%= f.number_field :pin, value: @account_squad.pin, class: "input", disabled: true %>
+        </div>
+
+        <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+          <%= f.label :name %>
+          <%= f.text_field :name, value: @account_squad.name, class: "input", maxlength: 16 %>
+        </div>
+
+        <%= f.submit "Save", class: "button" %>
+      <% end %>
+
+      <%= button_to "Leave squad", leave_squad_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto button-red" %>
+
+    <% end %>
+  </div>
+
+<% end %>
+
+<%# DAILY COMPLETIONS %>
+
+<hr class="my-4 border-aoc-gray-darker">
 
 <div class="my-4 pb-2 block overflow-x-auto max-w-full">
   <table class="mx-auto text-right leading-tight">

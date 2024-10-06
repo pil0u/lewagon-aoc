@@ -279,6 +279,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_04_205357) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "puzzles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date", null: false
+    t.string "slack_url"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_puzzles_on_date", unique: true
+  end
+
   create_table "reactions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "reaction_type", null: false

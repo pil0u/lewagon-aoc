@@ -12,7 +12,7 @@ RSpec.describe Scores::SquadPoints do
   let!(:squad_2) { create(:squad, id: 2) }
   let!(:user_3) { create(:user, id: 3, squad: squad_2) }
 
-  let(:solo_points) do
+  let(:insanity_points) do
     [
       { score: 28, user_id: 1, day: 1, challenge: 1 },
       { score: 25, user_id: 1, day: 1, challenge: 2 },
@@ -25,7 +25,7 @@ RSpec.describe Scores::SquadPoints do
   end
 
   before do
-    allow(Scores::SoloPoints).to receive(:get).and_return(solo_points).once
+    allow(Scores::InsanityPoints).to receive(:get).and_return(insanity_points).once
   end
 
   it "groups the scores of squad members into the squad score" do
@@ -49,7 +49,7 @@ RSpec.describe Scores::SquadPoints do
     let!(:user_4) { create(:user, id: 4, squad: nil) }
 
     before do
-      solo_points << { score: 50, user_id: 4, day: 1, challenge: 1 }
+      insanity_points << { score: 50, user_id: 4, day: 1, challenge: 1 }
     end
 
     it "does not include their points" do
@@ -81,10 +81,10 @@ RSpec.describe Scores::SquadPoints do
       context "when AOC state has been refetched in the meantime" do
         before do
           create(:state, fetch_api_begin: state.fetch_api_end + 2.seconds)
-          allow(Scores::SoloPoints).to receive(:get).and_return(new_solo_points).once
+          allow(Scores::InsanityPoints).to receive(:get).and_return(new_insanity_points).once
         end
 
-        let(:new_solo_points) do
+        let(:new_insanity_points) do
           [
             { score: 28, user_id: 1, day: 1, challenge: 1 },
             { score: 25, user_id: 1, day: 1, challenge: 2 },
@@ -120,7 +120,7 @@ RSpec.describe Scores::SquadPoints do
         before do
           travel 10.seconds # Specs go too fast, updated_at stays the same otherwise
           user_2.update(squad: create(:squad, id: 3))
-          allow(Scores::SoloPoints).to receive(:get).and_return(solo_points).once
+          allow(Scores::InsanityPoints).to receive(:get).and_return(insanity_points).once
         end
 
         it "doesn't provide stale results" do

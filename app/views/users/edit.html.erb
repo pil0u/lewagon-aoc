@@ -33,7 +33,7 @@
 
       <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
         <%= f.label :name %>
-        <%= f.text_field :name, value: @squad.name, class: "input" %>
+        <%= f.text_field :name, value: @squad.name, class: "input", maxlength: 16 %>
       </div>
 
       <%= f.submit "Save", class: "button" %>

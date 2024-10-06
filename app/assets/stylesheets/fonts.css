@@ -1,27 +1,30 @@
-/* Replace font sourcing from Google (https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;600&display=swap) with a local copy of the font. Source: https://google-webfonts-helper.herokuapp.com/fonts/source-code-pro?subsets=latin */
+/* Source: https://gwfh.mranftl.com/fonts/source-code-pro?subsets=latin */
 
 @layer base {
   /* source-code-pro-300 - latin */
   @font-face {
-    font-family: "Source Code Pro";
+    font-display: swap;
+    font-family: 'Source Code Pro';
     font-style: normal;
     font-weight: 300;
+    src: url('source-code-pro-v23-latin-300.woff2') format('woff2');
+  }
+
+  /* source-code-pro-regular - latin */
+  @font-face {
     font-display: swap;
-    src:
-      local("Source Code Pro"),
-      url("source-code-pro-v21-latin-300.woff2") format("woff2"),
-      url("source-code-pro-v21-latin-300.woff") format("woff");
+    font-family: 'Source Code Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: url('source-code-pro-v23-latin-regular.woff2') format('woff2');
   }
 
   /* source-code-pro-600 - latin */
   @font-face {
-    font-family: "Source Code Pro";
+    font-display: swap;
+    font-family: 'Source Code Pro';
     font-style: normal;
     font-weight: 600;
-    font-display: swap;
-    src:
-      local("Source Code Pro"),
-      url("source-code-pro-v21-latin-600.woff2") format("woff2"),
-      url("source-code-pro-v21-latin-600.woff") format("woff");
+    src: url('source-code-pro-v23-latin-600.woff2') format('woff2');
   }
 }

@@ -75,7 +75,6 @@ Rails.application.routes.draw do
     post    "/squad/join",                      to: "squads#join",      as: :join_squad
     delete  "/squad/leave",                     to: "squads#leave",     as: :leave_squad
     get     "/profile/:uid",                    to: "users#show",       as: :profile
-    get     "/settings",                        to: "users#edit"
     patch   "/settings",                        to: "users#update"
     post    "/snippets/:snippet_id/reactions",  to: "reactions#create",  as: :reactions
     patch   "/reactions/:id",                   to: "reactions#update",  as: :update_reaction

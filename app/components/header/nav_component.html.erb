@@ -3,7 +3,7 @@
   <% if @user.confirmed? %>
 
     <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
-    <%= render NavTabComponent.new(link: { name: "settings", path: settings_path }) %>
+    <%= render NavTabComponent.new(link: { name: "profile", path: profile_path(@user.uid) }) %>
     <%= render NavTabComponent.new(link: { name: "patrons", path: patrons_path }) %>
 
   <% else %>

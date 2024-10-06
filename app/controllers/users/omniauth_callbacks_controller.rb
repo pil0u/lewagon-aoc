@@ -20,11 +20,11 @@ module Users
       )
 
       flash.notice = "Successfully linked Slack account!"
-      redirect_to controller: "/users", action: "edit"
+      redirect_to request.env["omniauth.origin"] || "/"
     rescue Slack::Web::Api::Errors::SlackError => e
-      fail_auth("Info fetch failed - #{e.message}")
+      fail_auth("Slack API error - #{e.message}")
     rescue ActiveRecord::RecordInvalid => e
-      fail_auth("Info recording failed - #{e.message}")
+      fail_auth("ActiveRecord error - #{e.message}")
     end
 
     def kitt

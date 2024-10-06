@@ -9,8 +9,9 @@ class GenerateSlackThread < ApplicationJob
     @puzzle = Puzzle.find_or_create_by(date:)
 
     if @puzzle.title ||= title_scraped
-      post_message(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text: title)
+      post_message(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text: @puzzle.title)
       @puzzle.slack_url = save_permalink
+      @puzzle.thread_ts = @message["message"]["ts"]
       @puzzle.save
     else
       post_message(channel: "#aoc-dev", text: "Title not found for day ##{@day}")
@@ -25,7 +26,7 @@ class GenerateSlackThread < ApplicationJob
 
   def post_message(channel:, text:)
     # https://api.slack.com/methods/chat.postMessage
-    client.chat_postMessage(channel:, text:)
+    @message = client.chat_postMessage(channel:, text:)
   end
 
   def save_permalink

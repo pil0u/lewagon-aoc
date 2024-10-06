@@ -18,5 +18,7 @@ class DaysController < ApplicationController
     presenter = Scores::DayScoresPresenter.new(scores)
 
     @participants = presenter.get
+
+    @puzzle = Puzzle.by_date(Aoc.begin_time.change(day: @day))
   end
 end

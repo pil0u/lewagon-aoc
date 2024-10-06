@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get "/faq",             to: "pages#faq"
   get "/stats",           to: "pages#stats"
   get "/scores/insanity", to: "scores#insanity"
+  get "/scores/squads",   to: "scores#squads"
 
   # Routes for unauthenticated users
   unauthenticated do
@@ -86,7 +87,6 @@ Rails.application.routes.draw do
     post  "/impersonate",     to: "users#impersonate", as: :impersonate
 
     get   "/scores/solo",     to: "scores#solo"
-    get   "/scores/squads",   to: "scores#squads"
     get   "/scores/campuses", to: "scores#campuses"
     get   "/participation",   to: "pages#participation"
 

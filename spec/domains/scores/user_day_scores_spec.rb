@@ -7,7 +7,7 @@ RSpec.describe Scores::UserDayScores do
 
   let!(:user_1) { create(:user, id: 1) }
   let!(:user_2) { create(:user, id: 2) }
-  let(:solo_points) do
+  let(:insanity_points) do
     [
       { score: 50, user_id: 1, day: 1, challenge: 1, completion_id: 1 },
       { score: 49, user_id: 1, day: 1, challenge: 2, completion_id: 2 },
@@ -19,7 +19,7 @@ RSpec.describe Scores::UserDayScores do
 
   before do
     allow(Aoc).to receive(:latest_day).and_return(2)
-    allow(Scores::SoloPoints).to receive(:get).and_return(solo_points)
+    allow(Scores::InsanityPoints).to receive(:get).and_return(insanity_points)
   end
 
   it "totals the points from each challenge for each user grouped by day" do

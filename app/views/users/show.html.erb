@@ -12,7 +12,7 @@
 
       <% if @user.favourite_language.present? %>
         <span>·</span>
-        <%= image_tag "languages/#{@user.favourite_language}.png", class: "h-6 self-center transition-all opacity-80" %>
+        <%= inline_svg_tag "languages/#{@user.favourite_language}.svg", class: "h-6 self-center", title: @user.favourite_language %>
       <% end %>
     </div>
 
@@ -92,7 +92,7 @@
 
         <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
           <%= f.label :name %>
-          <%= f.text_field :name, value: @account_squad.name, class: "input" %>
+          <%= f.text_field :name, value: @account_squad.name, class: "input", maxlength: 16 %>
         </div>
 
         <%= f.submit "Save", class: "button" %>

@@ -20,10 +20,18 @@
   <% @languages.each do |language| %>
     <%= link_to snippet_path(day: @day, challenge: @challenge, id: @snippet.id, language: language == @language ? nil : language) do %>
       <%= inline_svg_tag(
-        "languages/#{language}.svg",
-        class: "h-8 transition-all hover:opacity-100 #{@language == language ? 'opacity-90' : @language.nil? ? 'opacity-80' : 'opacity-50'}",
-        title: Snippet::LANGUAGES[language.to_sym]
-      ) %>
+            "languages/#{language}.svg",
+            class: "h-8 transition-all hover:opacity-100 #{
+              if @language == language
+                'opacity-90'
+              elsif @language.nil?
+                'opacity-80'
+              else
+                'opacity-50'
+              end
+            }",
+            title: Snippet::LANGUAGES[language.to_sym]
+          ) %>
     <% end %>
   <% end %>
 </div>

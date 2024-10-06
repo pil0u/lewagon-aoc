@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_02_165818) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_06_145446) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -283,6 +283,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_165818) do
     t.datetime "created_at", null: false
     t.date "date", null: false
     t.string "slack_url"
+    t.string "thread_ts"
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["date"], name: "index_puzzles_on_date", unique: true

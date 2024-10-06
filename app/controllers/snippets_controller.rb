@@ -25,7 +25,7 @@ class SnippetsController < ApplicationController
   def edit; end
 
   def create
-    snippet = Snippets::Builder.call(
+    @snippet = Snippets::Builder.call(
       code: snippet_params[:code],
       language: snippet_params[:language],
       user: current_user,
@@ -33,11 +33,11 @@ class SnippetsController < ApplicationController
       challenge: params[:challenge]
     )
 
-    if snippet.save
+    if @snippet.save
       post_slack_message
       redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), notice: "Your solution was published"
     else
-      redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: snippet.errors.full_messages
+      redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: @snippet.errors.full_messages
     end
   end
 
@@ -54,7 +54,9 @@ class SnippetsController < ApplicationController
   def post_slack_message
     client = Slack::Web::Client.new
     puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
-    text = "#{current_user.slack_username || current_user.username} submitted a new solution for part #{params[:challenge]} in :#{snippet_params[:language]}:"
+    username = "<#{ENV.fetch('BASE_URL')}/profile/#{current_user.uid}|#{current_user.username}>"
+    solution = "<#{ENV.fetch('BASE_URL')}/#{snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
+    text = "#{username} submitted a new #{solution} for part #{params[:challenge]} in :#{@snippet.language}:"
     client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)
   end
 

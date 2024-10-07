@@ -10,7 +10,6 @@ export default class extends Controller {
   }
 
   connect () {
-    console.log(this.launchDateValue)
     if (new Date() < new Date(this.launchDateValue)) {
       this.startRefreshing()
     }

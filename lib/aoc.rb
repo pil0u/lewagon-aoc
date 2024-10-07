@@ -58,7 +58,7 @@ class Aoc
   # Le Wagon specific times and helpers
 
   def self.lewagon_launch_time
-    Time.new(year, 11, 17, 8, 30, 0, pilou_timezone)
+    Time.new(year, 11, 19, 8, 30, 0, pilou_timezone)
   end
 
   def self.lewagon_lock_time

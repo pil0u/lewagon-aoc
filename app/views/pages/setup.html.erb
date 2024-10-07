@@ -8,17 +8,17 @@
   </div>
 
   <p class="text-justify">
-    This platform is designed to enhance your Advent of Code experience with exclusive features for the
-    <span class="hover:text-wagon-red">Le Wagon</span> community.
+    This platform enhances your Advent of Code experience with exclusive features targeted to the community of
+    <span class="hover:text-wagon-red">Le Wagon</span>.
   </p>
   <p class="text-justify font-semibold">
-    To complete your sign-up, you have to carefully follow these steps:
+    To complete your sign-up, follow these steps carefully:
   </p>
 
   <ol start="1" class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
     <li>
       <div class="flex flex-col gap-y-2">
-        <p>Did you hear of the event from a friend? Enter their referral code here (optional):</p>
+        <p>If a friend referred you, enter their referral code (optional):</p>
 
         <%= form_with model: current_user, url: setup_path, class: "flex flex-col items-center gap-y-2" do |f| %>
           <div class="flex items-center gap-x-2">
@@ -47,26 +47,26 @@
                 target: :_blank,
                 rel: :noopener,
                 class: "link-explicit link-external"
-              ) %>, enter the code <code class="strong"><%= current_user.private_leaderboard %></code> and click [Join].
+              ) %>, enter this code: <code class="strong"><%= current_user.private_leaderboard %></code> and click [Join].
         </p>
         <p>
-          You should see a confirmation message: <code>You have joined that private leaderboard.</code>
+          You should see this confirmation: <code>You have joined that private leaderboard.</code>
         </p>
       </div>
     </li>
     <li>
       <%= link_to(
-          "In your settings",
+          "Go to your settings",
           "https://adventofcode.com/settings",
           target: :_blank,
           rel: :noopener,
           class: "link-explicit link-external"
-        ) %>, get the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>
+        ) %> and get the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code> (your ID)
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Paste that number <span class="strong">XXXXXXX</span> below. Read the Code of Conduct, approve it and click
+          Enter that number <span class="strong">XXXXXXX</span> below. Read and accept the Code of Conduct, then click
           "Save":
         </p>
 
@@ -78,7 +78,7 @@
             ) do |f| %>
 
           <div class="flex items-center gap-x-2">
-            <%= f.number_field :aoc_id, value: current_user.aoc_id, min: 1, class: "input", placeholder: "ID" %>
+            <%= f.number_field :aoc_id, value: current_user.aoc_id, min: 1, class: "input", placeholder: "XXXXXXX" %>
             <%= f.submit "Save", class: "button", data: { "unlock-target" => "button" } %>
           </div>
 
@@ -90,7 +90,7 @@
                   class: "focus:no-ring"
                 ) %>
             <%= f.label :accepted_coc, class: "text-sm" do
-                  "I have read and I will comply with the #{link_to(
+                  "I have read and agree to comply with the #{link_to(
                     'Code of Conduct',
                     code_of_conduct_path,
                     target: :_blank,
@@ -103,14 +103,15 @@
         <% end %>
 
         <p>
-          Your sync status at the top of this page should have changed to <span class="text-aoc-atmospheric">Pending</span>.
+          After saving, your sync status at the top of this page should change to
+          <span class="text-aoc-atmospheric">Pending</span>.
         </p>
       </div>
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Customise your personal settings:
+          Configure your personal settings:
         </p>
         <%= render Users::AccountSettingsComponent.new(user: current_user) %>
       </div>
@@ -122,12 +123,12 @@
 </div>
 
 <p>
-  Congratulations, your setup is now complete! Our platform synchronises every 10 minutes with adventofcode.com. This
-  page will soon vanish, replaced by your personal advent calendar ✨
+  Congratulations, your setup is now complete! Every 10 minutes, our platform syncs with adventofcode.com. Soon, this
+  page will vanish, replaced by your personal advent calendar ✨
 </p>
 
 <p class="mt-4 italic text-sm opacity-80">
-  If you have completed all these steps, <b>waited 10 minutes</b>, and your status remains
+  If you have completed all these steps, <b>waited at least 10 minutes</b>, and your status is still
   <span class="not-italic text-aoc-atmospheric">Pending</span>, please send a message in this
   <%= link_to "Slack thread", "https://lewagon-alumni.slack.com/archives/C02PN711H09/p1700598449505399", target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
   with the following details:

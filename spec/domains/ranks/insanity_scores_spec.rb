@@ -49,11 +49,11 @@ RSpec.describe Ranks::InsanityScores do
       end
     end
 
-    context "and users have completed the same number of puzzles, but took different times to complete them" do
+    context "and users have completed the same puzzles, but took different times to complete them" do
       it "prioritizes by smaller total duration of puzzle solving" do
-        create(:completion, user: pilou, completion_unix_time: fake_now + 40.hours)
-        create(:completion, user: aquaj, completion_unix_time: fake_now + 20.hours)
-        create(:completion, user: foo, completion_unix_time: fake_now + 30.hours)
+        create(:completion, user: pilou, day: 1, completion_unix_time: fake_now + 40.hours)
+        create(:completion, user: aquaj, day: 1, completion_unix_time: fake_now + 20.hours)
+        create(:completion, user: foo, day: 1, completion_unix_time: fake_now + 30.hours)
 
         expect(described_class.new(input).rank).to eq([
                                                         input[1],
@@ -63,11 +63,11 @@ RSpec.describe Ranks::InsanityScores do
       end
     end
 
-    context "and users have completed the same number of puzzles, took the same time to complete them" do
+    context "and users have completed the same puzzles, took the same time to complete them" do
       it "prioritizes by user id" do
-        create(:completion, user: pilou, completion_unix_time: fake_now + 2.hours)
-        create(:completion, user: aquaj, completion_unix_time: fake_now + 2.hours)
-        create(:completion, user: foo, completion_unix_time: fake_now + 2.hours)
+        create(:completion, user: pilou, day: 1, completion_unix_time: fake_now + 2.hours)
+        create(:completion, user: aquaj, day: 1, completion_unix_time: fake_now + 2.hours)
+        create(:completion, user: foo, day: 1, completion_unix_time: fake_now + 2.hours)
 
         expect(described_class.new(input).rank).to eq([
                                                         input[0],

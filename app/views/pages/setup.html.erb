@@ -40,7 +40,7 @@
     <li>
       <div>
         <p>
-          While logged in,
+          Once logged in,
           <%= link_to(
                 "go to this page",
                 "https://adventofcode.com/leaderboard/private",
@@ -55,23 +55,18 @@
       </div>
     </li>
     <li>
-      <p>
-        We need your adventofcode.com ID to sync your progress.
-      </p>
-      <p>
-        <%= link_to(
-            "Go to your settings",
-            "https://adventofcode.com/settings",
-            target: :_blank,
-            rel: :noopener,
-            class: "link-explicit link-external"
-          ) %>, your ID is the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>.
-      </p>
+      <%= link_to(
+          "In your settings",
+          "https://adventofcode.com/settings",
+          target: :_blank,
+          rel: :noopener,
+          class: "link-explicit link-external"
+        ) %>, get the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Paste that number <span class="strong">XXXXXXX</span> below, read the Code of Conduct, approve it and click
+          Paste that number <span class="strong">XXXXXXX</span> below. Read the Code of Conduct, approve it and click
           "Save":
         </p>
 
@@ -108,7 +103,7 @@
         <% end %>
 
         <p>
-          Your sync status at the top of this page will change to <span class="text-aoc-atmospheric">Pending</span>.
+          Your sync status at the top of this page should have changed to <span class="text-aoc-atmospheric">Pending</span>.
         </p>
       </div>
     </li>

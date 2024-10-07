@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Aoc
+  def self.year
+    2024
+  end
+
   def self.event_timezone
     Time.find_zone!("America/New_York")
   end
@@ -12,11 +16,11 @@ class Aoc
   # Official event related times and helpers
 
   def self.begin_time
-    Time.new(2023, 12, 1, 0, 0, 0, event_timezone)
+    Time.new(year, 12, 1, 0, 0, 0, event_timezone)
   end
 
   def self.end_time
-    Time.new(2023, 12, 25, 23, 59, 59, event_timezone)
+    Time.new(year, 12, 25, 23, 59, 59, event_timezone)
   end
 
   def self.in_progress?
@@ -44,25 +48,25 @@ class Aoc
   end
 
   def self.release_time(day)
-    Time.new(2023, 12, day, 0, 0, 0, event_timezone)
+    Time.new(year, 12, day, 0, 0, 0, event_timezone)
   end
 
   def self.url(day)
-    "https://adventofcode.com/2023/day/#{day}"
+    "https://adventofcode.com/#{year}/day/#{day}"
   end
 
   # Le Wagon specific times and helpers
 
   def self.lewagon_launch_time
-    Time.new(2023, 11, 17, 8, 30, 0, pilou_timezone)
+    Time.new(year, 11, 17, 8, 30, 0, pilou_timezone)
   end
 
   def self.lewagon_lock_time
-    Time.new(2023, 12, 8, 17, 30, 0, pilou_timezone)
+    Time.new(year, 12, 8, 17, 30, 0, pilou_timezone)
   end
 
   def self.lewagon_end_time
-    Time.new(2023, 12, 31, 11, 30, 0, pilou_timezone)
+    Time.new(year, 12, 31, 11, 30, 0, pilou_timezone)
   end
 
   def self.private_leaderboards

@@ -8,14 +8,17 @@
   </div>
 
   <p class="text-justify">
-    Welcome to our platform, designed to enhance your Advent of Code experience with exclusive features for the
-    <span class="hover:text-wagon-red">Le Wagon</span> community. To unlock these features, please follow these steps:
+    This platform is designed to enhance your Advent of Code experience with exclusive features for the
+    <span class="hover:text-wagon-red">Le Wagon</span> community.
+  </p>
+  <p class="text-justify font-semibold">
+    To complete your sign-up, you have to carefully follow these steps:
   </p>
 
-  <ol start="0" class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
+  <ol start="1" class="ml-7 flex flex-col gap-y-3 list-decimal text-justify">
     <li>
       <div class="flex flex-col gap-y-2">
-        <p>(Optional) Got referred by a friend? Enter their referral code here:</p>
+        <p>Did you hear of the event from a friend? Enter their referral code here (optional):</p>
 
         <%= form_with model: current_user, url: setup_path, class: "flex flex-col items-center gap-y-2" do |f| %>
           <div class="flex items-center gap-x-2">
@@ -32,19 +35,19 @@
             target: :_blank,
             rel: :noopener,
             class: "link-explicit link-external"
-          ) %>, using either your GitHub account or another OAuth option.
+          ) %> (e.g. using your GitHub account).
     </li>
     <li>
-      <div class="flex flex-col gap-y-2">
+      <div>
         <p>
-          After logging in, make sure to join our private leaderboard on Advent of Code.
+          While logged in,
           <%= link_to(
-                "Go to this page",
+                "go to this page",
                 "https://adventofcode.com/leaderboard/private",
                 target: :_blank,
                 rel: :noopener,
                 class: "link-explicit link-external"
-              ) %>, enter the following code <code class="strong"><%= current_user.private_leaderboard %></code> and click [Join].
+              ) %>, enter the code <code class="strong"><%= current_user.private_leaderboard %></code> and click [Join].
         </p>
         <p>
           You should see a confirmation message: <code>You have joined that private leaderboard.</code>
@@ -52,14 +55,18 @@
       </div>
     </li>
     <li>
-      We also need your Advent of Code ID, which you can find in
-      <%= link_to(
-            "your settings",
+      <p>
+        We need your adventofcode.com ID to sync your progress.
+      </p>
+      <p>
+        <%= link_to(
+            "Go to your settings",
             "https://adventofcode.com/settings",
             target: :_blank,
             rel: :noopener,
             class: "link-explicit link-external"
-          ) %>. It's the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>.
+          ) %>, your ID is the number next to <code>anonymous user #<span class="strong">XXXXXXX</span></code>.
+      </p>
     </li>
     <li>
       <div class="flex flex-col gap-y-2">
@@ -108,18 +115,21 @@
     <li>
       <div class="flex flex-col gap-y-2">
         <p>
-          Now, simply wait for the next data update, and refresh this page to reveal what's behind the curtain ✨
+          Customise your personal settings:
         </p>
-        <p>
-          While waiting, feel free to explore our <%= link_to "FAQ", faq_path, class: "link-explicit link-internal" %>
-          or customise your settings:
-        </p>
+        <%= render Users::AccountSettingsComponent.new(user: current_user) %>
       </div>
+    </li>
+    <li>
+      Read the <%= link_to "FAQ", faq_path, class: "link-explicit link-internal" %>
     </li>
   </ol>
 </div>
 
-<%= render Users::AccountSettingsComponent.new(user: current_user) %>
+<p>
+  Congratulations, your setup is now complete! Our platform synchronises every 10 minutes with adventofcode.com. This
+  page will soon vanish, replaced by your personal advent calendar ✨
+</p>
 
 <p class="mt-4 italic text-sm opacity-80">
   If you have completed all these steps, <b>waited 10 minutes</b>, and your status remains

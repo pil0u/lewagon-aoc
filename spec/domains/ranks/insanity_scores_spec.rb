@@ -14,9 +14,6 @@ RSpec.describe Ranks::InsanityScores do
     ]
   end
 
-  # Use a fixed time in the future to ensure positive durations
-  let(:fake_now) { Time.new(2100, 1, 1, 0, 0, 0, Aoc.event_timezone) }
-
   it_behaves_like "a ranker"
 
   it "sorts by score" do
@@ -51,9 +48,11 @@ RSpec.describe Ranks::InsanityScores do
 
     context "and users have completed the same puzzles, but took different times to complete them" do
       it "prioritizes by smaller total duration of puzzle solving" do
-        create(:completion, user: pilou, day: 1, completion_unix_time: fake_now + 40.hours)
-        create(:completion, user: aquaj, day: 1, completion_unix_time: fake_now + 20.hours)
-        create(:completion, user: foo, day: 1, completion_unix_time: fake_now + 30.hours)
+        travel_to Time.new(2030, 12, 1, 0, 0, 0, Aoc.event_timezone)
+
+        create(:completion, user: pilou, day: 1, completion_unix_time: 40.hours.from_now)
+        create(:completion, user: aquaj, day: 1, completion_unix_time: 20.hours.from_now)
+        create(:completion, user: foo, day: 1, completion_unix_time: 30.hours.from_now)
 
         expect(described_class.new(input).rank).to eq([
                                                         input[1],
@@ -65,9 +64,11 @@ RSpec.describe Ranks::InsanityScores do
 
     context "and users have completed the same puzzles, took the same time to complete them" do
       it "prioritizes by user id" do
-        create(:completion, user: pilou, day: 1, completion_unix_time: fake_now + 2.hours)
-        create(:completion, user: aquaj, day: 1, completion_unix_time: fake_now + 2.hours)
-        create(:completion, user: foo, day: 1, completion_unix_time: fake_now + 2.hours)
+        travel_to Time.new(2030, 12, 1, 0, 0, 0, Aoc.event_timezone)
+
+        create(:completion, user: pilou, day: 1, completion_unix_time: 2.hours.from_now)
+        create(:completion, user: aquaj, day: 1, completion_unix_time: 2.hours.from_now)
+        create(:completion, user: foo, day: 1, completion_unix_time: 2.hours.from_now)
 
         expect(described_class.new(input).rank).to eq([
                                                         input[0],

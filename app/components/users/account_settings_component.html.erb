@@ -35,8 +35,8 @@
 
     <% else %>
 
-      <div class="flex items-center gap-x-3">
-        <span>Unlock cool™ features →</span>
+      <div class="flex flex-col lg:flex-row items-center gap-x-3">
+        <span>Unlock cool™ features <span class="lg:hidden">↓</span><span class="hidden lg:inline">→</span></span>
         <%= button_to(
               user_slack_openid_omniauth_authorize_path,
               data: { turbo: false, controller: "disable-link", action: "disable-link#now" },

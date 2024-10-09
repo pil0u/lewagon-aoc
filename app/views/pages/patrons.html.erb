@@ -7,19 +7,19 @@
 
   <p>
     You can become one, by sharing your personal referral code
-    <code
-      class="text-other-green hover:cursor-pointer hover:text-opacity-90 active:text-opacity-70"
-      data-controller="clipboard"
-      data-action="click->clipboard#copy"
-      data-clipboard-content-value="<%= current_user.referral_code %>"><%= current_user.referral_code %></code>
+    <code class="text-other-green hover:cursor-pointer hover:text-opacity-90 active:text-opacity-70"
+          data-controller="clipboard"
+          data-action="click->clipboard#copy"
+          data-clipboard-content-value="<%= current_user.referral_code %>">
+      <%= current_user.referral_code %>
+    </code>
     or URL (click to copy)
   </p>
 
-  <code
-    class="w-max mx-auto text-other-green hover:cursor-pointer hover:text-opacity-90 active:text-opacity-70"
-    data-controller="clipboard"
-    data-action="click->clipboard#copy"
-    data-clipboard-content-value="<%= current_user.referral_link(request) %>">
+  <code class="w-max mx-auto text-other-green hover:cursor-pointer hover:text-opacity-90 active:text-opacity-70"
+        data-controller="clipboard"
+        data-action="click->clipboard#copy"
+        data-clipboard-content-value="<%= current_user.referral_link(request) %>">
     <%= current_user.referral_link(request) %>
   </code>
 
@@ -44,9 +44,9 @@
 <% if @current_user_referees.any? %>
   <p>
     You already referred <%= pluralize(@current_user_referees.count, "user") %>:
-    <%= safe_join @current_user_referees.map do |user|
+    <%= safe_join(@current_user_referees.map do |user|
           link_to user.username, profile_path(user.uid), class: "strong hover:text-gold"
-        end, ", " %>
+        end, ", ") %>
   </p>
 <% end %>
 

@@ -3,57 +3,62 @@
 <div class="flex flex-col max-w-3xl mx-auto my-4">
 
   <details open>
-    <%= render Faq::DetailsSummaryComponent.new(title: "TL;DR") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p>
-        Solve puzzles 🧠 Gain points 💎 Win prizes 🎁
-      </p>
-      <p>
-        Each puzzle you solve <em>at any time</em> grants points to you, your campus and your squad.
-      </p>
-      <p>
-        The competition starts on <span class="strong">December 1st</span>, winners in all categories will be determined
-        by the final standings on <span class="strong">December 31st</span>.
-      </p>
-
-      <% if user_signed_in? %>
-
-        <p>Good luck!</p>
-
-      <% else %>
-
-        <div class="my-2">
-          <%= button_to(
-                user_kitt_omniauth_authorize_path,
-                data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
-                class: "button"
-              ) do %>
-            Sign in with Kitt
-          <% end %>
-        </div>
-
-      <% end %>
-    </div>
-  </details>
-
-  <details>
     <%= render Faq::DetailsSummaryComponent.new(title: "What is Advent of Code?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
         <%= link_to "Advent of Code", "https://adventofcode.com/", target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
-        is an Advent calendar of small programming puzzles that you can solve in any programming language.
+        is an Advent calendar of programming puzzles that you can solve in any programming language.
       </p>
       <p>
-        A new puzzle is released every day at midnight EST/UTC-5 (or 6am Paris time 😴), from
+        A new puzzle is released daily at midnight EST/UTC-5 (6am Paris time 😴), from
         <span class="strong">December 1st</span> to <span class="strong">December 25th</span>, accompanied by a
         fictional Christmas backstory 🎄
       </p>
       <p>
-        Solving puzzles earns you points 💎, for yourself, <span class="strong">your campus</span> @
-        <span class="text-wagon-red">Le Wagon</span> and your custom <span class="strong">squad of 4</span>.
+        The event focuses on <span class="strong">learning</span> new programming skills and
+        <span class="strong">sharing</span> with the community.
       </p>
+      <p>
+        If you feel competitive, you can earn points by solving puzzles <em>fast</em>. Enough points to win the golden
+        ticket? <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %>
+      </p>
+
+      <% if user_signed_in? %>
+        <p>Good luck!</p>
+      <% else %>
+        <div class="my-2">
+          <%= button_to user_kitt_omniauth_authorize_path,
+                data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
+                class: "button" do %>
+            Sign in with Kitt
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </details>
+
+  <details>
+    <%= render Faq::DetailsSummaryComponent.new(title: "Why two platforms?") %>
+
+    <div class="flex flex-col gap-y-2 text-justify">
+      <p>
+        <%= link_to "adventofcode.com", "https://adventofcode.com/", target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
+        provides the puzzles.
+      </p>
+      <p>
+        <%= link_to "aoc.lewagon.community", "https://aoc.lewagon.community/", target: :_blank, rel: :noopener, class: "link-explicit link-internal" %>
+        is our platform built to enhance the Advent of Code experience for the community of Le Wagon:
+      </p>
+      <ul class="ml-7 list-disc list-inside">
+        <li>A beautiful calendar</li>
+        <li>Daily buddies</li>
+        <li>Personal statistics</li>
+        <li>Solution sharing</li>
+        <li>Squads</li>
+        <li>Custom leaderboards</li>
+        <li>Golden tickets <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %></li>
+      </ul>
     </div>
   </details>
 
@@ -62,13 +67,13 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        A puzzle is a problem stated in plain English terms, (usually) requiring a programming solution to find the
-        answer. Given an <span class="strong">input</span>, you have to compute the corresponding
-        <span class="strong">output</span>, typically a number.
+        A puzzle is a problem stated in plain English, typically requiring programming to solve it. Given an
+        <span class="strong">input</span>, you need to compute the corresponding <span class="strong">output</span>,
+        usually a number.
       </p>
       <p>
-        Each puzzle consists of two parts, two <em>challenges</em>, with access to the second one granted only
-        <span class="strong">upon solving the first</span>.
+        Each puzzle has two parts. Access to the second part is granted only
+        <span class="strong">after solving the first part</span>.
       </p>
       <p>
         Puzzles from past editions are available
@@ -82,20 +87,21 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        Puzzle difficulty fluctuates across the event. The first part of each puzzle is
-        <span class="strong">generally accessible to Wagoners, students and Alumni</span>. The second part is somewhat
-        harder, but still doable for varying experience levels.
+        Puzzle difficulty varies throughout the event. The first part of each puzzle is
+        <span class="strong">generally accessible to all Wagoners, students and Alumni</span>. The second part is
+        more challenging but still doable for various experience levels.
       </p>
       <p>
-        <span class="strong">Difficulty is not strictly progressive</span>; you may find puzzle #21 much easier than #6.
-        Difficulty is very relative to your personal skills and past problem-solving experience.
+        Puzzle difficulty <span class="strong">does not strictly increase</span> during the event. You might find puzzle
+        #21 easier than #6, depending on your skills, experience, or the puzzle creator's design.
       </p>
       <p>
-        If you get stuck on a puzzle, you can always
-        <%= link_to "discuss with other Wagoners", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>!
-        This event is about
-        <span class="strong">sharing, learning, and mutual help, irrespective of your skill level</span>. It's also a
-        perfect time to reconnect with your campus/batch 🤙
+        <span class="strong">Never give up.</span>
+      </p>
+      <p>
+        If you are stuck, open a discussion <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %> where other Wagoners can help you.
+        This event is about <span class="strong">sharing, learning, and mutual help, regardless of skill level</span>.
+        It's also a great opportunity to reconnect with your campus/batch 🤙
       </p>
     </div>
   </details>
@@ -105,26 +111,16 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        A squad is a group of <span class="strong">up to 4</span> participants, and each participant can be part of 0 or
-        1 squad.
+        The more, the merrier! A squad is a group of participants who team up to learn together.
       </p>
       <p>
-        You build your squad by assembling your dream team (find people
-        <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
-        ) and create a squad in your
-        <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup> in 1 click.
+        Create your squad in one click in your
+        <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup>. This generates a unique
+        <span class="strong">PIN to share with your peers</span> for joining.
       </p>
       <p>
-        Creating a squad generates a unique <span class="strong">PIN to share with your peers</span> for joining.
-      </p>
-      <p>
-        Squads have their own scoreboards, and the squad's score is
-        <span class="strong">the sum of its members' scores</span>.
-      </p>
-      <p>
-        ⚠️ Squads <span class="strong">lock</span> on
-        <%= "#{Aoc.lewagon_lock_time.to_fs(:long_ordinal)} #{Aoc.lewagon_lock_time.zone}" %>. No squad creation, joining
-        or leaving is possible after that.
+        <%= link_to "Use Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
+        to assemble your dream team now!
       </p>
     </div>
   </details>
@@ -134,111 +130,14 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        Coming soon... 👀
-      </p>
-    </div>
-  </details>
-
-  <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "How do I earn points?") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p>
-        TL;DR - You have 24 hours to maximise points for a daily puzzle; after that, points decrease slightly over time.
-      </p>
-
-      <span class="text-center underline">Individual scores</span>
-
-      <p>
-        There are <code>50</code> <em>challenges</em> (25 days * 2 challenges/day). For each challenge:
-        <ul class="list-disc list-inside">
-          <li>if you solve it within 24 hours, you get <code class="strong">50</code> points</li>
-          <li>
-            after 24 hours, points decrease by <code class="strong">1</code>/hour, up until
-            <code class="strong">25</code> points
-          </li>
-        </ul>
+        3 exceptional individuals will receive a golden ticket
+        <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %>
       </p>
       <p>
-        Even if you solve a challenge 2 weeks after release, you still get <code class="strong">25</code> points.
+        Each golden ticket unlocks a reward worth 500€.
       </p>
       <p>
-        Your individual score is <span class="strong">the sum of scores for every challenge you solve</span>.
-      </p>
-      <p>
-        Tiebreakers:
-        <ol class="list-decimal list-inside">
-          <li>Score</li>
-          <li>Total challenges solved in less than 24 hours</li>
-          <li>Total challenges solved in less than 48 hours</li>
-        </ol>
-      </p>
-
-      <span class="text-center underline">Campus scores</span>
-
-      <p>
-        Ranking campuses is hard, because the number of Alumni per campus varies a lot.
-      </p>
-      <p>
-        For <em>each challenge</em>, the campus' top <code class="strong">N</code> individual scores are taken into
-        account - also called the <span class="strong">top contributors</span>.
-      </p>
-      <p>
-        <code>N</code> depends on your <span class="strong">campus' size</span>: it's equal either to
-        <code class="strong">5% * 2023 Alumni + 3% * 2022 Alumni + 1% * remaining Alumni</code> of your campus, or
-        <code class="strong">10</code>, whichever is <em>greater</em>.
-      </p>
-      <p>
-        Examples:
-        <ul class="list-disc list-inside">
-          <li>
-            Suppose campus A has graduated 600 Alumni: 300 in 2023, 200 in 2022 and 100 between 2018 and
-            2021. 5% * 300 + 3% * 200 + 1% * 100 = 15 + 6 + 1 = <code>22</code>, thus this campus' <code>N</code> is
-            equal to <code class="strong">22</code>.
-          </li>
-          <li>
-            Suppose campus B opened in 2023 and has graduated <code>51</code> Alumni already.
-            5% * 51 + 3% * 0 + 1% * 0 = <code>2.55</code>, thus this campus' <code>N</code> is equal to
-            <code class="strong">10</code>.
-          </li>
-        </ul>
-      </p>
-      <p>
-        The campus score, for <em>each challenge</em>, is
-        <span class="strong">the average of the top <code>N</code> individual scores</span>. The global campus score is
-        the sum of these averages for all challenges.
-      </p>
-      <p>
-        Examples:
-        <ul class="list-disc list-inside">
-          <li>
-            Campus B's <code>N</code> is equal to <code>10</code>.<br>
-            12 people from campus B join the event with these scores:<br>
-            <code>day 1 part 1 | [50, 50, 50, 48, 48, 45, 36, 25, 25, 25, 25, 0]</code><br>
-            <code>day 1 part 2 | [50, 50, 50, 50, 40, 25, 25, 0, 0, 0, 0, 0]</code><br>
-            Campus B's score is the sum of each challenge average of the 10 participants with the highest scores among
-            the 12 participants, so
-            <code>
-              <span class="strong">40.2</span> for day 1 part 1 + <span class="strong">29</span> for day 1 part 2 =
-              <span class="strong">70</span>
-            </code>.
-          </li>
-          <li>
-            Campus A's <code>N</code> is equal to <code>22</code>.<br>
-            12 people from campus A join the event with these scores:<br>
-            <code>day 1 part 1 | [50, 50, 50, 48, 48, 45, 36, 25, 25, 25, 25, 0]</code><br>
-            <code>day 1 part 2 | [50, 50, 50, 50, 40, 25, 25, 0, 0, 0, 0, 0]</code><br>
-            Campus A's score is <code class="strong">33</code>.
-          </li>
-        </ul>
-      </p>
-      <p>
-        Tiebreakers:
-        <ol class="list-decimal list-inside">
-          <li>Score</li>
-          <li>Total challenges solved in less than 24 hours by the top <code>N</code></li>
-          <li>Total challenges solved in less than 48 hours by the top <code>N</code></li>
-        </ol>
+        More info <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>.
       </p>
     </div>
   </details>
@@ -248,197 +147,95 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        Puzzles release globally at midnight EST/UTC-5, or 5:00/6:00 in Western Europe.
+        Puzzles release globally at midnight EST/UTC-5 (5:00/6:00 in Western Europe).
       </p>
       <p>
-        Some of you wake up right before 6:00 to start coding upon puzzle release, every day, during 25 days.
+        Some participants wake up just before 6:00 to start coding upon puzzle release, every day, for 25 days.
       </p>
       <p>
         <span class="strong">This is insane.</span>
       </p>
       <p>
-        But I don't want to get in the way of people adopting new morning habits.
+        We don't want to get in the way of people adopting new morning habits.
       </p>
       <p>
-        So we created an additional individual scoring system, based on your time to solve a challenge
-        <em>from its release</em>:
-      </p>
-      <p>
-        <span class="strong">The Ladder of Insanity</span>
-      </p>
-
-      <span class="my-4 text-center underline underline-offset-4">I am insane, how can I join?</span>
-
-      <p>
-        Go to your <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup> and
-        tick the checkbox.
-      </p>
-      <p>
-        Things to consider by opting-in:
-        <ul class="list-disc list-inside pl-6">
-          <li>
-            You become eligible for Insanity individual rewards but you lose your eligibility to the casual individual
-            rewards. You have to choose.
-          </li>
-          <li>
-            You still get a casual score and you still appear in the casual ranking -
-            <span class="text-aoc-gray-dark">greyed out</span> to have a quick overview of who's insane and who's not.
-          </li>
-          <li>
-            Whether you opt-in or not, your contributions to your squad or your campus are always computed from your
-            <span class="strong">casual score</span>.
-          </li>
-          <li>
-            The scores and the ranking of The Ladder of Insanity are computed only among the participants who opt-in.
-          </li>
-        </ul>
-      </p>
-      <p>
-        ⚠️ The Ladder of Insanity <span class="strong">locks</span> on
-        <%= "#{Aoc.lewagon_lock_time.to_fs(:long_ordinal)} #{Aoc.lewagon_lock_time.zone}" %>. No joining or leaving is
-        possible after that.
+        So we created an individual scoring system, based on your time to solve a part of puzzle
+        <em>from its release</em>: <span class="strong">The Ladder of Insanity</span>.
       </p>
 
       <span class="my-4 text-center underline underline-offset-4">How the ranking works</span>
 
       <p>
-        Let <code>X</code> be the opt-in (insane) participants.
+        For each <em>part</em>, participants are ranked by relative solving time:
+        <ul class="ml-7 list-disc list-inside">
+          <li>1st place: <code class="strong">5</code> points</li>
+          <li>2nd place: <code class="strong">4</code> points</li>
+          <li>3rd place: <code class="strong">3</code> points</li>
+          <li>4th place: <code class="strong">2</code> points</li>
+          <li>5th place: <code class="strong">1</code> point</li>
+          <li>6th place and beyond: <code class="strong">0</code> points</li>
+        </ul>
       </p>
-      <p>
-        For each <em>challenge</em>, participants are ranked by relative time to solve it. The first participant wins
-        <code>X</code> points, the second one wins <code>X-1</code> points, the third one <code>X-2</code> points and so
-        on.
-      </p>
-      <p>
-        Example:
-      </p>
+
+      <p>Example:</p>
 
       <table class="w-full text-center">
         <thead>
           <tr>
             <th>Username</th>
             <th>Day</th>
-            <th>Challenge</th>
+            <th>Part</th>
             <th>Time to complete</th>
             <th>Score</th>
           </tr>
         </thead>
         <tbody class="text-center text-xl">
+          <% [
+            ['alpha', 1, 1, '1 minute', 5],
+            ['bravo', 1, 1, '1 minute 1 second', 4],
+            ['charlie', 1, 1, '1 hour', 3],
+            ['delta', 1, 1, '2 hours', 2],
+            ['echo', 1, 1, '5 days', 1],
+            ['foxtrot', 1, 1, '5 days 2 hours', 0],
+            ['alpha', 1, 2, 'never', 0],
+            ['bravo', 1, 2, '6 hours', 4],
+            ['charlie', 1, 2, '6 days', 2],
+            ['delta', 1, 2, '3 hours', 5],
+            ['echo', 1, 2, '5 days 2 hours', 3],
+            ['foxtrot', 1, 2, '6 days 1 minute', 1]
+          ].each do |username, day, challenge, time, score| %>
             <tr>
-              <td class="text-sm">alpha</td>
-              <td>1</td>
-              <td>1</td>
-              <td class="text-sm">1 minute</td>
-              <td class="strong">5</td>
+              <td class="text-sm"><%= username %></td>
+              <td><%= day %></td>
+              <td><%= challenge %></td>
+              <td class="text-sm"><%= time %></td>
+              <td class="strong"><%= score %></td>
             </tr>
-            <tr>
-              <td class="text-sm">bravo</td>
-              <td>1</td>
-              <td>1</td>
-              <td class="text-sm">1 minute 1 second</td>
-              <td class="strong">4</td>
-            </tr>
-            <tr>
-              <td class="text-sm">charlie</td>
-              <td>1</td>
-              <td>1</td>
-              <td class="text-sm">1 hour</td>
-              <td class="strong">3</td>
-            </tr>
-            <tr>
-              <td class="text-sm">delta</td>
-              <td>1</td>
-              <td>1</td>
-              <td class="text-sm">2 hours</td>
-              <td class="strong">2</td>
-            </tr>
-            <tr>
-              <td class="text-sm">echo</td>
-              <td>1</td>
-              <td>1</td>
-              <td class="text-sm">5 days</td>
-              <td class="strong">1</td>
-            </tr>
-            <tr>
-              <td class="text-sm">alpha</td>
-              <td>1</td>
-              <td>2</td>
-              <td class="text-sm">never</td>
-              <td class="strong">0</td>
-            </tr>
-            <tr>
-              <td class="text-sm">bravo</td>
-              <td>1</td>
-              <td>2</td>
-              <td class="text-sm">6 hours</td>
-              <td class="strong">4</td>
-            </tr>
-            <tr>
-              <td class="text-sm">charlie</td>
-              <td>1</td>
-              <td>2</td>
-              <td class="text-sm">6 days</td>
-              <td class="strong">2</td>
-            </tr>
-            <tr>
-              <td class="text-sm">delta</td>
-              <td>1</td>
-              <td>2</td>
-              <td class="text-sm">3 hours</td>
-              <td class="strong">5</td>
-            </tr>
-            <tr>
-              <td class="text-sm">echo</td>
-              <td>1</td>
-              <td>2</td>
-              <td class="text-sm">5 days 2 hours</td>
-              <td class="strong">3</td>
-            </tr>
+          <% end %>
         </tbody>
       </table>
-
-      <p>
-        Scores are adjusted dynamically as new participants join The Ladder of Insanity. Your Insanity score is
-        <span class="strong">the sum of scores for challenge you solve</span>.
-      </p>
     </div>
   </details>
 
   <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "Why two platforms?") %>
+    <%= render Faq::DetailsSummaryComponent.new(
+          title: "Why are leaderboards different on adventofcode.com vs aoc.lewagon.community?"
+        ) %>
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        Advent of Code hosts and presents the puzzles for solving.
+        During the setup process, you joined a private leaderboard on adventofcode.com.
       </p>
       <p>
-        At <span class="text-wagon-red">Le Wagon</span> we like things spicy, we want
-        <span class="strong">campus-specific scoreboards</span>, which the adventofcode.com leaderboard system does not
-        support.
+        This private leaderboard is capped at 200 members, but our participant count exceeds this limit.
       </p>
       <p>
-        So, we created a platform (this website), linking Kitt and Advent of Code, to build
-        <%= link_to "custom agregated scoreboards", "#", class: "link-explicit link-internal" %><sup>(*)</sup>.
-      </p>
-    </div>
-  </details>
-
-  <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "Why are leaderboards different on adventofcode.com vs aoc.lewagon.community?") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p>
-        During the setup process, you join a private leaderboard on adventofcode.com, capped at 200 members. As
-        participants <em>here</em> exceed this limit, multiple private leaderboards are created behind the scenes,
-        assigning each participant to one.
+        We create multiple private leaderboards on adventofcode.com and <span class="strong">randomly</span> assign each
+        participant to one of them.
       </p>
       <p>
-        Your private leaderboard on adventofcode.com is meaningless, it's a random group of 200 Wagoners.
-      </p>
-      <p>
-        Check our platform's
-        <%= link_to "scoreboards", "#", class: "link-explicit link-internal" %><sup>(*)</sup> instead, they
-        include everyone in the comunity!
+        Your private leaderboard on adventofcode.com is just a random group of ~200 Wagoners, and it uses a different
+        scoring system than ours.
       </p>
     </div>
   </details>
@@ -448,9 +245,9 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        <span class="strong"><%= "#{Aoc.lewagon_end_time.to_fs(:long_ordinal)} #{Aoc.lewagon_end_time.zone}" %></span>
-        is the deadline for solving puzzles 🏁 At this point, all scores will freeze, and the results will be determined
-        and announced.
+        The last puzzle is released on December 25th, but the solving deadline is
+        <span class="strong"><%= "#{Aoc.lewagon_end_time.to_fs(:long_ordinal)} #{Aoc.lewagon_end_time.zone}" %></span>.
+        After this, all scores freeze, and results will be announced.
       </p>
     </div>
   </details>
@@ -460,15 +257,23 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        When you hit "Sign in with Kitt", we collect your <code>GitHub username</code>, <code>batch number</code> and
-        <code>campus</code>. We use your GitHub username as your default public username, changeable at any time.
+        When you "Sign in with Kitt", we collect:
+        <ul class="ml-7 list-disc list-inside">
+          <li>your <code class="strong">GitHub username</code> (used as your default username here)</li>
+          <li>your <code class="strong">batch number</code></li>
+          <li>your <code class="strong">campus</code></li>
+        </ul>
       </p>
       <p>
-        When you hit "Link Slack account", we collect your <code>Slack ID</code>, <code>Slack username</code> and
-        encrypted <code>authentication token</code> from Le Wagon Alumni workspace.
+        When you "Link Slack account", we collect from Le Wagon Alumni workspace:
+        <ul class="ml-7 list-disc list-inside">
+          <li>your <code class="strong">Slack ID</code></li>
+          <li>your <code class="strong">Slack name</code></li>
+          <li>your <code class="strong">authentication token</code> (stored encrypted)</li>
+        </ul>
       </p>
       <p>
-        <span class="strong">We do not collect emails or real names.</span>
+        <span class="strong">We do not collect emails.</span>
       </p>
     </div>
   </details>

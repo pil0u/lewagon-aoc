@@ -135,8 +135,8 @@
       </p>
       <p>
         Create your squad in one click in your
-        <%= link_to "settings",
-                    settings_path,
+        <%= link_to "profile",
+                    profile_path(current_user.uid),
                     class: "link-explicit link-internal" %><sup>(*)</sup>.
         This generates a unique <span class="strong">PIN to share with your peers</span> for joining.
       </p>
@@ -149,6 +149,8 @@
         to assemble your dream team now!
       </p>
     </div>
+
+    <p class="mt-4 text-xs"><sup>(*)</sup> accessible only when your account is setup</p>
   </details>
 
   <details>
@@ -307,7 +309,5 @@
       </p>
     </div>
   </details>
-
-  <p class="mt-4 text-xs"><sup>(*)</sup> accessible only when your account is setup</p>
 
 </div>

@@ -7,7 +7,11 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        <%= link_to "Advent of Code", "https://adventofcode.com/", target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
+        <%= link_to "Advent of Code",
+                    "https://adventofcode.com/",
+                    target: :_blank,
+                    rel: :noopener,
+                    class: "link-explicit link-external" %>
         is an Advent calendar of programming puzzles that you can solve in any programming language.
       </p>
       <p>
@@ -29,8 +33,8 @@
       <% else %>
         <div class="my-2">
           <%= button_to user_kitt_omniauth_authorize_path,
-                data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
-                class: "button" do %>
+                        data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
+                        class: "button" do %>
             Sign in with Kitt
           <% end %>
         </div>
@@ -43,11 +47,19 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        <%= link_to "adventofcode.com", "https://adventofcode.com/", target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
+        <%= link_to "adventofcode.com",
+                    "https://adventofcode.com/",
+                    target: :_blank,
+                    rel: :noopener,
+                    class: "link-explicit link-external" %>
         provides the puzzles.
       </p>
       <p>
-        <%= link_to "aoc.lewagon.community", "https://aoc.lewagon.community/", target: :_blank, rel: :noopener, class: "link-explicit link-internal" %>
+        <%= link_to "aoc.lewagon.community",
+                    "https://aoc.lewagon.community/",
+                    target: :_blank,
+                    rel: :noopener,
+                    class: "link-explicit link-internal" %>
         is our platform built to enhance the Advent of Code experience for the community of Le Wagon:
       </p>
       <ul class="ml-7 list-disc list-inside">
@@ -76,8 +88,11 @@
         <span class="strong">after solving the first part</span>.
       </p>
       <p>
-        Puzzles from past editions are available
-        <%= link_to "here", "https://adventofcode.com/events", target: :_blank, rel: :noopener, class: "link-explicit link-external" %>.
+        Puzzles from past editions are available <%= link_to "here",
+                                                             "https://adventofcode.com/events",
+                                                             target: :_blank,
+                                                             rel: :noopener,
+                                                             class: "link-explicit link-external" %>.
       </p>
     </div>
   </details>
@@ -99,9 +114,14 @@
         <span class="strong">Never give up.</span>
       </p>
       <p>
-        If you are stuck, open a discussion <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %> where other Wagoners can help you.
-        This event is about <span class="strong">sharing, learning, and mutual help, regardless of skill level</span>.
-        It's also a great opportunity to reconnect with your campus/batch 🤙
+        If you are stuck, open a discussion <%= link_to "on Slack",
+                                                        Aoc.slack_channel,
+                                                        target: :_blank,
+                                                        rel: :noopener,
+                                                        class: "link-explicit link-slack" %>
+        where other Wagoners can help you. This event is about
+        <span class="strong">sharing, learning, and mutual help, regardless of skill level</span>. It's also a great
+        opportunity to reconnect with your campus/batch 🤙
       </p>
     </div>
   </details>
@@ -115,11 +135,17 @@
       </p>
       <p>
         Create your squad in one click in your
-        <%= link_to "settings", settings_path, class: "link-explicit link-internal" %><sup>(*)</sup>. This generates a unique
-        <span class="strong">PIN to share with your peers</span> for joining.
+        <%= link_to "settings",
+                    settings_path,
+                    class: "link-explicit link-internal" %><sup>(*)</sup>.
+        This generates a unique <span class="strong">PIN to share with your peers</span> for joining.
       </p>
       <p>
-        <%= link_to "Use Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
+        <%= link_to "Use Slack",
+                    Aoc.slack_channel,
+                    target: :_blank,
+                    rel: :noopener,
+                    class: "link-explicit link-slack" %>
         to assemble your dream team now!
       </p>
     </div>
@@ -137,7 +163,11 @@
         Each golden ticket unlocks a reward worth 500€.
       </p>
       <p>
-        More info <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>.
+        More info <%= link_to "on Slack",
+                              Aoc.slack_channel,
+                              target: :_blank,
+                              rel: :noopener,
+                              class: "link-explicit link-slack" %>.
       </p>
     </div>
   </details>
@@ -191,19 +221,19 @@
         </thead>
         <tbody class="text-center text-xl">
           <% [
-            ['alpha', 1, 1, '1 minute', 5],
-            ['bravo', 1, 1, '1 minute 1 second', 4],
-            ['charlie', 1, 1, '1 hour', 3],
-            ['delta', 1, 1, '2 hours', 2],
-            ['echo', 1, 1, '5 days', 1],
-            ['foxtrot', 1, 1, '5 days 2 hours', 0],
-            ['alpha', 1, 2, 'never', 0],
-            ['bravo', 1, 2, '6 hours', 4],
-            ['charlie', 1, 2, '6 days', 2],
-            ['delta', 1, 2, '3 hours', 5],
-            ['echo', 1, 2, '5 days 2 hours', 3],
-            ['foxtrot', 1, 2, '6 days 1 minute', 1]
-          ].each do |username, day, challenge, time, score| %>
+               ["alpha", 1, 1, "1 minute", 5],
+               ["bravo", 1, 1, "1 minute 1 second", 4],
+               ["charlie", 1, 1, "1 hour", 3],
+               ["delta", 1, 1, "2 hours", 2],
+               ["echo", 1, 1, "5 days", 1],
+               ["foxtrot", 1, 1, "5 days 2 hours", 0],
+               ["alpha", 1, 2, "never", 0],
+               ["bravo", 1, 2, "6 hours", 4],
+               ["charlie", 1, 2, "6 days", 2],
+               ["delta", 1, 2, "3 hours", 5],
+               ["echo", 1, 2, "5 days 2 hours", 3],
+               ["foxtrot", 1, 2, "6 days 1 minute", 1]
+             ].each do |username, day, challenge, time, score| %>
             <tr>
               <td class="text-sm"><%= username %></td>
               <td><%= day %></td>

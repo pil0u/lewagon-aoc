@@ -81,6 +81,10 @@
     @apply scrollbar-chrome overflow-x-auto;
   }
 
+  .copyable {
+    @apply font-semibold text-aoc-green hover:text-opacity-90 active:text-opacity-70 cursor-pointer;
+  }
+
   details > summary {
     list-style: none;
   }

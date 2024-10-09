@@ -7,16 +7,14 @@
 
   <p>
     You can become one, by sharing your personal referral code
-    <code class="text-other-green hover:cursor-pointer hover:text-opacity-90 active:text-opacity-70"
+    <code class="copyable"
           data-controller="clipboard"
           data-action="click->clipboard#copy"
-          data-clipboard-content-value="<%= current_user.referral_code %>">
-      <%= current_user.referral_code %>
-    </code>
+          data-clipboard-content-value="<%= current_user.referral_code %>"><%= current_user.referral_code %></code>
     or URL (click to copy)
   </p>
 
-  <code class="w-max mx-auto text-other-green hover:cursor-pointer hover:text-opacity-90 active:text-opacity-70"
+  <code class="w-max mx-auto copyable"
         data-controller="clipboard"
         data-action="click->clipboard#copy"
         data-clipboard-content-value="<%= current_user.referral_link(request) %>">

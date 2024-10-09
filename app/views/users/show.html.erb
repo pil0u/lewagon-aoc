@@ -95,7 +95,11 @@
 
     <% else %>
 
-      <p class="my-4">Members: <%= safe_join @account_squad.users.map { |user| link_to user.username, profile_path(user.uid), class: "strong hover:text-gold" }, ", " %></p>
+      <p class="my-4">
+        Members: <%= safe_join(@account_squad.users.map do |user|
+                       link_to user.username, profile_path(user.uid), class: "strong hover:text-gold"
+                     end, ", ") %>
+      </p>
 
       <%= form_with model: @account_squad,
                     url: update_squad_path(@account_squad),

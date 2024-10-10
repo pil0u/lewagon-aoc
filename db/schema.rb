@@ -432,6 +432,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_07_183849) do
     t.string "uid"
     t.datetime "updated_at", null: false
     t.string "username"
+    t.integer "years_of_service", default: 0
     t.index ["aoc_id"], name: "index_users_on_aoc_id", unique: true
     t.index ["batch_id"], name: "index_users_on_batch_id"
     t.index ["city_id"], name: "index_users_on_city_id"

@@ -36,8 +36,6 @@ class User < ApplicationRecord
   validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
   validate :referrer_cannot_be_self,           on: :update
 
-  before_validation :blank_language_to_nil
-
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) } # All users are 'hardcore' since 2024 edition
@@ -52,7 +50,9 @@ class User < ApplicationRecord
     newsletter: 4
   }
 
+  before_validation :blank_language_to_nil
   before_validation :assign_private_leaderboard, on: :create
+  before_create :set_years_of_service
 
   def self.from_kitt(auth)
     oldest_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
@@ -188,5 +188,10 @@ class User < ApplicationRecord
     assigned_leaderboard = leaderboards.min_by { |_, count| count }.first
 
     update(private_leaderboard: assigned_leaderboard)
+  end
+
+  def set_years_of_service
+    self.years_of_service = CSV.read(Rails.root.join("db/static/participants_all_time.csv"), headers: true)
+                               .count { |row| row["kitt_uid"] == uid }
   end
 end

@@ -3,7 +3,14 @@
 <div class="my-4 flex flex-col gap-y-2">
   <div class="text-xl flex justify-between">
     <div class="flex flex-wrap gap-x-6">
-      <h2 class="strong"><%= @user.username %></h2>
+      <h2 class="strong">
+        <%= @user.username %>
+        <% if @user.years_of_service > 0 %>
+          <%= inline_svg_tag "years_of_service/#{@user.years_of_service}.svg",
+                             class: "h-8 w-8 inline-block",
+                             title: "#{@user.years_of_service} years of service" %>
+        <% end %>
+      </h2>
 
       <% if @user.slack_id.present? %>
         <span>·</span>

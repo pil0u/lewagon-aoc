@@ -81,6 +81,21 @@
     @apply scrollbar-chrome overflow-x-auto;
   }
 
+  .copyable {
+    @apply font-semibold text-aoc-green hover:text-opacity-90 active:text-opacity-70 cursor-pointer;
+  }
+
+  @keyframes fadeInOutUp {
+    0% { opacity: 0; transform: translateY(5px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-5px); }
+  }
+  
+  .animate-feedback {
+    animation: fadeInOutUp 1.5s ease-in-out;
+  }
+
   details > summary {
     list-style: none;
   }

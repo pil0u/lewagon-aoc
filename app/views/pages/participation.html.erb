@@ -2,8 +2,8 @@
 
 <div class="my-4 flex flex-col gap-y-4">
   <p>
-    The assignment of users to their campus is automatic: they can see it in
-    their <%= link_to "settings", settings_path, class: "link-explicit link-internal" %>.
+    The assignment of users to their campus is automatic: they can see it in their
+    <%= link_to "profile", profile_path(current_user.uid), class: "link-explicit link-internal" %>.
   </p>
 </div>
 

@@ -17,3 +17,4 @@
 - [ ] Linters pass
 - [ ] Tests pass
 - [ ] Related GitHub issues are linked in the description
+- [ ] Merge conflicts are resolved

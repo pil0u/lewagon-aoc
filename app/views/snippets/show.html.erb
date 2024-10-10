@@ -18,10 +18,10 @@
 
 <div class="my-4 flex items-center justify-end gap-x-4 flex-wrap">
   <% @languages.each do |language| %>
-    <%= link_to snippet_path(day: @day, challenge: @challenge, id: @snippet.id, language: language == @language ? nil : language), class: "h-4 lg:h-8" do %>
+    <%= link_to snippet_path(day: @day, challenge: @challenge, id: @snippet.id, language: language == @language ? nil : language) do %>
       <%= inline_svg_tag(
             "languages/#{language}.svg",
-            class: "h-full transition-all hover:opacity-100 #{
+            class: "transition-all hover:opacity-100 #{
               if @language == language
                 'opacity-90'
               elsif @language.nil?
@@ -30,6 +30,7 @@
                 'opacity-50'
               end
             }",
+            style: "height: 2rem;",
             title: Snippet::LANGUAGES[language.to_sym]
           ) %>
     <% end %>

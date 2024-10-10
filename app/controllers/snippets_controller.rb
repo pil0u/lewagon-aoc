@@ -54,9 +54,9 @@ class SnippetsController < ApplicationController
   def post_slack_message
     client = Slack::Web::Client.new
     puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
-    username = "<#{ENV.fetch('BASE_URL')}/profile/#{current_user.uid}|#{current_user.username}>"
-    solution = "<#{ENV.fetch('BASE_URL')}/#{snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
-    text = "#{username} submitted a new #{solution} for part #{params[:challenge]} in :#{@snippet.language}:"
+    username = "<#{helpers.profile_url(current_user.uid)}|#{current_user.username}>"
+    solution = "<#{helpers.snippet_url(@snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
+    text = "#{username} submitted a new #{solution} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
     client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)
   end
 

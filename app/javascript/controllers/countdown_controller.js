@@ -6,17 +6,17 @@ export default class extends Controller {
   }
 
   static get values () {
-    return { refreshInterval: Number }
+    return { refreshInterval: Number, launchDate: String }
   }
 
   connect () {
-    if (new Date() < Date.parse("November 17 2023 08:30:00 +0100")) {
+    if (new Date() < new Date(this.launchDateValue)) {
       this.startRefreshing()
     }
   }
 
   updateClock () {
-    const timeDiff = Date.parse("November 17 2023 08:30:00 +0100") - (new Date()).getTime()
+    const timeDiff = new Date(this.launchDateValue) - (new Date()).getTime()
 
     if (timeDiff > 0) {
       this.daysTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 2)

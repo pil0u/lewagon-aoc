@@ -21,6 +21,7 @@ module Scores
       {
         uid: user.uid.to_i,
         username: user.username,
+        years_of_service: user.years_of_service,
         city_vanity_name: user.city&.vanity_name,
         batch_number: user.batch&.number,
         squad_name: user.squad&.name,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_06_145446) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_07_183849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -144,8 +144,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_06_145446) do
     t.bigint "completion_unix_time"
     t.datetime "created_at", null: false
     t.integer "day", limit: 2
-    t.virtual "duration", type: :interval, as: "\nCASE\n    WHEN (completion_unix_time IS NOT NULL) THEN (to_timestamp((completion_unix_time)::double precision) - to_timestamp(((1701406800)::double precision + (((day - 1) * 86400))::double precision)))\n    ELSE NULL::interval\nEND", stored: true
-    t.virtual "release_date", type: :datetime, precision: nil, as: "to_timestamp(((1701406800)::double precision + (((day - 1) * 86400))::double precision))", stored: true
+    t.virtual "duration", type: :interval, as: "\nCASE\n    WHEN (completion_unix_time IS NOT NULL) THEN (to_timestamp((completion_unix_time)::double precision) - to_timestamp(((1733029200)::double precision + (((day - 1) * 86400))::double precision)))\n    ELSE NULL::interval\nEND", stored: true
+    t.virtual "release_date", type: :datetime, precision: nil, as: "to_timestamp(((1733029200)::double precision + (((day - 1) * 86400))::double precision))", stored: true
     t.bigint "user_id", null: false
     t.index ["user_id", "day", "challenge"], name: "index_completions_on_user_id_and_day_and_challenge", unique: true
     t.index ["user_id"], name: "index_completions_on_user_id"
@@ -433,6 +433,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_06_145446) do
     t.string "uid"
     t.datetime "updated_at", null: false
     t.string "username"
+    t.integer "years_of_service", default: 0
     t.index ["aoc_id"], name: "index_users_on_aoc_id", unique: true
     t.index ["batch_id"], name: "index_users_on_batch_id"
     t.index ["city_id"], name: "index_users_on_city_id"

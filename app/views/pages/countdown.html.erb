@@ -8,11 +8,11 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
+  <body class="font-mono font-light text-aoc-gray bg-dark min-h-screen flex flex-col">
     <header class="flex flex-col mx-auto">
       <%= render Header::TitleComponent.new %>
     </header>
@@ -20,6 +20,7 @@
     <main class="m-auto">
       <div data-controller="countdown"
            data-countdown-refresh-interval-value="23"
+           data-countdown-launch-date-value="<%= Aoc.lewagon_launch_time %>"
            class="text-3xl lg:text-6xl text-center h-[30vh]">
         <span data-countdown-target="days"></span>
         <span data-countdown-target="hours"></span>

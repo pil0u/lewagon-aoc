@@ -283,6 +283,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_07_183849) do
     t.datetime "created_at", null: false
     t.date "date", null: false
     t.string "slack_url"
+    t.string "thread_ts"
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["date"], name: "index_puzzles_on_date", unique: true

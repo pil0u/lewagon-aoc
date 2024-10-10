@@ -14,7 +14,8 @@ class GenerateSlackThread < ApplicationJob
       @puzzle.thread_ts = @message["message"]["ts"]
       @puzzle.save
     else
-      post_message(channel: "#aoc-dev", text: "Title not found for day ##{@day}")
+      post_message(channel: "#aoc-dev", text: "Title not found for day ##{@puzzle.date.day}")
+      @puzzle.destroy
     end
   end
 

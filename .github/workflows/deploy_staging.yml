@@ -17,6 +17,7 @@ jobs:
         uses: dokku/github-action@master
         with:
           command: deploy
+          branch: main
           git_remote_url: "ssh://dokku@aoc.lewagon.engineering/aoc-staging"
           git_push_flags: "--force -vvv"
           ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}

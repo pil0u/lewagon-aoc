@@ -1,32 +1,21 @@
-# Logfiles and tempfiles
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
-*.swp
-
-# Local environment variables (dotenv)
-.env
-
-# Local database dumps
-*.dump
-
-# Byebug command history file
-.byebug_history
-
 # Secret keys
-/config/credentials/development.key
-/config/credentials/production.key
+config/credentials/production.key
 config/master.key
-
-# Pilou's drafts
-/_*
-
-/app/assets/builds/*
-!/app/assets/builds/.keep
-
-coverage
 
 # SSH Keypair for GitHub Action
 gha_ed25519
 gha_ed25519.pub
+
+# Development environment
+app/assets/builds/*
+coverage
+log/
+tmp/
+vendor/javascript/*
+.byebug_history
+.env
+__*
+
+# Exceptions to track
+!app/assets/builds/.keep
+!vendor/javascript/.keep

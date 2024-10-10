@@ -25,6 +25,10 @@ class User < ApplicationRecord
   has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
   has_many :reactions, dependent: :destroy
 
+  before_validation :blank_language_to_nil
+  before_validation :assign_private_leaderboard, on: :create
+  before_validation :set_years_of_service, on: :create
+
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
@@ -49,10 +53,6 @@ class User < ApplicationRecord
     slack_batch: 3,
     newsletter: 4
   }
-
-  before_validation :blank_language_to_nil
-  before_validation :assign_private_leaderboard, on: :create
-  before_create :set_years_of_service
 
   def self.from_kitt(auth)
     oldest_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
@@ -187,7 +187,7 @@ class User < ApplicationRecord
     # Take the private leaderboard with the least users and assign it to the user
     assigned_leaderboard = leaderboards.min_by { |_, count| count }.first
 
-    update(private_leaderboard: assigned_leaderboard)
+    self.private_leaderboard = assigned_leaderboard
   end
 
   def set_years_of_service

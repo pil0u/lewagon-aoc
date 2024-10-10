@@ -4,22 +4,25 @@
   <p>
     This page lists the greatest influencers of Le Wagon.
   </p>
-
   <p>
     You can become one, by sharing your personal referral code
-    <code class="copyable"
-          data-controller="clipboard"
-          data-action="click->clipboard#copy"
-          data-clipboard-content-value="<%= current_user.referral_code %>"><%= current_user.referral_code %></code>
+    <span class="relative inline-block" data-controller="clipboard">
+      <code class="copyable"
+            data-action="click->clipboard#copy"
+            data-clipboard-content-value="<%= current_user.referral_code %>"><%= current_user.referral_code %></code>
+      <span data-clipboard-target="feedback" class="hidden absolute -top-4 right-0 text-xs">Copied!</span>
+    </span>
     or URL (click to copy)
   </p>
 
-  <code class="w-max mx-auto copyable"
-        data-controller="clipboard"
-        data-action="click->clipboard#copy"
-        data-clipboard-content-value="<%= current_user.referral_link(request) %>">
-    <%= current_user.referral_link(request) %>
-  </code>
+  <div class="relative w-max mx-auto" data-controller="clipboard">
+    <code class="copyable"
+          data-action="click->clipboard#copy"
+          data-clipboard-content-value="<%= current_user.referral_link(request) %>">
+      <%= current_user.referral_link(request) %>
+    </code>
+    <span data-clipboard-target="feedback" class="hidden absolute -top-4 right-0 text-xs">Copied!</span>
+  </div>
 
   <p>
     Share this link everywhere to your fellow Wagoners: your batch channel

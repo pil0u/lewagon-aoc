@@ -13,6 +13,9 @@ end
 
 # Initialize campuses
 if Rails.env.development?
+  ApplicationRecord.reset_column_information
+
+  User.destroy_all
   City.destroy_all
   Batch.destroy_all
 end
@@ -90,7 +93,6 @@ Rails.logger.info "✔ Campuses upserted"
 
 # Initialize some users in development
 if Rails.env.development?
-  User.destroy_all
   User.create!([
                  {
                    username: "test_1",

@@ -110,9 +110,12 @@
           <%= f.text_field :name, value: @account_squad.name, class: "input", maxlength: 16 %>
         </div>
 
-        <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+        <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3 relative" data-controller="clipboard">
           <span>PIN:</span>
-          <code class="w-48 text-center tracking-[0.5rem] copyable"><%= @account_squad.pin %></code>
+          <code class="w-48 text-center tracking-[0.5rem] copyable"
+                data-action="click->clipboard#copy"
+                data-clipboard-content-value="<%= @account_squad.pin %>"><%= @account_squad.pin %></code>
+          <span data-clipboard-target="feedback" class="hidden absolute -top-4 right-0 text-xs">Copied!</span>
         </div>
 
         <%= f.submit "Save", class: "button" %>

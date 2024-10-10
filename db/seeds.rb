@@ -99,28 +99,32 @@ if Rails.env.development?
                    batch: Batch.find_or_create_by(number: 343),
                    city: City.find_by(name: "Paris"),
                    aoc_id: 151_323,
-                   uid: 1
+                   uid: 1,
+                   accepted_coc: true
                  },
                  {
                    username: "test_2",
                    batch: Batch.find_or_create_by(number: 454),
                    city: City.find_by(name: "Paris"),
                    aoc_id: 1_095_582,
-                   uid: 2
+                   uid: 2,
+                   accepted_coc: true
                  },
                  {
                    username: "test_3",
                    batch: Batch.find_or_create_by(number: 123),
                    city: City.find_by(name: "Bordeaux"),
                    aoc_id: 1_266_664,
-                   uid: 3
+                   uid: 3,
+                   accepted_coc: true
                  },
                  {
                    username: "test_4",
                    batch: Batch.find_or_create_by(number: 123),
                    city: City.find_by(name: "London"),
                    aoc_id: 1_237_086,
-                   uid: 4
+                   uid: 4,
+                   accepted_coc: true
                  },
                  {
                    username: "test_5",
@@ -153,3 +157,5 @@ if Rails.env.development?
                ])
   Rails.logger.info "✔ Users initialized"
 end
+
+InsertNewCompletionsJob.perform_now

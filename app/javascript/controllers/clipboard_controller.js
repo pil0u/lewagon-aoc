@@ -6,11 +6,11 @@ export default class extends Controller {
 
   copy() {
     navigator.clipboard.writeText(this.contentValue)
-    this.toggleFeedback()
-    setTimeout(() => this.toggleFeedback(), 1500)
+    this.#toggleFeedback()
+    setTimeout(() => this.#toggleFeedback(), 1500)
   }
 
-  toggleFeedback() {
+  #toggleFeedback() {
     this.feedbackTarget.classList.toggle("hidden")
     this.feedbackTarget.classList.toggle("animate-feedback")
   }

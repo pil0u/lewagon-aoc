@@ -6,19 +6,19 @@ export default class extends Controller {
 
   connect() {
     if (new Date() < new Date(this.launchDateValue)) {
-      setInterval(() => this.updateClock(), 23)
+      setInterval(() => this.#updateClock(), 23)
     }
   }
 
-  updateClock() {
+  #updateClock() {
     const timeDiff = new Date(this.launchDateValue) - Date.now()
 
     if (timeDiff > 0) {
-      this.daysTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 2)
-      this.hoursTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60)) % 24), 2)
-      this.minutesTarget.innerHTML = this.format(Math.floor((timeDiff / 1000 / 60) % 60), 2)
-      this.secondsTarget.innerHTML = this.format(Math.floor((timeDiff / 1000) % 60), 2)
-      this.millisecondsTarget.innerHTML = this.format(Math.floor(timeDiff % 1000), 3)
+      this.daysTarget.innerHTML = this.#format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 2)
+      this.hoursTarget.innerHTML = this.#format(Math.floor((timeDiff / (1000 * 60 * 60)) % 24), 2)
+      this.minutesTarget.innerHTML = this.#format(Math.floor((timeDiff / 1000 / 60) % 60), 2)
+      this.secondsTarget.innerHTML = this.#format(Math.floor((timeDiff / 1000) % 60), 2)
+      this.millisecondsTarget.innerHTML = this.#format(Math.floor(timeDiff % 1000), 3)
 
       if (Math.floor(timeDiff % 1000) % 100 == 0) {
         this.codeTarget.classList.remove("hidden")
@@ -38,7 +38,7 @@ export default class extends Controller {
     }
   }
 
-  format(integer, digits) {
+  #format(integer, digits) {
     return integer.toString().padStart(digits, "0")
   }
 }

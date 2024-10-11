@@ -1,21 +1,19 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static get targets () {
-    return ["days", "hours", "minutes", "seconds", "milliseconds", "code"]
+  static targets = ["days", "hours", "minutes", "seconds", "milliseconds", "code"]
+  static values = {
+    refreshInterval: Number,
+    launchDate: String
   }
 
-  static get values () {
-    return { refreshInterval: Number, launchDate: String }
-  }
-
-  connect () {
+  connect() {
     if (new Date() < new Date(this.launchDateValue)) {
       this.startRefreshing()
     }
   }
 
-  updateClock () {
+  updateClock() {
     const timeDiff = new Date(this.launchDateValue) - (new Date()).getTime()
 
     if (timeDiff > 0) {
@@ -41,13 +39,13 @@ export default class extends Controller {
     }, 500)
   }
 
-  startRefreshing () {
+  startRefreshing() {
     this.refreshTimer = setInterval(() => {
       this.updateClock()
     }, this.refreshIntervalValue)
   }
 
-  format (integer, digits) {
+  format(integer, digits) {
     return integer.toString().padStart(digits, "0")
   }
 }

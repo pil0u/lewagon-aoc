@@ -112,7 +112,7 @@
 
         <div data-controller="clipboard"
              data-clipboard-content-value="<%= @account_squad.pin %>"
-             class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3 relative" >
+             class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3 relative">
           <span>PIN:</span>
           <code class="w-48 text-center tracking-[0.5rem] copyable"
                 data-action="click->clipboard#copy"><%= @account_squad.pin %></code>

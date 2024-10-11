@@ -2,10 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["days", "hours", "minutes", "seconds", "milliseconds", "code"]
-  static values = {
-    refreshInterval: Number,
-    launchDate: String
-  }
+  static values = { launchDate: String }
 
   connect() {
     if (new Date() < new Date(this.launchDateValue)) {
@@ -14,7 +11,7 @@ export default class extends Controller {
   }
 
   updateClock() {
-    const timeDiff = new Date(this.launchDateValue) - (new Date()).getTime()
+    const timeDiff = new Date(this.launchDateValue) - Date.now()
 
     if (timeDiff > 0) {
       this.daysTarget.innerHTML = this.format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 2)
@@ -33,16 +30,18 @@ export default class extends Controller {
     }
 
     this.millisecondsTarget.innerHTML = "000"
-
-    setInterval(() => {
-      location.reload()
-    }, 500)
+    
+    // Reload the page only once
+    if (!this.hasReloaded) {
+      this.hasReloaded = true
+      setTimeout(() => location.reload(), 500)
+    }
   }
 
   startRefreshing() {
     this.refreshTimer = setInterval(() => {
       this.updateClock()
-    }, this.refreshIntervalValue)
+    }, 23)
   }
 
   format(integer, digits) {

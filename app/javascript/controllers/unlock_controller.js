@@ -1,15 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static get targets () {
-    return ["checkbox", "button"]
-  }
+  static targets = ["checkbox", "button"]
 
-  connect () {
+  connect() {
     this.toggle()
   }
 
-  toggle () {
+  toggle() {
     this.buttonTarget.disabled = !this.checkboxTarget.checked
   }
 }

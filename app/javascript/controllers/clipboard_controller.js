@@ -1,24 +1,17 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = {
-    content: String
-  }
-
   static targets = ["feedback"]
+  static values = { content: String }
 
   copy() {
     navigator.clipboard.writeText(this.contentValue)
-    this.showFeedback()
+    this.#toggleFeedback()
+    setTimeout(() => this.#toggleFeedback(), 1500)
   }
 
-  showFeedback() {
-    this.feedbackTarget.classList.remove("hidden")
-    this.feedbackTarget.classList.add("animate-feedback")
-    
-    setTimeout(() => {
-      this.feedbackTarget.classList.remove("animate-feedback")
-      this.feedbackTarget.classList.add("hidden")
-    }, 1500)
+  #toggleFeedback() {
+    this.feedbackTarget.classList.toggle("hidden")
+    this.feedbackTarget.classList.toggle("animate-feedback")
   }
 }

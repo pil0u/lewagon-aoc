@@ -34,9 +34,12 @@ RSpec.describe Ranks::InsanityScores do
 
     context "and users have completed different numbers of puzzles" do
       it "the more completed puzzles the better" do
-        create_list(:completion, 2, user: pilou)
-        create_list(:completion, 3, user: aquaj)
-        create_list(:completion, 1, user: foo)
+        create(:completion, user: pilou, day: 1)
+        create(:completion, user: pilou, day: 2)
+        create(:completion, user: aquaj, day: 1)
+        create(:completion, user: aquaj, day: 2)
+        create(:completion, user: aquaj, day: 3)
+        create(:completion, user: foo, day: 1)
 
         expect(described_class.new(input).rank).to eq([
                                                         input[1],

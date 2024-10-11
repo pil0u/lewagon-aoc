@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["days", "hours", "minutes", "seconds", "milliseconds", "code"]
+  static targets = ["days", "hours", "minutes", "seconds", "milliseconds", "enigma"]
   static values = { launchDate: String }
 
   connect() {
@@ -10,35 +10,38 @@ export default class extends Controller {
     }
   }
 
+  #format(digits, integer) {
+    return integer.toString().padStart(digits, "0")
+  }
+
   #updateClock() {
     const timeDiff = new Date(this.launchDateValue) - Date.now()
 
-    if (timeDiff > 0) {
-      this.daysTarget.innerHTML = this.#format(Math.floor((timeDiff / (1000 * 60 * 60 * 24))), 2)
-      this.hoursTarget.innerHTML = this.#format(Math.floor((timeDiff / (1000 * 60 * 60)) % 24), 2)
-      this.minutesTarget.innerHTML = this.#format(Math.floor((timeDiff / 1000 / 60) % 60), 2)
-      this.secondsTarget.innerHTML = this.#format(Math.floor((timeDiff / 1000) % 60), 2)
-      this.millisecondsTarget.innerHTML = this.#format(Math.floor(timeDiff % 1000), 3)
+    // While the countdown is running
 
-      if (Math.floor(timeDiff % 1000) % 100 == 0) {
-        this.codeTarget.classList.remove("hidden")
-      } else {
-        this.codeTarget.classList.add("hidden")
-      }
+    if (timeDiff > 0) {
+      // Update the values of the timer
+      this.daysTarget.innerHTML = this.#format(2, Math.floor((timeDiff / (1000 * 60 * 60 * 24))))
+      this.hoursTarget.innerHTML = this.#format(2, Math.floor((timeDiff / (1000 * 60 * 60)) % 24))
+      this.minutesTarget.innerHTML = this.#format(2, Math.floor((timeDiff / 1000 / 60) % 60))
+      this.secondsTarget.innerHTML = this.#format(2, Math.floor((timeDiff / 1000) % 60))
+      this.millisecondsTarget.innerHTML = this.#format(3, Math.floor(timeDiff % 1000))
+
+      // Make the enigma blink
+      this.enigmaTarget.classList.toggle("hidden", Math.floor(timeDiff % 1000) % 100 !== 0);
 
       return
     }
 
+    // When the countdown is over
+
+    // Force the timer to 0
     this.millisecondsTarget.innerHTML = "000"
-    
-    // Reload the page only once
+
+    // Reload the page (only once)
     if (!this.hasReloaded) {
       this.hasReloaded = true
       setTimeout(() => location.reload(), 500)
     }
-  }
-
-  #format(integer, digits) {
-    return integer.toString().padStart(digits, "0")
   }
 }

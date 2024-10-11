@@ -6,7 +6,7 @@ export default class extends Controller {
 
   connect() {
     if (new Date() < new Date(this.launchDateValue)) {
-      this.startRefreshing()
+      setInterval(() => this.updateClock(), 23)
     }
   }
 
@@ -36,12 +36,6 @@ export default class extends Controller {
       this.hasReloaded = true
       setTimeout(() => location.reload(), 500)
     }
-  }
-
-  startRefreshing() {
-    this.refreshTimer = setInterval(() => {
-      this.updateClock()
-    }, 23)
   }
 
   format(integer, digits) {

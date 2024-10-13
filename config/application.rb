@@ -43,5 +43,8 @@ module LewagonAoc
 
     # Disable partial writes when changing default values
     config.active_record.partial_inserts = false
+
+    # Blazer requires a default URL options to be set
+    config.action_mailer.default_url_options = { host: "dummy_host" }
   end
 end

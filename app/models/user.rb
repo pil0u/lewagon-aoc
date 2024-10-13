@@ -5,7 +5,7 @@ class User < ApplicationRecord
   encrypts :slack_access_token
 
   ADMINS = { pilou: "6788", aquaj: "449" }.freeze
-  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049", aurelie: "9168" }.freeze
+  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049" }.freeze
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
@@ -25,9 +25,14 @@ class User < ApplicationRecord
   has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
   has_many :reactions, dependent: :destroy
 
+  before_validation :blank_language_to_nil
+  before_validation :assign_private_leaderboard, on: :create
+  before_validation :set_years_of_service, on: :create
+
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
+  validates :username, length: { maximum: 16 }
   validates :private_leaderboard, presence: true
   validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
@@ -35,11 +40,9 @@ class User < ApplicationRecord
   validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
   validate :referrer_cannot_be_self,           on: :update
 
-  before_validation :blank_language_to_nil
-
   scope :admins, -> { where(uid: ADMINS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
-  scope :insanity, -> { where(entered_hardcore: true) }
+  scope :insanity, -> { where(entered_hardcore: true) } # All users are 'hardcore' since 2024 edition
   scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
   scope :slack_linked, -> { where.not(slack_id: nil) }
 
@@ -48,15 +51,8 @@ class User < ApplicationRecord
     slack_general: 1,
     slack_campus: 2,
     slack_batch: 3,
-    newsletter: 4,
-    linkedin: 5,
-    facebook: 6,
-    instagram: 7,
-    event_brussels: 8,
-    event_london: 9
+    newsletter: 4
   }
-
-  before_validation :assign_private_leaderboard, on: :create
 
   def self.from_kitt(auth)
     oldest_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
@@ -84,25 +80,23 @@ class User < ApplicationRecord
   def self.with_aura
     query = <<~SQL.squish
       SELECT
-        users.uid,
-        users.username,
-        COUNT(DISTINCT referees.id) AS referrals,
-        CEIL(100 * (
-          LN(COUNT(DISTINCT referees.id) + 1) +
-          2 * LN(COUNT(CASE WHEN referees_with_completion.completions_count = 1 THEN referees.id END) + 1) +
-          3 * LN(COUNT(CASE WHEN referees_with_completion.completions_count = 2 THEN referees.id END) + 1) +
-          5 * LN(COUNT(CASE WHEN referees_with_completion.completions_count > 2 THEN referees.id END) + 1)
-        )) AS aura
-      FROM users
-      LEFT JOIN users referees ON users.id = referees.referrer_id
-      LEFT JOIN (
-        SELECT user_id, COUNT(id) AS completions_count
-        FROM completions
-        GROUP BY user_id
-      ) referees_with_completion ON referees.id = referees_with_completion.user_id
-      GROUP BY users.id
-      HAVING COUNT(referees.id) > 0
-      ORDER BY aura DESC;
+          referrers.uid,
+          referrers.username,
+          COUNT(referees.id) AS referrals,
+          CEIL(100 * (
+              LN(COUNT(referees.id) + 1) +                    /* SIGNUPS */
+              SUM(LN(COALESCE(completions.total, 0) + 1)) +   /* COMPLETIONS */
+              5 * SUM(LN(COALESCE(snippets.total, 0) + 1))    /* CONTRIBUTIONS */
+          ))::int AS aura
+      FROM users AS referees
+      LEFT JOIN users AS referrers
+          ON referees.referrer_id = referrers.id
+      LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM completions GROUP BY user_id) AS completions
+          ON referees.id = completions.user_id
+      LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM snippets GROUP BY user_id) AS snippets
+          ON referees.id = snippets.user_id
+      WHERE referees.referrer_id IS NOT NULL
+      GROUP BY 1, 2;
     SQL
 
     ActiveRecord::Base.connection.exec_query(query, "SQL")
@@ -193,6 +187,11 @@ class User < ApplicationRecord
     # Take the private leaderboard with the least users and assign it to the user
     assigned_leaderboard = leaderboards.min_by { |_, count| count }.first
 
-    update(private_leaderboard: assigned_leaderboard)
+    self.private_leaderboard = assigned_leaderboard
+  end
+
+  def set_years_of_service
+    self.years_of_service = CSV.read(Rails.root.join("db/static/participants_all_time.csv"), headers: true)
+                               .count { |row| row["kitt_uid"] == uid }
   end
 end

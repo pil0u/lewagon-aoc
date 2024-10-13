@@ -1,5 +1,4 @@
 @import "fonts";
-@import "font_awesome";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
@@ -17,7 +16,7 @@
   }
 
   .button-slack {
-    @apply form-element cursor-pointer hover:text-aoc-atmospheric;
+    @apply form-element cursor-pointer text-aoc-atmospheric hover:border-aoc-atmospheric/50;
   }
 
   .calendar-tile {
@@ -29,35 +28,35 @@
   }
 
   .snippet * {
-    @apply last:mb-0
+    @apply last:mb-0;
   }
 
   .snippet code {
-    @apply text-xs bg-dark px-1 py-0.5 border border-aoc-gray-darker rounded
+    @apply text-xs bg-dark px-1 py-0.5 border border-aoc-gray-darker rounded;
   }
 
   .snippet h1 {
-    @apply my-4 border-b border-aoc-gray-darker pb-2 font-semibold text-4xl
+    @apply my-4 border-b border-aoc-gray-darker pb-2 font-semibold text-4xl;
   }
 
   .snippet h2 {
-    @apply my-4 border-b border-aoc-gray-darker pb-1.5 font-semibold text-2xl
+    @apply my-4 border-b border-aoc-gray-darker pb-1.5 font-semibold text-2xl;
   }
 
   .snippet h3 {
-    @apply my-4 font-semibold text-lg
+    @apply my-4 font-semibold text-lg;
   }
 
   .snippet li {
-    @apply leading-6
+    @apply leading-6;
   }
 
   .snippet ol {
-    @apply list-decimal ml-6
+    @apply list-decimal ml-6;
   }
 
   .snippet p {
-    @apply leading-6
+    @apply leading-6;
   }
 
   .snippet pre {
@@ -71,7 +70,7 @@
   }
 
   .snippet ul {
-    @apply list-disc ml-6
+    @apply list-disc ml-6;
   }
 
   pre.code-highlighter {
@@ -80,6 +79,21 @@
 
   .scrollable {
     @apply scrollbar-chrome overflow-x-auto;
+  }
+
+  .copyable {
+    @apply font-semibold text-aoc-green hover:text-opacity-90 active:text-opacity-70 cursor-pointer;
+  }
+
+  @keyframes fadeInOutUp {
+    0% { opacity: 0; transform: translateY(5px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-5px); }
+  }
+  
+  .animate-feedback {
+    animation: fadeInOutUp 1.5s ease-in-out;
   }
 
   details > summary {
@@ -134,18 +148,6 @@
 
   .no-ring {
     @apply ring-transparent ring-offset-transparent;
-  }
-
-  .rank-down {
-    @apply fas fa-angles-down text-wagon-red text-opacity-50;
-  }
-
-  .rank-equal {
-    @apply fas fa-equals text-aoc-gray-darker text-opacity-50;
-  }
-
-  .rank-up {
-    @apply fas fa-angles-up text-aoc-green text-opacity-50;
   }
 
   .scrollbar-chrome::-webkit-scrollbar {

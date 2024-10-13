@@ -12,7 +12,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="font-mono text-aoc-gray bg-dark min-h-screen flex flex-col">
+  <body class="font-mono font-light text-aoc-gray bg-dark min-h-screen flex flex-col">
     <%= render FlashComponent.new(flash:) %>
 
     <header class="flex flex-col mx-auto">
@@ -20,7 +20,7 @@
       <%= render Header::NavComponent.new(user: current_user) %>
     </header>
 
-    <main class="flex flex-col max-w-4xl w-5/6 mx-auto my-4 lg:my-6">
+    <main class="flex flex-col max-w-4xl w-[90%] mx-auto my-4 lg:my-6">
       <%= yield %>
     </main>
 

@@ -1,0 +1,51 @@
+<div class="flex flex-col gap-y-2">
+  <%= form_with model: @user, url: settings_path, class: "flex flex-col w-max mx-auto items-end gap-y-2" do |f| %>
+    <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+      <%= f.label :username %>
+      <%= f.text_field :username, value: @user.username, class: "input self-end", maxlength: 16 %>
+    </div>
+
+    <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+      <%= f.label :aoc_id %>
+      <%= f.number_field :aoc_id, value: @user.aoc_id, min: 1, class: "input self-end", disabled: true %>
+    </div>
+
+    <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+      <%= f.label :favourite_language %>
+      <%= f.select :favourite_language, Snippet::LANGUAGES.invert.to_a, { prompt: "", selected: @user.favourite_language }, class: "input self-end" %>
+    </div>
+
+    <div class="flex flex-col gap-y-1 sm:flex-row sm:items-center sm:gap-x-3">
+      <%= f.label :event_awareness, "How did you hear about us? 💡" %>
+      <%= f.select :event_awareness, @form_awareness_options, { prompt: "", selected: @user.event_awareness }, class: "input self-end pr-8 text-ellipsis" %>
+    </div>
+
+    <%= f.submit "Save", class: "button" %>
+  <% end %>
+
+  <div class="w-max mx-auto">
+    <% if @user.slack_linked? %>
+
+      <div class="flex items-center gap-x-3">
+        <span>You are <%= link_to "@#{@user.slack_username}", @user.slack_link, target: :_blank, rel: :noopener, class: "link-slack" %> on Slack!</span>
+        <%= button_to user_slack_omniauth_remove_path, method: :delete, data: { turbo: false }, class: "flex w-max mx-auto" do %>
+          (<span class="hover:text-wagon-red">unlink</span>)
+        <% end %>
+      </div>
+
+    <% else %>
+
+      <div class="flex flex-col lg:flex-row items-center gap-x-3">
+        <span>Unlock cool™ features <span class="lg:hidden">↓</span><span class="hidden lg:inline">→</span></span>
+        <%= button_to(
+              user_slack_openid_omniauth_authorize_path,
+              data: { turbo: false, controller: "disable-link", action: "disable-link#now" },
+              class: "button-slack"
+            ) do %>
+          Link Slack account
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+</div>

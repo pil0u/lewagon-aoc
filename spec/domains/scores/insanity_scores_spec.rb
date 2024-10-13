@@ -39,7 +39,7 @@ RSpec.describe Scores::InsanityScores do
   context "when a user has no points" do
     let!(:user_3) { create(:user, id: 3, entered_hardcore: true) }
 
-    it "still includes it in the scores with 0 points" do
+    it "includes them, with 0 points" do
       expect(described_class.get).to include(
         hash_including(score: 0, user_id: 3)
       )

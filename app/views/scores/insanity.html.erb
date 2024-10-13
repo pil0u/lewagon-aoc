@@ -1,9 +1,7 @@
-<%= render Scores::NavComponent.new %>
-
 <%= render PageTitleComponent.new(title: "The Ladder of Insanity") %>
 
 <p class="my-4">
-  For each <em>challenge</em>, you are ranked by your relative time to solve it and earn points accordingly.
+  The first 5 players to solve a part of a puzzle get respectively 5, 4, 3, 2 and 1 point.
   <%= link_to "More info", faq_path, class: "link-explicit link-internal" %>.
 </p>
 

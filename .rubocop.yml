@@ -2,6 +2,8 @@ require:
   - rubocop-performance
   - rubocop-rails
   # - rubocop-rspec
+  # - rubocop-rspec_rails
+  # - rubocop-factory_bot
 
 AllCops:
   NewCops: enable
@@ -17,6 +19,14 @@ Metrics/ClassLength:
   Exclude:
     - "**/app/models/user.rb"
 
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - "**/db/migrate/20240608160740_recreate_good_job_cron_indexes_with_conditional.rb"
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - "**/db/migrate/20240608160740_recreate_good_job_cron_indexes_with_conditional.rb"
+
 Naming/VariableNumber:
   EnforcedStyle: snake_case
   Exclude:
@@ -25,7 +35,8 @@ Naming/VariableNumber:
 
 Rails/DangerousColumnNames:
   Exclude:
-    - "**/db/migrate/*"
+    - "**/db/migrate/20221010144700_make_cache_key_more_obvious_in_cache_models.rb"
+    - "**/db/migrate/20221024015351_change_cache_keys_to_strings_and_change_their_name.rb"
 
 Rails/DynamicFindBy:
   AllowedMethods: ["find_by_referral_code"]

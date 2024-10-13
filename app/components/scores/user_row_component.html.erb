@@ -1,8 +1,9 @@
 <%# The scale-100 trick is to make the last td absolute, relative to the tr  %>
 
 <tr class="scale-100 hover:bg-hover
-          <%= "bg-aoc-green bg-opacity-20" if @participant[:uid] == @user.uid.to_i %>
+          <%= "bg-aoc-green bg-opacity-20" if @user && @participant[:uid] == @user.uid.to_i %>
           <%= "text-aoc-gray-dark" if @colorize_hardcore && @participant[:entered_hardcore] %>">
+
   <td class="<%= class_names(rank_css(@participant[:rank])) %>">
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
       <%= (@participant[:rank] if @participant[:display_rank]) || "&nbsp".html_safe %>
@@ -12,7 +13,12 @@
   <td class="py-1 max-w-[12rem]">
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center items-center truncate" do %>
       <%= @participant[:username] %>
-      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-2") if @participant[:uid].in?(User::CONTRIBUTORS.values.map(&:to_i)) %>
+      <% if @participant[:years_of_service] > 0 %>
+        <%= inline_svg_tag "years_of_service/#{@participant[:years_of_service]}.svg",
+                           class: "h-6 w-6 inline-block ml-1",
+                           title: "#{@participant[:years_of_service]} years of service" %>
+      <% end %>
+      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-1") if @participant[:uid].in?(User::CONTRIBUTORS.values.map(&:to_i)) %>
     <% end %>
   </td>
 
@@ -59,6 +65,4 @@
   </td>
 
   <% end %>
-
-  <%= render Scores::RankEvolutionCellComponent.new(previous_rank: @participant[:previous_rank], current_rank: @participant[:rank]) %>
 </tr>

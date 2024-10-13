@@ -132,7 +132,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :request do
 
       it "shows a flash explaining the error" do
         omniauth_login
-        expect(session.dig("flash", "flashes", "alert")).to match(/Info fetch failed.*token_revoked/)
+        expect(session.dig("flash", "flashes", "alert")).to match(/Slack API error.*token_revoked/)
       end
     end
 

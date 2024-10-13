@@ -2,7 +2,6 @@
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[admin code_of_conduct faq participation stats welcome]
-  before_action      :render_countdown,   only: %i[code_of_conduct faq participation patrons setup stats welcome], if: :render_countdown?
 
   def admin; end
 
@@ -57,6 +56,7 @@ class PagesController < ApplicationController
 
   def patrons
     @users = User.with_aura
+    @current_user_referees = current_user.referees
   end
 
   def setup
@@ -94,15 +94,5 @@ class PagesController < ApplicationController
     @total_users = User.count
 
     cookies[:referral_code] = params[:referral_code] if params[:referral_code].present?
-  end
-
-  private
-
-  def render_countdown
-    render "countdown", layout: false
-  end
-
-  def render_countdown?
-    Time.now.utc < Aoc.lewagon_launch_time && Rails.env.production? && !ENV["THIS_IS_STAGING"]
   end
 end

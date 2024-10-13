@@ -16,7 +16,7 @@ module Scores
     end
 
     def compute
-      points = Scores::SoloPoints.get
+      points = Scores::InsanityPoints.get
 
       # index for o(1) fetch
       squad_for_user = User.where(id: points.pluck(:user_id)).pluck(:id, :squad_id).to_h

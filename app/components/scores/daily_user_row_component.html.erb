@@ -1,7 +1,13 @@
 <tr class="hover:bg-hover <%= "bg-aoc-green bg-opacity-20" if @participant[:uid] == @user.uid %>">
   <td>
-    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center" do %>
+    <%= link_to profile_path(@participant[:uid]), class: "flex justify-center items-center" do %>
       <%= @participant[:username] %>
+      <% if @participant[:years_of_service] > 0 %>
+        <%= inline_svg_tag "years_of_service/#{@participant[:years_of_service]}.svg",
+                           class: "h-6 w-6 inline-block ml-1",
+                           title: "#{@participant[:years_of_service]} years of service" %>
+      <% end %>
+      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-1") if @participant[:uid].in?(User::CONTRIBUTORS.values) %>
     <% end %>
   </td>
 

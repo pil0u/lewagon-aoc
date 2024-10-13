@@ -1,29 +1,30 @@
 # frozen_string_literal: true
 
 class ReactionsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_reaction, only: %i[update destroy]
 
   def create
     reaction = current_user.reactions.build(reaction_params.merge(snippet_id: params[:snippet_id]))
 
     if reaction.save
-      redirect_back fallback_location: "/"
+      render json: { reaction: }, status: :ok
     else
-      redirect_back fallback_location: "/", alert: reaction.errors.full_messages
+      render json: { errors: reaction.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
     if @reaction.update(reaction_params)
-      redirect_back fallback_location: "/"
+      render json: { reaction: @reaction }, status: :ok
     else
-      redirect_back fallback_location: "/", alert: @reaction.errors.full_messages
+      render json: { errors: reaction.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @reaction.destroy
-    redirect_back fallback_location: "/"
+    render json: {}, status: :ok
   end
 
   private

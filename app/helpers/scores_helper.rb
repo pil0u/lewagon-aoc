@@ -10,8 +10,4 @@ module ScoresHelper
       "strong": rank > 3
     }
   end
-
-  def scores_path
-    "/scores/#{session[:last_score_page] ||= 'squads'}"
-  end
 end

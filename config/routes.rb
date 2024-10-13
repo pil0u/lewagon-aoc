@@ -32,8 +32,9 @@ Rails.application.routes.draw do
   # Public routes
   get "/code-of-conduct", to: "pages#code_of_conduct"
   get "/faq",             to: "pages#faq"
-  get "/participation",   to: "pages#participation"
   get "/stats",           to: "pages#stats"
+  get "/scores/insanity", to: "scores#insanity"
+  get "/scores/squads",   to: "scores#squads"
 
   # Routes for unauthenticated users
   unauthenticated do
@@ -68,18 +69,12 @@ Rails.application.routes.draw do
     patch   "/snippets/:id",                    to: "snippets#update", as: :update_snippet, day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
     get     "/the-wall",                        to: "messages#index",  as: :messages
     post    "/the-wall",                        to: "messages#create"
-    get     "/scores/campuses",                 to: "scores#campuses"
-    get     "/scores/cities",                   to: "scores#campuses" # Retrocompat in case of old links
-    get     "/scores/insanity",                 to: "scores#insanity"
-    get     "/scores/solo",                     to: "scores#solo"
-    get     "/scores/squads",                   to: "scores#squads"
     get     "/squad/:id",                       to: "squads#show",      as: :squad
     post    "/squad",                           to: "squads#create",    as: :create_squad
     patch   "/squad/:id",                       to: "squads#update",    as: :update_squad
     post    "/squad/join",                      to: "squads#join",      as: :join_squad
     delete  "/squad/leave",                     to: "squads#leave",     as: :leave_squad
     get     "/profile/:uid",                    to: "users#show",       as: :profile
-    get     "/settings",                        to: "users#edit"
     patch   "/settings",                        to: "users#update"
     post    "/snippets/:snippet_id/reactions",  to: "reactions#create",  as: :reactions
     patch   "/reactions/:id",                   to: "reactions#update",  as: :update_reaction
@@ -88,10 +83,14 @@ Rails.application.routes.draw do
 
   # Admin routes
   authenticated :user, ->(user) { user.admin? } do
-    get "/admin",         to: "pages#admin"
-    post "/impersonate",  to: "users#impersonate", as: :impersonate
+    get   "/admin",           to: "pages#admin"
+    post  "/impersonate",     to: "users#impersonate", as: :impersonate
 
-    mount Blazer::Engine,   at: "blazer"
-    mount GoodJob::Engine,  at: "good_job"
+    get   "/scores/solo",     to: "scores#solo"
+    get   "/scores/campuses", to: "scores#campuses"
+    get   "/participation",   to: "pages#participation"
+
+    mount Blazer::Engine,     at: "blazer"
+    mount GoodJob::Engine,    at: "good_job"
   end
 end

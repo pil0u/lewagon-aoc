@@ -2,46 +2,54 @@
 
 <div class="my-4 flex flex-col gap-y-4">
   <p>
-    Influencers of Le Wagon, this is your moment.
+    This page lists the greatest influencers of Le Wagon.
+  </p>
+  <p>
+    You can become one, by sharing your personal referral code
+    <span data-controller="clipboard"
+          data-clipboard-content-value="<%= current_user.referral_code %>"
+          class="relative inline-block">
+      <code data-action="click->clipboard#copy" class="copyable"><%= current_user.referral_code %></code>
+      <span data-clipboard-target="feedback" class="hidden absolute -top-4 right-0 text-xs">Copied!</span>
+    </span>
+    or URL (click to copy)
   </p>
 
+  <div data-controller="clipboard"
+       data-clipboard-content-value="<%= current_user.referral_link(request) %>"
+       class="relative w-max mx-auto">
+    <code data-action="click->clipboard#copy" class="copyable"><%= current_user.referral_link(request) %></code>
+    <span data-clipboard-target="feedback" class="hidden absolute -top-4 right-0 text-xs">Copied!</span>
+  </div>
+
   <p>
-    Your referral code
-    <code
-      class="hover:cursor-pointer hover:text-gold active:text-aoc-gray"
-      data-controller="clipboard"
-      data-action="click->clipboard#copy"
-      data-clipboard-content-value="<%= current_user.referral_code %>"><%= current_user.referral_code %></code>
-    is your fame booster. Share it everywhere to your fellow Wagoners: your batch channel
+    Share this link everywhere to your fellow Wagoners: your batch channel
     <%= link_to "on Slack", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>,
     your WhatsApp groups, by mail, pigeon, or even in the
-    <%= link_to "#general", "https://lewagon-alumni.slack.com/archives/C02NE024R", target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
-    Slack channel if you dare. Here is your personal referral link:
-  </p>
-
-  <code
-    class="w-max mx-auto hover:cursor-pointer hover:text-gold active:text-aoc-gray"
-    data-controller="clipboard"
-    data-action="click->clipboard#copy"
-    data-clipboard-content-value="<%= current_user.referral_link(request) %>">
-    <%= current_user.referral_link(request) %>
-  </code>
-
-  <p>
-    Every time someone signs up using your code, you will increase your <span class="strong">aura</span>. Finding people
-    who solve a few puzzles can only help your <span class="strong">aura</span> as well.
+    <%= link_to "#general",
+                "https://lewagon-alumni.slack.com/archives/C02NE024R",
+                target: :_blank,
+                rel: :noopener,
+                class: "link-explicit link-slack" %>
+    Slack channel if you dare.
   </p>
 
   <p>
-    One more thing. The top referrer by December 8th wins a <code>100€</code> Amazon voucher 💸
-  </p>
-
-  <p>
-    Good luck!
+    Every signup using your code will increase your <span class="strong">aura</span>. Referring people who solve a few
+    puzzles or share their solution can only help your <span class="strong">aura</span> as well.
   </p>
 </div>
 
-<table class="block overflow-x-auto whitespace-nowrap w-full max-w-lg mx-auto">
+<% if @current_user_referees.any? %>
+  <p>
+    You already referred <%= pluralize(@current_user_referees.count, "user") %>:
+    <%= safe_join(@current_user_referees.map do |user|
+          link_to user.username, profile_path(user.uid), class: "strong hover:text-gold"
+        end, ", ") %>
+  </p>
+<% end %>
+
+<table class="block overflow-x-auto whitespace-nowrap w-full max-w-md mx-auto">
   <thead>
     <tr class="border-b border-aoc-gray-darker">
       <th class="font-light w-full"></th>
@@ -62,7 +70,7 @@
         </td>
 
         <td class="text-center strong">
-          <%= user["aura"].to_i %>
+          <%= user["aura"] %>
         </td>
       </tr>
     <% end %>

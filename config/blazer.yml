@@ -60,6 +60,7 @@ check_schedules:
   - "1 day"
   - "1 hour"
   - "5 minutes"
+  - "10 seconds"
 
 # enable anomaly detection
 # note: with trend, time series are sent to https://trendapi.org

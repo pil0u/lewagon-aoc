@@ -13,13 +13,13 @@
     <% end %>
   </td>
 
-  <td>
+  <td class="py-1 strong text-lg">
     <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
       <%= @squad[:stars] || 0 %>
     <% end %>
   </td>
 
-  <td class="py-1 strong text-lg">
+  <td>
     <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
       <%= @squad[:total_members] %>
     <% end %>

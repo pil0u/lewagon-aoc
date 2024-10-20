@@ -34,12 +34,14 @@ export default class extends Controller {
     }
 
     // When the countdown is over
+
+    // Properly stop the clock
     clearInterval(this.interval)
 
-    // Force the timer to 0
+    // Force the timer to display 0
     this.millisecondsTarget.innerHTML = "000"
 
     // Reload the page
-    setTimeout(() => location.reload(), 500)
+    location.reload()
   }
 }

@@ -17,6 +17,19 @@ FileUtils.chdir APP_ROOT do
   system! "gem install bundler --conservative"
   system("bundle check") || system!("bundle install")
 
+  # Create .env file if it doesn't exist
+  env_file_path = File.join(APP_ROOT, ".env")
+  unless File.exist?(env_file_path)
+    puts "\n== Creating .env file =="
+    File.open(env_file_path, "w") do |file|
+      file.puts "AOC_ROOMS=1222761-c7a21654,"
+      file.puts "SESSION_COOKIE="
+    end
+    puts "Created .env file with default values"
+  else
+    puts ".env file already exists, skipping creation"
+  end
+
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
   #   FileUtils.cp "config/database.yml.sample", "config/database.yml"

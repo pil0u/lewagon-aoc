@@ -6,7 +6,7 @@ export default class extends Controller {
 
   connect() {
     if (new Date() < new Date(this.launchDateValue)) {
-      setInterval(() => this.#updateClock(), 23)
+      this.interval = setInterval(() => this.#updateClock(), 23)
     }
   }
 
@@ -34,14 +34,12 @@ export default class extends Controller {
     }
 
     // When the countdown is over
+    clearInterval(this.interval)
 
     // Force the timer to 0
     this.millisecondsTarget.innerHTML = "000"
 
-    // Reload the page (only once)
-    if (!this.hasReloaded) {
-      this.hasReloaded = true
-      setTimeout(() => location.reload(), 500)
-    }
+    // Reload the page
+    setTimeout(() => location.reload(), 500)
   }
 }

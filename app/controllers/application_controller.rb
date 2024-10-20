@@ -20,10 +20,18 @@ class ApplicationController < ActionController::Base
   end
 
   def render_countdown?
-    is_before_launch = Time.now.utc < Aoc.lewagon_launch_time
-    is_real_production = Rails.env.production? && !ENV["THIS_IS_STAGING"]
-    is_not_admin = !current_user&.admin?
+    !devise_controller? && !admin? && before_launch? && true_production?
+  end
 
-    !devise_controller? && is_not_admin && is_before_launch && is_real_production
+  def admin?
+    current_user&.admin?
+  end
+
+  def before_launch?
+    Time.now.utc < Aoc.lewagon_launch_time
+  end
+
+  def true_production?
+    Rails.env.production? && !ENV["THIS_IS_STAGING"]
   end
 end

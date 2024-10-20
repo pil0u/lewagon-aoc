@@ -33,15 +33,8 @@ export default class extends Controller {
       return
     }
 
-    // When the countdown is over
-
-    // Force the timer to 0
+    // When the countdown is over, force the timer to display 0 and reload the page
     this.millisecondsTarget.innerHTML = "000"
-
-    // Reload the page (only once)
-    if (!this.hasReloaded) {
-      this.hasReloaded = true
-      setTimeout(() => location.reload(), 500)
-    }
+    location.reload()
   }
 }

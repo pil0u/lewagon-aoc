@@ -25,7 +25,7 @@ FileUtils.chdir APP_ROOT do
       file.puts "AOC_ROOMS=1222761-c7a21654,"
       file.puts "SESSION_COOKIE="
     end
-    puts "Created .env file with default values"
+    puts "Created .env file"
   else
     puts ".env file already exists, skipping creation"
   end

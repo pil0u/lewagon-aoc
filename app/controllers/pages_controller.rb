@@ -2,6 +2,7 @@
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[admin code_of_conduct faq participation stats welcome]
+  skip_before_action :render_countdown, only: %i[admin]
 
   def admin; end
 
@@ -27,10 +28,6 @@ class PagesController < ApplicationController
 
   def code_of_conduct
     @admins = User.admins.pluck(:username)
-  end
-
-  def countdown
-    render_countdown
   end
 
   def faq; end

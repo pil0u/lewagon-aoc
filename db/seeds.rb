@@ -157,5 +157,5 @@ if Rails.env.development?
                ])
   Rails.logger.info "✔ Users initialized"
 
-  InsertNewCompletionsJob.perform_now
+  InsertNewCompletionsJob.perform_now if ENV.fetch("SESSION_COOKIE").present?
 end

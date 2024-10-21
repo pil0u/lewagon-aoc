@@ -100,7 +100,8 @@ if Rails.env.development?
                    city: City.find_by(name: "Paris"),
                    aoc_id: 151_323,
                    uid: 1,
-                   accepted_coc: true
+                   accepted_coc: true,
+                   synced: true
                  },
                  {
                    username: "test_2",
@@ -108,7 +109,8 @@ if Rails.env.development?
                    city: City.find_by(name: "Paris"),
                    aoc_id: 1_095_582,
                    uid: 2,
-                   accepted_coc: true
+                   accepted_coc: true,
+                   synced: true
                  },
                  {
                    username: "test_3",
@@ -116,7 +118,8 @@ if Rails.env.development?
                    city: City.find_by(name: "Bordeaux"),
                    aoc_id: 1_266_664,
                    uid: 3,
-                   accepted_coc: true
+                   accepted_coc: true,
+                   synced: true
                  },
                  {
                    username: "test_4",
@@ -124,7 +127,8 @@ if Rails.env.development?
                    city: City.find_by(name: "London"),
                    aoc_id: 1_237_086,
                    uid: 4,
-                   accepted_coc: true
+                   accepted_coc: true,
+                   synced: true
                  },
                  {
                    username: "test_5",

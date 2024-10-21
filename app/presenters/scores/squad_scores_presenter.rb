@@ -24,10 +24,17 @@ module Scores
     end
 
     def stats_of(squad)
-      score = scores_per_squad[squad.id] || { score: 0, current_day_score: 0, rank: scores_per_squad.count + 1 }
+      completions = squad.completions.group_by(&:challenge).transform_values(&:count)
+      all = completions[1] || 0
+      gold = completions[2] || 0
+      silver = all - gold
+
+      score = scores_per_squad[squad.id] || { score: 0, current_day_score: 0, rank: scores_per_squad.count + 1, silver_stars: 0, gold_stars: 0 }
       {
         rank: score[:rank],
         order: score[:order],
+        silver_stars: silver,
+        gold_stars: gold,
         score: score[:score],
         daily_score: score[:current_day_score],
         total_members: squad.users.size

@@ -58,7 +58,6 @@ Rails.application.routes.draw do
   # Routes for authenticated + confirmed users
   authenticated :user, ->(user) { user.confirmed? } do
     get     "/",                                to: "pages#calendar", as: :calendar
-    get     "/countdown",                       to: "pages#countdown"
     get     "/patrons",                         to: "pages#patrons"
     get     "/campus/:slug",                    to: "campuses#show",   as: :campus
     get     "/city/:slug",                      to: "campuses#show",   as: :city # Retrocompat in case of old links

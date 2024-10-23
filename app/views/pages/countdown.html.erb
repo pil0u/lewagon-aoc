@@ -19,7 +19,7 @@
 
     <main class="m-auto">
       <div data-controller="countdown"
-           data-countdown-launch-date-value="<%= Aoc.lewagon_launch_time %>"
+           data-countdown-launch-date-value="<%= Aoc.lewagon_launch_time.strftime("%Y/%m/%d %H:%M:%S %z") %>"
            class="text-3xl lg:text-6xl text-center h-[30vh]">
         <span data-countdown-target="days"></span>
         <span data-countdown-target="hours"></span>

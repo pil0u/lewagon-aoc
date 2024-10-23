@@ -21,4 +21,4 @@ jobs:
           git_push_flags: "--force -vvv"
           ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
           ssh_host_key: |
-            aoc.lewagon.engineering ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCdhe2e12VHkgquDfT9sFDSG1O4WXs/B7R1eew/kfPHfQkxHRrA+qxML0QdUKKJFBAJb2raXb2kcQIavgkZCwIy/b+vjjHT4k5HWWkmWehr6jwhIg9lxDXN+9akc7ocit/rZA7Xai2LIU0h+Orh+0qoinhB3ANPIDgF8XARjpAgQkGPDqCfi/EL4OhcBq51eUp8UdjKo7GaBL+zEn1ehpyJoDZgKOYqN8eRaVsJZ59PBVSuedqRR5tJpMpM74faLHsixfT7BcDfvvBAU2H2ZXXptiNbjdLiZo0SHymYlpUHvyt7xc0H0mm0/xEFT0Z1qzbC+pULzskwuS4lqtJxN6W7W+V7rgBkKFM5MB87ykvF8wB+VmJS4RnXKB2ZrAcAFsEJ+EyUI1jDdNJuzpvcXj9+BecfDw8ar1312lgZEFzzCgjZfy/666cZQFyDAl5hK6pCWVbLXme49Kxz6Ktj18PXCERT6XYhGoPotJ8j1HL9yYLbWg3WnqdAO8OAB+mvAAs=
+            aoc.lewagon.engineering ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBSrD6AdnGUx4U9vveaTF+pBGjujy2GABWd7wkGfrm9l

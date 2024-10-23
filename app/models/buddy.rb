@@ -5,6 +5,8 @@ class Buddy < ApplicationRecord
   scope :of_user,  ->(user_id) { where("id_1 = ? OR id_2 = ?", user_id, user_id) }
 
   def self.of_the_day(user)
+    return nil unless Aoc.in_progress?
+
     buddy_pair = of_today.of_user(user.id).first
     daily_buddy_id = user.id == buddy_pair.id_1 ? buddy_pair.id_2 : buddy_pair.id_1 if buddy_pair
 

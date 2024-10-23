@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   def admin; end
 
   def calendar
-    @daily_buddy = Buddy.of_the_day(current_user) if Aoc.in_progress?
+    @daily_buddy = Buddy.of_the_day(current_user)
 
     user_completions = current_user.completions.group(:day).count
     @advent_days = [

@@ -1,6 +1,8 @@
 <div class="text-lg flex flex-wrap flex-col sm:flex-row items-center sm:justify-between">
   <div class="flex flex-wrap gap-x-6">
     <h2 class="strong"><%= @squad.name %></h2>
+    <span>·</span>
+    <span><%= pluralize(@squad_stats[:total_members], "member") %></span>
   </div>
 
   <div class="flex gap-x-6">
@@ -10,10 +12,6 @@
       <% end %>
       <span class="text-aoc-gold"><%= @squad_stats[:gold_stars] %>*</span>
     </span>
-    <span>·</span>
-    <span class="text-aoc-atmospheric"><%= @squad_stats[:score] %> pts</span>
-    <span>·</span>
-    <span><%= @squad_stats[:rank] %><sup><%= @squad_stats[:rank].ordinal %></sup></span>
   </div>
 </div>
 

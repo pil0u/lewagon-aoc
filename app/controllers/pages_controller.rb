@@ -2,10 +2,13 @@
 
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[admin code_of_conduct faq participation stats welcome]
+  skip_before_action :render_countdown, only: %i[admin]
 
   def admin; end
 
   def calendar
+    @daily_buddy = Buddy.of_the_day(current_user)
+
     user_completions = current_user.completions.group(:day).count
     @advent_days = [
       2,  23, 19, 15, 6,
@@ -20,17 +23,12 @@ class PagesController < ApplicationController
       }
     end
 
-    @daily_buddy = Buddy.of_the_day(current_user)
-    @next_puzzle_time = Aoc.next_puzzle_time
     @now = Aoc.event_timezone.now
+    @next_puzzle_time = Aoc.next_puzzle_time
   end
 
   def code_of_conduct
     @admins = User.admins.pluck(:username)
-  end
-
-  def countdown
-    render_countdown
   end
 
   def faq; end

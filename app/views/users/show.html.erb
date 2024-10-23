@@ -1,7 +1,7 @@
 <%# HEADER %>
 
-<div class="my-4 flex flex-col gap-y-2">
-  <div class="text-xl flex justify-between">
+<div class="flex flex-col gap-y-2">
+  <div class="text-lg flex justify-between">
     <div class="flex flex-wrap gap-x-6">
       <h2 class="strong">
         <%= @user.username %>
@@ -45,12 +45,12 @@
         <span>#<%= @user.batch.number %></span>
       <% end %>
 
-      <% if @user.batch_id.present? && @user.original_city.present? %>
+      <% if @user.batch_id.present? && @user.city_id.present? %>
         <span>·</span>
       <% end %>
 
-      <% if @user.original_city.present? %>
-        <span><%= @user.original_city.vanity_name %></span>
+      <% if @user.city_id.present? %>
+        <span><%= @user.city.vanity_name %></span>
       <% end %>
     </div>
 

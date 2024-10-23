@@ -11,6 +11,19 @@
         <%= link_to "slack thread", @puzzle.slack_url, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
       <% end %>
     <% end %>
+
+    <% if @daily_buddy.present? %>
+      <span>·</span>
+      <p class="text-center">
+        Your buddy:
+
+        <% if @daily_buddy.slack_id.present? %>
+          <%= link_to "@#{@daily_buddy.slack_username}", @daily_buddy.slack_link, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
+        <% else %>
+          <%= link_to @daily_buddy.username, profile_path(@daily_buddy.uid), class: "link-explicit" %>
+        <% end %>
+      </p>
+    <% end %>
   </div>
 
   <div class="flex items-center gap-x-6">

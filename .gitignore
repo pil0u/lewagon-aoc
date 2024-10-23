@@ -13,6 +13,7 @@ log/
 tmp/
 vendor/javascript/*
 .byebug_history
+.DS_Store
 .env
 __*
 

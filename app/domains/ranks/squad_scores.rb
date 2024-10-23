@@ -11,9 +11,9 @@ module Ranks
     def ranking_criterion(score)
       squad = @squads[score[:squad_id]]
       [
-        score[:score],
-        squad.completions.count { |c| c.duration < 24.hours },
-        squad.completions.count { |c| c.duration < 48.hours }
+        squad.completions.count,
+        -squad.users.count,
+        score[:score]
       ]
     end
   end

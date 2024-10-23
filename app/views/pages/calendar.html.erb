@@ -3,7 +3,6 @@
 </p>
 
 <% if @daily_buddy.present? %>
-
   <p class="text-center">
     Your daily buddy is
 
@@ -13,7 +12,6 @@
       <%= link_to @daily_buddy.username, profile_path(@daily_buddy.uid), class: "link-explicit" %>
     <% end %>
   </p>
-
 <% end %>
 
 <div class="mx-auto my-4 w-max grid grid-cols-5 gap-2 lg:gap-3">

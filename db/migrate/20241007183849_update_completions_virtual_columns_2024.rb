@@ -10,7 +10,7 @@ class UpdateCompletionsVirtualColumns2024 < ActiveRecord::Migration[7.1]
       release_date_sql = ActiveRecord::Base.sanitize_sql_array(
         ["to_timestamp(?::double precision + (day - 1) * ?)",
          BEGINNING_OF_EXERCISES.to_i,
-         INTERVAL_BETWEEN_EXERCISES]
+         INTERVAL_BETWEEN_EXERCISES.to_i]
       )
 
       remove_column :completions, :release_date, :timestamp

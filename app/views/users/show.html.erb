@@ -45,12 +45,12 @@
         <span>#<%= @user.batch.number %></span>
       <% end %>
 
-      <% if @user.batch_id.present? && @user.original_city.present? %>
+      <% if @user.batch_id.present? && @user.city_id.present? %>
         <span>·</span>
       <% end %>
 
-      <% if @user.original_city.present? %>
-        <span><%= @user.original_city.vanity_name %></span>
+      <% if @user.city_id.present? %>
+        <span><%= @user.city.vanity_name %></span>
       <% end %>
     </div>
 

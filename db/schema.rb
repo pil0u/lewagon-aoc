@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_07_183849) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_25_155835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -425,6 +425,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_07_183849) do
     t.bigint "referrer_id"
     t.datetime "remember_created_at"
     t.text "remember_token"
+    t.integer "roles", default: 0, null: false
     t.string "slack_access_token"
     t.string "slack_id"
     t.string "slack_username"

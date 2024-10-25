@@ -157,6 +157,16 @@ if Rails.env.development?
                    city: City.find_by(name: "Paris"),
                    aoc_id: 1_259_379,
                    uid: 8
+                 },
+                 {
+                   provider: "kitt",
+                   uid: "6788",
+                   username: "pil0u",
+                   aoc_id: 1_222_761,
+                   accepted_coc: true,
+                   synced: true,
+                   batch: Batch.find_or_create_by(number: 343),
+                   roles: %i[admin contributor]
                  }
                ])
   Rails.logger.info "✔ Users initialized"

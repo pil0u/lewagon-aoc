@@ -20,6 +20,7 @@ module Scores
     def identity_of(user)
       {
         uid: user.uid.to_i,
+        contributor: user.contributor?,
         username: user.username,
         years_of_service: user.years_of_service,
         city_vanity_name: user.city&.vanity_name,

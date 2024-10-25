@@ -4,8 +4,17 @@ class User < ApplicationRecord
   devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
   encrypts :slack_access_token
 
-  ADMINS = { pilou: "6788", aquaj: "449" }.freeze
-  CONTRIBUTORS = { pilou: "6788", aquaj: "449", louis: "19049" }.freeze
+  flag :roles, %i[admin contributor]
+  delegate :admin?, to: :roles
+  delegate :contributor?, to: :roles
+
+  enum :event_awareness, {
+    slack_aoc: 0,
+    slack_general: 1,
+    slack_campus: 2,
+    slack_batch: 3,
+    newsletter: 4
+  }
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true
@@ -40,19 +49,11 @@ class User < ApplicationRecord
   validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
   validate :referrer_cannot_be_self,           on: :update
 
-  scope :admins, -> { where(uid: ADMINS.values) }
-  scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
+  scope :admins, -> { where_roles(:admin) }
+  scope :contributors, -> { where_roles(:contributor) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) } # All users are 'hardcore' since 2024 edition
   scope :slack_linked, -> { where.not(slack_id: nil) }
-
-  enum :event_awareness, {
-    slack_aoc: 0,
-    slack_general: 1,
-    slack_campus: 2,
-    slack_batch: 3,
-    newsletter: 4
-  }
 
   def self.from_kitt(auth)
     oldest_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
@@ -100,14 +101,6 @@ class User < ApplicationRecord
     SQL
 
     ActiveRecord::Base.connection.exec_query(query, "SQL")
-  end
-
-  def admin?
-    uid.in?(ADMINS.values)
-  end
-
-  def contributor?
-    uid.in?(CONTRIBUTORS.values)
   end
 
   def confirmed?

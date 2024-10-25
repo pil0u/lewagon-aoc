@@ -126,16 +126,6 @@ class User < ApplicationRecord
     "OK"
   end
 
-  def sync_status_css_class
-    css_class = {
-      "KO" => "text-wagon-red",
-      "Pending" => "text-aoc-atmospheric",
-      "OK" => "text-aoc-green"
-    }
-
-    css_class[sync_status]
-  end
-
   def referral_code
     "R#{uid.to_s.rjust(5, '0')}"
   end

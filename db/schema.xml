@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
-<!-- Active URL: https://kitt.lewagon.com/db/74308 -->
+<!-- Active URL: https://kitt.lewagon.com/db/135101 -->
 <sql>
   <datatypes db="postgresql">
     <group label="Numeric" color="rgb(238,238,170)">
@@ -42,7 +42,7 @@
       <type label="Geometry" length="0" sql="GEOMETRY" quote="'" />
     </group>
   </datatypes>
-  <table x="501" y="351" name="users">
+  <table x="621" y="19" name="users">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -73,13 +73,35 @@
       <datatype>BOOLEAN</datatype>
       <default>NULL</default>
     </row>
+    <row name="event_awareness" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="favourite_language" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
     <row name="github_username" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="original_city_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+      <relation table="cities" row="id" />
+    </row>
+    <row name="private_leaderboard" null="1" autoincrement="0">
       <datatype>TEXT</datatype>
       <default>NULL</default>
     </row>
     <row name="provider" null="1" autoincrement="0">
       <datatype>TEXT</datatype>
       <default>NULL</default>
+    </row>
+    <row name="referrer_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
     </row>
     <row name="remember_created_at" null="1" autoincrement="0">
       <datatype>TIMESTAMP</datatype>
@@ -89,11 +111,15 @@
       <datatype>TEXT</datatype>
       <default>NULL</default>
     </row>
-    <row name="sponsor_since" null="1" autoincrement="0">
-      <datatype>TIMESTAMP</datatype>
+    <row name="slack_access_token" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
       <default>NULL</default>
     </row>
-    <row name="sponsor_tier" null="1" autoincrement="0">
+    <row name="slack_id" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="slack_username" null="1" autoincrement="0">
       <datatype>TEXT</datatype>
       <default>NULL</default>
     </row>
@@ -118,11 +144,15 @@
       <datatype>TEXT</datatype>
       <default>'NULL'</default>
     </row>
+    <row name="years_of_service" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
   </table>
-  <table x="751" y="451" name="cities">
+  <table x="430" y="400" name="cities">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -139,15 +169,23 @@
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
+    <row name="top_contributors" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
     <row name="updated_at" null="1" autoincrement="0">
       <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="vanity_name" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
       <default>NULL</default>
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
   </table>
-  <table x="601" y="101" name="completions">
+  <table x="211" y="70" name="completions">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -185,11 +223,16 @@
       <part>id</part>
     </key>
   </table>
-  <table x="601" y="51" name="⬇️ Updated from AoC's JSON API">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="20" name="Updated from AoC's JSON API ⬇️ ">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="771" y="101" name="states">
+  <table x="50" y="70" name="states">
     <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="completions_fetched" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
@@ -205,7 +248,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="350" y="687" name="batches">
+  <table x="430" y="260" name="batches">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -226,7 +269,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="751" y="630" name="squads">
+  <table x="900" y="620" name="squads">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -251,31 +294,39 @@
       <part>id</part>
     </key>
   </table>
-  <table x="301" y="51" name="blazer_audits">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="300" name="blazer_audits">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="301" y="81" name="blazer_checks">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="330" name="blazer_checks">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="301" y="111" name="blazer_dashboard_queries">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="360" name="blazer_dashboard_queries">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="301" y="141" name="blazer_dashboards">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="390" name="blazer_dashboards">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="301" y="171" name="blazer_queries">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="420" name="blazer_queries">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="301" y="221" name="good_job_processes">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="530" name="good_job_processes">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="301" y="251" name="good_job_settings">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="560" name="good_job_settings">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="301" y="280" name="good_jobs">
-    <key type="PRIMARY" name=""></key>
+  <table x="50" y="590" name="good_jobs">
+    <key type="PRIMARY" name="">
+</key>
   </table>
-  <table x="1251" y="250" name="cache:solo_points">
+  <table x="50" y="1010" name="cache:solo_points">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -285,6 +336,10 @@
       <default>NULL</default>
     </row>
     <row name="challenge" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="completion_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
@@ -307,13 +362,12 @@
     <row name="user_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
-      <relation table="users" row="id" />
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
   </table>
-  <table x="951" y="201" name="cache:solo_scores">
+  <table x="240" y="1010" name="cache:solo_scores">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -324,6 +378,18 @@
     </row>
     <row name="created_at" null="1" autoincrement="0">
       <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="current_day_score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="order" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="rank" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
     <row name="score" null="1" autoincrement="0">
@@ -337,13 +403,12 @@
     <row name="user_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
-      <relation table="users" row="id" />
     </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
   </table>
-  <table x="1250" y="501" name="cache:squad_points">
+  <table x="1250" y="620" name="cache:squad_points">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -371,7 +436,6 @@
     <row name="squad_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
-      <relation table="squads" row="id" />
     </row>
     <row name="updated_at" null="1" autoincrement="0">
       <datatype>TIMESTAMP</datatype>
@@ -381,7 +445,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="951" y="601" name="cache:squad_scores">
+  <table x="1460" y="620" name="cache:squad_scores">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -394,7 +458,23 @@
       <datatype>TIMESTAMP</datatype>
       <default>NULL</default>
     </row>
+    <row name="current_day_score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="order" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="rank" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
     <row name="score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="squad_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
@@ -402,16 +482,11 @@
       <datatype>TIMESTAMP</datatype>
       <default>NULL</default>
     </row>
-    <row name="squad_id" null="1" autoincrement="0">
-      <datatype>INTEGER</datatype>
-      <default>NULL</default>
-      <relation table="squads" row="id" />
-    </row>
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
   </table>
-  <table x="951" y="400" name="cache:city_scores">
+  <table x="239" y="740" name="cache:city_scores">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -423,10 +498,25 @@
     <row name="city_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
-      <relation table="cities" row="id" />
     </row>
     <row name="created_at" null="1" autoincrement="0">
       <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="current_day_part_1_contributors" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="current_day_part_2_contributors" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="order" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="rank" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
       <default>NULL</default>
     </row>
     <row name="score" null="1" autoincrement="0">
@@ -441,7 +531,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="101" y="401" name="messages">
+  <table x="900" y="20" name="messages">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -467,7 +557,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="101" y="151" name="snippets">
+  <table x="900" y="370" name="snippets">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -505,7 +595,7 @@
       <part>id</part>
     </key>
   </table>
-  <table x="101" y="601" name="achievements">
+  <table x="900" y="180" name="achievements">
     <row name="id" null="1" autoincrement="1">
       <datatype>INTEGER</datatype>
       <default>NULL</default>
@@ -534,5 +624,286 @@
     <key type="PRIMARY" name="">
       <part>id</part>
     </key>
+  </table>
+  <table x="1100" y="80" name="buddies">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="day" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="id_1" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="id_2" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="50" y="740" name="cache:city_points">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="cache_fingerprint" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="challenge" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="city_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="contributor_count" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="day" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="total_score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="50" y="470" name="good_job_batches">
+    <key type="PRIMARY" name="">
+</key>
+  </table>
+  <table x="50" y="500" name="good_job_executions">
+    <key type="PRIMARY" name="">
+</key>
+  </table>
+  <table x="1470" y="20" name="cache:insanity_scores">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="cache_fingerprint" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="current_day_score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="order" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="rank" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="update_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="user_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="1250" y="20" name="cache:insanity_points">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="cache_fingerprint" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="challenge" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="completion_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="day" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="duration" null="1" autoincrement="0">
+      <datatype>INTERVAL</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="user_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="299" y="400" name="puzzles">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="date" null="1" autoincrement="0">
+      <datatype>DATE</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="slack_url" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="thread_ts" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="title" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="1070" y="370" name="reactions">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="reaction_type" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="snippet_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+      <relation table="snippets" row="id" />
+    </row>
+    <row name="updated_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="user_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+      <relation table="users" row="id" />
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="1250" y="300" name="cache:user_day_scores">
+    <row name="id" null="1" autoincrement="1">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="cache_fingerprint" null="1" autoincrement="0">
+      <datatype>TEXT</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="created_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="day" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="order" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="part_1_completion_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="part_2_completion_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="rank" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="updated_at" null="1" autoincrement="0">
+      <datatype>TIMESTAMP</datatype>
+      <default>NULL</default>
+    </row>
+    <row name="user_id" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>NULL</default>
+    </row>
+    <key type="PRIMARY" name="">
+      <part>id</part>
+    </key>
+  </table>
+  <table x="50" y="700" name="DEPRECATED">
+    <key type="PRIMARY" name="">
+</key>
   </table>
 </sql>

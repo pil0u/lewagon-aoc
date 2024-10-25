@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include Referrable
+
   devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
   encrypts :slack_access_token
 
@@ -20,7 +22,6 @@ class User < ApplicationRecord
   belongs_to :city, optional: true, touch: true
   belongs_to :original_city, class_name: "City", inverse_of: :original_users, optional: true
   belongs_to :squad, optional: true, touch: true
-  belongs_to :referrer, class_name: "User", optional: true
 
   has_many :completions, dependent: :destroy
   has_many :user_day_scores, class_name: "Cache::UserDayScore", dependent: :delete_all
@@ -31,7 +32,6 @@ class User < ApplicationRecord
   has_many :messages, dependent: :nullify
   has_many :snippets, dependent: :nullify
   has_many :achievements, dependent: :destroy
-  has_many :referees, class_name: "User", inverse_of: :referrer, dependent: :nullify
   has_many :reactions, dependent: :destroy
 
   before_validation :blank_language_to_nil
@@ -45,9 +45,7 @@ class User < ApplicationRecord
   validates :private_leaderboard, presence: true
   validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
-  validate :batch_cannot_be_changed,           on: :update, if: :batch_id_changed?
-  validate :referrer_must_exist,               on: :update, if: :referrer_id_changed?
-  validate :referrer_cannot_be_self,           on: :update
+  validate :batch_cannot_be_changed, on: :update, if: :batch_id_changed?
 
   scope :admins, -> { where_roles(:admin) }
   scope :contributors, -> { where_roles(:contributor) }
@@ -70,37 +68,6 @@ class User < ApplicationRecord
 
     user.save
     user
-  end
-
-  def self.find_by_referral_code(code)
-    return unless code&.match?(/R\d{5}/)
-
-    User.find_by(uid: code.gsub(/R0*/, "").to_i)
-  end
-
-  def self.with_aura
-    query = <<~SQL.squish
-      SELECT
-          referrers.uid,
-          referrers.username,
-          COUNT(referees.id) AS referrals,
-          CEIL(100 * (
-              LN(COUNT(referees.id) + 1) +                    /* SIGNUPS */
-              SUM(LN(COALESCE(completions.total, 0) + 1)) +   /* COMPLETIONS */
-              5 * SUM(LN(COALESCE(snippets.total, 0) + 1))    /* CONTRIBUTIONS */
-          ))::int AS aura
-      FROM users AS referees
-      LEFT JOIN users AS referrers
-          ON referees.referrer_id = referrers.id
-      LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM completions GROUP BY user_id) AS completions
-          ON referees.id = completions.user_id
-      LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM snippets GROUP BY user_id) AS snippets
-          ON referees.id = snippets.user_id
-      WHERE referees.referrer_id IS NOT NULL
-      GROUP BY 1, 2;
-    SQL
-
-    ActiveRecord::Base.connection.exec_query(query, "SQL")
   end
 
   def confirmed?
@@ -126,18 +93,6 @@ class User < ApplicationRecord
     "OK"
   end
 
-  def referral_code
-    "R#{uid.to_s.rjust(5, '0')}"
-  end
-
-  def referral_link(request)
-    "#{request.base_url}/?referral_code=#{referral_code}"
-  end
-
-  def referrer_code
-    referrer&.referral_code
-  end
-
   private
 
   def batch_cannot_be_changed
@@ -148,14 +103,6 @@ class User < ApplicationRecord
     return if favourite_language.present?
 
     self.favourite_language = nil
-  end
-
-  def referrer_must_exist
-    errors.add(:referrer, "must exist") unless User.exists?(referrer_id)
-  end
-
-  def referrer_cannot_be_self
-    errors.add(:referrer, "can't be you (nice try!)") if referrer == self
   end
 
   def assign_private_leaderboard

@@ -41,9 +41,9 @@ class User < ApplicationRecord
   validate :referrer_cannot_be_self,           on: :update
 
   scope :admins, -> { where(uid: ADMINS.values) }
+  scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) } # All users are 'hardcore' since 2024 edition
-  scope :contributors, -> { where(uid: CONTRIBUTORS.values) }
   scope :slack_linked, -> { where.not(slack_id: nil) }
 
   enum :event_awareness, {
@@ -106,12 +106,12 @@ class User < ApplicationRecord
     uid.in?(ADMINS.values)
   end
 
-  def confirmed?
-    aoc_id.present? && accepted_coc && synced
-  end
-
   def contributor?
     uid.in?(CONTRIBUTORS.values)
+  end
+
+  def confirmed?
+    aoc_id.present? && accepted_coc && synced
   end
 
   def slack_linked?

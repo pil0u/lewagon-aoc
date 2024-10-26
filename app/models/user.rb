@@ -33,7 +33,6 @@ class User < ApplicationRecord
 
   before_validation :assign_private_leaderboard, on: :create
   before_validation :set_years_of_service, on: :create
-  before_validation :blank_language_to_nil
 
   scope :admins, -> { where_roles(:admin) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -91,11 +90,5 @@ class User < ApplicationRecord
   def set_years_of_service
     self.years_of_service = CSV.read(Rails.root.join("db/static/participants_all_time.csv"), headers: true)
                                .count { |row| row["kitt_uid"] == uid }
-  end
-
-  def blank_language_to_nil
-    return if favourite_language.present?
-
-    self.favourite_language = nil
   end
 end

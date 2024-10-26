@@ -34,9 +34,9 @@ class User < ApplicationRecord
   has_many :achievements, dependent: :destroy
   has_many :reactions, dependent: :destroy
 
-  before_validation :blank_language_to_nil
   before_validation :assign_private_leaderboard, on: :create
   before_validation :set_years_of_service, on: :create
+  before_validation :blank_language_to_nil
 
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
@@ -86,12 +86,6 @@ class User < ApplicationRecord
 
   private
 
-  def blank_language_to_nil
-    return if favourite_language.present?
-
-    self.favourite_language = nil
-  end
-
   def assign_private_leaderboard
     return if private_leaderboard.present?
 
@@ -108,5 +102,11 @@ class User < ApplicationRecord
   def set_years_of_service
     self.years_of_service = CSV.read(Rails.root.join("db/static/participants_all_time.csv"), headers: true)
                                .count { |row| row["kitt_uid"] == uid }
+  end
+
+  def blank_language_to_nil
+    return if favourite_language.present?
+
+    self.favourite_language = nil
   end
 end

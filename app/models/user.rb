@@ -10,13 +10,7 @@ class User < ApplicationRecord
   delegate :admin?, to: :roles
   delegate :contributor?, to: :roles
 
-  enum :event_awareness, {
-    slack_aoc: 0,
-    slack_general: 1,
-    slack_campus: 2,
-    slack_batch: 3,
-    newsletter: 4
-  }
+  enum :event_awareness, { slack_aoc: 0, slack_general: 1, slack_campus: 2, slack_batch: 3, newsletter: 4 }
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true

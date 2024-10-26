@@ -41,7 +41,6 @@ class User < ApplicationRecord
   validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
   scope :admins, -> { where_roles(:admin) }
-  scope :contributors, -> { where_roles(:contributor) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) } # All users are 'hardcore' since 2024 edition
   scope :slack_linked, -> { where.not(slack_id: nil) }

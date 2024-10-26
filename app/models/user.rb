@@ -7,9 +7,7 @@ class User < ApplicationRecord
   encrypts :slack_access_token
 
   flag :roles, %i[admin contributor beta_tester]
-  delegate :admin?, to: :roles
-  delegate :contributor?, to: :roles
-  delegate :beta_tester?, to: :roles
+  delegate :admin?, :contributor?, :beta_tester?, to: :roles
 
   enum :event_awareness, { slack_aoc: 0, slack_general: 1, slack_campus: 2, slack_batch: 3, newsletter: 4 }
 

@@ -45,8 +45,6 @@ class User < ApplicationRecord
   validates :private_leaderboard, presence: true
   validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
 
-  validate :batch_cannot_be_changed, on: :update, if: :batch_id_changed?
-
   scope :admins, -> { where_roles(:admin) }
   scope :contributors, -> { where_roles(:contributor) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -87,10 +85,6 @@ class User < ApplicationRecord
   end
 
   private
-
-  def batch_cannot_be_changed
-    errors.add(:batch, "can't be changed")
-  end
 
   def blank_language_to_nil
     return if favourite_language.present?

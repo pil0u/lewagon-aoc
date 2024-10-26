@@ -8,7 +8,6 @@ class User < ApplicationRecord
 
   flag :roles, %i[admin contributor beta_tester]
   delegate :admin?, :contributor?, :beta_tester?, to: :roles
-
   enum :event_awareness, { slack_aoc: 0, slack_general: 1, slack_campus: 2, slack_batch: 3, newsletter: 4 }
 
   belongs_to :batch, optional: true
@@ -27,16 +26,16 @@ class User < ApplicationRecord
   has_many :achievements, dependent: :destroy
   has_many :reactions, dependent: :destroy
 
-  before_validation :assign_private_leaderboard, on: :create
-  before_validation :set_years_of_service, on: :create
-  before_validation :blank_language_to_nil
-
   validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
   validates :aoc_id, uniqueness: { allow_nil: true }
   validates :username, presence: true
   validates :username, length: { maximum: 16 }
   validates :private_leaderboard, presence: true
   validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
+
+  before_validation :assign_private_leaderboard, on: :create
+  before_validation :set_years_of_service, on: :create
+  before_validation :blank_language_to_nil
 
   scope :admins, -> { where_roles(:admin) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }

@@ -26,12 +26,10 @@ class User < ApplicationRecord
   has_many :achievements, dependent: :destroy
   has_many :reactions, dependent: :destroy
 
-  validates :aoc_id, numericality: { in: 1...(2**31), message: "should be between 1 and 2^31" }, allow_nil: true
-  validates :aoc_id, uniqueness: { allow_nil: true }
-  validates :username, presence: true
-  validates :username, length: { maximum: 16 }
+  validates :username, presence: true, length: { maximum: 16 }
+  validates :aoc_id, allow_nil: true, numericality: { in: 1...(2**31) }, uniqueness: true
   validates :private_leaderboard, presence: true
-  validates :favourite_language, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }, allow_nil: true
+  validates :favourite_language, allow_nil: true, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }
 
   before_validation :assign_private_leaderboard, on: :create
   before_validation :set_years_of_service, on: :create

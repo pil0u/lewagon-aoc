@@ -103,10 +103,8 @@ class User < ApplicationRecord
 
     # Count existing users in each private leaderboard
     leaderboards = User.group(:private_leaderboard).count
-
     # Add the missing private leaderboards
     Aoc.private_leaderboards.each { |leaderboard| leaderboards[leaderboard] ||= 0 }
-
     # Take the private leaderboard with the least users and assign it to the user
     assigned_leaderboard = leaderboards.min_by { |_, count| count }.first
 

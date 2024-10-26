@@ -4,8 +4,8 @@ class User < ApplicationRecord
   include Referrable
 
   devise :rememberable, :omniauthable, omniauth_providers: %i[kitt slack_openid]
-
   encrypts :slack_access_token
+
   flag :roles, %i[admin contributor beta_tester]
   delegate :admin?, :contributor?, :beta_tester?, to: :roles
   enum :event_awareness, { slack_aoc: 0, slack_general: 1, slack_campus: 2, slack_batch: 3, newsletter: 4 }
@@ -16,23 +16,22 @@ class User < ApplicationRecord
   belongs_to :squad, optional: true, touch: true
 
   has_many :completions, dependent: :destroy
+  has_many :snippets, dependent: :nullify
+  has_many :reactions, dependent: :destroy
+  has_many :messages, dependent: :nullify
+  has_many :achievements, dependent: :destroy
   has_many :user_day_scores, class_name: "Cache::UserDayScore", dependent: :delete_all
-  has_many :solo_points, class_name: "Cache::SoloPoint", dependent: :delete_all
-  has_many :solo_scores, class_name: "Cache::SoloScore", dependent: :delete_all
   has_many :insanity_points, class_name: "Cache::InsanityPoint", dependent: :delete_all
   has_many :insanity_scores, class_name: "Cache::InsanityScore", dependent: :delete_all
-  has_many :messages, dependent: :nullify
-  has_many :snippets, dependent: :nullify
-  has_many :achievements, dependent: :destroy
-  has_many :reactions, dependent: :destroy
+  has_many :solo_points, class_name: "Cache::SoloPoint", dependent: :delete_all
+  has_many :solo_scores, class_name: "Cache::SoloScore", dependent: :delete_all
 
   validates :username, presence: true, length: { maximum: 16 }
   validates :aoc_id, allow_nil: true, numericality: { in: 1...(2**31) }, uniqueness: true
   validates :private_leaderboard, presence: true
   validates :favourite_language, allow_nil: true, inclusion: { in: Snippet::LANGUAGES.keys.map(&:to_s) }
 
-  before_validation :assign_private_leaderboard, on: :create
-  before_validation :set_years_of_service, on: :create
+  before_validation :assign_private_leaderboard, :set_years_of_service, on: :create
 
   scope :admins, -> { where_roles(:admin) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
@@ -40,17 +39,17 @@ class User < ApplicationRecord
   scope :slack_linked, -> { where.not(slack_id: nil) }
 
   def self.from_kitt(auth)
-    oldest_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
+    original_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
+    original_city = City.find_or_initialize_by(name: original_batch&.city&.name)
 
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
       u.username = auth.info.github_nickname
-
-      u.batch = Batch.find_or_initialize_by(number: oldest_batch&.camp&.slug.to_i)
-      u.city = City.find_or_initialize_by(name: oldest_batch&.city&.name)
+      u.batch = Batch.find_or_initialize_by(number: original_batch&.camp&.slug.to_i)
+      u.city = original_city
     end
 
     user.github_username = auth.info.github_nickname
-    user.original_city_id = City.find_or_initialize_by(name: oldest_batch&.city&.name).id
+    user.original_city_id = original_city.id
 
     user.save
     user
@@ -88,7 +87,9 @@ class User < ApplicationRecord
   end
 
   def set_years_of_service
-    self.years_of_service = CSV.read(Rails.root.join("db/static/participants_all_time.csv"), headers: true)
-                               .count { |row| row["kitt_uid"] == uid }
+    self.years_of_service = CSV.read(
+      Rails.root.join("db/static/participants_all_time.csv"),
+      headers: true
+    ).count { |row| row["kitt_uid"] == uid }
   end
 end

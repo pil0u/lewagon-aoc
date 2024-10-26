@@ -86,13 +86,6 @@ class User < ApplicationRecord
     Completion.where(user: self, day:, challenge:).any?
   end
 
-  def sync_status
-    return "KO" if aoc_id.nil? || !accepted_coc
-    return "Pending" unless synced
-
-    "OK"
-  end
-
   private
 
   def batch_cannot_be_changed

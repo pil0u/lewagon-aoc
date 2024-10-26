@@ -59,11 +59,11 @@ class PagesController < ApplicationController
 
   def setup
     @private_leaderboard = ENV.fetch("AOC_ROOMS").split(",").last
-    @sync_status_css_class = {
-      "KO" => "text-wagon-red",
-      "Pending" => "text-aoc-atmospheric",
-      "OK" => "text-aoc-green"
-    }[current_user.sync_status]
+    @sync_status = if current_user.aoc_id.nil? || !current_user.accepted_coc
+                     { status: "KO", css_class: "text-wagon-red" }
+                   else
+                     { status: "Pending", css_class: "text-aoc-atmospheric" }
+                   end
 
     return if cookies[:referral_code].blank?
 

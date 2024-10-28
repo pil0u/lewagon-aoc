@@ -80,6 +80,8 @@
   <% end %>
 </div>
 
+<% if @silver_stars > 0 %>
+
 <div class="pb-2 block overflow-x-auto max-w-full">
   <table class="mx-auto text-right">
     <tr>
@@ -92,6 +94,8 @@
     <%= render Scores::DailyUserRowComponent.with_collection(@participants, user: current_user) %>
   </table>
 </div>
+
+<% end %>
 
 <% else %>
 

@@ -39,7 +39,7 @@
 <% if @day <= Aoc.latest_day %>
 
 <div class="my-4 flex flex-wrap justify-center gap-2">
-  <% if @solved_part_one %>
+  <% if @part_one_is_unlocked %>
     <%= link_to snippet_path(day: @day, challenge: 1), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
       <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
         Solutions
@@ -59,7 +59,7 @@
     <span>Solve the puzzle to share your solution and access others'</span>
   <% end %>
 
-  <% if @solved_part_two %>
+  <% if @part_two_is_unlocked %>
     <%= link_to snippet_path(day: @day, challenge: 2), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
       <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
         Solutions

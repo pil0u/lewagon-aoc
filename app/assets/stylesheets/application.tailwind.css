@@ -194,6 +194,10 @@
     text-shadow: 0 0 5px #99c;
   }
 
+  .truncated {
+    @apply max-h-[12rem] overflow-hidden;
+  }
+
   @keyframes wiggle {
     0% { transform: rotate(0deg); }
     70% { transform: rotate(0deg); }

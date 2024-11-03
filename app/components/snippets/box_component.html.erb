@@ -16,7 +16,7 @@
   </pre>
   <button data-action="show-more#toggle"
           data-show-more-target="button"
-          class="w-full text-xs text-center bg-aoc-green bg-opacity-20 hover:bg-opacity-15 active:bg-opacity-10">
+          class="w-full text-xs text-center bg-aoc-green/20 hover:bg-aoc-green/15 active:bg-aoc-green/10">
     ↓ Show more ↓
   </button>
 
@@ -24,7 +24,7 @@
 
   <div class="w-full flex items-center justify-between">
     <div
-      class="flex items-center gap-x-4"
+      class="flex items-center gap-x-1"
       data-controller="reactions"
       data-reactions-snippet-id-value="<%= @snippet.id %>"
       data-reactions-vote-value="<%= @snippet.reactions.find_by(user_id: @user.id).to_json %>">

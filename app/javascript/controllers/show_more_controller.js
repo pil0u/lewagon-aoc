@@ -13,5 +13,7 @@ export default class extends Controller {
     toggle() {
         const isExpanded = !this.codeBlockTarget.classList.toggle("truncated")
         this.buttonTarget.textContent = isExpanded ? "↑↑↑" : "↓↓↓"
+
+        this.codeBlockTarget.scrollIntoView({ behavior: "smooth" })
     }
 }

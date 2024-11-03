@@ -11,8 +11,8 @@ class DaysController < ApplicationController
     @gold_stars = completions[2].to_i
     @silver_stars = completions[1].to_i - @gold_stars
 
-    @solved_part_one = current_user.solved?(@day, 1)
-    @solved_part_two = current_user.solved?(@day, 2)
+    @part_one_is_unlocked = part_is_unlocked?(1)
+    @part_two_is_unlocked = part_is_unlocked?(2)
     @snippets_part_one = Snippet.where(day: @day, challenge: 1).count
     @snippets_part_two = Snippet.where(day: @day, challenge: 2).count
 
@@ -22,5 +22,12 @@ class DaysController < ApplicationController
     @participants = presenter.get
 
     @puzzle = Puzzle.by_date(Aoc.begin_time.change(day: @day))
+  end
+
+  private
+
+  def part_is_unlocked?(challenge)
+    # Taken from AllowedToSeeSolutionsConstraint
+    current_user.solved?(@day, challenge) || Completion.where(day: @day, challenge:).count >= 5
   end
 end

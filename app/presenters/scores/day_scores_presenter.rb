@@ -24,6 +24,7 @@ module Scores
     def identity_of(user)
       {
         uid: user.uid,
+        contributor: user.contributor?,
         username: user.username,
         years_of_service: user.years_of_service
       }

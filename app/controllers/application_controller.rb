@@ -20,11 +20,11 @@ class ApplicationController < ActionController::Base
   end
 
   def render_countdown?
-    !devise_controller? && !admin? && before_launch? && true_production?
+    !devise_controller? && !beta_tester? && before_launch? && true_production?
   end
 
-  def admin?
-    current_user&.admin?
+  def beta_tester?
+    current_user&.beta_tester?
   end
 
   def before_launch?

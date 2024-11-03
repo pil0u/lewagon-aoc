@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.5"
 gem "rails", "~> 7.2.1.1"
 
+gem "active_flag"
 gem "blazer"
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
 gem "commonmarker", "< 1"

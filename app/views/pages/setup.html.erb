@@ -3,7 +3,7 @@
 <div class="my-4 flex flex-col gap-y-4">
   <div class="mx-auto text-center flex flex-col">
     <p>Welcome, <span class="strong"><%= current_user.username %></span></p>
-    <p>Sync status: <span class="<%= current_user.sync_status_css_class %>"><%= current_user.sync_status %></p>
+    <p>Sync status: <span class="<%= @sync_status[:css_class] %>"><%= @sync_status[:status] %></span></p>
     <%= render LastDataUpdateComponent.new %>
   </div>
 

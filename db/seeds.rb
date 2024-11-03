@@ -95,68 +95,78 @@ Rails.logger.info "✔ Campuses upserted"
 if Rails.env.development?
   User.create!([
                  {
-                   username: "test_1",
-                   batch: Batch.find_or_create_by(number: 343),
-                   city: City.find_by(name: "Paris"),
-                   aoc_id: 151_323,
                    uid: 1,
+                   username: "test_1",
+                   aoc_id: 151_323,
                    accepted_coc: true,
-                   synced: true
-                 },
-                 {
-                   username: "test_2",
-                   batch: Batch.find_or_create_by(number: 454),
-                   city: City.find_by(name: "Paris"),
-                   aoc_id: 1_095_582,
-                   uid: 2,
-                   accepted_coc: true,
-                   synced: true
-                 },
-                 {
-                   username: "test_3",
-                   batch: Batch.find_or_create_by(number: 123),
-                   city: City.find_by(name: "Bordeaux"),
-                   aoc_id: 1_266_664,
-                   uid: 3,
-                   accepted_coc: true,
-                   synced: true
-                 },
-                 {
-                   username: "test_4",
-                   batch: Batch.find_or_create_by(number: 123),
-                   city: City.find_by(name: "London"),
-                   aoc_id: 1_237_086,
-                   uid: 4,
-                   accepted_coc: true,
-                   synced: true
-                 },
-                 {
-                   username: "test_5",
-                   batch: Batch.find_or_create_by(number: 123),
-                   city: City.find_by(name: "London"),
-                   aoc_id: 1_258_899,
-                   uid: 5
-                 },
-                 {
-                   username: "test_6",
-                   batch: Batch.find_or_create_by(number: 454),
-                   city: City.find_by(name: "Paris"),
-                   aoc_id: 1_259_034,
-                   uid: 6
-                 },
-                 {
-                   username: "test_7",
-                   batch: Batch.find_or_create_by(number: 454),
-                   city: City.find_by(name: "Brussels"),
-                   aoc_id: 1_259_062,
-                   uid: 7
-                 },
-                 {
-                   username: "test_8",
+                   synced: true,
                    batch: Batch.find_or_create_by(number: 343),
-                   city: City.find_by(name: "Paris"),
+                   city: City.find_by(name: "Paris")
+                 },
+                 {
+                   uid: 2,
+                   username: "test_2",
+                   aoc_id: 1_095_582,
+                   accepted_coc: true,
+                   synced: true,
+                   batch: Batch.find_or_create_by(number: 454),
+                   city: City.find_by(name: "Paris")
+                 },
+                 {
+                   uid: 3,
+                   username: "test_3",
+                   aoc_id: 1_266_664,
+                   accepted_coc: true,
+                   synced: true,
+                   batch: Batch.find_or_create_by(number: 123),
+                   city: City.find_by(name: "Bordeaux")
+                 },
+                 {
+                   uid: 4,
+                   username: "test_4",
+                   aoc_id: 1_237_086,
+                   accepted_coc: true,
+                   synced: true,
+                   batch: Batch.find_or_create_by(number: 123),
+                   city: City.find_by(name: "London")
+                 },
+                 {
+                   uid: 5,
+                   username: "test_5",
+                   aoc_id: 1_258_899,
+                   batch: Batch.find_or_create_by(number: 123),
+                   city: City.find_by(name: "London")
+                 },
+                 {
+                   uid: 6,
+                   username: "test_6",
+                   aoc_id: 1_259_034,
+                   batch: Batch.find_or_create_by(number: 454),
+                   city: City.find_by(name: "Paris")
+                 },
+                 {
+                   uid: 7,
+                   username: "test_7",
+                   aoc_id: 1_259_062,
+                   batch: Batch.find_or_create_by(number: 454),
+                   city: City.find_by(name: "Brussels")
+                 },
+                 {
+                   uid: 8,
+                   username: "test_8",
                    aoc_id: 1_259_379,
-                   uid: 8
+                   batch: Batch.find_or_create_by(number: 343),
+                   city: City.find_by(name: "Paris")
+                 },
+                 {
+                   provider: "kitt",
+                   uid: "6788",
+                   username: "pil0u",
+                   aoc_id: 1_222_761,
+                   accepted_coc: true,
+                   synced: true,
+                   batch: Batch.find_or_create_by(number: 343),
+                   roles: %i[admin contributor]
                  }
                ])
   Rails.logger.info "✔ Users initialized"

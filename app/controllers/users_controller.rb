@@ -26,8 +26,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user.batch_id = -1 if params.dig(:user, :batch_number) # Set impossible value to trigger validation
-
     referrer_code = params.dig(:user, :referrer_code)
     current_user.referrer_id = User.find_by_referral_code(referrer_code)&.id || -1 if referrer_code
 
@@ -77,5 +75,6 @@ class UsersController < ApplicationController
     params
       .require(:user)
       .permit(:accepted_coc, :aoc_id, :city_id, :event_awareness, :favourite_language, :username)
+      .compact_blank
   end
 end

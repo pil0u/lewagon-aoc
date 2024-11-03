@@ -166,7 +166,7 @@ if Rails.env.development?
                    accepted_coc: true,
                    synced: true,
                    batch: Batch.find_or_create_by(number: 343),
-                   roles: %i[admin contributor]
+                   roles: %i[admin contributor beta_tester]
                  }
                ])
   Rails.logger.info "✔ Users initialized"

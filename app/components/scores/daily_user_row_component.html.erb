@@ -1,4 +1,4 @@
-<tr class="hover:bg-hover <%= "bg-aoc-green bg-opacity-20" if @participant[:uid] == @user.uid %>">
+<tr class="hover:bg-aoc-gray/10 <%= "bg-aoc-green/20" if @participant[:uid] == @user.uid %>">
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center items-center" do %>
       <%= @participant[:username] %>

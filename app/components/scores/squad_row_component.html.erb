@@ -1,6 +1,6 @@
 <%# The scale-100 trick is to make the last td absolute, relative to the tr %>
 
-<tr class="scale-100 hover:bg-hover <%= "bg-aoc-green bg-opacity-20" if @user && @squad[:id] == @user.squad_id %>">
+<tr class="scale-100 hover:bg-aoc-gray/10 <%= "bg-aoc-green/20" if @user && @squad[:id] == @user.squad_id %>">
   <td class="<%= class_names(rank_css(@squad[:rank])) %>">
     <%= link_to squad_path(@squad[:id]), class: "flex justify-center" do %>
       <%= (@squad[:rank] if @squad[:display_rank]) || "&nbsp".html_safe %>

@@ -1,14 +1,20 @@
 <div class="relative group/reaction">
-  <div class="absolute bg-aoc-gray-darker bottom-full hidden mb-2 px-2 py-0.5 right-1/2 rounded shadow-black shadow-lg text-xs translate-x-1/2 w-max group-hover/reaction:block">
+  <div class="hidden group-hover/reaction:block absolute bottom-full left-0 px-2 py-0.5 mb-1 w-max bg-aoc-gray-darker text-xs">
     <%= EMOTES[@reaction_type][:tooltip] %>
   </div>
 
   <%= button_to reactions_path(@snippet.id),
-                class: "border duration-300 px-1.5 rounded-full transition-colors #{'cursor-pointer hover:bg-aoc-gray-darker' unless @snippet.user_id == @user.id}",
+                class: "flex gap-x-2 items-center border px-2 rounded-full #{@snippet.user_id == @user.id ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-aoc-green/15'}",
                 params: { reaction: { reaction_type: @reaction_type } },
                 data: { reactions_target: "button", reaction_type: @reaction_type, action: "click->reactions#handleClick" },
                 disabled: @snippet.user_id == @user.id do %>
-      <%= EMOTES[@reaction_type][:emote] %>
-      <span data-reactions-target="counter" data-reaction-type="<%= @reaction_type %>"><%= @reactions.count %></span>
+      <span>
+        <%= EMOTES[@reaction_type][:emote] %>
+      </span>
+      <span data-reactions-target="counter"
+            data-reaction-type="<%= @reaction_type %>"
+            class="font-semibold">
+        <%= @reactions.count %>
+      </span>
   <% end %>
 </div>

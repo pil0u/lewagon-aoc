@@ -24,7 +24,7 @@
 
   <div class="w-full flex items-center justify-between">
     <div
-      class="flex items-center gap-x-4"
+      class="flex items-center gap-x-1"
       data-controller="reactions"
       data-reactions-snippet-id-value="<%= @snippet.id %>"
       data-reactions-vote-value="<%= @snippet.reactions.find_by(user_id: @user.id).to_json %>">

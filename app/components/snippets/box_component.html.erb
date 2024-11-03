@@ -34,9 +34,9 @@
     </div>
 
     <div class="flex justify-end gap-x-2">
-      <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+      <span class="text-xs text-aoc-gray-dark"><%= @snippet.created_at %></span>
 
-      <em class="text-sm text-aoc-gray-dark">
+      <em class="text-xs text-aoc-gray-dark">
         - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
       </em>
     </div>

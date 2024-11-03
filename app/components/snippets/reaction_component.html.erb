@@ -4,7 +4,7 @@
   </div>
 
   <%= button_to reactions_path(@snippet.id),
-                class: "flex gap-x-2 items-center border px-2 rounded-full #{@snippet.user_id == @user.id ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-aoc-green/15'}",
+                class: "flex gap-x-2 items-center border px-2 rounded-full #{@snippet.user_id == @user.id ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-aoc-green/15 active:bg-aoc-green/10'}",
                 params: { reaction: { reaction_type: @reaction_type } },
                 data: { reactions_target: "button", reaction_type: @reaction_type, action: "click->reactions#handleClick" },
                 disabled: @snippet.user_id == @user.id do %>

@@ -8,7 +8,15 @@ class User < ApplicationRecord
 
   flag :roles, %i[admin contributor beta_tester]
   delegate :admin?, :contributor?, :beta_tester?, to: :roles
-  enum :event_awareness, { slack_aoc: 0, slack_general: 1, slack_campus: 2, slack_batch: 3, newsletter: 4 }
+  enum :event_awareness, {
+    newsletter: 1,
+    slack_aoc: 2,
+    slack_general: 3,
+    slack_payforward: 4,
+    slack_campus: 5,
+    slack_batch: 6,
+    other: 99
+  }
 
   belongs_to :batch, optional: true
   belongs_to :city, optional: true, touch: true

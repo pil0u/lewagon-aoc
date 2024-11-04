@@ -42,7 +42,7 @@
 
 <% if @current_user_referees.any? %>
   <p>
-    You already referred <%= pluralize(@current_user_referees.count, "user") %>:
+    You already have referred <%= pluralize(@current_user_referees.count, "user") %>:
     <%= safe_join(@current_user_referees.map do |user|
           link_to user.username, profile_path(user.uid), class: "strong hover:text-gold"
         end, ", ") %>

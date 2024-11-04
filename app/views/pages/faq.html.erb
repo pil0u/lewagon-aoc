@@ -158,18 +158,36 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        3 exceptional individuals will receive a golden ticket
+        Three exceptional individuals will receive a golden ticket
         <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %>
+        <ol class="ml-7 list-decimal list-inside">
+          <li>The greatest influencer of Le Wagon (see <%= link_to "patrons",
+                                                                   patrons_path,
+                                                                   class: "link-explicit link-internal" %>)</li>
+          <li>Announced soon™</li>
+          <li>Announced soon™</li>
+        </ol>
       </p>
       <p>
-        Each golden ticket unlocks a reward worth 500€.
-      </p>
-      <p>
+        Each golden ticket unlocks a reward package worth <code class="strong">919€</code>.
         More info <%= link_to "on Slack",
                               Aoc.slack_channel,
                               target: :_blank,
                               rel: :noopener,
                               class: "link-explicit link-slack" %>.
+      </p>
+      <p>
+        These rewards are funded by
+        <%= link_to "Le Wagon",
+                    "https://www.lewagon.com/",
+                    target: :_blank,
+                    rel: :noopener,
+                    class: "text-wagon-red link-explicit" %>
+        and <%= link_to "ShipOnRails",
+                        "https://shiponrails.com/",
+                        target: :_blank,
+                        rel: :noopener,
+                        class: "link-explicit link-external" %>.
       </p>
     </div>
   </details>

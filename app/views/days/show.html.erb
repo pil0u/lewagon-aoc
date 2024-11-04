@@ -38,61 +38,65 @@
 
 <% if @day <= Aoc.latest_day %>
 
-<div class="my-4 flex flex-wrap justify-center gap-2">
-  <% if @solved_part_one %>
-    <%= link_to snippet_path(day: @day, challenge: 1), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
-      <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
-        Solutions
-      </h3>
+  <div class="my-4 flex flex-wrap justify-center gap-2">
+    <% if @part_one_is_unlocked %>
+      <%= link_to snippet_path(day: @day, challenge: 1), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
+        <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
+          Solutions
+        </h3>
 
-      <div class="h-3/5 flex flex-col justify-around">
-        <span class="flex items-center justify-center text-aoc-silver text-lg">
-          Part 1
-        </span>
+        <div class="h-3/5 flex flex-col justify-around">
+          <span class="flex items-center justify-center text-aoc-silver text-lg">
+            Part 1
+          </span>
 
-        <span class="flex items-center justify-center">
-          <%= @snippets_part_one %> shared
-        </span>
-      </div>
+          <span class="flex items-center justify-center">
+            <%= @snippets_part_one %> shared
+          </span>
+        </div>
+      <% end %>
+    <% else %>
+      <span class="max-w-lg text-center">
+        You must <em>either</em> wait for 5 people to solve the puzzle <em>or</em> solve it yourself to see the solutions
+      </span>
     <% end %>
-  <% else %>
-    <span>Solve the puzzle to share your solution and access others'</span>
-  <% end %>
 
-  <% if @solved_part_two %>
-    <%= link_to snippet_path(day: @day, challenge: 2), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
-      <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
-        Solutions
-      </h3>
+    <% if @part_two_is_unlocked %>
+      <%= link_to snippet_path(day: @day, challenge: 2), class: "w-36 h-36 p-2 flex flex-col justify-between border border-aoc-gray-darker bg-aoc-gray-darkest hover:bg-aoc-gray-darker" do %>
+        <h3 class="h-2/5 flex items-center justify-center strong text-center text-lg">
+          Solutions
+        </h3>
 
-      <div class="h-3/5 flex flex-col justify-around">
-        <span class="flex items-center justify-center text-aoc-gold text-lg">
-          Part 2
-        </span>
+        <div class="h-3/5 flex flex-col justify-around">
+          <span class="flex items-center justify-center text-aoc-gold text-lg">
+            Part 2
+          </span>
 
-        <span class="flex items-center justify-center">
-          <%= @snippets_part_two %> shared
-        </span>
-      </div>
+          <span class="flex items-center justify-center">
+            <%= @snippets_part_two %> shared
+          </span>
+        </div>
+      <% end %>
     <% end %>
+  </div>
+
+  <% if @silver_stars > 0 %>
+    <div class="pb-2 block overflow-x-auto max-w-full">
+      <table class="mx-auto text-right">
+        <tr>
+          <th class="min-w-[12rem] lg:min-w-[16rem]"></th>
+          <th class="min-w-[6rem] font-light text-aoc-silver text-center">Part 1</th>
+          <th class="min-w-[6rem] font-light text-aoc-gold text-center">Part 2</th>
+          <th class="min-w-[6rem] font-light strong text-center">Score</th>
+        </tr>
+
+        <%= render Scores::DailyUserRowComponent.with_collection(@participants, user: current_user) %>
+      </table>
+    </div>
   <% end %>
-</div>
-
-<div class="pb-2 block overflow-x-auto max-w-full">
-  <table class="mx-auto text-right">
-    <tr>
-      <th class="min-w-[12rem] lg:min-w-[16rem]"></th>
-      <th class="min-w-[6rem] font-light text-aoc-silver text-center">Part 1</th>
-      <th class="min-w-[6rem] font-light text-aoc-gold text-center">Part 2</th>
-      <th class="min-w-[6rem] font-light strong text-center">Score</th>
-    </tr>
-
-    <%= render Scores::DailyUserRowComponent.with_collection(@participants, user: current_user) %>
-  </table>
-</div>
 
 <% else %>
 
-<span class="my-8 text-center">Puzzle is not released yet</span>
+  <span class="my-8 text-center">Puzzle is not released yet</span>
 
 <% end %>

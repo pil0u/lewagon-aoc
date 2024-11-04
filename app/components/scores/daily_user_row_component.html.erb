@@ -1,4 +1,4 @@
-<tr class="hover:bg-hover <%= "bg-aoc-green bg-opacity-20" if @participant[:uid] == @user.uid %>">
+<tr class="hover:bg-aoc-gray/10 <%= "bg-aoc-green/20" if @participant[:uid] == @user.uid %>">
   <td>
     <%= link_to profile_path(@participant[:uid]), class: "flex justify-center items-center" do %>
       <%= @participant[:username] %>
@@ -7,7 +7,7 @@
                            class: "h-6 w-6 inline-block ml-1",
                            title: "#{@participant[:years_of_service]} years of service" %>
       <% end %>
-      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-1") if @participant[:uid].in?(User::CONTRIBUTORS.values) %>
+      <%= image_tag("aoc.gif", class: "w-5 h-5 ml-1") if @participant[:contributor] %>
     <% end %>
   </td>
 

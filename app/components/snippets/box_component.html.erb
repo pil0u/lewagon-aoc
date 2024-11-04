@@ -1,4 +1,6 @@
-<div id="<%= @snippet.id %>" class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group">
+<div id="<%= @snippet.id %>"
+     class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
+     data-controller="show-more">
   <div class="flex text-xs gap-x-3">
     <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
 
@@ -7,15 +9,22 @@
     <% end %>
   </div>
 
-  <pre class="snippet break-words text-sm whitespace-normal" data-language="<%= @snippet.language %>">
-    <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
+  <pre class="snippet break-words text-sm whitespace-normal truncated"
+       data-language="<%= @snippet.language %>"
+       data-show-more-target="codeBlock">
+      <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
   </pre>
+  <button data-action="show-more#toggle"
+          data-show-more-target="button"
+          class="w-full text-xs text-center bg-aoc-green/20 hover:bg-aoc-green/15 active:bg-aoc-green/10">
+    ↓ Show more ↓
+  </button>
 
   <hr class="border-aoc-gray-darker">
 
   <div class="w-full flex items-center justify-between">
     <div
-      class="flex items-center gap-x-4"
+      class="flex items-center gap-x-1"
       data-controller="reactions"
       data-reactions-snippet-id-value="<%= @snippet.id %>"
       data-reactions-vote-value="<%= @snippet.reactions.find_by(user_id: @user.id).to_json %>">
@@ -25,9 +34,9 @@
     </div>
 
     <div class="flex justify-end gap-x-2">
-      <span class="invisible group-hover:visible text-sm text-aoc-gray-dark"><%= @snippet.created_at %></span>
+      <span class="text-xs text-aoc-gray-dark"><%= @snippet.created_at %></span>
 
-      <em class="text-sm text-aoc-gray-dark">
+      <em class="text-xs text-aoc-gray-dark">
         - <%= link_to(@snippet.user.username, profile_path(@snippet.user.uid), class: "link-explicit group-hover:text-aoc-gray") %>
       </em>
     </div>

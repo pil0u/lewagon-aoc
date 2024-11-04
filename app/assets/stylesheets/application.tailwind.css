@@ -3,10 +3,6 @@
 @import "tailwindcss/components";
 
 @layer components {
-  .bg-hover {
-    @apply bg-aoc-gray bg-opacity-10;
-  }
-
   .button {
     @apply form-element cursor-pointer hover:text-gold;
   }
@@ -20,7 +16,7 @@
   }
 
   .calendar-tile {
-    @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-hover;
+    @apply w-14 h-14 rounded-xl lg:w-20 lg:h-20 lg:rounded-2xl flex items-center justify-center border border-aoc-gray-darker hover:bg-aoc-gray/10;
   }
 
   code:not(pre code) {
@@ -106,7 +102,7 @@
   }
 
   .disabled {
-    @apply pointer-events-none bg-aoc-gray-darker text-aoc-gray-dark bg-opacity-40;
+    @apply pointer-events-none bg-aoc-gray-darker/40 text-aoc-gray-dark;
 
     /* For some weird reason, a background opacity >= 50% changes the text color on mobile. WTF. */
   }
@@ -192,6 +188,10 @@
     @apply text-aoc-silver;
 
     text-shadow: 0 0 5px #99c;
+  }
+
+  .truncated {
+    @apply max-h-[12rem] overflow-hidden;
   }
 
   @keyframes wiggle {

@@ -37,11 +37,11 @@ export default class extends Controller {
   #toggleBorder() {
     this.buttonTargets.forEach(button => {
       if (button.dataset.reactionType === this.vote?.reaction_type) {
-        button.classList.add("border-aoc-green")
-        button.classList.remove("border-aoc-gray-dark")
+        button.classList.add("border-aoc-green", "bg-aoc-green/20")
+        button.classList.remove("border-aoc-gray-darker")
       } else {
-        button.classList.add("border-aoc-gray-dark")
-        button.classList.remove("border-aoc-green")
+        button.classList.add("border-aoc-gray-darker")
+        button.classList.remove("border-aoc-green", "bg-aoc-green/20")
       }
     })
   }

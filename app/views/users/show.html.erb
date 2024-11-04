@@ -8,7 +8,7 @@
         <% if @user.years_of_service > 0 %>
           <%= inline_svg_tag "years_of_service/#{@user.years_of_service}.svg",
                              class: "h-8 w-8 inline-block",
-                             title: "#{@user.years_of_service} years of service" %>
+                             title: "#{pluralize(@user.years_of_service, 'year')} of service" %>
         <% end %>
       </h2>
 

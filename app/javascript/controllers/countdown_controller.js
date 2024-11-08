@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["days", "hours", "minutes", "seconds", "milliseconds", "enigma"]
+  static targets = ["days", "hours", "minutes", "seconds", "milliseconds", "enigma", "dijkstra"]
   static values = { launchDate: String }
 
   connect() {
@@ -28,6 +28,7 @@ export default class extends Controller {
       this.millisecondsTarget.innerHTML = this.#format(3, Math.floor(timeDiff % 1000))
 
       // Make the enigma blink
+      this.dijkstraTarget.classList.toggle("hidden", Math.floor(timeDiff % 1000) % 100 === 0);
       this.enigmaTarget.classList.toggle("hidden", Math.floor(timeDiff % 1000) % 100 !== 0);
 
       return

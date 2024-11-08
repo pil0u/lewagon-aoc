@@ -23,6 +23,10 @@
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
   }
 
+  .dijkstra-incorporated {
+    @apply w-64 h-64 opacity-70 hover:opacity-100;
+  }
+
   .snippet * {
     @apply last:mb-0;
   }

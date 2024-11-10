@@ -1,6 +1,8 @@
 <%= render PageTitleComponent.new(title: "Code of Conduct") %>
 
-<div class="flex flex-col text-justify max-w-3xl mx-auto gap-y-6 my-4">
+<div class="relative flex flex-col text-justify max-w-3xl mx-auto gap-y-6 my-4">
+  <%= image_tag "dijkstra/pages/code_of_conduct.svg", alt: "dijkstra", class: "dijkstra-incorporated absolute top-48 -right-64 " %>
+
   <p>
     <span class="text-wagon-red">Le Wagon</span> x <span class="text-other-green">Advent of Code</span> is about
     learning, collaboration, sharing and having fun. It is a breeze of warmth of intellectual stimulation and kindness

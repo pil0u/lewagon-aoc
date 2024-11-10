@@ -23,10 +23,6 @@
     @apply px-1 bg-aoc-gray-darkest border border-aoc-gray-darker rounded;
   }
 
-  .dijkstra-incorporated {
-    @apply w-32 h-32;
-  }
-
   .snippet * {
     @apply last:mb-0;
   }

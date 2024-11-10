@@ -84,7 +84,10 @@
     <% if current_user.squad_id.nil? %>
 
       <%= form_with model: @account_squad, url: join_squad_path, class: "relative flex w-max mx-auto items-end gap-x-2" do |f| %>
-        <%= image_tag "dijkstra/pages/squad_settings.svg", alt: "dijkstra", title: "Apes. Together. Strong.", class: "dijkstra-incorporated absolute -top-4 -right-48" %>
+        <%= image_tag "dijkstra/pages/squad_settings.svg",
+                      alt: "dijkstra",
+                      title: "Apes. Together. Strong.",
+                      class: "dijkstra-incorporated absolute -top-4 -right-48" %>
 
         <%= f.number_field :pin, placeholder: "Squad PIN", class: "input w-32" %>
 

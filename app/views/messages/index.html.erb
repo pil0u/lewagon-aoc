@@ -1,13 +1,15 @@
 <%= render PageTitleComponent.new(title: "The Wall") %>
 
-<p class="my-4 text-center">
-  Welcome to this new experience.<br>
-  A space of extended freedom.<br>
-  Until you find its boundaries.
+<p class="my-8 flex flex-col gap-y-4">
+  <span class="text-left">You have just entered The Wall of uncertainty.</span>
+  <span class="text-center">A Wall to admire. A Wall to cherish. A Wall with holes from the past.</span>
+  <span class="text-right">A Wall to build. A Wall to break. A Wall to grow.</span>
 </p>
 
-<%= form_with model: @message, class: "my-4 mx-auto w-full max-w-md flex flex-col gap-y-2" do |f| %>
-  <%= f.text_area :content, placeholder: "You will be baked, and then there will be cake", rows: 2, class: "w-full input" %>
+<%= form_with model: @message, class: "relative my-4 mx-auto w-full max-w-2xl flex flex-col gap-y-2" do |f| %>
+  <%= image_tag "dijkstra/pages/the_wall.svg", alt: "dijkstra", class: "dijkstra-incorporated absolute top-0 -right-64" %>
+
+  <%= f.text_area :content, placeholder: "We do what we must because we can.", rows: 8, class: "w-full input" %>
 
   <%= f.submit "Send", class: "w-fit self-end button" %>
 <% end %>

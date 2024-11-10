@@ -24,7 +24,7 @@
   }
 
   .dijkstra-incorporated {
-    @apply w-64 h-64 opacity-70 hover:opacity-100;
+    @apply w-32 h-32 opacity-70 hover:opacity-100;
   }
 
   .snippet * {

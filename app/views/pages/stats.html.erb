@@ -17,15 +17,17 @@
   </div>
 </div>
 
-<p class="my-4 text-justify">
-  <span class="text-aoc-gold">Gold</span> indicates users who have completed both parts of a puzzle,
-  while <span class="text-aoc-silver">silver</span> indicates users who have completed only the first half.
-  Each <span class="text-aoc-gold">*</span> or <span class="text-aoc-silver">*</span> star represents
-  up to <span class="strong"><%= @users_per_star %></span> users.
-</p>
+<% if @silver_stars + @gold_stars > 0 %>
+  <p class="my-4 text-justify">
+    <span class="text-aoc-gold">Gold</span> indicates users who have completed both parts of a puzzle,
+    while <span class="text-aoc-silver">silver</span> indicates users who have completed only the first half.
+    Each <span class="text-aoc-gold">*</span> or <span class="text-aoc-silver">*</span> star represents
+    up to <span class="strong"><%= @users_per_star %></span> users.
+  </p>
 
-<table class="block overflow-x-auto whitespace-nowrap w-full py-2">
-  <tbody>
-    <%= render Stats::TreeRowComponent.with_collection(@daily_completers.reverse, users_per_star: @users_per_star) %>
-  </tbody>
-</table>
+  <table class="block overflow-x-auto whitespace-nowrap w-full py-2">
+    <tbody>
+      <%= render Stats::TreeRowComponent.with_collection(@daily_completers.reverse, users_per_star: @users_per_star) %>
+    </tbody>
+  </table>
+<% end %>

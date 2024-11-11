@@ -1,0 +1,37 @@
+<p class="px-3">
+  Rewards by
+  <%= link_to "Le Wagon",
+              "https://www.lewagon.com",
+              target: :_blank,
+              rel: :noopener,
+              class: "link-explicit decoration-wagon-red" %>
+  &
+  <%= link_to "ShipOnRails",
+              "https://shiponrails.com",
+              target: :_blank,
+              rel: :noopener,
+              class: "link-explicit decoration-aoc-green" %>
+  | Made with ♥️ by
+  <%= link_to "pil0u",
+              "https://lewagon-alumni.slack.com/team/URZ0F4TEF",
+              target: :_blank,
+              rel: :noopener,
+              class: "text-white font-semibold hover:text-aoc-atmospheric" %>,
+  <%= link_to "Aquaj",
+              "https://lewagon-alumni.slack.com/team/U0J5GUEAW",
+              target: :_blank,
+              rel: :noopener,
+              class: "text-white font-semibold hover:text-aoc-atmospheric" %> &
+  <%= link_to "Joenn",
+              "https://lewagon-alumni.slack.com/team/U045Z0313UP",
+              target: :_blank,
+              rel: :noopener,
+              class: "text-white font-semibold hover:text-aoc-atmospheric" %>
+  →
+  <%= link_to "https://github.com/pil0u/lewagon-aoc",
+              target: :_blank,
+              rel: :noopener,
+              class: "text-other-green hover:link-external" do %>
+    <%= inline_svg_tag "icons/github.svg", class: "w-5 h-5 inline-block" %>
+  <% end %>
+</p>

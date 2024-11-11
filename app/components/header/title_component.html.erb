@@ -8,6 +8,10 @@
   </h1>
 
   <% if current_page?("/") %>
-    <%= link_to "#aoc on Slack!", Aoc.slack_channel, target: :_blank, rel: :noopener, class: "hidden lg:block absolute top-9 right-9 -rotate-[8deg] text-sm link-slack" %>
+    <%= link_to "#aoc on Slack!",
+                Aoc.slack_channel,
+                target: :_blank,
+                rel: :noopener,
+                class: "hidden lg:block absolute top-9 right-9 -rotate-[8deg] text-sm link-slack" %>
   <% end %>
 </div>

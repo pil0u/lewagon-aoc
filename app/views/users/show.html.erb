@@ -83,7 +83,12 @@
   <div class="my-4 flex flex-col gap-y-2">
     <% if current_user.squad_id.nil? %>
 
-      <%= form_with model: @account_squad, url: join_squad_path, class: "flex w-max mx-auto items-end gap-x-2" do |f| %>
+      <%= form_with model: @account_squad, url: join_squad_path, class: "relative flex w-max mx-auto items-end gap-x-2" do |f| %>
+        <%= image_tag "dijkstra/pages/squad_settings.svg",
+                      alt: "dijkstra",
+                      title: "Apes. Together. Strong.",
+                      class: "w-32 h-32 absolute -top-4 -right-48" %>
+
         <%= f.number_field :pin, placeholder: "Squad PIN", class: "input w-32" %>
 
         <%= f.submit "Join squad", class: "button" %>

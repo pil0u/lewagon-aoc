@@ -267,7 +267,7 @@
         </thead>
         <tbody class="text-center text-xl">
           <% @insanity_points.each_with_index do |(username, day, challenge, time, score), index| %>
-            <tr class="<%= 'border-b border-dashed' if index == 5 %>">
+            <tr class="<%= "border-b border-dashed" if index == 5 %>">
               <td class="text-sm"><%= username %></td>
               <td><%= challenge %></td>
               <td class="text-sm"><%= time %></td>

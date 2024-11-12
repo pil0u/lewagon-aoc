@@ -49,17 +49,18 @@
             ) do %>
           Link Slack account
         <% end %>
-
         <div data-controller="clipboard"
             data-clipboard-content-value="lewagon-alumni"
-            class="relative">
+            class="relative group">
           <%= inline_svg_tag "icons/info.svg",
                              data: { action: "click->clipboard#copy" },
                              class: "w-5 h-5 inline-block hover:opacity-90 active:opacity-70 cursor-pointer" %>
+          <span class="hidden absolute w-max top-2 left-6 text-xs group-hover:block">
+            Click to copy the workspace URL
+          </span>
           <span data-clipboard-target="feedback"
-                class="hidden absolute w-max top-0 left-6 text-xs">
-            Workspace URL copied to clipboard!<br>
-            → lewagon-alumni.slack.com
+                class="hidden absolute w-max top-6 left-6 text-xs">
+            Copied! → lewagon-alumni.slack.com
           </span>
         </div>
       </div>

@@ -80,7 +80,7 @@ class PagesController < ApplicationController
     @sync_status = if current_user.aoc_id.nil? || !current_user.accepted_coc
                      { status: "KO", css_class: "text-wagon-red" }
                    else
-                     { status: "Pending", css_class: "text-aoc-atmospheric" }
+                     { status: "Pending", css_class: "text-aoc-bronze" }
                    end
 
     return if cookies[:referral_code].blank?

@@ -18,7 +18,7 @@ linters:
   HardCodedString:
     exclude:
       - "**/app/components/**/*"
-      - "**/app/components/*" # https://github.com/Shopify/erb-lint/issues/265
+      - "**/app/components/*" # https://github.com/Shopify/erb_lint/issues/265
       - "**/app/views/**/*"
 
   Rubocop:

@@ -24,9 +24,9 @@ jobs:
       - name: Run RuboCop
         run: bundle exec rubocop
 
-  erb-lint:
+  erb_lint:
     # ERB & HTML static code analyzer and formatter
-    # https://github.com/Shopify/erb-lint
+    # https://github.com/Shopify/erb_lint
 
     name: ERB Lint
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
           bundler-cache: true
 
       - name: Run ERB Lint
-        run: bundle exec erblint --lint-all --enable-all-linters
+        run: bundle exec erb_lint --lint-all --enable-all-linters
 
   rspec:
     name: RSpec

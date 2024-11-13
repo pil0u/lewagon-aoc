@@ -92,7 +92,7 @@ class PagesController < ApplicationController
                                   end
     @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil
 
-    @current_user_solved_today = current_user.completions.where(day: Aoc.latest_day).count
+    @current_user_solved_today = current_user.completions.where(day: Aoc.latest_day).count if current_user.present?
   end
 
   def welcome

@@ -1,46 +1,50 @@
 <%= render PageTitleComponent.new(title: "Platform statistics") %>
 
-<div class="my-4 flex flex-wrap justify-center gap-2">
-  <%= render Stats::TileComponent.new(title: "Sign in clickers", value: @registered_users) %>
-  <%= render Stats::TileComponent.new(title: "Setup completers", value: @confirmed_users) %>
-  <%= render Stats::TileComponent.new(title: "Puzzle solvers", value: @participating_users) %>
-  <%= render Stats::TileComponent.new(title: "Solution posters", value: @users_with_snippets) %>
-  <%= render Stats::TileComponent.new(title: "Solutions shared", value: @total_snippets) %>
-</div>
+<div class="my-4 flex flex-col gap-y-4">
 
-<div class="relative flex flex-col gap-y-1">
-  <% if @current_user_solved_today == 1 %>
-    <%= image_tag "dijkstra/pages/stats_silver.svg",
-                  alt: "dijkstra",
-                  title: "One more silver star today, thanks to you <3",
-                  class: "w-32 h-32 absolute -top-16 -left-16" %>
-  <% end %>
-  <% if @current_user_solved_today == 2 %>
-    <%= image_tag "dijkstra/pages/stats_gold.svg",
-                  alt: "dijkstra",
-                  title: "One more gold star today, thanks to you <3",
-                  class: "w-32 h-32 absolute -top-16 -right-16" %>
-  <% end %>
-
-  <h3 class="strong text-center text-sm lg:text-base">Total stars collected</h3>
-
-  <div class="flex justify-center gap-x-2">
-    <span class="text-aoc-silver text-xl lg:text-2xl"><%= @silver_stars %>*</span>
-    <span class="text-aoc-gold text-xl lg:text-2xl"><%= @gold_stars %>*</span>
+  <div class="flex flex-wrap justify-center gap-2">
+    <%= render Stats::TileComponent.new(title: "Sign in clickers", value: @registered_users) %>
+    <%= render Stats::TileComponent.new(title: "Setup completers", value: @confirmed_users) %>
+    <%= render Stats::TileComponent.new(title: "Puzzle solvers", value: @participating_users) %>
+    <%= render Stats::TileComponent.new(title: "Solution posters", value: @users_with_snippets) %>
+    <%= render Stats::TileComponent.new(title: "Solutions shared", value: @total_snippets) %>
   </div>
+
+  <div class="relative flex flex-col gap-y-1">
+    <h3 class="strong text-center text-sm lg:text-base">Total stars collected</h3>
+
+    <div class="flex justify-center gap-x-2">
+      <span class="text-aoc-silver text-xl lg:text-2xl"><%= @silver_stars %>*</span>
+      <span class="text-aoc-gold text-xl lg:text-2xl"><%= @gold_stars %>*</span>
+    </div>
+
+    <% if @current_user_solved_today == 1 %>
+      <%= image_tag "dijkstra/pages/stats_silver.svg",
+                    alt: "dijkstra",
+                    title: "One more silver star today, thanks to you <3",
+                    class: "w-32 h-32 absolute -top-16 -left-16" %>
+    <% end %>
+    <% if @current_user_solved_today == 2 %>
+      <%= image_tag "dijkstra/pages/stats_gold.svg",
+                    alt: "dijkstra",
+                    title: "One more gold star today, thanks to you <3",
+                    class: "w-32 h-32 absolute -top-16 -right-16" %>
+    <% end %>
+  </div>
+
+  <% if @silver_stars + @gold_stars > 0 %>
+    <p class="text-justify">
+      <span class="text-aoc-gold">Gold</span> indicates users who have completed both parts of a puzzle,
+      while <span class="text-aoc-silver">silver</span> indicates users who have completed only the first half.
+      Each <span class="text-aoc-gold">*</span> or <span class="text-aoc-silver">*</span> star represents
+      up to <span class="strong"><%= @users_per_star %></span> users.
+    </p>
+
+    <table class="block overflow-x-auto whitespace-nowrap w-full py-2">
+      <tbody>
+        <%= render Stats::TreeRowComponent.with_collection(@daily_completers.reverse, users_per_star: @users_per_star) %>
+      </tbody>
+    </table>
+  <% end %>
+
 </div>
-
-<% if @silver_stars + @gold_stars > 0 %>
-  <p class="my-4 text-justify">
-    <span class="text-aoc-gold">Gold</span> indicates users who have completed both parts of a puzzle,
-    while <span class="text-aoc-silver">silver</span> indicates users who have completed only the first half.
-    Each <span class="text-aoc-gold">*</span> or <span class="text-aoc-silver">*</span> star represents
-    up to <span class="strong"><%= @users_per_star %></span> users.
-  </p>
-
-  <table class="block overflow-x-auto whitespace-nowrap w-full py-2">
-    <tbody>
-      <%= render Stats::TreeRowComponent.with_collection(@daily_completers.reverse, users_per_star: @users_per_star) %>
-    </tbody>
-  </table>
-<% end %>

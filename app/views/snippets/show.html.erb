@@ -21,7 +21,7 @@
     <%= link_to snippet_path(day: @day, challenge: @challenge, id: @snippet.id, language: language == @language ? nil : language) do %>
       <%= inline_svg_tag(
             "languages/#{language}.svg",
-            class: "transition-all hover:opacity-100 #{
+            class: "hover:opacity-100 #{
               if @language == language
                 'opacity-90'
               elsif @language.nil?

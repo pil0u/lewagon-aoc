@@ -10,6 +10,15 @@
     <%= render Stats::TileComponent.new(title: "Solutions shared", value: @total_snippets) %>
   </div>
 
+  <div class="flex flex-wrap justify-center gap-1">
+    <% 12.times do |i| %>
+      <%= image_tag "dijkstra/achievements/surprise.svg",
+                    alt: "dijkstra",
+                    title: "soon™",
+                    class: "w-32 h-32 opacity-70 hover:opacity-100" %>
+    <% end %>
+  </div>
+
   <div class="relative flex flex-col gap-y-1">
     <h3 class="strong text-center text-sm lg:text-base">Total stars collected</h3>
 

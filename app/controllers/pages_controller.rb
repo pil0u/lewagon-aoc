@@ -71,7 +71,7 @@ class PagesController < ApplicationController
   end
 
   def patrons
-    @users = User.with_aura
+    @patrons = User.with_aura
     @current_user_referees = current_user.referees
   end
 
@@ -110,7 +110,7 @@ class PagesController < ApplicationController
                                   end
     @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil
 
-    @current_user_solved_today = current_user.completions.where(day: Aoc.latest_day).count if current_user.present?
+    @current_user_solved_today = current_user.completions.where(day: Aoc.latest_day).count if user_signed_in?
   end
 
   def welcome

@@ -49,33 +49,35 @@
   </p>
 <% end %>
 
-<table class="block overflow-x-auto whitespace-nowrap w-full max-w-md mx-auto">
-  <thead>
-    <tr class="border-b border-aoc-gray-darker">
-      <th class="font-light w-full"></th>
-      <th class="font-light min-w-[6rem]">Referrals</th>
-      <th class="font-light min-w-[6rem]">Aura</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each_with_index do |user, index| %>
-      <tr class="hover:bg-aoc-gray/10">
-        <td class="text-center">
-          <%= link_to user["username"], profile_path(user["uid"]), class: "hover:text-gold" %>
-          <% if index == 0 %>
-            <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %>
-          <% end %>
-        </td>
-
-        <td class="text-center">
-          <%= user["referrals"] %>
-        </td>
-
-        <td class="text-center strong">
-          <%= user["aura"] %>
-        </td>
+<% if @patrons.any? %>
+  <table class="block overflow-x-auto whitespace-nowrap w-full max-w-md mx-auto">
+    <thead>
+      <tr class="border-b border-aoc-gray-darker">
+        <th class="font-light w-full"></th>
+        <th class="font-light min-w-[6rem]">Referrals</th>
+        <th class="font-light min-w-[6rem]">Aura</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @patrons.each_with_index do |user, index| %>
+        <tr class="hover:bg-aoc-gray/10">
+          <td class="text-center">
+            <%= link_to user["username"], profile_path(user["uid"]), class: "hover:text-gold" %>
+            <% if index == 0 %>
+              <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %>
+            <% end %>
+          </td>
+
+          <td class="text-center">
+            <%= user["referrals"] %>
+          </td>
+
+          <td class="text-center strong">
+            <%= user["aura"] %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

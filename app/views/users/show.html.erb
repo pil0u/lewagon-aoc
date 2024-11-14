@@ -140,34 +140,36 @@
 
 <%# DAILY COMPLETIONS %>
 
-<hr class="my-4 border-aoc-gray-darker">
+<% if @daily_completions.any? %>
+  <hr class="my-4 border-aoc-gray-darker">
 
-<div class="my-4 pb-2 block overflow-x-auto max-w-full">
-  <table class="mx-auto text-right leading-tight">
-    <tr>
-      <th rowspan="2" class="align-bottom font-light">Day</th>
-      <th colspan="2" class="font-light text-aoc-silver">- Part 1 -</th>
-      <th colspan="2" class="font-light text-aoc-gold">- Part 2 -</th>
-    </tr>
-    <tr>
-      <th class="w-24 font-light">Time</th>
-      <th class="w-16 font-light">Score</th>
-      <th class="w-24 font-light">Time</th>
-      <th class="w-16 font-light">Score</th>
-    </tr>
-
-    <% @daily_completions.each_with_index do |completion, day| %>
+  <div class="my-4 pb-2 block overflow-x-auto max-w-full">
+    <table class="mx-auto text-right leading-tight">
       <tr>
-        <th class="font-light"><%= @latest_day - day %></th>
-        <% [0, 1].each do |part| %>
-          <% if completion[part] %>
-            <td><%= duration_as_text(completion[part][:duration]) %></td>
-            <td><%= completion[part][:score] %></td>
-          <% else %>
-            <td colspan="2">-</td>
-          <% end %>
-        <% end %>
+        <th rowspan="2" class="align-bottom font-light">Day</th>
+        <th colspan="2" class="font-light text-aoc-silver">- Part 1 -</th>
+        <th colspan="2" class="font-light text-aoc-gold">- Part 2 -</th>
       </tr>
-    <% end %>
-  </table>
-</div>
+      <tr>
+        <th class="w-24 font-light">Time</th>
+        <th class="w-16 font-light">Score</th>
+        <th class="w-24 font-light">Time</th>
+        <th class="w-16 font-light">Score</th>
+      </tr>
+
+      <% @daily_completions.each_with_index do |completion, day| %>
+        <tr>
+          <th class="font-light"><%= @latest_day - day %></th>
+          <% [0, 1].each do |part| %>
+            <% if completion[part] %>
+              <td><%= duration_as_text(completion[part][:duration]) %></td>
+              <td><%= completion[part][:score] %></td>
+            <% else %>
+              <td colspan="2">-</td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>

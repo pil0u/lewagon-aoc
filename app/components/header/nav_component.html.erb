@@ -5,16 +5,21 @@
     <%= render NavTabComponent.new(link: { name: "calendar", path: calendar_path }) %>
     <%= render NavTabComponent.new(link: { name: "profile", path: profile_path(@user.uid) }) %>
     <%= render NavTabComponent.new(link: { name: "patrons", path: patrons_path }) %>
+    <%= render NavTabComponent.new(link: { name: "squads", path: scores_squads_path }) %>
+    <%= render NavTabComponent.new(link: { name: "faq", path: faq_path }) %>
+    <%= render NavTabComponent.new(link: { name: "stats", path: stats_path }) %>
+    <%= link_to destroy_user_session_path, class: "hover:text-wagon-red", data: { turbo: false } do %>
+      <%= inline_svg_tag "icons/power.svg", class: "w-5 h-5 inline-block" %>
+    <% end %>
 
   <% else %>
 
     <%= render NavTabComponent.new(link: { name: "setup", path: setup_path }) %>
+    <%= render NavTabComponent.new(link: { name: "faq", path: faq_path }) %>
+    <%= link_to destroy_user_session_path, class: "hover:text-wagon-red", data: { turbo: false } do %>
+      <%= inline_svg_tag "icons/power.svg", class: "w-5 h-5 inline-block" %>
+    <% end %>
 
-  <% end %>
-
-  <%= render NavTabComponent.new(link: { name: "faq", path: faq_path }) %>
-  <%= link_to destroy_user_session_path, class: "hover:text-wagon-red", data: { turbo: false } do %>
-    <%= inline_svg_tag "icons/power.svg", class: "w-5 h-5 inline-block" %>
   <% end %>
 
   <%= render NavTabComponent.new(link: { name: "admin", path: admin_path }) if @user.admin? %>

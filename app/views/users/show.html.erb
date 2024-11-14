@@ -25,7 +25,7 @@
         <span>·</span>
         <%= inline_svg_tag "languages/#{@user.favourite_language}.svg",
                            class: "h-6 self-center",
-                           title: @user.favourite_language %>
+                           title: Snippet::LANGUAGES[@user.favourite_language.to_sym] %>
       <% end %>
     </div>
 

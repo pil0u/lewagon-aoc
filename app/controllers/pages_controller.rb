@@ -71,7 +71,7 @@ class PagesController < ApplicationController
   end
 
   def patrons
-    @users = User.with_aura
+    @patrons = User.with_aura
     @current_user_referees = current_user.referees
   end
 

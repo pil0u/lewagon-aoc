@@ -1,11 +1,16 @@
 <nav class="px-3">
-  <%= link_to "code of conduct", code_of_conduct_path, class: "link-explicit" %>
-  <%= link_to "stats", stats_path, class: "link-explicit" %>
-
   <% if @user && @user.confirmed? %>
-    <%= link_to "the wall", messages_path, class: "link-explicit" %>
-  <% end %>
 
-  <%= link_to "ladder of insanity", scores_insanity_path, class: "link-explicit" %>
-  <%= link_to "squads", scores_squads_path, class: "link-explicit" %>
+    <%= link_to "code of conduct", code_of_conduct_path, class: "link-explicit" %>
+    <%= link_to "ladder of insanity", scores_insanity_path, class: "link-explicit" %>
+    <%= link_to "the wall", messages_path, class: "link-explicit" %>
+  
+  <% else %>
+
+    <%= link_to "faq", faq_path, class: "link-explicit" %>
+    <%= link_to "code of conduct", code_of_conduct_path, class: "link-explicit" %>
+    <%= link_to "ladder of insanity", scores_insanity_path, class: "link-explicit" %>
+    <%= link_to "stats", stats_path, class: "link-explicit" %>
+
+  <% end %>
 </nav>

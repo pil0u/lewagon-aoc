@@ -1,7 +1,6 @@
 <%= render PageTitleComponent.new(title: "Platform statistics") %>
 
 <div class="my-4 flex flex-col gap-y-4">
-
   <div class="flex flex-wrap justify-center gap-2">
     <%= render Stats::TileComponent.new(title: "Sign in clickers", value: @registered_users) %>
     <%= render Stats::TileComponent.new(title: "Setup completers", value: @confirmed_users) %>
@@ -55,5 +54,4 @@
       </tbody>
     </table>
   <% end %>
-
 </div>

@@ -31,7 +31,25 @@ class PagesController < ApplicationController
     @admins = User.admins.pluck(:username)
   end
 
-  def faq; end
+  def faq
+    @insanity_points = [
+      ["alpha", 1, 1, "1 minute", 5],
+      ["bravo", 1, 1, "1 minute 1 second", 4],
+      ["charlie", 1, 1, "1 hour", 3],
+      ["delta", 1, 1, "2 hours", 2],
+      ["echo", 1, 1, "5 days", 1],
+      ["foxtrot", 1, 1, "5 days 2 hours", 0],
+      ["alpha", 1, 2, "never", 0],
+      ["bravo", 1, 2, "6 hours", 4],
+      ["charlie", 1, 2, "6 days", 2],
+      ["delta", 1, 2, "3 hours", 5],
+      ["echo", 1, 2, "5 days 2 hours", 3],
+      ["foxtrot", 1, 2, "6 days 1 minute", 1]
+    ]
+    @insanity_scores = @insanity_points.group_by { |row| row[0] }
+                                       .transform_values { |rows| rows.sum { |row| row[4] } }
+                                       .sort_by { |_, score| -score }
+  end
 
   def participation
     users_per_city = City.joins(:users).group(:id).count
@@ -62,7 +80,7 @@ class PagesController < ApplicationController
     @sync_status = if current_user.aoc_id.nil? || !current_user.accepted_coc
                      { status: "KO", css_class: "text-wagon-red" }
                    else
-                     { status: "Pending", css_class: "text-aoc-atmospheric" }
+                     { status: "Pending", css_class: "text-aoc-bronze" }
                    end
 
     return if cookies[:referral_code].blank?
@@ -92,7 +110,7 @@ class PagesController < ApplicationController
                                   end
     @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil
 
-    @current_user_solved_today = current_user.completions.where(day: Aoc.latest_day).count
+    @current_user_solved_today = current_user.completions.where(day: Aoc.latest_day).count if current_user.present?
   end
 
   def welcome

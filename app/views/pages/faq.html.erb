@@ -102,16 +102,22 @@
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
-        Puzzle difficulty varies throughout the event. The first part of each puzzle is
-        <span class="strong">generally accessible to all Wagoners, students and Alumni</span>. The second part is
-        more challenging but still doable for various experience levels.
+        Puzzle difficulty varies throughout the event.
       </p>
       <p>
-        Puzzle difficulty <span class="strong">does not strictly increase</span> during the event. You might find puzzle
-        #21 easier than #6, depending on your skills, experience, or the puzzle creator's design.
+        The first part of most puzzles, especially in the first half of the event, is
+        <span class="strong">usually accessible to most Wagoners, students and Alumni</span>. The second part is more
+        challenging.
       </p>
       <p>
-        <span class="strong">Never give up.</span>
+        Puzzle difficulty <span class="strong">roughly increases</span> during the event. That said, you might find
+        puzzle #21 easier than #6, depending on your skills, experience, or the puzzle creator's design.
+      </p>
+      <p class="text-center text-gold">
+        Never give up.
+      </p>
+      <p>
+        Take a shot at every puzzle. You never know what you can achieve until you try.
       </p>
       <p>
         If you are stuck, open a discussion <%= link_to "on Slack",
@@ -193,7 +199,7 @@
   </details>
 
   <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "The Ladder of Insanity?!") %>
+    <%= render Faq::DetailsSummaryComponent.new(title: "How does the scoring system work?") %>
 
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
@@ -217,46 +223,52 @@
 
       <p>
         For each <em>part</em>, participants are ranked by relative solving time:
-        <ul class="ml-7 list-disc list-inside">
-          <li>1st place: <code class="strong">5</code> points</li>
-          <li>2nd place: <code class="strong">4</code> points</li>
-          <li>3rd place: <code class="strong">3</code> points</li>
-          <li>4th place: <code class="strong">2</code> points</li>
-          <li>5th place: <code class="strong">1</code> point</li>
-          <li>6th place and beyond: <code class="strong">0</code> points</li>
-        </ul>
       </p>
 
-      <p>Example:</p>
+      <ul class="ml-7 list-disc list-inside">
+        <li>1st place: <code class="strong">5</code> points</li>
+        <li>2nd place: <code class="strong">4</code> points</li>
+        <li>3rd place: <code class="strong">3</code> points</li>
+        <li>4th place: <code class="strong">2</code> points</li>
+        <li>5th place: <code class="strong">1</code> point</li>
+        <li>6th place and beyond: <code class="strong">0</code> points</li>
+      </ul>
 
-      <table class="w-full text-center">
-        <thead>
+      <p>
+        Suppose day 1 is over with the following results:
+      </p>
+
+      <table class="mx-auto w-96 border border-aoc-gray-dark">
+        <thead class="text-center border-b border-aoc-gray-dark">
           <tr>
             <th>Username</th>
-            <th>Day</th>
+            <th>Total Score</th>
+          </tr>
+        </thead>
+        <tbody class="text-center text-xl">
+          <% @insanity_scores.each do |username, total_score| %>
+            <tr>
+              <td class="text-sm"><%= username %></td>
+              <td class="strong"><%= total_score %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <p>This is how the individual completions might look like:</p>
+      <table class="mx-auto w-96 border border-aoc-gray-dark">
+        <thead class="text-center border-b border-aoc-gray-dark">
+          <tr>
+            <th>Username</th>
             <th>Part</th>
             <th>Time to complete</th>
             <th>Score</th>
           </tr>
         </thead>
         <tbody class="text-center text-xl">
-          <% [
-               ["alpha", 1, 1, "1 minute", 5],
-               ["bravo", 1, 1, "1 minute 1 second", 4],
-               ["charlie", 1, 1, "1 hour", 3],
-               ["delta", 1, 1, "2 hours", 2],
-               ["echo", 1, 1, "5 days", 1],
-               ["foxtrot", 1, 1, "5 days 2 hours", 0],
-               ["alpha", 1, 2, "never", 0],
-               ["bravo", 1, 2, "6 hours", 4],
-               ["charlie", 1, 2, "6 days", 2],
-               ["delta", 1, 2, "3 hours", 5],
-               ["echo", 1, 2, "5 days 2 hours", 3],
-               ["foxtrot", 1, 2, "6 days 1 minute", 1]
-             ].each do |username, day, challenge, time, score| %>
-            <tr>
+          <% @insanity_points.each_with_index do |(username, day, challenge, time, score), index| %>
+            <tr class="<%= "border-b border-dashed" if index == 5 %>">
               <td class="text-sm"><%= username %></td>
-              <td><%= day %></td>
               <td><%= challenge %></td>
               <td class="text-sm"><%= time %></td>
               <td class="strong"><%= score %></td>
@@ -264,6 +276,15 @@
           <% end %>
         </tbody>
       </table>
+
+      <p>
+        In case of a tie, participants are ranked following these criteria:
+        <ol class="ml-7 list-decimal list-inside">
+          <li>Total number of stars (the more, the better)</li>
+          <li>Total solving time (the less, the better)</li>
+          <li>User ID (the earlier you signed up, the better)</li>
+        </ol>
+      </p>
     </div>
   </details>
 
@@ -296,7 +317,7 @@
     <div class="flex flex-col gap-y-2 text-justify">
       <p>
         The last puzzle is released on December 25th, but the solving deadline is
-        <span class="strong"><%= "#{Aoc.lewagon_end_time.to_fs(:long_ordinal)} #{Aoc.lewagon_end_time.zone}" %></span>.
+        <span class="strong"><%= "#{Aoc.lewagon_end_time.to_fs(:long_ordinal)}am #{Aoc.lewagon_end_time.zone}" %></span>.
         After this, all scores freeze, and results will be announced.
       </p>
     </div>

@@ -1,11 +1,19 @@
 <div id="<%= @snippet.id %>"
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
      data-controller="show-more">
-  <div class="flex text-xs gap-x-3">
-    <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
 
-    <% if @user_can_edit_snippet %>
-      <%= link_to "edit", edit_snippet_path(day: @snippet.day, challenge: @snippet.challenge, id: @snippet.id), class: "link-explicit" %>
+
+  <div class="flex items-center justify-between text-xs">
+    <div class="flex gap-x-3">
+      <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
+
+      <% if @user_can_edit_snippet %>
+        <%= link_to "edit", edit_snippet_path(day: @snippet.day, challenge: @snippet.challenge, id: @snippet.id), class: "link-explicit" %>
+      <% end %>
+    </div>
+
+    <% if @user_can_discuss_snippet %>
+      <%= link_to "Discuss this solution", discuss_snippet_path(@snippet), class: "link-slack", target: "_blank" %>
     <% end %>
   </div>
 

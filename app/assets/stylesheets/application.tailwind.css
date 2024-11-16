@@ -3,6 +3,22 @@
 @import "tailwindcss/components";
 
 @layer components {
+  .achievement-locked {
+    @apply opacity-50 hover:opacity-70;
+  }
+
+  .achievement-unlocked {
+    @apply opacity-90 hover:opacity-100;
+  }
+
+  .achievement-unlocked-plus {
+    filter: drop-shadow(0px 0px 20px #CCCCCC);
+
+    &:hover {
+      filter: drop-shadow(0px 0px 20px white);
+    }
+  }
+
   .button {
     @apply form-element cursor-pointer hover:text-gold;
   }

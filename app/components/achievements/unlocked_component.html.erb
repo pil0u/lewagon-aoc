@@ -1,5 +1,5 @@
 <%= image_tag(
-      "dijkstra/#{@nature}.svg",
-      title: "#{t("achievements.#{@nature}.title")}\n#{t("achievements.#{@nature}.description")}",
-      class: "w-32 sm:w-48 opacity-70 hover:opacity-100"
+      "dijkstra/achievements/#{@nature}.svg",
+      title: @title,
+      class: "w-32 h-32 #{@state_css}"
     ) %>

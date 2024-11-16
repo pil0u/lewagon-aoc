@@ -52,7 +52,7 @@ class SnippetsController < ApplicationController
   def discuss
     return redirect_to @snippet.slack_url if @snippet.slack_url
 
-    text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}: solution on puzzle #{@snippet.day} part #{@snippet.challenge}"
+    text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}-hd: solution on puzzle #{@snippet.day} part #{@snippet.challenge}"
     message = client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:)
     slack_thread = client.chat_getPermalink(channel: message["channel"], message_ts: message["message"]["ts"])
     @snippet.update(slack_url: slack_thread[:permalink])

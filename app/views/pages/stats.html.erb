@@ -18,6 +18,8 @@
     <%= render Achievements::UnlockedComponent.new(nature: "doomed_sundays", state: :unlocked_plus, title: "") %>
     <%= render Achievements::UnlockedComponent.new(**@influencer_achievement) %>
     <%= render Achievements::UnlockedComponent.new(nature: "influencer", state: :unlocked, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(**@the_godfather_achievement) %>
+    <%= render Achievements::UnlockedComponent.new(nature: "the_godfather", state: :unlocked_plus, title: "") %>
 
     <% 10.times do |i| %>
       <%= render Achievements::UnlockedComponent.new(nature: "surprise", state: :locked, title: "") %>

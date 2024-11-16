@@ -102,6 +102,7 @@ class PagesController < ApplicationController
     set_the_answer_achievement
     set_doomed_sundays_achievement
     set_influencer_achievement
+    set_the_godfather_achievement
 
     # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
@@ -169,5 +170,12 @@ class PagesController < ApplicationController
     title += " - and you have invited #{current_user_referrals_count} of them, thank you for spreading the love <3" if current_user_referrals_count&.> 0
 
     @influencer_achievement = { nature: "influencer", state:, title: }
+  end
+
+  def set_the_godfather_achievement
+    state = :locked
+    title = "I'm going to make you an offer you can't refuse."
+
+    @the_godfather_achievement = { nature: "the_godfather", state:, title: }
   end
 end

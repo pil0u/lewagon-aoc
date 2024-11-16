@@ -104,6 +104,7 @@ class PagesController < ApplicationController
     set_influencer_achievement
     set_the_godfather_achievement
     set_belonging_achievement
+    set_mobster_achievement
 
     # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
@@ -136,7 +137,7 @@ class PagesController < ApplicationController
   def set_the_answer_achievement
     state = :locked
     state = :unlocked if Completion.where(challenge: 2).count >= 4242
-    title = "Together, we've unlocked the answer to life, the universe, and everything by collecting 4242 gold stars!"
+    title = "Together, we have unlocked the answer to life, the universe, and everything, by collecting 4242 gold stars!"
 
     @the_answer_achievement = { nature: "the_answer", state:, title: }
   end
@@ -144,14 +145,14 @@ class PagesController < ApplicationController
   def set_doomed_sundays_achievement
     state = :locked
     state = :unlocked if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
-    title = "You survived all Advent Sundays with their extra hard puzzles. We all did!"
+    title = "You have survived all Advent Sundays with their extra hard puzzles. We all did!"
 
     @doomed_sundays_achievement = { nature: "doomed_sundays", state:, title: }
   end
 
   def set_the_godfather_achievement
     state = :locked
-    title = "I'm going to make you an offer you can't refuse."
+    title = "\"I'm going to make you an offer you can't refuse.\""
 
     @the_godfather_achievement = { nature: "the_godfather", state:, title: }
   end
@@ -160,7 +161,7 @@ class PagesController < ApplicationController
 
   def set_fan_achievement
     fan_count = Achievement.fan.count
-    current_user_has_fan = user_signed_in? && current_user.achievements.fan.exists?
+    current_user_has_fan = current_user&.achievements&.fan&.exists?
 
     state = :locked
     state = :unlocked if fan_count > 0
@@ -173,12 +174,12 @@ class PagesController < ApplicationController
 
   def set_influencer_achievement
     referrals_count = User.where.not(referrer_id: nil).count
-    current_user_referrals_count = current_user.referees.count if user_signed_in?
+    current_user_referrals_count = current_user&.referees&.count
 
     state = :locked
     state = :unlocked if referrals_count >= 100
     state = :unlocked_plus if current_user_referrals_count&.> 0
-    title = "We reached 100 referrals 🤝 Actually #{referrals_count} and counting!"
+    title = "We have reached 100 referrals 🤝 Actually #{referrals_count} and counting!"
     title += " - and you have personally invited #{current_user_referrals_count} of them, thank you for spreading the love <3" if current_user_referrals_count&.> 0
 
     @influencer_achievement = { nature: "influencer", state:, title: }
@@ -189,8 +190,19 @@ class PagesController < ApplicationController
 
     state = :locked
     state = :unlocked_plus if current_user_squad_name.present?
-    title = "You joined a squad! Time to solve puzzles and bring glory to #{current_user_squad_name} 💪"
+    title = "You are a member of a squad. Time to solve puzzles and bring glory to #{current_user_squad_name} 💪"
 
     @belonging_achievement = { nature: "belonging", state:, title: }
+  end
+
+  def set_mobster_achievement
+    biggest_squad_id = Squad.joins(:users).group(:id).order("COUNT(users.id) DESC").first&.id
+    current_user_is_in_biggest_squad = current_user&.squad_id == biggest_squad_id
+
+    state = :locked
+    state = :unlocked_plus if current_user_is_in_biggest_squad
+    title = "You are part of the biggest crime family in town, capisce?"
+
+    @mobster_achievement = { nature: "mobster", state:, title: }
   end
 end

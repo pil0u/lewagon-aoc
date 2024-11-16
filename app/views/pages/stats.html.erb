@@ -16,12 +16,14 @@
     <%= render Achievements::UnlockedComponent.new(**@influencer_achievement) %>
     <%= render Achievements::UnlockedComponent.new(**@the_godfather_achievement) %>
     <%= render Achievements::UnlockedComponent.new(**@belonging_achievement) %>
+    <%= render Achievements::UnlockedComponent.new(**@mobster_achievement) %>
     <%= render Achievements::UnlockedComponent.new(nature: "fan", state: :unlocked, title: "") %>
     <%= render Achievements::UnlockedComponent.new(nature: "the_answer", state: :unlocked, title: "") %>
     <%= render Achievements::UnlockedComponent.new(nature: "doomed_sundays", state: :unlocked, title: "") %>
     <%= render Achievements::UnlockedComponent.new(nature: "influencer", state: :unlocked, title: "") %>
     <%= render Achievements::UnlockedComponent.new(nature: "the_godfather", state: :unlocked, title: "") %>
     <%= render Achievements::UnlockedComponent.new(nature: "belonging", state: :unlocked_plus, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(nature: "mobster", state: :unlocked_plus, title: "") %>
   </div>
 
   <div class="relative flex flex-col gap-y-1">

@@ -101,6 +101,7 @@ class PagesController < ApplicationController
     set_fan_achievement
     set_the_answer_achievement
     set_doomed_sundays_achievement
+    set_influencer_achievement
 
     # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
@@ -155,5 +156,18 @@ class PagesController < ApplicationController
     title = "You survived all Advent Sundays with their extra hard puzzles. We all did!"
 
     @doomed_sundays_achievement = { nature: "doomed_sundays", state:, title: }
+  end
+
+  def set_influencer_achievement
+    referrals_count = User.where.not(referrer_id: nil).count
+    current_user_referrals_count = current_user.referees.count if user_signed_in?
+
+    state = :locked
+    state = :unlocked if referrals_count >= 100
+    state = :unlocked_plus if current_user_referrals_count&.> 0
+    title = "We reached 100 referrals 🎉 Actually #{referrals_count} and counting!"
+    title += " - and you have invited #{current_user_referrals_count} of them, thank you for spreading the love <3" if current_user_referrals_count&.> 0
+
+    @influencer_achievement = { nature: "influencer", state:, title: }
   end
 end

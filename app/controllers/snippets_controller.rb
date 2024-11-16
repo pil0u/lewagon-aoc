@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SnippetsController < ApplicationController
-  before_action :set_snippet, only: %i[edit update]
+  before_action :set_snippet, only: %i[edit update discuss]
 
   def show
     @day = params[:day]
@@ -49,10 +49,23 @@ class SnippetsController < ApplicationController
     end
   end
 
+  def discuss
+    return redirect_to @snippet.slack_url if @snippet.slack_url
+
+    text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}: solution on puzzle #{@snippet.day} part #{@snippet.challenge}"
+    message = client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:)
+    slack_thread = client.chat_getPermalink(channel: message["channel"], message_ts: message["message"]["ts"])
+    @snippet.update(slack_url: slack_thread[:permalink])
+    redirect_to @snippet.slack_url
+  end
+
   private
 
+  def client
+    @client ||= Slack::Web::Client.new
+  end
+
   def post_slack_message
-    client = Slack::Web::Client.new
     puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
     username = "<#{helpers.profile_url(current_user.uid)}|#{current_user.username}>"
     solution = "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"

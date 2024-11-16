@@ -12,6 +12,8 @@
   <div class="flex flex-wrap justify-center gap-1">
     <%= render Achievements::UnlockedComponent.new(**@fan_achievement) %>
     <%= render Achievements::UnlockedComponent.new(nature: "fan", state: :unlocked, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(**@the_answer_achievement) %>
+    <%= render Achievements::UnlockedComponent.new(nature: "the_answer", state: :unlocked_plus, title: "") %>
 
     <% 10.times do |i| %>
       <%= render Achievements::UnlockedComponent.new(nature: "surprise", state: :locked, title: "") %>

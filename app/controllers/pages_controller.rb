@@ -99,6 +99,7 @@ class PagesController < ApplicationController
 
     # Achievements
     set_fan_achievement
+    set_the_answer_achievement
 
     # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
@@ -137,5 +138,13 @@ class PagesController < ApplicationController
     title += " - and you are one of them 🎉" if current_user_has_fan
 
     @fan_achievement = { nature: "fan", state:, title: }
+  end
+
+  def set_the_answer_achievement
+    state = :locked
+    state = :unlocked_plus if Completion.where(challenge: 2).count >= 4242
+    title = "Together, we've unlocked the answer to life, the universe, and everything by collecting 4242 gold stars!"
+
+    @the_answer_achievement = { nature: "the_answer", state:, title: }
   end
 end

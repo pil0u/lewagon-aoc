@@ -100,6 +100,7 @@ class PagesController < ApplicationController
     # Achievements
     set_fan_achievement
     set_the_answer_achievement
+    set_doomed_sundays_achievement
 
     # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
@@ -146,5 +147,13 @@ class PagesController < ApplicationController
     title = "Together, we've unlocked the answer to life, the universe, and everything by collecting 4242 gold stars!"
 
     @the_answer_achievement = { nature: "the_answer", state:, title: }
+  end
+
+  def set_doomed_sundays_achievement
+    state = :locked
+    state = :unlocked_plus if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
+    title = "You survived all Advent Sundays with their extra hard puzzles! We all did!"
+
+    @doomed_sundays_achievement = { nature: "doomed_sundays", state:, title: }
   end
 end

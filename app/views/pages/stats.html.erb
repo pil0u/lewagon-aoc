@@ -10,10 +10,11 @@
   </div>
 
   <div class="flex flex-wrap justify-center gap-1">
-    <% 12.times do |i| %>
-      <%= image_tag "dijkstra/achievements/surprise.svg",
-                    title: "soon™",
-                    class: "w-32 h-32 opacity-70 hover:opacity-100" %>
+    <%= render Achievements::UnlockedComponent.new(**@fan_achievement) %>
+    <%= render Achievements::UnlockedComponent.new(nature: "fan", state: :unlocked, title: "") %>
+
+    <% 10.times do |i| %>
+      <%= render Achievements::UnlockedComponent.new(nature: "surprise", state: :locked, title: "") %>
     <% end %>
   </div>
 

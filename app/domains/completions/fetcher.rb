@@ -118,6 +118,8 @@ module Completions
     end
 
     def unlock_achievements
+      Achievements::MassUnlockJob.perform_later(:fan)
+
       Achievements::MassUnlockJob.perform_later(:setup_complete)
       Achievements::MassUnlockJob.perform_later(:edition2020)
       Achievements::MassUnlockJob.perform_later(:edition2021)
@@ -132,7 +134,6 @@ module Completions
       Achievements::MassUnlockJob.perform_later(:speed360)
       Achievements::MassUnlockJob.perform_later(:speed720)
       Achievements::MassUnlockJob.perform_later(:speed1440)
-      Achievements::MassUnlockJob.perform_later(:github_star)
     end
 
     def launch_cache_refresh

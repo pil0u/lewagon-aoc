@@ -90,12 +90,17 @@ class PagesController < ApplicationController
   end
 
   def stats
+    # Platform statistics
     @registered_users = User.count
     @confirmed_users = User.confirmed.count
     @participating_users = User.distinct(:id).joins(:completions).count
     @users_with_snippets = User.distinct(:id).joins(:snippets).count
     @total_snippets = Snippet.count
 
+    # Achievements
+    set_fan_achievement
+
+    # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
     @silver_stars = Completion.where(challenge: 1).count - @gold_stars
 
@@ -117,5 +122,20 @@ class PagesController < ApplicationController
     @total_users = User.count
 
     cookies[:referral_code] = params[:referral_code] if params[:referral_code].present?
+  end
+
+  private
+
+  def set_fan_achievement
+    fan_count = Achievement.fan.count
+    current_user_has_fan = user_signed_in? && current_user.achievements.fan.exists?
+
+    state = :locked
+    state = :unlocked if fan_count > 0
+    state = :unlocked_plus if current_user_has_fan
+    title = "#{view_context.pluralize(fan_count, 'participant')} starred the project on GitHub"
+    title += " - and you are one of them 🎉" if current_user_has_fan
+
+    @fan_achievement = { nature: "fan", state:, title: }
   end
 end

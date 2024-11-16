@@ -11,19 +11,17 @@
 
   <div class="flex flex-wrap justify-center gap-1">
     <%= render Achievements::UnlockedComponent.new(**@fan_achievement) %>
-    <%= render Achievements::UnlockedComponent.new(nature: "fan", state: :unlocked, title: "") %>
     <%= render Achievements::UnlockedComponent.new(**@the_answer_achievement) %>
-    <%= render Achievements::UnlockedComponent.new(nature: "the_answer", state: :unlocked_plus, title: "") %>
     <%= render Achievements::UnlockedComponent.new(**@doomed_sundays_achievement) %>
-    <%= render Achievements::UnlockedComponent.new(nature: "doomed_sundays", state: :unlocked_plus, title: "") %>
     <%= render Achievements::UnlockedComponent.new(**@influencer_achievement) %>
-    <%= render Achievements::UnlockedComponent.new(nature: "influencer", state: :unlocked, title: "") %>
     <%= render Achievements::UnlockedComponent.new(**@the_godfather_achievement) %>
-    <%= render Achievements::UnlockedComponent.new(nature: "the_godfather", state: :unlocked_plus, title: "") %>
-
-    <% 10.times do |i| %>
-      <%= render Achievements::UnlockedComponent.new(nature: "surprise", state: :locked, title: "") %>
-    <% end %>
+    <%= render Achievements::UnlockedComponent.new(**@belonging_achievement) %>
+    <%= render Achievements::UnlockedComponent.new(nature: "fan", state: :unlocked, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(nature: "the_answer", state: :unlocked, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(nature: "doomed_sundays", state: :unlocked, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(nature: "influencer", state: :unlocked, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(nature: "the_godfather", state: :unlocked, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(nature: "belonging", state: :unlocked_plus, title: "") %>
   </div>
 
   <div class="relative flex flex-col gap-y-1">

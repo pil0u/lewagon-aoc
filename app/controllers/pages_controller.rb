@@ -103,6 +103,7 @@ class PagesController < ApplicationController
     set_doomed_sundays_achievement
     set_influencer_achievement
     set_the_godfather_achievement
+    set_belonging_achievement
 
     # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
@@ -177,9 +178,19 @@ class PagesController < ApplicationController
     state = :locked
     state = :unlocked if referrals_count >= 100
     state = :unlocked_plus if current_user_referrals_count&.> 0
-    title = "We reached 100 referrals 🎉 Actually #{referrals_count} and counting!"
-    title += " - and you have invited #{current_user_referrals_count} of them, thank you for spreading the love <3" if current_user_referrals_count&.> 0
+    title = "We reached 100 referrals 🤝 Actually #{referrals_count} and counting!"
+    title += " - and you have personally invited #{current_user_referrals_count} of them, thank you for spreading the love <3" if current_user_referrals_count&.> 0
 
     @influencer_achievement = { nature: "influencer", state:, title: }
+  end
+
+  def set_belonging_achievement
+    current_user_squad_name = current_user&.squad&.name
+
+    state = :locked
+    state = :unlocked_plus if current_user_squad_name.present?
+    title = "You joined a squad! Time to solve puzzles and bring glory to #{current_user_squad_name} 💪"
+
+    @belonging_achievement = { nature: "belonging", state:, title: }
   end
 end

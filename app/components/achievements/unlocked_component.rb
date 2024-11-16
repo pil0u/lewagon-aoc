@@ -14,14 +14,13 @@ module Achievements
 
     def random_locked_message
       [
-        "Click to reveal! Nah, just kidding.",
         "Soon™",
-        "Do you really wanna know what's behind this?",
         "Nothing to see here... yet!",
-        "This achievement is shy and doesn't want to come out",
-        "Keep trying! Or don't. I'm just a tooltip.",
+        "Click to reveal! Nah, just kidding.",
         "Legend says this achievement exists...",
-        "The achievement is in another castle!"
+        "Keep trying! Or don't. I'm just a tooltip.",
+        "Do you really wanna know what's behind this?",
+        "This achievement is shy and doesn't want to come out"
       ].sample
     end
   end

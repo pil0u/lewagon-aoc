@@ -152,7 +152,7 @@ class PagesController < ApplicationController
   def set_doomed_sundays_achievement
     state = :locked
     state = :unlocked_plus if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
-    title = "You survived all Advent Sundays with their extra hard puzzles! We all did!"
+    title = "You survived all Advent Sundays with their extra hard puzzles. We all did!"
 
     @doomed_sundays_achievement = { nature: "doomed_sundays", state:, title: }
   end

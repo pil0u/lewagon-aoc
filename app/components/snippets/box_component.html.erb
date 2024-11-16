@@ -2,7 +2,6 @@
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
      data-controller="show-more">
 
-
   <div class="flex items-center justify-between text-xs">
     <div class="flex gap-x-3">
       <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
@@ -13,7 +12,7 @@
     </div>
 
     <% if @user_can_discuss_snippet %>
-      <%= link_to "Discuss this solution", discuss_snippet_path(@snippet), class: "link-slack", target: "_blank" %>
+      <%= link_to "Discuss this solution", discuss_snippet_path(@snippet), class: "link-slack", rel: "noopener", target: "_blank" %>
     <% end %>
   </div>
 

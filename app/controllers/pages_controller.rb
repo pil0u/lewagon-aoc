@@ -105,6 +105,7 @@ class PagesController < ApplicationController
     set_the_godfather_achievement
     set_belonging_achievement
     set_mobster_achievement
+    set_jedi_master_achievement
 
     # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
@@ -160,14 +161,14 @@ class PagesController < ApplicationController
   # User achievements
 
   def set_fan_achievement
-    fan_count = Achievement.fan.count
-    current_user_has_fan = current_user&.achievements&.fan&.exists?
+    fans = Achievement.fan.joins(:user).pluck("users.id")
+    current_user_is_fan = fans.pluck(0).include?(current_user&.id)
 
     state = :locked
-    state = :unlocked if fan_count > 0
-    state = :unlocked_plus if current_user_has_fan
-    title = "#{view_context.pluralize(fan_count, 'participant')} starred the project on GitHub"
-    title += " - and you are one of them 🎉" if current_user_has_fan
+    state = :unlocked if fans.any?
+    state = :unlocked_plus if current_user_is_fan
+    title = "#{view_context.pluralize(fans.count, 'participant')} starred the project on GitHub"
+    title += " - and you are one of them 🎉" if current_user_is_fan
 
     @fan_achievement = { nature: "fan", state:, title: }
   end
@@ -204,5 +205,18 @@ class PagesController < ApplicationController
     title = "You are part of the biggest crime family in town, capisce?"
 
     @mobster_achievement = { nature: "mobster", state:, title: }
+  end
+
+  def set_jedi_master_achievement
+    jedi_masters = Achievement.jedi_master.joins(:user).pluck("users.id", "users.username")
+    current_user_is_jedi_master = jedi_masters.pluck(0).include?(current_user&.id)
+
+    state = :locked
+    state = :unlocked if jedi_masters.any?
+    state = :unlocked_plus if current_user_is_jedi_master
+    title = "A select few have earned points on the global Advent of Code leaderboard. These are our Jedi Masters: #{jedi_masters.pluck(1).join(', ')}"
+    title += " - and you are on the list! This is the rarest and hardest achievement to unlock, you can be proud." if current_user_is_jedi_master
+
+    @jedi_master_achievement = { nature: "jedi_master", state:, title: }
   end
 end

@@ -130,6 +130,33 @@ class PagesController < ApplicationController
 
   private
 
+  # Community achievements
+
+  def set_the_answer_achievement
+    state = :locked
+    state = :unlocked if Completion.where(challenge: 2).count >= 4242
+    title = "Together, we've unlocked the answer to life, the universe, and everything by collecting 4242 gold stars!"
+
+    @the_answer_achievement = { nature: "the_answer", state:, title: }
+  end
+
+  def set_doomed_sundays_achievement
+    state = :locked
+    state = :unlocked if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
+    title = "You survived all Advent Sundays with their extra hard puzzles. We all did!"
+
+    @doomed_sundays_achievement = { nature: "doomed_sundays", state:, title: }
+  end
+
+  def set_the_godfather_achievement
+    state = :locked
+    title = "I'm going to make you an offer you can't refuse."
+
+    @the_godfather_achievement = { nature: "the_godfather", state:, title: }
+  end
+
+  # User achievements
+
   def set_fan_achievement
     fan_count = Achievement.fan.count
     current_user_has_fan = user_signed_in? && current_user.achievements.fan.exists?
@@ -143,22 +170,6 @@ class PagesController < ApplicationController
     @fan_achievement = { nature: "fan", state:, title: }
   end
 
-  def set_the_answer_achievement
-    state = :locked
-    state = :unlocked_plus if Completion.where(challenge: 2).count >= 4242
-    title = "Together, we've unlocked the answer to life, the universe, and everything by collecting 4242 gold stars!"
-
-    @the_answer_achievement = { nature: "the_answer", state:, title: }
-  end
-
-  def set_doomed_sundays_achievement
-    state = :locked
-    state = :unlocked_plus if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
-    title = "You survived all Advent Sundays with their extra hard puzzles. We all did!"
-
-    @doomed_sundays_achievement = { nature: "doomed_sundays", state:, title: }
-  end
-
   def set_influencer_achievement
     referrals_count = User.where.not(referrer_id: nil).count
     current_user_referrals_count = current_user.referees.count if user_signed_in?
@@ -170,12 +181,5 @@ class PagesController < ApplicationController
     title += " - and you have invited #{current_user_referrals_count} of them, thank you for spreading the love <3" if current_user_referrals_count&.> 0
 
     @influencer_achievement = { nature: "influencer", state:, title: }
-  end
-
-  def set_the_godfather_achievement
-    state = :locked
-    title = "I'm going to make you an offer you can't refuse."
-
-    @the_godfather_achievement = { nature: "the_godfather", state:, title: }
   end
 end

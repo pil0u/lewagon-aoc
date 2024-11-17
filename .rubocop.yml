@@ -15,23 +15,8 @@ Lint/MissingSuper:
 Lint/SymbolConversion:
   EnforcedStyle: consistent
 
-Metrics/ClassLength:
-  Exclude:
-    - "**/app/models/user.rb"
-
-Metrics/CyclomaticComplexity:
-  Exclude:
-    - "**/db/migrate/20240608160740_recreate_good_job_cron_indexes_with_conditional.rb"
-
-Metrics/PerceivedComplexity:
-  Exclude:
-    - "**/db/migrate/20240608160740_recreate_good_job_cron_indexes_with_conditional.rb"
-
 Naming/VariableNumber:
   EnforcedStyle: snake_case
-  Exclude:
-    - "**/app/controllers/messages_controller.rb"
-    - "**/app/domains/completions/fetcher.rb"
 
 Rails/DangerousColumnNames:
   Exclude:

@@ -3,7 +3,7 @@
 class RecreateGoodJobCronIndexesWithConditional < ActiveRecord::Migration[7.1]
   disable_ddl_transaction!
 
-  def change
+  def change # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     reversible do |dir|
       dir.up do
         unless connection.index_name_exists?(:good_jobs, :index_good_jobs_on_cron_key_and_created_at_cond)

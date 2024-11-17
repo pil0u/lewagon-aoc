@@ -133,12 +133,10 @@ class PagesController < ApplicationController
 
   private
 
-  # Community achievements
-
   def set_the_answer_achievement
     state = :locked
     state = :unlocked if Completion.where(challenge: 2).count >= 4242
-    title = "Together, we have unlocked the answer to life, the universe, and everything, by collecting 4242 gold stars!"
+    title = "The Answer\n\nTogether, we have unlocked the answer to life, the universe, and everything, by collecting 4242 gold stars!"
 
     @the_answer_achievement = { nature: "the_answer", state:, title: }
   end
@@ -146,19 +144,17 @@ class PagesController < ApplicationController
   def set_doomed_sundays_achievement
     state = :locked
     state = :unlocked if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
-    title = "You have survived all Advent Sundays with their extra hard puzzles. We all did!"
+    title = "Doomed Sundays\n\nYou have survived all Advent Sundays with their extra hard puzzles. We all did. But at what cost?"
 
     @doomed_sundays_achievement = { nature: "doomed_sundays", state:, title: }
   end
 
   def set_the_godfather_achievement
     state = :locked
-    title = "\"I'm going to make you an offer you can't refuse.\""
+    title = "The Godfather\n\n\"I'm going to make you an offer you can't refuse.\""
 
     @the_godfather_achievement = { nature: "the_godfather", state:, title: }
   end
-
-  # User achievements
 
   def set_fan_achievement
     fans = Achievement.fan.joins(:user).pluck("users.id")

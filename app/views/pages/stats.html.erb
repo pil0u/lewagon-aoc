@@ -10,57 +10,18 @@
   </div>
 
   <div class="flex flex-wrap justify-center gap-1">
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:influencer]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:belonging]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:mobster]) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:fan]) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:the_answer]) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:doomed_sundays]) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:influencer]) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_godfather]) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:belonging]) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:mobster]) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:jedi_master]) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:madness]) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler]) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer]) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso]) %>
-    <%# All locked %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:fan].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_answer].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:doomed_sundays].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:influencer].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_godfather].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:belonging].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:mobster].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:jedi_master].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:madness].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer].merge(state: :locked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso].merge(state: :locked)) %>
-    <%# All unlocked %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:fan].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_answer].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:doomed_sundays].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:influencer].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_godfather].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:belonging].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:mobster].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:jedi_master].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:madness].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer].merge(state: :unlocked)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso].merge(state: :unlocked)) %>
-    <%# All unlocked_plus %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:fan].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_answer].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:doomed_sundays].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:influencer].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_godfather].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:belonging].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:mobster].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:jedi_master].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:madness].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer].merge(state: :unlocked_plus)) %>
-    <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso].merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:madness]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:jedi_master]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_godfather]) %>
   </div>
 
   <div class="relative flex flex-col gap-y-1">

@@ -66,42 +66,6 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
     @users_per_star ||= (max_completers.to_f / 50).ceil
   end
 
-  def set_the_answer_achievement
-    state = :locked
-    state = :unlocked if Completion.where(challenge: 2).count >= 4242
-    title = "The Answer\n\nTogether, we have unlocked the answer to life, the universe, and everything, by collecting 4242 gold stars!"
-
-    { nature: "the_answer", state:, title: }
-  end
-
-  def set_doomed_sundays_achievement
-    state = :locked
-    state = :unlocked if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
-    title = "Doomed Sundays\n\nYou have survived all Advent Sundays with their extra hard puzzles. We all did. But at what cost?"
-
-    { nature: "doomed_sundays", state:, title: }
-  end
-
-  def set_the_godfather_achievement
-    state = :locked
-    title = "The Godfather\n\n\"I'm going to make you an offer you can't refuse.\""
-
-    { nature: "the_godfather", state:, title: }
-  end
-
-  def set_fan_achievement
-    fans = Achievement.fan.joins(:user).pluck("users.id")
-    user_is_fan = fans.pluck(0).include?(@user&.id)
-
-    state = :locked
-    state = :unlocked if fans.any?
-    state = :unlocked_plus if user_is_fan
-    title = "Fan\n\n#{ActionController::Base.helpers.pluralize(fans.count, 'participant')} starred the project on GitHub"
-    title += " - and you are one of them 🎉" if user_is_fan
-
-    { nature: "fan", state:, title: }
-  end
-
   def set_influencer_achievement
     referrals_count = User.where.not(referrer_id: nil).count
     user_referrals_count = @user&.referees&.count
@@ -136,28 +100,33 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
     { nature: "mobster", state:, title: }
   end
 
-  def set_jedi_master_achievement
-    jedi_masters = Achievement.jedi_master.joins(:user).pluck("users.id", "users.username")
-    user_is_jedi_master = jedi_masters.pluck(0).include?(@user&.id)
+  def set_fan_achievement
+    fans = Achievement.fan.joins(:user).pluck("users.id")
+    user_is_fan = fans.pluck(0).include?(@user&.id)
 
     state = :locked
-    state = :unlocked if jedi_masters.any?
-    state = :unlocked_plus if user_is_jedi_master
-    title = "Jedi Master\n\nA select few have earned points on the global Advent of Code leaderboard: #{jedi_masters.pluck(1).join(', ')}"
-    title += " - and you are on the list! This is the rarest and hardest achievement to unlock, you can be proud." if user_is_jedi_master
+    state = :unlocked if fans.any?
+    state = :unlocked_plus if user_is_fan
+    title = "Fan\n\n#{ActionController::Base.helpers.pluralize(fans.count, 'participant')} starred the project on GitHub"
+    title += " - and you are one of them 🎉" if user_is_fan
 
-    { nature: "jedi_master", state:, title: }
+    { nature: "fan", state:, title: }
   end
 
-  def set_madness_achievement
-    madness_holders = Achievement.madness.joins(:user).pluck("users.id")
-    user_is_madness_holder = madness_holders.pluck(0).include?(@user&.id)
-
+  def set_the_answer_achievement
     state = :locked
-    state = :unlocked_plus if user_is_madness_holder
-    title = "Madness?\n\nTHIS. IS. CHRISTMAAAAAAAAAAAAAS.\n(you got some points on the ladder of insanity, well done)"
+    state = :unlocked_plus if Completion.where(challenge: 2).count >= 4242
+    title = "The Answer\n\nTogether, we have unlocked the answer to life, the universe, and everything, by collecting 4242 gold stars!"
 
-    { nature: "madness", state:, title: }
+    { nature: "the_answer", state:, title: }
+  end
+
+  def set_doomed_sundays_achievement
+    state = :locked
+    state = :unlocked_plus if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
+    title = "Doomed Sundays\n\nYou have survived all Advent Sundays with their extra hard puzzles. We all did. But at what cost?"
+
+    { nature: "doomed_sundays", state:, title: }
   end
 
   def set_jeweler_achievement
@@ -188,5 +157,36 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
     title = "Picasso\n\nYou have submitted a solution in JavaScript. While the language may look ugly, broken, not following standards, its power make it a real piece of art."
 
     { nature: "picasso", state:, title: }
+  end
+
+  def set_madness_achievement
+    madness_holders = Achievement.madness.joins(:user).pluck("users.id")
+    user_is_madness_holder = madness_holders.pluck(0).include?(@user&.id)
+
+    state = :locked
+    state = :unlocked_plus if user_is_madness_holder
+    title = "Madness?\n\nTHIS. IS. CHRISTMAAAAAAAAAAAAAS.\n(you got some points on the ladder of insanity, well done)"
+
+    { nature: "madness", state:, title: }
+  end
+
+  def set_jedi_master_achievement
+    jedi_masters = Achievement.jedi_master.joins(:user).pluck("users.id", "users.username")
+    user_is_jedi_master = jedi_masters.pluck(0).include?(@user&.id)
+
+    state = :locked
+    state = :unlocked if jedi_masters.any?
+    state = :unlocked_plus if user_is_jedi_master
+    title = "Jedi Master\n\nA select few have earned points on the global Advent of Code leaderboard: #{jedi_masters.pluck(1).join(', ')}"
+    title += " - and you are on the list! This is the rarest and hardest achievement to unlock, you can be proud." if user_is_jedi_master
+
+    { nature: "jedi_master", state:, title: }
+  end
+
+  def set_the_godfather_achievement
+    state = :locked
+    title = "The Godfather\n\n\"I'm going to make you an offer you can't refuse.\""
+
+    { nature: "the_godfather", state:, title: }
   end
 end

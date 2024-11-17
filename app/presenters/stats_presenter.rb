@@ -16,7 +16,7 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
       silver_stars:,
       daily_completers:,
       users_per_star:,
-      user_solved_today:
+      user_solved_today: @user&.completions&.where(day: Aoc.latest_day)&.count
     }
   end
 
@@ -61,10 +61,6 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
   def users_per_star
     max_completers = @daily_completers.map { |dc| dc[:gold_completers] + dc[:silver_completers] }.max
     @users_per_star ||= (max_completers.to_f / 50).ceil
-  end
-
-  def user_solved_today
-    @user_solved_today ||= @user&.completions&.where(day: Aoc.latest_day)&.count
   end
 
   def set_the_answer_achievement

@@ -68,6 +68,7 @@ class SnippetsController < ApplicationController
 
   def unlock_achievements
     Achievements::UnlockJob.perform_later(:jeweler, current_user.id)
+    Achievements::UnlockJob.perform_later(:snake_charmer, current_user.id)
   end
 
   def snippet_params

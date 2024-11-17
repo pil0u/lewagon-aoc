@@ -31,7 +31,8 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
       mobster: set_mobster_achievement,
       jedi_master: set_jedi_master_achievement,
       madness: set_madness_achievement,
-      jeweler: set_jeweler_achievement
+      jeweler: set_jeweler_achievement,
+      snake_charmer: set_snake_charmer_achievement
     }
   end
 
@@ -159,13 +160,24 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
   end
 
   def set_jeweler_achievement
-    jeweler_holders = Achievement.jeweler.joins(:user).pluck("users.id")
-    user_is_jeweler = jeweler_holders.pluck(0).include?(@user&.id)
+    jewelers = Achievement.jeweler.joins(:user).pluck("users.id")
+    user_is_jeweler = jewelers.pluck(0).include?(@user&.id)
 
     state = :locked
     state = :unlocked_plus if user_is_jeweler
     title = "Jeweler\n\nYou have submitted a solution in Ruby, thank you for your contribution"
 
     { nature: "jeweler", state:, title: }
+  end
+
+  def set_snake_charmer_achievement
+    snake_charmers = Achievement.snake_charmer.joins(:user).pluck("users.id")
+    user_is_snake_charmer = snake_charmers.pluck(0).include?(@user&.id)
+
+    state = :locked
+    state = :unlocked_plus if user_is_snake_charmer
+    title = "Snake Charmer\n\nYou have submitted a solution in Python, thank you for your contribution"
+
+    { nature: "snake_charmer", state:, title: }
   end
 end

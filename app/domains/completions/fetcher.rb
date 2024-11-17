@@ -137,21 +137,6 @@ module Completions
       Achievements::MassUnlockJob.perform_later(:fan)
       Achievements::MassUnlockJob.perform_later(:jedi_master)
       Achievements::MassUnlockJob.perform_later(:madness)
-
-      Achievements::MassUnlockJob.perform_later(:setup_complete)
-      Achievements::MassUnlockJob.perform_later(:edition2020)
-      Achievements::MassUnlockJob.perform_later(:edition2021)
-      Achievements::MassUnlockJob.perform_later(:stars1)
-      Achievements::MassUnlockJob.perform_later(:stars5)
-      Achievements::MassUnlockJob.perform_later(:stars11)
-      Achievements::MassUnlockJob.perform_later(:stars23)
-      Achievements::MassUnlockJob.perform_later(:speed10)
-      Achievements::MassUnlockJob.perform_later(:speed30)
-      Achievements::MassUnlockJob.perform_later(:speed90)
-      Achievements::MassUnlockJob.perform_later(:speed180)
-      Achievements::MassUnlockJob.perform_later(:speed360)
-      Achievements::MassUnlockJob.perform_later(:speed720)
-      Achievements::MassUnlockJob.perform_later(:speed1440)
     end
 
     def launch_cache_refresh

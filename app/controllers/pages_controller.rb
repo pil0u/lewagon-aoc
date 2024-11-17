@@ -167,7 +167,7 @@ class PagesController < ApplicationController
     state = :locked
     state = :unlocked if fans.any?
     state = :unlocked_plus if current_user_is_fan
-    title = "#{view_context.pluralize(fans.count, 'participant')} starred the project on GitHub"
+    title = "Fan\n\n#{view_context.pluralize(fans.count, 'participant')} starred the project on GitHub"
     title += " - and you are one of them 🎉" if current_user_is_fan
 
     @fan_achievement = { nature: "fan", state:, title: }
@@ -180,7 +180,7 @@ class PagesController < ApplicationController
     state = :locked
     state = :unlocked if referrals_count >= 100
     state = :unlocked_plus if current_user_referrals_count&.> 0
-    title = "We have reached 100 referrals 🤝 Actually #{referrals_count} and counting!"
+    title = "Influencer\n\nWe have reached 100 referrals 🤝 Actually #{referrals_count} and counting!"
     title += " - and you have personally invited #{current_user_referrals_count} of them, thank you for spreading the love <3" if current_user_referrals_count&.> 0
 
     @influencer_achievement = { nature: "influencer", state:, title: }
@@ -191,7 +191,7 @@ class PagesController < ApplicationController
 
     state = :locked
     state = :unlocked_plus if current_user_squad_name.present?
-    title = "You are a member of a squad. Time to solve puzzles and bring glory to #{current_user_squad_name} 💪"
+    title = "Belonging\n\nYou are a member of a squad. Time to solve puzzles and bring glory to #{current_user_squad_name} 💪"
 
     @belonging_achievement = { nature: "belonging", state:, title: }
   end
@@ -202,7 +202,7 @@ class PagesController < ApplicationController
 
     state = :locked
     state = :unlocked_plus if current_user_is_in_biggest_squad
-    title = "You are part of the biggest crime family in town, capisce?"
+    title = "Mobster\n\nYou are part of the biggest crime family in town, capisce?"
 
     @mobster_achievement = { nature: "mobster", state:, title: }
   end
@@ -214,7 +214,7 @@ class PagesController < ApplicationController
     state = :locked
     state = :unlocked if jedi_masters.any?
     state = :unlocked_plus if current_user_is_jedi_master
-    title = "A select few have earned points on the global Advent of Code leaderboard. These are our Jedi Masters: #{jedi_masters.pluck(1).join(', ')}"
+    title = "Jedi Master\n\nA select few have earned points on the global Advent of Code leaderboard: #{jedi_masters.pluck(1).join(', ')}"
     title += " - and you are on the list! This is the rarest and hardest achievement to unlock, you can be proud." if current_user_is_jedi_master
 
     @jedi_master_achievement = { nature: "jedi_master", state:, title: }

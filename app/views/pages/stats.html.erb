@@ -18,14 +18,40 @@
     <%= render Achievements::UnlockedComponent.new(**@belonging_achievement) %>
     <%= render Achievements::UnlockedComponent.new(**@mobster_achievement) %>
     <%= render Achievements::UnlockedComponent.new(**@jedi_master_achievement) %>
-    <%= render Achievements::UnlockedComponent.new(nature: "fan", state: :unlocked, title: "") %>
-    <%= render Achievements::UnlockedComponent.new(nature: "the_answer", state: :unlocked, title: "") %>
-    <%= render Achievements::UnlockedComponent.new(nature: "doomed_sundays", state: :unlocked, title: "") %>
-    <%= render Achievements::UnlockedComponent.new(nature: "influencer", state: :unlocked, title: "") %>
-    <%= render Achievements::UnlockedComponent.new(nature: "the_godfather", state: :unlocked, title: "") %>
-    <%= render Achievements::UnlockedComponent.new(nature: "belonging", state: :unlocked_plus, title: "") %>
-    <%= render Achievements::UnlockedComponent.new(nature: "mobster", state: :unlocked_plus, title: "") %>
-    <%= render Achievements::UnlockedComponent.new(nature: "jedi_master", state: :unlocked_plus, title: "") %>
+    <%= render Achievements::UnlockedComponent.new(**@madness_achievement) %>
+
+    <%# All locked %>
+    <%= render Achievements::UnlockedComponent.new(**@fan_achievement.merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@the_answer_achievement.merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@doomed_sundays_achievement.merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@influencer_achievement.merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@the_godfather_achievement.merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@belonging_achievement.merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@mobster_achievement.merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@jedi_master_achievement.merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@madness_achievement.merge(state: :locked)) %>
+
+    <%# All unlocked %>
+    <%= render Achievements::UnlockedComponent.new(**@fan_achievement.merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@the_answer_achievement.merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@doomed_sundays_achievement.merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@influencer_achievement.merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@the_godfather_achievement.merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@belonging_achievement.merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@mobster_achievement.merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@jedi_master_achievement.merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@madness_achievement.merge(state: :unlocked)) %>
+
+    <%# All unlocked_plus %>
+    <%= render Achievements::UnlockedComponent.new(**@fan_achievement.merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@the_answer_achievement.merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@doomed_sundays_achievement.merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@influencer_achievement.merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@the_godfather_achievement.merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@belonging_achievement.merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@mobster_achievement.merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@jedi_master_achievement.merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@madness_achievement.merge(state: :unlocked_plus)) %>
   </div>
 
   <div class="relative flex flex-col gap-y-1">

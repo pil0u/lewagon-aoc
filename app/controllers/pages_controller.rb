@@ -106,6 +106,7 @@ class PagesController < ApplicationController
     set_belonging_achievement
     set_mobster_achievement
     set_jedi_master_achievement
+    set_madness_achievement
 
     # Daily challenge statistics
     @gold_stars = Completion.where(challenge: 2).count
@@ -214,5 +215,16 @@ class PagesController < ApplicationController
     title += " - and you are on the list! This is the rarest and hardest achievement to unlock, you can be proud." if current_user_is_jedi_master
 
     @jedi_master_achievement = { nature: "jedi_master", state:, title: }
+  end
+
+  def set_madness_achievement
+    madness_holders = Achievement.madness.joins(:user).pluck("users.id")
+    current_user_is_madness_holder = madness_holders.pluck(0).include?(current_user&.id)
+
+    state = :locked
+    state = :unlocked_plus if current_user_is_madness_holder
+    title = "Madness?\n\nTHIS. IS. CHRISTMAAAAAAAAAAAAAS.\n(you got some points on the ladder of insanity, well done)"
+
+    @madness_achievement = { nature: "madness", state:, title: }
   end
 end

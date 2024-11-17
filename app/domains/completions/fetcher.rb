@@ -136,6 +136,7 @@ module Completions
     def unlock_achievements
       Achievements::MassUnlockJob.perform_later(:fan)
       Achievements::MassUnlockJob.perform_later(:jedi_master)
+      Achievements::MassUnlockJob.perform_later(:madness)
 
       Achievements::MassUnlockJob.perform_later(:setup_complete)
       Achievements::MassUnlockJob.perform_later(:edition2020)

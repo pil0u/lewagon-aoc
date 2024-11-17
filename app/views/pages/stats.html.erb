@@ -21,6 +21,7 @@
     <%= render Achievements::UnlockedComponent.new(**@achievements[:madness]) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler]) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso]) %>
     <%# All locked %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:fan].merge(state: :locked)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:the_answer].merge(state: :locked)) %>
@@ -33,6 +34,7 @@
     <%= render Achievements::UnlockedComponent.new(**@achievements[:madness].merge(state: :locked)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler].merge(state: :locked)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer].merge(state: :locked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso].merge(state: :locked)) %>
     <%# All unlocked %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:fan].merge(state: :unlocked)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:the_answer].merge(state: :unlocked)) %>
@@ -45,6 +47,7 @@
     <%= render Achievements::UnlockedComponent.new(**@achievements[:madness].merge(state: :unlocked)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler].merge(state: :unlocked)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer].merge(state: :unlocked)) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso].merge(state: :unlocked)) %>
     <%# All unlocked_plus %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:fan].merge(state: :unlocked_plus)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:the_answer].merge(state: :unlocked_plus)) %>
@@ -57,6 +60,7 @@
     <%= render Achievements::UnlockedComponent.new(**@achievements[:madness].merge(state: :unlocked_plus)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler].merge(state: :unlocked_plus)) %>
     <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer].merge(state: :unlocked_plus)) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso].merge(state: :unlocked_plus)) %>
   </div>
 
   <div class="relative flex flex-col gap-y-1">

@@ -32,7 +32,8 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
       jedi_master: set_jedi_master_achievement,
       madness: set_madness_achievement,
       jeweler: set_jeweler_achievement,
-      snake_charmer: set_snake_charmer_achievement
+      snake_charmer: set_snake_charmer_achievement,
+      picasso: set_picasso_achievement
     }
   end
 
@@ -177,5 +178,15 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
     title = "Snake Charmer\n\nYou have submitted a solution in Python, thank you for your contribution"
 
     { nature: "snake_charmer", state:, title: }
+  end
+
+  def set_picasso_achievement
+    user_is_picasso = @user&.snippets&.exists?(language: "javascript")
+
+    state = :locked
+    state = :unlocked_plus if user_is_picasso
+    title = "Picasso\n\nYou have submitted a solution in JavaScript. While the language may look ugly, broken, not following standards, its power make it a real piece of art."
+
+    { nature: "picasso", state:, title: }
   end
 end

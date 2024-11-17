@@ -32,8 +32,8 @@ module Completions
         end
       end
 
-      unlock_achievements
       launch_cache_refresh
+      unlock_achievements
       true
     end
 

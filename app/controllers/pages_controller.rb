@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PagesController < ApplicationController # rubocop:disable Metrics/ClassLength
+class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[admin code_of_conduct faq participation stats welcome]
   skip_before_action :render_countdown, only: %i[admin]
 
@@ -90,141 +90,15 @@ class PagesController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def stats
-    # Platform statistics
-    @registered_users = User.count
-    @confirmed_users = User.confirmed.count
-    @participating_users = User.distinct(:id).joins(:completions).count
-    @users_with_snippets = User.distinct(:id).joins(:snippets).count
-    @total_snippets = Snippet.count
+    presenter = StatsPresenter.new(current_user)
 
-    # Achievements
-    set_fan_achievement
-    set_the_answer_achievement
-    set_doomed_sundays_achievement
-    set_influencer_achievement
-    set_the_godfather_achievement
-    set_belonging_achievement
-    set_mobster_achievement
-    set_jedi_master_achievement
-    set_madness_achievement
-
-    # Daily challenge statistics
-    @gold_stars = Completion.where(challenge: 2).count
-    @silver_stars = Completion.where(challenge: 1).count - @gold_stars
-
-    @daily_completers = Completion.group(:day, :challenge).order(:day, :challenge).count # { [12, 1]: 5, [12, 2]: 8, ... }
-                                  .group_by { |day_challenge, _| day_challenge.first }   # { 12: [ [[12, 1], 5], [[12, 2], 8] ], ... }
-                                  .map do |day, completers|
-                                    {
-                                      number: day,
-                                      gold_completers: completers.dig(1, 1).to_i,
-                                      silver_completers: completers.dig(0, 1).to_i - completers.dig(1, 1).to_i
-                                    }
-                                  end
-    @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil
-
-    @current_user_solved_today = current_user.completions.where(day: Aoc.latest_day).count if user_signed_in?
+    @platform_stats = presenter.platform_stats
+    @achievements = presenter.achievements
   end
 
   def welcome
     @total_users = User.count
 
     cookies[:referral_code] = params[:referral_code] if params[:referral_code].present?
-  end
-
-  private
-
-  def set_the_answer_achievement
-    state = :locked
-    state = :unlocked if Completion.where(challenge: 2).count >= 4242
-    title = "The Answer\n\nTogether, we have unlocked the answer to life, the universe, and everything, by collecting 4242 gold stars!"
-
-    @the_answer_achievement = { nature: "the_answer", state:, title: }
-  end
-
-  def set_doomed_sundays_achievement
-    state = :locked
-    state = :unlocked if Time.now.utc >= Aoc.end_time.prev_occurring(:sunday)
-    title = "Doomed Sundays\n\nYou have survived all Advent Sundays with their extra hard puzzles. We all did. But at what cost?"
-
-    @doomed_sundays_achievement = { nature: "doomed_sundays", state:, title: }
-  end
-
-  def set_the_godfather_achievement
-    state = :locked
-    title = "The Godfather\n\n\"I'm going to make you an offer you can't refuse.\""
-
-    @the_godfather_achievement = { nature: "the_godfather", state:, title: }
-  end
-
-  def set_fan_achievement
-    fans = Achievement.fan.joins(:user).pluck("users.id")
-    current_user_is_fan = fans.pluck(0).include?(current_user&.id)
-
-    state = :locked
-    state = :unlocked if fans.any?
-    state = :unlocked_plus if current_user_is_fan
-    title = "Fan\n\n#{view_context.pluralize(fans.count, 'participant')} starred the project on GitHub"
-    title += " - and you are one of them 🎉" if current_user_is_fan
-
-    @fan_achievement = { nature: "fan", state:, title: }
-  end
-
-  def set_influencer_achievement
-    referrals_count = User.where.not(referrer_id: nil).count
-    current_user_referrals_count = current_user&.referees&.count
-
-    state = :locked
-    state = :unlocked if referrals_count >= 100
-    state = :unlocked_plus if current_user_referrals_count&.> 0
-    title = "Influencer\n\nWe have reached 100 referrals 🤝 Actually #{referrals_count} and counting!"
-    title += " - and you have personally invited #{current_user_referrals_count} of them, thank you for spreading the love <3" if current_user_referrals_count&.> 0
-
-    @influencer_achievement = { nature: "influencer", state:, title: }
-  end
-
-  def set_belonging_achievement
-    current_user_squad_name = current_user&.squad&.name
-
-    state = :locked
-    state = :unlocked_plus if current_user_squad_name.present?
-    title = "Belonging\n\nYou are a member of a squad. Time to solve puzzles and bring glory to #{current_user_squad_name} 💪"
-
-    @belonging_achievement = { nature: "belonging", state:, title: }
-  end
-
-  def set_mobster_achievement
-    biggest_squad_id = Squad.joins(:users).group(:id).order("COUNT(users.id) DESC").first&.id
-    current_user_is_in_biggest_squad = current_user&.squad_id == biggest_squad_id
-
-    state = :locked
-    state = :unlocked_plus if current_user_is_in_biggest_squad
-    title = "Mobster\n\nYou are part of the biggest crime family in town, capisce?"
-
-    @mobster_achievement = { nature: "mobster", state:, title: }
-  end
-
-  def set_jedi_master_achievement
-    jedi_masters = Achievement.jedi_master.joins(:user).pluck("users.id", "users.username")
-    current_user_is_jedi_master = jedi_masters.pluck(0).include?(current_user&.id)
-
-    state = :locked
-    state = :unlocked if jedi_masters.any?
-    state = :unlocked_plus if current_user_is_jedi_master
-    title = "Jedi Master\n\nA select few have earned points on the global Advent of Code leaderboard: #{jedi_masters.pluck(1).join(', ')}"
-    title += " - and you are on the list! This is the rarest and hardest achievement to unlock, you can be proud." if current_user_is_jedi_master
-
-    @jedi_master_achievement = { nature: "jedi_master", state:, title: }
-  end
-
-  def set_madness_achievement
-    madness_holders = Achievement.madness.joins(:user).pluck("users.id")
-    current_user_is_madness_holder = madness_holders.pluck(0).include?(current_user&.id)
-
-    state = :locked
-    state = :unlocked_plus if current_user_is_madness_holder
-    title = "Madness?\n\nTHIS. IS. CHRISTMAAAAAAAAAAAAAS.\n(you got some points on the ladder of insanity, well done)"
-
-    @madness_achievement = { nature: "madness", state:, title: }
   end
 end

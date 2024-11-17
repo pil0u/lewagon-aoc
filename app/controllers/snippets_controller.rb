@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SnippetsController < ApplicationController
-  before_action :set_snippet, only: %i[edit update discuss]
+  before_action :set_snippet, only: %i[edit update]
 
   def show
     @day = params[:day]
@@ -50,6 +50,7 @@ class SnippetsController < ApplicationController
   end
 
   def discuss
+    @snippet = Snippet.find(params[:id])
     return redirect_to @snippet.slack_url if @snippet.slack_url
 
     text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}-hd: solution on puzzle #{@snippet.day} part #{@snippet.challenge}"

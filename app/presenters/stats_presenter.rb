@@ -30,7 +30,8 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
       belonging: set_belonging_achievement,
       mobster: set_mobster_achievement,
       jedi_master: set_jedi_master_achievement,
-      madness: set_madness_achievement
+      madness: set_madness_achievement,
+      jeweler: set_jeweler_achievement
     }
   end
 
@@ -155,5 +156,16 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
     title = "Madness?\n\nTHIS. IS. CHRISTMAAAAAAAAAAAAAS.\n(you got some points on the ladder of insanity, well done)"
 
     { nature: "madness", state:, title: }
+  end
+
+  def set_jeweler_achievement
+    jeweler_holders = Achievement.jeweler.joins(:user).pluck("users.id")
+    user_is_jeweler = jeweler_holders.pluck(0).include?(@user&.id)
+
+    state = :locked
+    state = :unlocked_plus if user_is_jeweler
+    title = "Jeweler\n\nYou have submitted a solution in Ruby, thank you for your contribution"
+
+    { nature: "jeweler", state:, title: }
   end
 end

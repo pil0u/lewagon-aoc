@@ -64,8 +64,8 @@ Rails.application.routes.draw do
     get     "/day/:day",                        to: "days#show",       as: :day,            day: /[1-9]|1\d|2[0-5]/
     get     "/day/:day/:challenge",             to: "snippets#show",   as: :snippet,        day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
     post    "/day/:day/:challenge",             to: "snippets#create",                      day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
-    get     "/snippets/:id/edit",               to: "snippets#edit",   as: :edit_snippet,   day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
-    patch   "/snippets/:id",                    to: "snippets#update", as: :update_snippet, day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
+    get     "/snippets/:id/edit",               to: "snippets#edit",   as: :edit_snippet
+    patch   "/snippets/:id",                    to: "snippets#update", as: :update_snippet
     get     "/the-wall",                        to: "messages#index",  as: :messages
     post    "/the-wall",                        to: "messages#create"
     get     "/scores/squads",                   to: "scores#squads",    as: :scores_squads

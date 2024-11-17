@@ -12,7 +12,7 @@
     </div>
 
     <% if @user_can_discuss_snippet %>
-      <%= link_to "Discuss this solution", discuss_snippet_path(@snippet), class: "link-slack", rel: "noopener", target: "_blank" %>
+      <%= link_to "discuss on Slack", discuss_snippet_path(@snippet), class: "link-slack", rel: "noopener", target: "_blank" %>
     <% end %>
   </div>
 

@@ -53,10 +53,11 @@ class SnippetsController < ApplicationController
     @snippet = Snippet.find(params[:id])
     return redirect_to @snippet.slack_url if @snippet.slack_url
 
-    text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}-hd: solution on puzzle #{@snippet.day} part #{@snippet.challenge}"
+    text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}-hd: #{solution_markdown} on puzzle #{@snippet.day} part #{@snippet.challenge}"
     message = client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:)
     slack_thread = client.chat_getPermalink(channel: message["channel"], message_ts: message["message"]["ts"])
     @snippet.update(slack_url: slack_thread[:permalink])
+
     redirect_to @snippet.slack_url
   end
 
@@ -69,13 +70,16 @@ class SnippetsController < ApplicationController
   def post_slack_message
     puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
     username = "<#{helpers.profile_url(current_user.uid)}|#{current_user.username}>"
-    solution = "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
-    text = "#{username} submitted a new #{solution} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
+    text = "#{username} submitted a new #{solution_markdown} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
     client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)
   end
 
   def set_snippet
     @snippet = current_user.snippets.find(params[:id])
+  end
+
+  def solution_markdown
+    "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
   end
 
   def snippet_params

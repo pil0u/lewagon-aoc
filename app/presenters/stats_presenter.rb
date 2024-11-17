@@ -160,8 +160,7 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
   end
 
   def set_jeweler_achievement
-    jewelers = Achievement.jeweler.joins(:user).pluck("users.id")
-    user_is_jeweler = jewelers.pluck(0).include?(@user&.id)
+    user_is_jeweler = @user&.snippets&.exists?(language: "ruby")
 
     state = :locked
     state = :unlocked_plus if user_is_jeweler
@@ -171,8 +170,7 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
   end
 
   def set_snake_charmer_achievement
-    snake_charmers = Achievement.snake_charmer.joins(:user).pluck("users.id")
-    user_is_snake_charmer = snake_charmers.pluck(0).include?(@user&.id)
+    user_is_snake_charmer = @user&.snippets&.exists?(language: "python")
 
     state = :locked
     state = :unlocked_plus if user_is_snake_charmer

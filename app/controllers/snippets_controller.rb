@@ -35,7 +35,6 @@ class SnippetsController < ApplicationController
 
     if @snippet.save
       post_slack_message
-      unlock_achievements
       redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), notice: "Your solution was published"
     else
       redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: @snippet.errors.full_messages
@@ -44,7 +43,6 @@ class SnippetsController < ApplicationController
 
   def update
     if @snippet.update(snippet_params)
-      unlock_achievements
       redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), notice: "Your solution was edited"
     else
       redirect_to snippet_path(day: @snippet.day, challenge: @snippet.challenge), alert: @snippet.errors.full_messages
@@ -64,11 +62,6 @@ class SnippetsController < ApplicationController
     solution = "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
     text = "#{username} submitted a new #{solution} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
     client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)
-  end
-
-  def unlock_achievements
-    Achievements::UnlockJob.perform_later(:jeweler, current_user.id)
-    Achievements::UnlockJob.perform_later(:snake_charmer, current_user.id)
   end
 
   def snippet_params

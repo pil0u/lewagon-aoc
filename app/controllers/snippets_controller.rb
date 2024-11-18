@@ -51,6 +51,10 @@ class SnippetsController < ApplicationController
 
   private
 
+  def set_snippet
+    @snippet = current_user.snippets.find(params[:id])
+  end
+
   def post_slack_message
     client = Slack::Web::Client.new
     puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
@@ -58,10 +62,6 @@ class SnippetsController < ApplicationController
     solution = "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
     text = "#{username} submitted a new #{solution} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
     client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)
-  end
-
-  def set_snippet
-    @snippet = current_user.snippets.find(params[:id])
   end
 
   def snippet_params

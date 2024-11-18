@@ -17,6 +17,6 @@ class Squad < ApplicationRecord
     pin = rand(100_000..999_999) while Squad.exists?(pin:)
 
     self.pin = pin
-    self.name ||= "sq#{Squad.any? ? Squad.last.id.next : 1} - #{SecureRandom.hex(3)}"
+    self.name ||= "SQ-#{SecureRandom.hex(3).upcase}"
   end
 end

@@ -30,7 +30,6 @@ class UsersController < ApplicationController
     current_user.referrer_id = User.find_by_referral_code(referrer_code)&.id || -1 if referrer_code
 
     if current_user.update(user_params)
-      unlock_achievements
       redirect_back fallback_location: "/", notice: "Your user information was updated"
     else
       redirect_back fallback_location: "/", alert: current_user.errors.full_messages[0].to_s
@@ -65,10 +64,6 @@ class UsersController < ApplicationController
 
     flash[:alert] = "You are not authorized to perform this action"
     redirect_to root_path
-  end
-
-  def unlock_achievements
-    Achievements::UnlockJob.perform_later(:city_join, current_user.id)
   end
 
   def user_params

@@ -34,7 +34,6 @@ Rails.application.routes.draw do
   get "/faq",             to: "pages#faq"
   get "/stats",           to: "pages#stats"
   get "/scores/insanity", to: "scores#insanity"
-  get "/scores/squads",   to: "scores#squads"
 
   # Routes for unauthenticated users
   unauthenticated do
@@ -42,6 +41,7 @@ Rails.application.routes.draw do
     get "/admin", to: "pages#admin"
   end
 
+  # Routes for authenticated users
   authenticated :user do
     omniauth_callbacks(:slack_openid)
 
@@ -64,10 +64,11 @@ Rails.application.routes.draw do
     get     "/day/:day",                        to: "days#show",       as: :day,            day: /[1-9]|1\d|2[0-5]/
     get     "/day/:day/:challenge",             to: "snippets#show",   as: :snippet,        day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
     post    "/day/:day/:challenge",             to: "snippets#create",                      day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
-    get     "/snippets/:id/edit",               to: "snippets#edit",   as: :edit_snippet,   day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
-    patch   "/snippets/:id",                    to: "snippets#update", as: :update_snippet, day: /[1-9]|1\d|2[0-5]/, challenge: /[1-2]/, constraints: AllowedToSeeSolutionsConstraint.new
+    get     "/snippets/:id/edit",               to: "snippets#edit",   as: :edit_snippet
+    patch   "/snippets/:id",                    to: "snippets#update", as: :update_snippet
     get     "/the-wall",                        to: "messages#index",  as: :messages
     post    "/the-wall",                        to: "messages#create"
+    get     "/scores/squads",                   to: "scores#squads",    as: :scores_squads
     get     "/squad/:id",                       to: "squads#show",      as: :squad
     post    "/squad",                           to: "squads#create",    as: :create_squad
     patch   "/squad/:id",                       to: "squads#update",    as: :update_squad

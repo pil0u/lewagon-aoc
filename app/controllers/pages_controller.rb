@@ -71,7 +71,7 @@ class PagesController < ApplicationController
   end
 
   def patrons
-    @users = User.with_aura
+    @patrons = User.with_aura
     @current_user_referees = current_user.referees
   end
 
@@ -90,27 +90,10 @@ class PagesController < ApplicationController
   end
 
   def stats
-    @registered_users = User.count
-    @confirmed_users = User.confirmed.count
-    @participating_users = User.distinct(:id).joins(:completions).count
-    @users_with_snippets = User.distinct(:id).joins(:snippets).count
-    @total_snippets = Snippet.count
+    presenter = StatsPresenter.new(current_user)
 
-    @gold_stars = Completion.where(challenge: 2).count
-    @silver_stars = Completion.where(challenge: 1).count - @gold_stars
-
-    @daily_completers = Completion.group(:day, :challenge).order(:day, :challenge).count # { [12, 1]: 5, [12, 2]: 8, ... }
-                                  .group_by { |day_challenge, _| day_challenge.first }   # { 12: [ [[12, 1], 5], [[12, 2], 8] ], ... }
-                                  .map do |day, completers|
-                                    {
-                                      number: day,
-                                      gold_completers: completers.dig(1, 1).to_i,
-                                      silver_completers: completers.dig(0, 1).to_i - completers.dig(1, 1).to_i
-                                    }
-                                  end
-    @users_per_star = (@daily_completers.map { |h| h[:gold_completers] + h[:silver_completers] }.max.to_f / 50).ceil
-
-    @current_user_solved_today = current_user.completions.where(day: Aoc.latest_day).count if current_user.present?
+    @platform_stats = presenter.platform_stats
+    @achievements = presenter.achievements
   end
 
   def welcome

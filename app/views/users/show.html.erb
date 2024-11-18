@@ -25,7 +25,7 @@
         <span>·</span>
         <%= inline_svg_tag "languages/#{@user.favourite_language}.svg",
                            class: "h-6 self-center",
-                           title: @user.favourite_language %>
+                           title: Snippet::LANGUAGES[@user.favourite_language.to_sym] %>
       <% end %>
     </div>
 
@@ -85,7 +85,6 @@
 
       <%= form_with model: @account_squad, url: join_squad_path, class: "relative flex w-max mx-auto items-end gap-x-2" do |f| %>
         <%= image_tag "dijkstra/pages/squad_settings.svg",
-                      alt: "dijkstra",
                       title: "Apes. Together. Strong.",
                       class: "w-32 h-32 absolute -top-4 -right-48" %>
 
@@ -140,34 +139,36 @@
 
 <%# DAILY COMPLETIONS %>
 
-<hr class="my-4 border-aoc-gray-darker">
+<% if @daily_completions.any? %>
+  <hr class="my-4 border-aoc-gray-darker">
 
-<div class="my-4 pb-2 block overflow-x-auto max-w-full">
-  <table class="mx-auto text-right leading-tight">
-    <tr>
-      <th rowspan="2" class="align-bottom font-light">Day</th>
-      <th colspan="2" class="font-light text-aoc-silver">- Part 1 -</th>
-      <th colspan="2" class="font-light text-aoc-gold">- Part 2 -</th>
-    </tr>
-    <tr>
-      <th class="w-24 font-light">Time</th>
-      <th class="w-16 font-light">Score</th>
-      <th class="w-24 font-light">Time</th>
-      <th class="w-16 font-light">Score</th>
-    </tr>
-
-    <% @daily_completions.each_with_index do |completion, day| %>
+  <div class="my-4 pb-2 block overflow-x-auto max-w-full">
+    <table class="mx-auto text-right leading-tight">
       <tr>
-        <th class="font-light"><%= @latest_day - day %></th>
-        <% [0, 1].each do |part| %>
-          <% if completion[part] %>
-            <td><%= duration_as_text(completion[part][:duration]) %></td>
-            <td><%= completion[part][:score] %></td>
-          <% else %>
-            <td colspan="2">-</td>
-          <% end %>
-        <% end %>
+        <th rowspan="2" class="align-bottom font-light">Day</th>
+        <th colspan="2" class="font-light text-aoc-silver">- Part 1 -</th>
+        <th colspan="2" class="font-light text-aoc-gold">- Part 2 -</th>
       </tr>
-    <% end %>
-  </table>
-</div>
+      <tr>
+        <th class="w-24 font-light">Time</th>
+        <th class="w-16 font-light">Score</th>
+        <th class="w-24 font-light">Time</th>
+        <th class="w-16 font-light">Score</th>
+      </tr>
+
+      <% @daily_completions.each_with_index do |completion, day| %>
+        <tr>
+          <th class="font-light"><%= @latest_day - day %></th>
+          <% [0, 1].each do |part| %>
+            <% if completion[part] %>
+              <td><%= duration_as_text(completion[part][:duration]) %></td>
+              <td><%= completion[part][:score] %></td>
+            <% else %>
+              <td colspan="2">-</td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>

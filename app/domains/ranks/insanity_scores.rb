@@ -12,9 +12,9 @@ module Ranks
       completions = @completions.fetch(score[:user_id], [])
       [
         score[:score],
-        score[:score] == 0 ? score[:user_id] : completions.count,
+        completions.count,
         -completions.sum { |completion| completion.duration || 0 },
-        -score[:user_id]
+        score[:user_id]
       ]
     end
   end

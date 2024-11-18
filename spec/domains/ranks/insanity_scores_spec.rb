@@ -23,7 +23,25 @@ RSpec.describe Ranks::InsanityScores do
                                                      ])
   end
 
-  describe "when scores are tied" do
+  describe "when scores 0" do
+    let(:input) do
+      [
+        { score: 0, user_id: pilou.id },
+        { score: 0, user_id: aquaj.id },
+        { score: 0, user_id: foo.id }
+      ]
+    end
+
+    it "prioritizes by user id descending" do
+      expect(described_class.new(input).rank).to eq([
+                                                      input[2],
+                                                      input[1],
+                                                      input[0]
+                                                    ])
+    end
+  end
+
+  describe "when non-zero scores are tied" do
     let(:input) do
       [
         { score: 50, user_id: pilou.id },

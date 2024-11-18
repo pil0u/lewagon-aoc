@@ -15,9 +15,11 @@ module Completions
           update_users_sync_status(api_completions.keys)
           Rails.logger.info "✔ Users' sync status updated"
 
+          update_users_global_score(api_completions)
+          Rails.logger.info "✔ Users' global score updated"
+
           completion_attributes = transform_for_database(api_completions)
-          Rails.logger.info \
-            "✔ Completions prepared for database import (total: #{completion_attributes.size})"
+          Rails.logger.info "✔ Completions prepared for database import (total: #{completion_attributes.size})"
 
           if completion_attributes.any?
             inserted = insert_into_db(completion_attributes)
@@ -30,8 +32,8 @@ module Completions
         end
       end
 
-      unlock_achievements
       launch_cache_refresh
+      unlock_achievements
       true
     end
 
@@ -85,6 +87,20 @@ module Completions
       end
     end
 
+    def update_users_global_score(api_completions)
+      aoc_global_scores = api_completions.values.filter_map do |user|
+        { id: user["id"], global_score: user["global_score"] } if user["global_score"] > 0
+      end
+
+      aoc_global_scores.each do |obj|
+        aoc_id = obj[:id]
+        aoc_global_score = obj[:global_score]
+
+        User.find_by(aoc_id:).update(aoc_global_score:)
+        Rails.logger.info "\t#{aoc_id} has a global score of #{aoc_global_score}!"
+      end
+    end
+
     def transform_for_database(api_completions)
       now = Time.now.utc
       users = User.pluck(:aoc_id, :id).to_h.except(nil)
@@ -118,21 +134,9 @@ module Completions
     end
 
     def unlock_achievements
-      Achievements::MassUnlockJob.perform_later(:setup_complete)
-      Achievements::MassUnlockJob.perform_later(:edition2020)
-      Achievements::MassUnlockJob.perform_later(:edition2021)
-      Achievements::MassUnlockJob.perform_later(:stars1)
-      Achievements::MassUnlockJob.perform_later(:stars5)
-      Achievements::MassUnlockJob.perform_later(:stars11)
-      Achievements::MassUnlockJob.perform_later(:stars23)
-      Achievements::MassUnlockJob.perform_later(:speed10)
-      Achievements::MassUnlockJob.perform_later(:speed30)
-      Achievements::MassUnlockJob.perform_later(:speed90)
-      Achievements::MassUnlockJob.perform_later(:speed180)
-      Achievements::MassUnlockJob.perform_later(:speed360)
-      Achievements::MassUnlockJob.perform_later(:speed720)
-      Achievements::MassUnlockJob.perform_later(:speed1440)
-      Achievements::MassUnlockJob.perform_later(:github_star)
+      Achievements::MassUnlockJob.perform_later(:fan)
+      Achievements::MassUnlockJob.perform_later(:jedi_master)
+      Achievements::MassUnlockJob.perform_later(:madness)
     end
 
     def launch_cache_refresh

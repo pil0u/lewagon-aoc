@@ -2,45 +2,49 @@
 
 <div class="my-4 flex flex-col gap-y-4">
   <div class="flex flex-wrap justify-center gap-2">
-    <%= render Stats::TileComponent.new(title: "Sign in clickers", value: @registered_users) %>
-    <%= render Stats::TileComponent.new(title: "Setup completers", value: @confirmed_users) %>
-    <%= render Stats::TileComponent.new(title: "Puzzle solvers", value: @participating_users) %>
-    <%= render Stats::TileComponent.new(title: "Solution posters", value: @users_with_snippets) %>
-    <%= render Stats::TileComponent.new(title: "Solutions shared", value: @total_snippets) %>
+    <%= render Stats::TileComponent.new(title: "Sign in clickers", value: @platform_stats[:registered_users]) %>
+    <%= render Stats::TileComponent.new(title: "Setup completers", value: @platform_stats[:confirmed_users]) %>
+    <%= render Stats::TileComponent.new(title: "Puzzle solvers", value: @platform_stats[:participating_users]) %>
+    <%= render Stats::TileComponent.new(title: "Solution posters", value: @platform_stats[:users_with_snippets]) %>
+    <%= render Stats::TileComponent.new(title: "Solutions shared", value: @platform_stats[:total_snippets]) %>
   </div>
 
   <div class="flex flex-wrap justify-center gap-1">
-    <% 12.times do |i| %>
-      <%= image_tag "dijkstra/achievements/surprise.svg",
-                    alt: "dijkstra",
-                    title: "soon™",
-                    class: "w-32 h-32 opacity-70 hover:opacity-100" %>
-    <% end %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:influencer]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:belonging]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:mobster]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:fan]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_answer]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:doomed_sundays]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:jeweler]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:snake_charmer]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:picasso]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:madness]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:jedi_master]) %>
+    <%= render Achievements::UnlockedComponent.new(**@achievements[:the_godfather]) %>
   </div>
 
   <div class="relative flex flex-col gap-y-1">
     <h3 class="strong text-center text-sm lg:text-base">Total stars collected</h3>
 
     <div class="flex justify-center gap-x-2">
-      <span class="text-aoc-silver text-xl lg:text-2xl"><%= @silver_stars %>*</span>
-      <span class="text-aoc-gold text-xl lg:text-2xl"><%= @gold_stars %>*</span>
+      <span class="text-aoc-silver text-xl lg:text-2xl"><%= @platform_stats[:silver_stars] %>*</span>
+      <span class="text-aoc-gold text-xl lg:text-2xl"><%= @platform_stats[:gold_stars] %>*</span>
     </div>
 
-    <% if @current_user_solved_today == 1 %>
+    <% if @platform_stats[:user_solved_today] == 1 %>
       <%= image_tag "dijkstra/pages/stats_silver.svg",
-                    alt: "dijkstra",
                     title: "One more silver star today, thanks to you <3",
                     class: "w-32 h-32 absolute -top-16 -left-16" %>
     <% end %>
-    <% if @current_user_solved_today == 2 %>
+    <% if @platform_stats[:user_solved_today] == 2 %>
       <%= image_tag "dijkstra/pages/stats_gold.svg",
-                    alt: "dijkstra",
                     title: "One more gold star today, thanks to you <3",
                     class: "w-32 h-32 absolute -top-16 -right-16" %>
     <% end %>
   </div>
 
-  <% if @silver_stars + @gold_stars > 0 %>
+  <% if @platform_stats[:silver_stars] + @platform_stats[:gold_stars] > 0 %>
     <p class="text-justify">
       <span class="text-aoc-gold">Gold</span> indicates users who have completed both parts of a puzzle,
       while <span class="text-aoc-silver">silver</span> indicates users who have completed only the first half.
@@ -50,7 +54,7 @@
 
     <table class="block overflow-x-auto whitespace-nowrap w-full py-2">
       <tbody>
-        <%= render Stats::TreeRowComponent.with_collection(@daily_completers.reverse, users_per_star: @users_per_star) %>
+        <%= render Stats::TreeRowComponent.with_collection(@platform_stats[:daily_completers].reverse, users_per_star: @platform_stats[:users_per_star]) %>
       </tbody>
     </table>
   <% end %>

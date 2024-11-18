@@ -51,6 +51,10 @@
       <datatype>BOOLEAN</datatype>
       <default>NULL</default>
     </row>
+    <row name="aoc_global_score" null="1" autoincrement="0">
+      <datatype>INTEGER</datatype>
+      <default>0</default>
+    </row>
     <row name="aoc_id" null="1" autoincrement="0">
       <datatype>INTEGER</datatype>
       <default>NULL</default>

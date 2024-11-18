@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Achievements
-  class GithubStarMassUnlocker < MassUnlocker
+  class FanMassUnlocker < MassUnlocker
     def call
       uri = URI("https://api.github.com/repos/pil0u/lewagon-aoc/stargazers")
       response = Net::HTTP.get_response(uri)

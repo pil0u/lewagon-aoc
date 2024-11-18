@@ -84,7 +84,7 @@ RSpec.describe Ranks::InsanityScores do
     end
 
     context "and users have completed the same puzzles, took the same time to complete them" do
-      it "prioritizes by user id" do
+      it "prioritizes by user id descending" do
         travel_to Time.new(2030, 12, 1, 0, 0, 0, Aoc.event_timezone)
 
         create(:completion, user: pilou, day: 1, completion_unix_time: 2.hours.from_now)
@@ -92,9 +92,9 @@ RSpec.describe Ranks::InsanityScores do
         create(:completion, user: foo, day: 1, completion_unix_time: 2.hours.from_now)
 
         expect(described_class.new(input).rank).to eq([
-                                                        input[0],
+                                                        input[2],
                                                         input[1],
-                                                        input[2]
+                                                        input[0]
                                                       ])
       end
     end

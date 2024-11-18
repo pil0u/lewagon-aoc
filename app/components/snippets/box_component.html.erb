@@ -7,7 +7,7 @@
       <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
 
       <% if @user_can_edit_snippet %>
-        <%= link_to "edit", edit_snippet_path(day: @snippet.day, challenge: @snippet.challenge, id: @snippet.id), class: "link-explicit" %>
+        <%= link_to "edit", edit_snippet_path(id: @snippet.id), class: "link-explicit" %>
       <% end %>
     </div>
 

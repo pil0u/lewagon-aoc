@@ -22,18 +22,18 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
 
   def achievements
     {
+      influencer: set_influencer_achievement,
+      belonging: set_belonging_achievement,
+      mobster: set_mobster_achievement,
       fan: set_fan_achievement,
       the_answer: set_the_answer_achievement,
       doomed_sundays: set_doomed_sundays_achievement,
-      influencer: set_influencer_achievement,
-      the_godfather: set_the_godfather_achievement,
-      belonging: set_belonging_achievement,
-      mobster: set_mobster_achievement,
-      jedi_master: set_jedi_master_achievement,
-      madness: set_madness_achievement,
       jeweler: set_jeweler_achievement,
       snake_charmer: set_snake_charmer_achievement,
-      picasso: set_picasso_achievement
+      picasso: set_picasso_achievement,
+      madness: set_madness_achievement,
+      jedi_master: set_jedi_master_achievement,
+      the_godfather: set_the_godfather_achievement
     }
   end
 

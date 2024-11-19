@@ -102,7 +102,7 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
 
   def set_fan_achievement
     fans = Achievement.fan.joins(:user).pluck("users.id")
-    user_is_fan = fans.pluck(0).include?(@user&.id)
+    user_is_fan = fans.include?(@user&.id)
 
     state = :locked
     state = :unlocked if fans.any?
@@ -161,7 +161,7 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
 
   def set_madness_achievement
     madness_holders = Achievement.madness.joins(:user).pluck("users.id")
-    user_is_madness_holder = madness_holders.pluck(0).include?(@user&.id)
+    user_is_madness_holder = madness_holders.include?(@user&.id)
 
     state = :locked
     state = :unlocked_plus if user_is_madness_holder

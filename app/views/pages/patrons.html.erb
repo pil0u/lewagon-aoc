@@ -17,7 +17,7 @@
 
   <div data-controller="clipboard"
        data-clipboard-content-value="<%= current_user.referral_link(request) %>"
-       class="relative w-max mx-auto">
+       class="relative text-center mx-auto">
     <code data-action="click->clipboard#copy" class="copyable"><%= current_user.referral_link(request) %></code>
     <span data-clipboard-target="feedback" class="hidden absolute -top-4 right-0 text-xs">Copied!</span>
   </div>

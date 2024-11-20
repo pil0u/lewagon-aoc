@@ -59,7 +59,7 @@ class User < ApplicationRecord
     user.github_username = auth.info.github_nickname
     user.original_city_id = original_city.id
 
-    user.save
+    user.save!
     user
   end
 

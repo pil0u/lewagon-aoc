@@ -69,7 +69,23 @@ module Completions
       response = https.request(request)
       Rails.logger.info "\t#{response.code} #{response.message}"
 
-      JSON.parse(response.body)["members"]
+      begin
+        JSON.parse(response.body)["members"]
+      rescue JSON::ParserError => e
+        client = Slack::Web::Client.new
+        channel = "#aoc-dev"
+
+        if Rails.env.development? || (Rails.env.production? && ENV.fetch("THIS_IS_STAGING", nil))
+          text = "(not prod) Failed to parse JSON from AoC API"
+          client.chat_postMessage(channel:, text:)
+          return
+        end
+
+        text = "⚠️ <@URZ0F4TEF> Failed to parse JSON from AoC API"
+        message = client.chat_postMessage(channel:, text:)
+        client.chat_postMessage(channel:, thread_ts: message["message"]["ts"], text: "```#{e.message}```")
+        raise
+      end
     end
 
     def update_users_sync_status(participant_ids)

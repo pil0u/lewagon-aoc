@@ -54,4 +54,42 @@ RSpec.describe User do
       )
     end
   end
+
+  describe "Slack linking scope" do
+    it "ensures slack_linked scope and slack_linked? method are in sync" do
+      user_with_slack = create(:user, slack_id: "ABC123", synced: true)
+      user_without_slack = create(:user, slack_id: nil, synced: true)
+      user_with_unsynced_slack = create(:user, slack_id: "DEF456", synced: false)
+
+      expect(User.slack_linked).to include(user_with_slack)
+      expect(user_with_slack.slack_linked?).to be true
+
+      expect(User.slack_linked).not_to include(user_without_slack)
+      expect(user_without_slack.slack_linked?).to be false
+
+      expect(User.slack_linked).not_to include(user_with_unsynced_slack)
+      expect(user_with_unsynced_slack.slack_linked?).to be false
+    end
+  end
+
+  describe "Confirmed scope" do
+    it "ensures confirmed scope and confirmed? method are in sync" do
+      user_confirmed = create(:user, aoc_id: 123, accepted_coc: true, synced: true)
+      user_no_aoc = create(:user, aoc_id: nil, accepted_coc: true, synced: true)
+      user_no_coc = create(:user, aoc_id: 456, accepted_coc: false, synced: true)
+      user_unsynced = create(:user, aoc_id: 789, accepted_coc: true, synced: false)
+
+      expect(User.confirmed).to include(user_confirmed)
+      expect(user_confirmed.confirmed?).to be true
+
+      expect(User.confirmed).not_to include(user_no_aoc)
+      expect(user_no_aoc.confirmed?).to be false
+
+      expect(User.confirmed).not_to include(user_no_coc)
+      expect(user_no_coc.confirmed?).to be false
+
+      expect(User.confirmed).not_to include(user_unsynced)
+      expect(user_unsynced.confirmed?).to be false
+    end
+  end
 end

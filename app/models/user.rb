@@ -44,7 +44,7 @@ class User < ApplicationRecord
   scope :admins, -> { where_roles(:admin) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) } # All users are 'hardcore' since 2024 edition
-  scope :slack_linked, -> { where.not(slack_id: nil) }
+  scope :slack_linked, -> { where(synced: true).where.not(slack_id: nil) }
 
   def self.from_kitt(auth)
     original_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
@@ -64,11 +64,11 @@ class User < ApplicationRecord
   end
 
   def confirmed?
-    aoc_id.present? && accepted_coc && synced
+    accepted_coc && aoc_id.present? && synced
   end
 
   def slack_linked?
-    slack_id.present?
+    synced && slack_id.present?
   end
 
   def slack_link

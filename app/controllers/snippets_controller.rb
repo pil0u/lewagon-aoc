@@ -9,7 +9,8 @@ class SnippetsController < ApplicationController
     @language = params[:language]
 
     @snippet = Snippets::Builder.call(language: current_user.favourite_language)
-    @snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge).order(created_at: :desc)
+    reaction_relations = Reaction::TYPES.map { |type| :"#{type}_reactions" }
+    @snippets = Snippet.includes(:user, :reactions, *reaction_relations).where(day: @day, challenge: @challenge).order(created_at: :desc)
 
     @languages = @snippets.pluck(:language).uniq.sort
     @snippets = @snippets.where(language: @language) if @language

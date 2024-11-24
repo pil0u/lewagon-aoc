@@ -1,0 +1,42 @@
+#!/bin/sh
+set -e # Exit immediately if a command exits with a non-zero status.
+
+if [ "$1" = "start" ]; then
+  echo "Up the 🐳 ..."
+  rm -rf tmp/pids/server.pid
+  docker compose up -d web worker db css
+  docker compose logs web worker db css -f -n 0
+elif [ "$1" = "console" ]; then
+  echo "Running rails console in 🐳 ..."
+  docker compose run --rm app bundle exec rails console
+elif [ "$1" = "migrate" ]; then
+  echo "Running rails console in 🐳 ..."
+  docker compose run --rm app bundle exec rails db:migrate
+elif [ "$1" = "stop" ]; then
+  echo "Stop the 🐳 ..."
+  docker compose down web worker css db
+elif [ "$1" = "restart" ]; then
+  $0 stop && $0 start
+elif [ "$1" = "run" ]; then
+  shift
+  echo "Running '$@' in the 🐳 ..."
+  docker compose run --rm app $@
+elif [ "$1" = "cleanup" ]; then
+  echo "Cleaning up the 🐳 ..."
+  docker compose down --rmi all --volumes --remove-orphans
+elif [ "$1" = "rubocop" ]; then
+  echo "Running Rubocop 🚨 command: $@"
+  docker compose run --rm --no-deps app bundle exec $@
+else
+  echo
+  echo "Available commands, with description :"
+  echo
+  echo "cleanup                                   Remove Docker images, and all dependencies, good way to start from scratch."
+  echo "console                                   Open a Rails console."
+  echo "restart                                   Restart containers, web, worker, vite-admin and vite."
+  echo "rubocop [-A]                              Run Rubocop linter"
+  echo "run [command]                             Run a specific command in Docker context"
+  echo "start                                     Start containers, web, worker, vite-admin and vite."
+  echo "stop                                      Stop containers, web, worker, vite-admin and vite."
+  echo
+fi

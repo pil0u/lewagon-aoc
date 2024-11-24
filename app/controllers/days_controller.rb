@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 class DaysController < ApplicationController
+  DIFFICULTY_LEVELS = {
+    1 => { difficulty: "EASY", colour: "🟢" },
+    2 => { difficulty: "HARD", colour: "🟡" },
+    3 => { difficulty: "VERY HARD", colour: "🟠" },
+    4 => { difficulty: "HARDCORE", colour: "🔴" },
+    5 => { difficulty: "IMPOSSIBLE", colour: "⚫" }
+  }.freeze
+
+  DEFAULT_DIFFICULTY = { difficulty: "UNKNOWN", colour: "⚪" }.freeze
+
   def show
     @day = params[:day].to_i
 
@@ -22,6 +32,14 @@ class DaysController < ApplicationController
     @participants = presenter.get
 
     @puzzle = Puzzle.by_date(Aoc.begin_time.change(day: @day))
+
+    @part_1 = DIFFICULTY_LEVELS[@puzzle&.difficulty_part_1] || DEFAULT_DIFFICULTY
+    @part_2 = DIFFICULTY_LEVELS[@puzzle&.difficulty_part_2] || DEFAULT_DIFFICULTY
+    @difficulty_title = <<~TEXT
+      Estimated difficulty (experimental)
+      Part 1: #{@part_1[:difficulty]} #{@part_1[:colour]}
+      Part 2: #{@part_2[:difficulty]} #{@part_2[:colour]}
+    TEXT
   end
 
   private

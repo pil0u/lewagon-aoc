@@ -3,32 +3,29 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: "bundle exec rails s -p 3000 -b '0.0.0.0'"
-    environment: &env
-      DATABASE_URL: postgres://aoc:aoc@db:5432/aocdb
-    volumes: &volumes
+    volumes:
       - .:/app
       - bundle:/usr/local/bundle
       - tailwindcss:/app/app/assets/builds
+      - postgres_socket:/var/run/postgresql
 
   db:
     image: postgres:14.2-alpine
     container_name: aoc-db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     command: "postgres -c 'max_connections=500'"
     environment:
-      POSTGRES_DB: aocdb
-      POSTGRES_USER: aoc
-      POSTGRES_PASSWORD: aoc
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_socket:/var/run/postgresql
 
   web:
     <<: *app
     command: "bundle exec rails s -p 3000 -b '0.0.0.0'"
     environment:
-      <<: *env
       PIDFILE: /tmp/pids/server.pid
     ports:
       - "3000:3000"
@@ -50,6 +47,7 @@ volumes:
   postgres_data: {}
   bundle: {}
   tailwindcss: {}
+  postgres_socket: {}
 networks:
   default:
     name: aoc_default

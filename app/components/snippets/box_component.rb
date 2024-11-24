@@ -11,6 +11,7 @@ module Snippets
       @snippet = snippet
 
       @user_can_edit_snippet = @snippet.user == @user
+      @user_reaction_vote_value = @snippet.reactions.find { _1.user_id == @user.id }
     end
   end
 end

@@ -1,11 +1,11 @@
 ![Le Wagon x Advent of Code](public/thumbnail.png)
 
 ```
-Ruby    3.3.5  
+Ruby    3.3.5
 Rails   7.2.1.1
 ```
 
-Found a bug? Please [open an Issue](/../../issues/new).  
+Found a bug? Please [open an Issue](/../../issues/new).
 Have a feature request? Let's discuss it [on Slack](slack://user?team=T02NE0241&id=URZ0F4TEF).
 
 # Contribute
@@ -35,6 +35,11 @@ Upon Pull Request actions (open, push), CI scripts are automatically run tests, 
 
 - `AOC_ROOMS` is a comma-separated list of [private leaderboard](https://adventofcode.com/leaderboard/private) IDs that _you belong_ to (e.g. `9999999-a0b1c2d3,7777777-e4f56789`)
 - `SESSION_COOKIE` is your own Advent of Code session cookie (valid ~ 1 month). You need to [log in](https://adventofcode.com/auth/login) to the platform, then retrieve the value of the `session` cookie (e.g. `436088a9...9ffb6476`)
+
+### Docker dev env
+
+You can also run the app in a Docker container. A `docker-compose.yml` file is provided for this purpose. The ENV variables are still required and should be added to the `.env` file.
+A small CLI is provided for common use-cases: `bin/ddev` (see usage for more details).
 
 ### Overmind (optional)
 
@@ -71,7 +76,7 @@ Finally, move the generated files to the `tmp` folder in the project root and st
 ```zsh
 mv localhost* tmp/
 bin/dev ssl
-```     
+```
 
 ## Launch the webapp on local mobile browser
 

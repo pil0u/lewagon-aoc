@@ -38,9 +38,15 @@ class UpdatePuzzlesDifficultyJob < ApplicationJob
 
       next unless puzzle.is_difficulty_final
 
-      text = "Estimated difficulty for day #{day} (experimental feature):"
-      text += "\n- part 1 is *`#{Puzzle::DIFFICULTY_LEVELS[puzzle.difficulty_part_1][:difficulty]}`* #{Puzzle::DIFFICULTY_LEVELS[puzzle.difficulty_part_1][:colour]}"
-      text += "\n- part 2 is *`#{Puzzle::DIFFICULTY_LEVELS[puzzle.difficulty_part_2][:difficulty]}`* #{Puzzle::DIFFICULTY_LEVELS[puzzle.difficulty_part_2][:colour]}"
+      part_1 = Puzzle::DIFFICULTY_LEVELS[puzzle.difficulty_part_1]
+      part_2 = Puzzle::DIFFICULTY_LEVELS[puzzle.difficulty_part_2]
+
+      text = <<~TEXT
+        Estimated difficulty for day #{day} (experimental feature):
+        - part 1 is *`#{part_1[:difficulty]}`* #{part_1[:colour]}
+        - part 2 is *`#{part_2[:difficulty]}`* #{part_2[:colour]}
+      TEXT
+
       client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:)
     end
 

@@ -1,13 +1,59 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "516250b58f27249a9548ed00f0872fa69ca6e07770f3a972a2c3a475744d12db",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/snippets_controller.rb",
+      "line": 64,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Snippet.find(params[:id]).slack_url)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SnippetsController",
+        "method": "discuss"
+      },
+      "user_input": "Snippet.find(params[:id]).slack_url",
+      "confidence": "High",
+      "cwe_id": [
+        601
+      ],
+      "note": "Redirecting to a safe Slack URL computed earlier."
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "516250b58f27249a9548ed00f0872fa69ca6e07770f3a972a2c3a475744d12db",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/snippets_controller.rb",
+      "line": 71,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Snippet.find(params[:id]).slack_url)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SnippetsController",
+        "method": "discuss"
+      },
+      "user_input": "Snippet.find(params[:id]).slack_url",
+      "confidence": "High",
+      "cwe_id": [
+        601
+      ],
+      "note": "Redirecting to a safe Slack URL computed earlier."
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "c453ead0c5aa7e164c9fc8d4dfd2014bbeefabd31d4076e37d18d9a76b583668",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/controllers/users_controller.rb",
-      "line": 60,
+      "line": 51,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "User.find_by(params[:attribute].to_sym => params[:identifier])",
       "render_path": null,
@@ -24,6 +70,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-11-12 00:39:59 +0100",
-  "brakeman_version": "6.0.1"
+  "updated": "2024-11-26 22:55:47 +0000",
+  "brakeman_version": "6.2.2"
 }

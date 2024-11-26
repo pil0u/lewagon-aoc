@@ -44,14 +44,14 @@ class User < ApplicationRecord
   scope :admins, -> { where_roles(:admin) }
   scope :confirmed, -> { where(accepted_coc: true, synced: true).where.not(aoc_id: nil) }
   scope :insanity, -> { where(entered_hardcore: true) } # All users are 'hardcore' since 2024 edition
-  scope :slack_linked, -> { where.not(slack_id: nil) }
+  scope :slack_linked, -> { where(synced: true).where.not(slack_id: nil) }
 
   def self.from_kitt(auth)
     original_batch = auth.info.schoolings&.min_by { |batch| batch.camp.starts_at }
     original_city = City.find_or_initialize_by(name: original_batch&.city&.name)
 
     user = find_or_initialize_by(provider: auth.provider, uid: auth.uid) do |u|
-      u.username = auth.info.github_nickname
+      u.username = auth.info.github_nickname[0...16]
       u.batch = Batch.find_or_initialize_by(number: original_batch&.camp&.slug.to_i)
       u.city = original_city
     end
@@ -59,16 +59,16 @@ class User < ApplicationRecord
     user.github_username = auth.info.github_nickname
     user.original_city_id = original_city.id
 
-    user.save
+    user.save!
     user
   end
 
   def confirmed?
-    aoc_id.present? && accepted_coc && synced
+    accepted_coc && aoc_id.present? && synced
   end
 
   def slack_linked?
-    slack_id.present?
+    synced && slack_id.present?
   end
 
   def slack_link

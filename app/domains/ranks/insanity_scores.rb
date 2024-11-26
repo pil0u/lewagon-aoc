@@ -14,7 +14,7 @@ module Ranks
         score[:score],
         completions.count,
         -completions.sum { |completion| completion.duration || 0 },
-        -score[:user_id]
+        score[:user_id]
       ]
     end
   end

@@ -59,7 +59,8 @@ module Referrable
         LEFT JOIN (SELECT user_id, COUNT(id) AS total FROM snippets GROUP BY user_id) AS snippets
             ON referees.id = snippets.user_id
         WHERE referees.referrer_id IS NOT NULL
-        GROUP BY 1, 2;
+        GROUP BY 1, 2
+        ORDER BY aura DESC;
       SQL
 
       ActiveRecord::Base.connection.exec_query(query, "SQL")

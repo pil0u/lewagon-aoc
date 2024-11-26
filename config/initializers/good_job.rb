@@ -26,10 +26,6 @@ Rails.application.configure do
         cron: "5 0 1-25 12 * America/New_York",
         class: "Buddies::GenerateDailyPairsJob",
         args: -> { [Aoc.latest_day] }
-      },
-      achievements_lock_time: {                   # once at lock time
-        cron: "30 17 8 12 * Europe/Paris",
-        class: "Achievements::LockTimeJob"
       }
     }
   }

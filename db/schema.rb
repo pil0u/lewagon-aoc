@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_16_190301) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_16_213617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -412,6 +412,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_190301) do
 
   create_table "users", force: :cascade do |t|
     t.boolean "accepted_coc", default: false, null: false
+    t.integer "aoc_global_score", default: 0
     t.integer "aoc_id"
     t.bigint "batch_id"
     t.bigint "city_id"

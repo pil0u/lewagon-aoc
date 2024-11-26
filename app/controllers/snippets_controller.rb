@@ -51,7 +51,7 @@ class SnippetsController < ApplicationController
 
   def discuss
     @snippet = Snippet.find(params[:id])
-    return redirect_to @snippet.slack_url if @snippet.slack_url
+    return redirect_to @snippet.slack_url if @snippet.slack_url.present?
 
     text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}-hd: #{solution_markdown} on puzzle #{@snippet.day} part #{@snippet.challenge}"
     message = client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:)

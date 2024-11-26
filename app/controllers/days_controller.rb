@@ -22,6 +22,14 @@ class DaysController < ApplicationController
     @participants = presenter.get
 
     @puzzle = Puzzle.by_date(Aoc.begin_time.change(day: @day))
+
+    @part_1 = Puzzle::DIFFICULTY_LEVELS[@puzzle&.difficulty_part_1] || Puzzle::DEFAULT_DIFFICULTY
+    @part_2 = Puzzle::DIFFICULTY_LEVELS[@puzzle&.difficulty_part_2] || Puzzle::DEFAULT_DIFFICULTY
+    @difficulty_title = <<~TEXT
+      Estimated difficulty (experimental)
+      Part 1: #{@part_1[:difficulty]} #{@part_1[:colour]}
+      Part 2: #{@part_2[:difficulty]} #{@part_2[:colour]}
+    TEXT
   end
 
   private

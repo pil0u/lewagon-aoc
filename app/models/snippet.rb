@@ -30,7 +30,10 @@ class Snippet < ApplicationRecord
 
   belongs_to :user
 
-  has_many :reactions, dependent: :destroy
+  has_many :reactions, dependent: :destroy, inverse_of: :snippet
+  Reaction::TYPES.each do |reaction_type|
+    has_many :"#{reaction_type}_reactions", -> { where(reaction_type: reaction_type) }, class_name: "Reaction", dependent: :destroy, inverse_of: :snippet
+  end
 
   validates :code, presence: true
   validates :language, inclusion: { in: LANGUAGES.keys.map(&:to_s) }

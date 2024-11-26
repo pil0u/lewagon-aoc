@@ -15,7 +15,7 @@ module Snippets
       @user = user
       @snippet = snippet
       @reaction_type = reaction_type
-      @reactions = @snippet.reactions.where(reaction_type:)
+      @reactions = @snippet.send(:"#{reaction_type}_reactions")
     end
   end
 end

@@ -27,7 +27,7 @@
       class="flex items-center gap-x-1"
       data-controller="reactions"
       data-reactions-snippet-id-value="<%= @snippet.id %>"
-      data-reactions-vote-value="<%= @snippet.reactions.find_by(user_id: @user.id).to_json %>">
+      data-reactions-vote-value="<%= @user_reaction_vote_value.to_json %>">
       <% Reaction::TYPES.each do |type| %>
         <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
       <% end %>

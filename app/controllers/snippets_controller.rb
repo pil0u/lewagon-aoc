@@ -10,14 +10,15 @@ class SnippetsController < ApplicationController
 
     @snippet = Snippets::Builder.call(language: current_user.favourite_language)
 
-    base_snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge)
+    reaction_relations = Reaction::TYPES.map { |type| :"#{type}_reactions" }
+    base_snippets = Snippet.includes(:user, :reactions, *reaction_relations).where(day: @day, challenge: @challenge)
     @languages = base_snippets.pluck(:language).uniq.sort
 
     snippets_scope = @language.present? ? base_snippets.where(language: @language) : base_snippets
 
     @snippets = snippets_scope.sort_by do |snippet|
       total_reactions = snippet.reactions.size
-      learning_reactions = snippet.reactions.count { |r| r.reaction_type == "learning" }
+      learning_reactions = snippet.learning_reactions.size
       hours_since_publish = (Time.current - snippet.created_at) / 1.hour
 
       (1 + learning_reactions) * (1 + total_reactions) / ((1 + hours_since_publish)**1.8)

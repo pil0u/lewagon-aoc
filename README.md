@@ -5,7 +5,7 @@ Ruby    3.3.5
 Rails   7.2.1.1
 ```
 
-Found a bug? Please [open an Issue](/../../issues/new).<br />
+Found a bug? Please [open an Issue](/../../issues/new).<br>
 Have a feature request? Let's discuss it [on Slack](slack://user?team=T02NE0241&id=URZ0F4TEF).
 
 # Contribute

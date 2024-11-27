@@ -72,9 +72,9 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
 
     state = :locked
     state = :unlocked if referrals_count >= 100
-    state = :unlocked_plus if user_referrals_count&.> 0
+    state = :unlocked_plus if referrals_count >= 100 && user_referrals_count.present?
     title = "Influencer\n\nWe have reached 100 referrals 🤝 Actually #{referrals_count} and counting!"
-    title += " - and you have personally invited #{user_referrals_count} of them, thank you for spreading the love <3" if user_referrals_count&.> 0
+    title += " - and you have personally invited #{user_referrals_count} of them, thank you for spreading the love <3" if state == :unlocked_plus
 
     { nature: "influencer", state:, title: }
   end

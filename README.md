@@ -33,6 +33,7 @@ Upon Pull Request actions (open, push), CI scripts are automatically run tests, 
 > [!CAUTION]
 > The `.env` file is used for development purposes only. It is _not_ versioned and never should.
 
+- `POSTGRES_USER` and `POSTGRES_PASSWORD` should be set accordingly to your db config. If you're using the [Docker dev env](#docker-dev-env) you can omit those.
 - `AOC_ROOMS` is a comma-separated list of [private leaderboard](https://adventofcode.com/leaderboard/private) IDs that _you belong_ to (e.g. `9999999-a0b1c2d3,7777777-e4f56789`)
 - `SESSION_COOKIE` is your own Advent of Code session cookie (valid ~ 1 month). You need to [log in](https://adventofcode.com/auth/login) to the platform, then retrieve the value of the `session` cookie (e.g. `436088a9...9ffb6476`)
 

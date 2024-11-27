@@ -90,7 +90,7 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
   end
 
   def set_mobster_achievement
-    biggest_squad_id = Squad.joins(:users).group(:id).order("COUNT(users.id) DESC").first&.id
+    biggest_squad_id = Squad.joins(:users).group(:id).order("COUNT(users.id) DESC, created_at").first&.id
     user_is_in_biggest_squad = @user&.squad_id == biggest_squad_id
 
     state = :locked

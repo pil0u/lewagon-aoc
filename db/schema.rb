@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_16_213617) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_22_142117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -282,6 +282,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_213617) do
   create_table "puzzles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "date", null: false
+    t.integer "difficulty_part_1"
+    t.integer "difficulty_part_2"
+    t.boolean "is_difficulty_final", default: false, null: false
     t.string "slack_url"
     t.string "thread_ts"
     t.string "title"
@@ -306,6 +309,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_213617) do
     t.datetime "created_at", null: false
     t.integer "day"
     t.text "language"
+    t.string "slack_url"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id", "day", "challenge", "language"], name: "index_snippets_on_user_id_and_day_and_challenge_and_language", unique: true

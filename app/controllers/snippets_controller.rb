@@ -9,16 +9,26 @@ class SnippetsController < ApplicationController
     @language = params[:language]
 
     @snippet = Snippets::Builder.call(language: current_user.favourite_language)
-    @snippets = Snippet.includes(:user, :reactions).where(day: @day, challenge: @challenge).order(created_at: :desc)
 
-    @languages = @snippets.pluck(:language).uniq.sort
-    @snippets = @snippets.where(language: @language) if @language
+    reaction_relations = Reaction::TYPES.map { |type| :"#{type}_reactions" }
+    base_snippets = Snippet.includes(:user, :reactions, *reaction_relations).where(day: @day, challenge: @challenge)
+    @languages = base_snippets.pluck(:language).uniq.sort
+
+    snippets_scope = @language.present? ? base_snippets.where(language: @language) : base_snippets
+
+    @snippets = snippets_scope.sort_by do |snippet|
+      total_reactions = snippet.reactions.size
+      learning_reactions = snippet.learning_reactions.size
+      hours_since_publish = (Time.current - snippet.created_at) / 1.hour
+
+      (1 + learning_reactions) * (1 + total_reactions) / ((1 + hours_since_publish)**1.8)
+    end.reverse
 
     @text_area_placeholder = <<~TEXT
-      This box is super smart.
-      Paste your code directly here, it will work.
-      Write a super nice guide in Markdown, it will work too.
-      If your Markdown tutorial features Python code, choose Python as a language.
+      Paste in your code directly here. Most common languages are supported.
+
+      Markdown is supported: you can write an entire guide about your approach.
+      In that case, pick the language featured in your guide.
     TEXT
   end
 
@@ -49,19 +59,37 @@ class SnippetsController < ApplicationController
     end
   end
 
+  def discuss
+    @snippet = Snippet.find(params[:id])
+    return redirect_to @snippet.slack_url if @snippet.slack_url.present?
+
+    text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}-hd: #{solution_markdown} on puzzle #{@snippet.day} part #{@snippet.challenge}"
+    message = client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:)
+    slack_thread = client.chat_getPermalink(channel: message["channel"], message_ts: message["message"]["ts"])
+    @snippet.update(slack_url: slack_thread[:permalink])
+
+    redirect_to @snippet.slack_url
+  end
+
   private
+
+  def client
+    @client ||= Slack::Web::Client.new
+  end
+
+  def post_slack_message
+    puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
+    username = "<#{helpers.profile_url(current_user.uid)}|#{current_user.username}>"
+    text = "#{username} submitted a new #{solution_markdown} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
+    client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)
+  end
 
   def set_snippet
     @snippet = current_user.snippets.find(params[:id])
   end
 
-  def post_slack_message
-    client = Slack::Web::Client.new
-    puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
-    username = "<#{helpers.profile_url(current_user.uid)}|#{current_user.username}>"
-    solution = "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
-    text = "#{username} submitted a new #{solution} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
-    client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)
+  def solution_markdown
+    "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
   end
 
   def snippet_params

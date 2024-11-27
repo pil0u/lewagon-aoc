@@ -1,11 +1,20 @@
 <div id="<%= @snippet.id %>"
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
      data-controller="show-more">
-  <div class="flex text-xs gap-x-3">
-    <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
 
-    <% if @user_can_edit_snippet %>
-      <%= link_to "edit", edit_snippet_path(id: @snippet.id), class: "link-explicit" %>
+  <div class="flex items-center justify-between text-xs">
+    <div class="flex gap-x-3">
+      <%= link_to "permalink", snippet_path(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id), class: "link-explicit" %>
+
+      <% if @user_can_edit_snippet %>
+        <%= link_to "edit", edit_snippet_path(id: @snippet.id), class: "link-explicit" %>
+      <% end %>
+    </div>
+
+    <% if @user_can_discuss_snippet %>
+      <%= button_to discuss_snippet_path(@snippet), method: :patch, form: { target: "_blank" } do %>
+        <span class="link-explicit link-slack">discuss on Slack</span>
+      <% end %>
     <% end %>
   </div>
 
@@ -27,7 +36,7 @@
       class="flex items-center gap-x-1"
       data-controller="reactions"
       data-reactions-snippet-id-value="<%= @snippet.id %>"
-      data-reactions-vote-value="<%= @snippet.reactions.find_by(user_id: @user.id).to_json %>">
+      data-reactions-vote-value="<%= @user_reaction_vote_value.to_json %>">
       <% Reaction::TYPES.each do |type| %>
         <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
       <% end %>

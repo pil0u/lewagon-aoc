@@ -12,7 +12,9 @@
     </div>
 
     <% if @user_can_discuss_snippet %>
-      <%= link_to "discuss on Slack", discuss_snippet_path(@snippet), class: "link-explicit link-slack", rel: :noopener, target: :_blank %>
+      <%= button_to discuss_snippet_path(@snippet), method: :patch, form: { target: "_blank" } do %>
+        <span class="link-explicit link-slack">discuss on Slack</span>
+      <% end %>
     <% end %>
   </div>
 

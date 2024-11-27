@@ -72,9 +72,9 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
 
     state = :locked
     state = :unlocked if referrals_count >= 100
-    state = :unlocked_plus if user_referrals_count&.> 0
+    state = :unlocked_plus if referrals_count >= 100 && user_referrals_count.to_i > 0
     title = "Influencer\n\nWe have reached 100 referrals 🤝 Actually #{referrals_count} and counting!"
-    title += " - and you have personally invited #{user_referrals_count} of them, thank you for spreading the love <3" if user_referrals_count&.> 0
+    title += " - and you have personally invited #{user_referrals_count} of them, thank you for spreading the love <3" if state == :unlocked_plus
 
     { nature: "influencer", state:, title: }
   end
@@ -90,7 +90,7 @@ class StatsPresenter # rubocop:disable Metrics/ClassLength
   end
 
   def set_mobster_achievement
-    biggest_squad_id = Squad.joins(:users).group(:id).order("COUNT(users.id) DESC").first&.id
+    biggest_squad_id = Squad.joins(:users).group(:id).order("COUNT(users.id) DESC, created_at").first&.id
     user_is_in_biggest_squad = @user&.squad_id == biggest_squad_id
 
     state = :locked

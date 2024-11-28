@@ -44,6 +44,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def me
+    redirect_to profile_path(current_user.uid)
+  end
+
   def impersonate
     attribute_name = params[:attribute]
     identifier_value = params[:identifier]

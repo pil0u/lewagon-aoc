@@ -35,6 +35,11 @@ Rails.application.configure do
       update_puzzles_difficulty: {
         cron: "*/5 0-2 1-25 12 * America/New_York",
         class: "UpdatePuzzlesDifficultyJob"
+      },
+      # every 5 minutes
+      blazer_run_all_checks: {
+        cron: "*/5 * * * *",
+        class: "Blazer::RunAllChecksJob"
       }
     }
   }

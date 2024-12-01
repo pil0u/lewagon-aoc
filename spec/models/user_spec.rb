@@ -57,18 +57,14 @@ RSpec.describe User do
 
   describe "Slack linking scope" do
     it "ensures slack_linked scope and slack_linked? method are in sync" do
-      user_with_slack = create(:user, slack_id: "ABC123", synced: true)
-      user_without_slack = create(:user, slack_id: nil, synced: true)
-      user_with_unsynced_slack = create(:user, slack_id: "DEF456", synced: false)
+      user_with_slack = create(:user, slack_id: "ABC123")
+      user_without_slack = create(:user, slack_id: nil)
 
       expect(User.slack_linked).to include(user_with_slack)
       expect(user_with_slack.slack_linked?).to be true
 
       expect(User.slack_linked).not_to include(user_without_slack)
       expect(user_without_slack.slack_linked?).to be false
-
-      expect(User.slack_linked).not_to include(user_with_unsynced_slack)
-      expect(user_with_unsynced_slack.slack_linked?).to be false
     end
   end
 

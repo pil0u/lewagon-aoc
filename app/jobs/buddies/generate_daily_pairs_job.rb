@@ -27,7 +27,7 @@ module Buddies
     private
 
     def retrieve_users_with_slack_linked
-      @user_ids = User.slack_linked.order(:id).pluck(:id)
+      @user_ids = User.slack_linked.where(synced: true).order(:id).pluck(:id)
     end
 
     def handle_odd_number_of_users

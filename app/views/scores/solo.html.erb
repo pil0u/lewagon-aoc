@@ -1,12 +1,17 @@
-<%= render Scores::NavComponent.new %>
-
 <%= render PageTitleComponent.new(title: "Solo scoreboard") %>
 
-<p class="my-4">
-  You earn between <code class="strong">25</code> and <code class="strong">50</code> points for each <em>challenge</em>
-  you solve. <%= link_to "More info", faq_path, class: "link-explicit link-internal" %>.
-</p>
-
+<div class="my-4">
+  <p>
+    If you solve a puzzle in the first 24 hours after its release, you get a score of <code class="strong">50</code>.
+  </p>
+  <p>
+    After 24 hours, the score decreases by <code class="strong">1</code>/hour, down to a minimum of
+    <code class="strong">25</code>.
+  </p>
+  <p>
+    Even if you solve a puzzle 2 weeks after release, you still get <code class="strong">25</code> points.
+  </p>
+</div>
 <table class="block overflow-x-auto whitespace-nowrap w-full">
   <thead>
     <tr class="border-b border-aoc-gray-darker">
@@ -22,6 +27,6 @@
   </thead>
 
   <tbody>
-    <%= render Scores::UserRowComponent.with_collection(@participants, user: current_user, extended: true, colorize_hardcore: true) %>
+    <%= render Scores::UserRowComponent.with_collection(@participants, user: current_user, extended: true) %>
   </tbody>
 </table>

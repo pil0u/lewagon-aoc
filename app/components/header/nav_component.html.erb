@@ -7,6 +7,7 @@
     <%= render NavTabComponent.new(link: { name: "patrons", path: patrons_path }) %>
     <%= render NavTabComponent.new(link: { name: "squads", path: scores_squads_path }) %>
     <%= render NavTabComponent.new(link: { name: "faq", path: faq_path }) %>
+    <%= render NavTabComponent.new(link: { name: "scores", path: scores_solo_path }) %>
     <%= render NavTabComponent.new(link: { name: "stats", path: stats_path }) %>
     <%= link_to destroy_user_session_path, class: "hover:text-wagon-red", data: { turbo: false } do %>
       <%= inline_svg_tag "icons/power.svg", class: "w-5 h-5 inline-block" %>

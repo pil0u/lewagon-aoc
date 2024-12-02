@@ -60,7 +60,12 @@ class GenerateSlackThread < ApplicationJob
 
       "`SPOILER` <#{@puzzle.url}|#{raw_title.gsub('---', '').strip}>" if raw_title.present?
     rescue OpenURI::HTTPError
-      client.chat_postMessage(channel: "#aoc-dev", text: "Title not found for day ##{@puzzle.date.day}")
+      day = @puzzle.date.day
+      client.chat_postMessage(
+        channel: "#aoc-dev",
+        text: "Title not found for day ##{day}, run bundle exec rake 'update_puzzle_thread[#{day},#{channel}]'"
+      )
+
       nil
     end
   end

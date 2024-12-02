@@ -63,7 +63,7 @@ class GenerateSlackThread < ApplicationJob
       day = @puzzle.date.day
       client.chat_postMessage(
         channel: "#aoc-dev",
-        text: "Title not found for day ##{day}, run bundle exec rake 'update_puzzle_thread[#{day},#{channel}]'"
+        text: "Title not found for day ##{day}, run `bundle exec rake 'update_puzzle_thread[#{day},#{channel}]'`"
       )
 
       nil

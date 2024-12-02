@@ -1,7 +1,9 @@
-desc 'update_puzzle_thread'
-task :update_puzzle_thread, [:day, :channel] => :environment do |_, args|
+# frozen_string_literal: true
+
+desc "update_puzzle_thread"
+task :update_puzzle_thread, %i[day channel] => :environment do |_, args|
   next p "day param missing" if args[:day].nil?
-  next p "channel missing or incorrect" unless args[:channel].in? ['aoc', 'aoc-dev']
+  next p "channel missing or incorrect" unless args[:channel].in? %w[aoc aoc-dev]
 
   puzzle = Puzzle.by_date(Aoc.begin_time.change(day: args[:day]))
   next p "Puzzle not found" if puzzle.nil?

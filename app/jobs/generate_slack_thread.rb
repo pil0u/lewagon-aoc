@@ -5,7 +5,9 @@ require "open-uri"
 class GenerateSlackThread < ApplicationJob
   queue_as :default
 
-  retry_on SlackError { |_, error| client.chat_postMessage(channel: "#aoc-dev", text: error) }
+  retry_on SlackError do |_, error|
+    client.chat_postMessage(channel: "#aoc-dev", text: error)
+  end
 
   def perform(date)
     @puzzle = Puzzle.fins_or_create_by(date:)
@@ -32,22 +34,22 @@ class GenerateSlackThread < ApplicationJob
   end
 
   def message
-    @message ||= begin
-      return { "message" => { "ts" => @puzzle.thread_ts } } if @puzzle.thread_ts.present?
+    @message ||= if @puzzle.thread_ts.present?
+                   { "message" => { "ts" => @puzzle.thread_ts } }
+                 else
+                   response = client.chat_postMessage(channel:, text: @puzzle.title)
+                   raise SlackError.new, "Failed to post message for day ##{@puzzle.date.day}" unless response["ok"]
 
-      response = client.chat_postMessage(channel:, text: @puzzle.title)
-      return response if response["ok"]
-
-      raise SlackError.new("Failed to post message for day ##{@puzzle.date.day}")
-    end
+                   response
+                 end
   end
 
   def permalink
     @permalink ||= begin
       response = client.chat_getPermalink(channel:, message_ts: message["message"]["ts"])[:permalink]
-      return response if response["ok"]
+      raise SlackError.new, "Failed to get permalink for day ##{@puzzle.date.day}" unless response["ok"]
 
-      raise SlackError.new("Failed to get permalink for day ##{@puzzle.date.day}")
+      response
     end
   end
 

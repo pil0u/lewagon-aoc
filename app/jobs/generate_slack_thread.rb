@@ -10,7 +10,7 @@ class GenerateSlackThread < ApplicationJob
   end
 
   def perform(date)
-    @puzzle = Puzzle.fins_or_create_by(date:)
+    @puzzle = Puzzle.find_or_create_by(date:)
     return if @puzzle.slack_url.present?
 
     if @puzzle.persisted?

@@ -5,43 +5,56 @@ require "open-uri"
 class GenerateSlackThread < ApplicationJob
   queue_as :default
 
+  retry_on SlackError do |_, error|
+    client.chat_postMessage(channel: "#aoc-dev", text: error)
+  end
+
   def perform(date)
     @puzzle = Puzzle.find_or_create_by(date:)
+    return if @puzzle.slack_url.present?
 
-    if @puzzle.title ||= title_scraped
-      post_message(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text: @puzzle.title)
-      @puzzle.slack_url = save_permalink
-      @puzzle.thread_ts = @message["message"]["ts"]
-      @puzzle.save
+    if @puzzle.persisted?
+      @puzzle.title = scraped_title || "`SPOILER` <#{@puzzle.url}|Day #{date.day}>"
+      @puzzle.thread_ts = message["message"]["ts"]
+      @puzzle.slack_url = permalink
+      @puzzle.save!
     else
-      post_message(channel: "#aoc-dev", text: "Title not found for day ##{@puzzle.date.day}")
-      @puzzle.destroy
+      client.chat_postMessage(channel: "#aoc-dev", text: @puzzle.errors.full_messages.join(", "))
     end
   end
 
   private
 
+  def channel
+    ENV.fetch("SLACK_CHANNEL", "#aoc-dev")
+  end
+
   def client
     @client ||= Slack::Web::Client.new
   end
 
-  def post_message(channel:, text:)
-    # https://api.slack.com/methods/chat.postMessage
-    @message = client.chat_postMessage(channel:, text:)
+  def message
+    @message ||= if @puzzle.thread_ts.present?
+                   { "message" => { "ts" => @puzzle.thread_ts } }
+                 else
+                   response = client.chat_postMessage(channel:, text: @puzzle.title)
+                   raise SlackError.new, "Failed to post message for day ##{@puzzle.date.day}" unless response["ok"]
+
+                   response
+                 end
   end
 
-  def save_permalink
-    # https://api.slack.com/methods/chat.getPermalink
-    slack_thread = client.chat_getPermalink(
-      channel: @message["channel"],
-      message_ts: @message["message"]["ts"]
-    )
+  def permalink
+    @permalink ||= begin
+      response = client.chat_getPermalink(channel:, message_ts: message["message"]["ts"])[:permalink]
+      raise SlackError.new, "Failed to get permalink for day ##{@puzzle.date.day}" unless response["ok"]
 
-    slack_thread[:permalink] || Aoc.slack_channel
+      response
+    end
   end
 
-  def title_scraped
-    @title_scraped ||= begin
+  def scraped_title
+    @scraped_title ||= begin
       html = URI.parse(@puzzle.url).open
       doc = Nokogiri::HTML(html)
       titles = doc.css("h2").map(&:text)
@@ -49,6 +62,12 @@ class GenerateSlackThread < ApplicationJob
 
       "`SPOILER` <#{@puzzle.url}|#{raw_title.gsub('---', '').strip}>" if raw_title.present?
     rescue OpenURI::HTTPError
+      day = @puzzle.date.day
+      client.chat_postMessage(
+        channel: "#aoc-dev",
+        text: "Title not found for day ##{day}, run `bundle exec rake 'update_puzzle_thread[#{day},#{channel}]'`"
+      )
+
       nil
     end
   end

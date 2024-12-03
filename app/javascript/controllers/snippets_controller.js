@@ -12,6 +12,18 @@ export default class extends Controller {
     this.#toggleBorder()
   }
 
+  handleDiscuss(event) {
+    event.preventDefault()
+    const { currentTarget: { dataset: { discussConfirm }, parentElement } } = event
+    if (discussConfirm && !confirm(discussConfirm)) { return }
+
+    const newTab = window.open('', '_blank')
+    const form = parentElement.cloneNode(true)
+    form.style.display = 'none'
+    newTab.document.body.appendChild(form)
+    form.submit()
+  }
+
   async handleToggleReaction(event) {
     event.preventDefault()
 

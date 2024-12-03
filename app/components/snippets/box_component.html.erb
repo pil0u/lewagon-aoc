@@ -14,7 +14,7 @@
     </div>
 
     <% if @user_can_discuss_snippet %>
-      <%= button_to discuss_snippet_path(@snippet), method: :patch, form: { target: "_blank" } do %>
+      <%= button_to discuss_snippet_path(@snippet), method: :patch, data: { action: "snippets#handleDiscuss", discuss_confirm: @discuss_confirm } do %>
         <span class="link-explicit link-slack">discuss on Slack</span>
       <% end %>
     <% end %>

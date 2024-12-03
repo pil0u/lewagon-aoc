@@ -11,7 +11,7 @@
       <span>·</span>
       <%= link_to "puzzle", Aoc.url(@day), target: :_blank, rel: :noopener, class: "link-explicit link-external" %>
 
-      <% if @puzzle.present? %>
+      <% if @puzzle.slack_url.present? %>
         <span>·</span>
         <%= link_to "slack thread", @puzzle.slack_url, target: :_blank, rel: :noopener, class: "link-explicit link-slack" %>
       <% end %>

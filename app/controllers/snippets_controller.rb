@@ -79,6 +79,8 @@ class SnippetsController < ApplicationController
 
   def post_slack_message
     puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
+    return if puzzle.thread_ts.nil?
+
     username = "<#{helpers.profile_url(current_user.uid)}|#{current_user.username}>"
     text = "#{username} submitted a new #{solution_markdown} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
     client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)

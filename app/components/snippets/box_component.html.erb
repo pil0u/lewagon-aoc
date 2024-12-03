@@ -1,6 +1,8 @@
 <div id="<%= @snippet.id %>"
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
-     data-controller="show-more">
+     data-controller="snippets"
+     data-snippets-snippet-id-value="<%= @snippet.id %>"
+     data-snippets-vote-value="<%= @user_reaction_vote_value.to_json %>">
 
   <div class="flex items-center justify-between text-xs">
     <div class="flex gap-x-3">
@@ -32,11 +34,7 @@
   <hr class="border-aoc-gray-darker">
 
   <div class="w-full flex items-center justify-between">
-    <div
-      class="flex items-center gap-x-1"
-      data-controller="reactions"
-      data-reactions-snippet-id-value="<%= @snippet.id %>"
-      data-reactions-vote-value="<%= @user_reaction_vote_value.to_json %>">
+    <div class="flex items-center gap-x-1">
       <% Reaction::TYPES.each do |type| %>
         <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
       <% end %>

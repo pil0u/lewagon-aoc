@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["button", "counter"]
+  static targets = ["reaction", "counter"]
   static values = {
     snippetId: Number,
     vote: String
@@ -12,16 +12,18 @@ export default class extends Controller {
     this.#toggleBorder()
   }
 
-  async handleClick(event) {
+  async handleToggleReaction(event) {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget.parentElement)
     const reaction = event.currentTarget.dataset.reactionType
 
+    console.log(reaction)
+
     if (reaction === this.vote?.reaction_type) {
       await this.#deleteReaction(formData)
     } else if (this.vote) {
-      await this.#updateReaction(reaction, formData)
+      await this.#updateReaction(formData)
     } else {
       await this.#createReaction(formData)
     }
@@ -35,13 +37,13 @@ export default class extends Controller {
   }
 
   #toggleBorder() {
-    this.buttonTargets.forEach(button => {
-      if (button.dataset.reactionType === this.vote?.reaction_type) {
-        button.classList.add("border-aoc-green", "bg-aoc-green/20")
-        button.classList.remove("border-aoc-gray-darker")
+    this.reactionTargets.forEach(reaction => {
+      if (reaction.dataset.reactionType === this.vote?.reaction_type) {
+        reaction.classList.add("border-aoc-green", "bg-aoc-green/20")
+        reaction.classList.remove("border-aoc-gray-darker")
       } else {
-        button.classList.add("border-aoc-gray-darker")
-        button.classList.remove("border-aoc-green", "bg-aoc-green/20")
+        reaction.classList.add("border-aoc-gray-darker")
+        reaction.classList.remove("border-aoc-green", "bg-aoc-green/20")
       }
     })
   }
@@ -69,7 +71,7 @@ export default class extends Controller {
     }
   }
 
-  async #updateReaction(reaction, body) {
+  async #updateReaction(body) {
     try {
       const response = await fetch(`/reactions/${this.vote.id}`, {
         method: "PATCH",

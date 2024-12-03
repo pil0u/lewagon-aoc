@@ -23,9 +23,9 @@ export default class extends Controller {
     const { currentTarget: { dataset: { discussConfirm }, parentElement } } = event
     if (discussConfirm && !confirm(discussConfirm)) { return }
 
-    const newTab = window.open('', '_blank')
+    const newTab = window.open("", "_blank")
     const form = parentElement.cloneNode(true)
-    form.style.display = 'none'
+    form.style.display = "none"
     newTab.document.body.appendChild(form)
     form.submit()
   }

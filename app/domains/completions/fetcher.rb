@@ -73,7 +73,7 @@ module Completions
         JSON.parse(response.body)["members"]
       rescue JSON::ParserError => e
         client = Slack::Web::Client.new
-        channel = "#aoc-dev"
+        channel = "C064BH3TLGJ"
 
         if Rails.env.development? || (Rails.env.production? && ENV.fetch("THIS_IS_STAGING", nil))
           text = "(not prod) Failed to parse JSON from AoC API"

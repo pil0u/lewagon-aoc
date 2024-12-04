@@ -64,7 +64,7 @@ class SnippetsController < ApplicationController
     return redirect_to @snippet.slack_url if @snippet.slack_url.present?
 
     text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}-hd: #{solution_markdown} on puzzle #{@snippet.day} part #{@snippet.challenge}"
-    message = client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:)
+    message = client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "C064BH3TLGJ"), text:)
     slack_thread = client.chat_getPermalink(channel: message["channel"], message_ts: message["message"]["ts"])
     @snippet.update(slack_url: slack_thread[:permalink])
 
@@ -83,7 +83,7 @@ class SnippetsController < ApplicationController
 
     username = "<#{helpers.profile_url(current_user.uid)}|#{current_user.username}>"
     text = "#{username} submitted a new #{solution_markdown} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
-    client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:, thread_ts: puzzle.thread_ts)
+    client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "C064BH3TLGJ"), text:, thread_ts: puzzle.thread_ts)
   end
 
   def set_snippet

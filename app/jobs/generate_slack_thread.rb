@@ -46,10 +46,10 @@ class GenerateSlackThread < ApplicationJob
 
   def permalink
     @permalink ||= begin
-      response = client.chat_getPermalink(channel:, message_ts: message["message"]["ts"])[:permalink]
+      response = client.chat_getPermalink(channel:, message_ts: message["message"]["ts"])
       raise SlackError.new, "Failed to get permalink for day ##{@puzzle.date.day}" unless response["ok"]
 
-      response
+      response[:permalink]
     end
   end
 

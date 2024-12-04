@@ -14,10 +14,9 @@ class GenerateSlackThread < ApplicationJob
     return if @puzzle.slack_url.present?
 
     if @puzzle.persisted?
-      @puzzle.title = scraped_title || "`SPOILER` <#{@puzzle.url}|Day #{date.day}>"
-      @puzzle.thread_ts = message["message"]["ts"]
-      @puzzle.slack_url = permalink
-      @puzzle.save!
+      @puzzle.update!(title: scraped_title || "`SPOILER` <#{@puzzle.url}|Day #{date.day}>")
+      @puzzle.update!(thread_ts: message["message"]["ts"])
+      @puzzle.update!(slack_url: permalink)
     else
       client.chat_postMessage(channel: "C064BH3TLGJ", text: @puzzle.errors.full_messages.join(", "))
     end

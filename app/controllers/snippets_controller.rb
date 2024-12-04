@@ -83,11 +83,11 @@ class SnippetsController < ApplicationController
     return if puzzle.thread_ts.nil?
 
     snippets = Snippet.includes(:user).where(day: @snippet.day)
-    part1, part2 = snippets.partition { |snippet| snippet.challenge == 1 }.map do |solutions|
+    part_one, part_two = snippets.partition { |snippet| snippet.challenge == 1 }.map do |solutions|
       solutions.map { |snippet| solution_markdown(snippet, "#{snippet.user.username} :#{snippet.language}-hd:") }
     end
 
-    text = "#{puzzle.title}\n\nSolutions for part 1: #{part1.join(', ')}\nSolutions for part 2: #{part2.join(', ')}"
+    text = "#{puzzle.title}\n\nSolutions for part 1: #{part_one.join(', ')}\nSolutions for part 2: #{part_two.join(', ')}"
     client.chat_update(channel: ENV.fetch("SLACK_CHANNEL", "C064BH3TLGJ"), text:, ts: puzzle.thread_ts)
   end
 

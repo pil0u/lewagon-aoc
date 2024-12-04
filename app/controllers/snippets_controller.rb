@@ -44,7 +44,7 @@ class SnippetsController < ApplicationController
     )
 
     if @snippet.save
-      post_slack_message
+      update_slack_thread
       redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), notice: "Your solution was published"
     else
       redirect_to snippet_path(day: params[:day], challenge: params[:challenge]), alert: @snippet.errors.full_messages
@@ -63,6 +63,7 @@ class SnippetsController < ApplicationController
     @snippet = Snippet.find(params[:id])
     return redirect_to @snippet.slack_url if @snippet.slack_url.present?
 
+    solution_markdown = "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
     text = "`SOLUTION` Hey <@#{@snippet.user.slack_id}>, some people want to discuss your :#{@snippet.language}-hd: #{solution_markdown} on puzzle #{@snippet.day} part #{@snippet.challenge}"
     message = client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "C064BH3TLGJ"), text:)
     slack_thread = client.chat_getPermalink(channel: message["channel"], message_ts: message["message"]["ts"])
@@ -77,21 +78,25 @@ class SnippetsController < ApplicationController
     @client ||= Slack::Web::Client.new
   end
 
-  def post_slack_message
+  def update_slack_thread
     puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
     return if puzzle.thread_ts.nil?
 
-    username = "<#{helpers.profile_url(current_user.uid)}|#{current_user.username}>"
-    text = "#{username} submitted a new #{solution_markdown} for part #{params[:challenge]} in :#{@snippet.language}-hd:"
-    client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "C064BH3TLGJ"), text:, thread_ts: puzzle.thread_ts)
+    snippets = Snippet.includes(:user).where(day: @snippet.day)
+    part1, part2 = snippets.partition { |snippet| snippet.challenge == 1 }.map do |solutions|
+      solutions.map { |snippet| solution_markdown(snippet, "#{snippet.user.username} :#{snippet.language}-hd:") }
+    end
+
+    text = "#{puzzle.title}\n\nSolutions for part 1: #{part1.join(', ')}\nSolutions for part 2: #{part2.join(', ')}"
+    client.chat_update(channel: ENV.fetch("SLACK_CHANNEL", "C064BH3TLGJ"), text:, ts: puzzle.thread_ts)
   end
 
   def set_snippet
     @snippet = current_user.snippets.find(params[:id])
   end
 
-  def solution_markdown
-    "<#{helpers.snippet_url(day: @snippet.day, challenge: @snippet.challenge, anchor: @snippet.id)}|solution>"
+  def solution_markdown(snippet = @snippet, text = "solution")
+    "<#{helpers.snippet_url(day: snippet.day, challenge: snippet.challenge, anchor: snippet.id)}|#{text}>"
   end
 
   def snippet_params

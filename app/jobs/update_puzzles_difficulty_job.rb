@@ -12,7 +12,7 @@ class UpdatePuzzlesDifficultyJob < ApplicationJob
     end
 
     client = Slack::Web::Client.new
-    channel = "#aoc-dev"
+    channel = "C064BH3TLGJ"
 
     puzzles.each do |puzzle|
       day = puzzle.date.day
@@ -47,7 +47,7 @@ class UpdatePuzzlesDifficultyJob < ApplicationJob
         - part 2 is *`#{part_2[:difficulty]}`* #{part_2[:colour]}
       TEXT
 
-      client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "#aoc-dev"), text:)
+      client.chat_postMessage(channel: ENV.fetch("SLACK_CHANNEL", "C064BH3TLGJ"), text:)
     end
 
     Rails.logger.info "✔ Puzzle difficulties updated"

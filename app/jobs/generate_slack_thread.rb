@@ -6,7 +6,7 @@ class GenerateSlackThread < ApplicationJob
   queue_as :default
 
   retry_on SlackError do |_, error|
-    client.chat_postMessage(channel: "#aoc-dev", text: error)
+    client.chat_postMessage(channel: "C064BH3TLGJ", text: error)
   end
 
   def perform(date)
@@ -14,19 +14,18 @@ class GenerateSlackThread < ApplicationJob
     return if @puzzle.slack_url.present?
 
     if @puzzle.persisted?
-      @puzzle.title = scraped_title || "`SPOILER` <#{@puzzle.url}|Day #{date.day}>"
-      @puzzle.thread_ts = message["message"]["ts"]
-      @puzzle.slack_url = permalink
-      @puzzle.save!
+      @puzzle.update!(title: scraped_title || "`SPOILER` <#{@puzzle.url}|Day #{date.day}>")
+      @puzzle.update!(thread_ts: message["message"]["ts"])
+      @puzzle.update!(slack_url: permalink)
     else
-      client.chat_postMessage(channel: "#aoc-dev", text: @puzzle.errors.full_messages.join(", "))
+      client.chat_postMessage(channel: "C064BH3TLGJ", text: @puzzle.errors.full_messages.join(", "))
     end
   end
 
   private
 
   def channel
-    ENV.fetch("SLACK_CHANNEL", "#aoc-dev")
+    ENV.fetch("SLACK_CHANNEL", "C064BH3TLGJ")
   end
 
   def client
@@ -46,10 +45,10 @@ class GenerateSlackThread < ApplicationJob
 
   def permalink
     @permalink ||= begin
-      response = client.chat_getPermalink(channel:, message_ts: message["message"]["ts"])[:permalink]
+      response = client.chat_getPermalink(channel:, message_ts: message["message"]["ts"])
       raise SlackError.new, "Failed to get permalink for day ##{@puzzle.date.day}" unless response["ok"]
 
-      response
+      response[:permalink]
     end
   end
 
@@ -64,7 +63,7 @@ class GenerateSlackThread < ApplicationJob
     rescue OpenURI::HTTPError
       day = @puzzle.date.day
       client.chat_postMessage(
-        channel: "#aoc-dev",
+        channel: "C064BH3TLGJ",
         text: "Title not found for day ##{day}, run `bundle exec rake 'update_puzzle_thread[#{day},#{channel}]'`"
       )
 

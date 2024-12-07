@@ -1,6 +1,7 @@
 <div id="<%= @snippet.id %>"
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
-     data-controller="snippets expandable"
+     data-controller="confirm expandable snippets"
+     data-confirm-message-value="<%= @discuss_confirm_message %>"
      data-snippets-snippet-id-value="<%= @snippet.id %>"
      data-snippets-vote-value="<%= @user_reaction_vote_value.to_json %>">
 
@@ -14,7 +15,7 @@
     </div>
 
     <% if @user_can_discuss_snippet %>
-      <%= button_to discuss_snippet_path(@snippet), method: :patch, data: { action: "snippets#handleDiscuss", discuss_confirm: @discuss_confirm } do %>
+      <%= button_to discuss_snippet_path(@snippet), method: :patch, data: { action: "confirm#handleSubmit" } do %>
         <span class="link-explicit link-slack">discuss on Slack</span>
       <% end %>
     <% end %>

@@ -1,9 +1,9 @@
 <div id="<%= @snippet.id %>"
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
-     data-controller="confirm expandable snippets"
+     data-controller="confirm expandable reactions"
      data-confirm-message-value="<%= @discuss_confirm_message %>"
-     data-snippets-snippet-id-value="<%= @snippet.id %>"
-     data-snippets-vote-value="<%= @user_reaction_vote_value.to_json %>">
+     data-reactions-snippet-id-value="<%= @snippet.id %>"
+     data-reactions-vote-value="<%= @user_reaction_vote_value.to_json %>">
 
   <div class="flex items-center justify-between text-xs">
     <div class="flex gap-x-3">

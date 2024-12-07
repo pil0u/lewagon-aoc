@@ -19,8 +19,6 @@ export default class extends Controller {
     const formData = new FormData(event.currentTarget.parentElement)
     const reaction = event.currentTarget.dataset.reactionType
 
-    console.log(reaction)
-
     if (reaction === this.vote?.reaction_type) {
       await this.#deleteReaction(formData)
     } else if (this.vote) {

@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["codeBlock", "counter", "expandButton", "reaction"]
+  static targets = ["counter", "reaction"]
 
   static values = {
     snippetId: Number,
@@ -11,11 +11,6 @@ export default class extends Controller {
   connect() {
     this.vote = JSON.parse(this.voteValue)
     this.#toggleBorder()
-
-    // Hide the "show more" button if the code block is not truncated
-    if (this.codeBlockTarget.scrollHeight <= this.codeBlockTarget.offsetHeight) {
-        this.expandButtonTarget.classList.add("hidden")
-    }
   }
 
   handleDiscuss(event) {
@@ -28,12 +23,6 @@ export default class extends Controller {
     form.style.display = "none"
     newTab.document.body.appendChild(form)
     form.submit()
-  }
-
-  handleToggleExpandable() {
-    const isExpanded = !this.codeBlockTarget.classList.toggle("truncated")
-    this.expandButtonTarget.textContent = isExpanded ? "↑ Show less ↑" : "↓ Show more ↓"
-    this.codeBlockTarget.scrollIntoView({ behavior: "smooth" })
   }
 
   async handleToggleReaction(event) {

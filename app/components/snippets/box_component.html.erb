@@ -1,6 +1,6 @@
 <div id="<%= @snippet.id %>"
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
-     data-controller="snippets"
+     data-controller="snippets expandable"
      data-snippets-snippet-id-value="<%= @snippet.id %>"
      data-snippets-vote-value="<%= @user_reaction_vote_value.to_json %>">
 
@@ -22,11 +22,11 @@
 
   <pre class="snippet break-words text-sm whitespace-normal truncated"
        data-language="<%= @snippet.language %>"
-       data-snippets-target="codeBlock">
+       data-expandable-target="codeBlock">
       <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
   </pre>
-  <button data-action="snippets#handleToggleExpandable"
-          data-snippets-target="expandButton"
+  <button data-action="expandable#handleToggleExpandable"
+          data-expandable-target="trigger"
           class="w-full text-xs text-center bg-aoc-green/20 hover:bg-aoc-green/15 active:bg-aoc-green/10">
     ↓ Show more ↓
   </button>

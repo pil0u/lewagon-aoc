@@ -1,9 +1,7 @@
 <div id="<%= @snippet.id %>"
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
-     data-controller="confirm expandable reactions"
-     data-confirm-message-value="<%= @discuss_confirm_message %>"
-     data-reactions-snippet-id-value="<%= @snippet.id %>"
-     data-reactions-vote-value="<%= @user_reaction_vote_value.to_json %>">
+     data-controller="confirm show-more"
+     data-confirm-message-value="<%= @discuss_confirm_message %>">
 
   <div class="flex items-center justify-between text-xs">
     <div class="flex gap-x-3">
@@ -23,11 +21,11 @@
 
   <pre class="snippet break-words text-sm whitespace-normal truncated"
        data-language="<%= @snippet.language %>"
-       data-expandable-target="codeBlock">
+       data-show-more-target="codeBlock">
       <%= raw render_markdown @snippet.code, default_language: @snippet.language %>
   </pre>
-  <button data-action="expandable#handleToggleExpandable"
-          data-expandable-target="trigger"
+  <button data-action="show-more#toggle"
+          data-show-more-target="button"
           class="w-full text-xs text-center bg-aoc-green/20 hover:bg-aoc-green/15 active:bg-aoc-green/10">
     ↓ Show more ↓
   </button>
@@ -35,7 +33,11 @@
   <hr class="border-aoc-gray-darker">
 
   <div class="w-full flex items-center justify-between">
-    <div class="flex items-center gap-x-1">
+    <div
+      class="flex items-center gap-x-1"
+      data-controller="reactions"
+      data-reactions-snippet-id-value="<%= @snippet.id %>"
+      data-reactions-vote-value="<%= @user_reaction_vote_value.to_json %>">
       <% Reaction::TYPES.each do |type| %>
         <%= render Snippets::ReactionComponent.new(snippet: @snippet, reaction_type: type.to_sym, user: @user) %>
       <% end %>

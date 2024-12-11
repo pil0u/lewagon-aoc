@@ -1,6 +1,7 @@
 <div id="<%= @snippet.id %>"
      class="w-full p-4 flex flex-col self-center gap-y-4 bg-aoc-gray-darkest border border-aoc-gray-dark group"
-     data-controller="show-more">
+     data-controller="confirm show-more"
+     data-confirm-message-value="<%= @discuss_confirm_message %>">
 
   <div class="flex items-center justify-between text-xs">
     <div class="flex gap-x-3">
@@ -12,7 +13,7 @@
     </div>
 
     <% if @user_can_discuss_snippet %>
-      <%= button_to discuss_snippet_path(@snippet), method: :patch, form: { target: "_blank" } do %>
+      <%= button_to discuss_snippet_path(@snippet), method: :patch, data: { action: "confirm#handleSubmit" } do %>
         <span class="link-explicit link-slack">discuss on Slack</span>
       <% end %>
     <% end %>

@@ -80,7 +80,7 @@ class SnippetsController < ApplicationController
 
   def update_slack_thread
     puzzle = Puzzle.by_date(Aoc.begin_time.change(day: params[:day]))
-    return if puzzle.thread_ts.nil?
+    return if puzzle&.thread_ts.nil?
 
     snippets = Snippet.includes(:user).where(day: @snippet.day)
     part_one, part_two = snippets.partition { |snippet| snippet.challenge == 1 }.map do |solutions|

@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.6"
+ruby "3.3.5"
 gem "rails", "~> 7.2.2.1"
 
 gem "active_flag"

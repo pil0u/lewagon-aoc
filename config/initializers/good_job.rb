@@ -5,7 +5,7 @@ require "aoc"
 Rails.application.configure do
   config.good_job = {
     execution_mode: :external,
-    max_threads: 5,
+    max_threads: 2,
     shutdown_timeout: 30,
     enable_cron: true,
     cron: {

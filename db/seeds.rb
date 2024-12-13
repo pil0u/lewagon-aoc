@@ -64,6 +64,7 @@ campuses = [
   { name: "Nantes",         size: 375,  top_contributors: 10 },
   { name: "Nice",           size: 209,  top_contributors: 10 },
   { name: "Online",         size: 1861, top_contributors: 85 },
+  { name: "Online LATAM",   size: 9999, top_contributors: 99 },
   { name: "Oslo",           size: 55,   top_contributors: 10 },  # not in export
   { name: "Paris",          size: 4347, top_contributors: 105 },
   { name: "Porto",          size: 53,   top_contributors: 10 },

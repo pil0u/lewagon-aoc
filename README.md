@@ -1,7 +1,7 @@
 ![Le Wagon x Advent of Code](public/thumbnail.png)
 
 ```
-Ruby    3.3.5
+Ruby    3.3.6
 Rails   7.2.2.1
 ```
 

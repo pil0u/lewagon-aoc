@@ -39,7 +39,7 @@ group :development, :test do
   gem "dotenv"
   gem "erb_lint", require: false
   gem "factory_bot_rails"
-  gem "rspec-rails", "~> 6.x"
+  gem "rspec-rails", "~> 7"
   gem "rubocop", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false

@@ -217,7 +217,7 @@ GEM
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
     mutex_m (0.2.0)
-    net-http (0.4.1)
+    net-http (0.7.0)
       uri
     net-imap (0.5.12)
       date
@@ -333,7 +333,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.9)
+    rexml (3.4.4)
     rouge (4.4.0)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
@@ -425,7 +425,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.6.0)
-    uri (0.13.1)
+    uri (1.1.0)
     useragent (0.16.11)
     version_gem (1.1.4)
     view_component (3.19.0)

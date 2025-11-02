@@ -1,11 +1,20 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :render_maintenance, if: :maintenance_mode?
   before_action :authenticate_user!
   before_action :sentry_set_user
   before_action :render_countdown, if: :render_countdown?
 
   private
+
+  def maintenance_mode?
+    ENV["MAINTENANCE_MODE"] == "true"
+  end
+
+  def render_maintenance
+    render "pages/maintenance", layout: false
+  end
 
   def sentry_set_user
     Sentry.set_user(

@@ -7,7 +7,7 @@ Rails.application.configure do
     execution_mode: :external,
     max_threads: 2,
     shutdown_timeout: 30,
-    # enable_cron: true,
+    enable_cron: true,
     cron: {
       # every 10 minutes between November 1st and December 30th
       insert_new_completions: {

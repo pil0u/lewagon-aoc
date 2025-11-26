@@ -3,7 +3,7 @@
 class Aoc
   class << self
     def year
-      2024
+      2025
     end
 
     def event_timezone

@@ -16,24 +16,24 @@ Rails.application.configure do
       },
       # every puzzle day, 5 minutes before a new puzzle is released
       cache_cleanup: {
-        cron: "55 23 1-25 12 * America/New_York",
+        cron: "55 23 1-12 12 * America/New_York",
         class: "Cache::CleanupJob"
       },
       # every puzzle day, 1 minutes after a new puzzle is released
       generate_slack_thread: {
-        cron: "1 0 1-25 12 * America/New_York",
+        cron: "1 0 1-12 12 * America/New_York",
         class: "GenerateSlackThread",
         args: -> { [Time.current] }
       },
       # every puzzle day, 5 minutes after a new puzzle is released
       buddies_generate_daily_pairs: {
-        cron: "5 0 1-25 12 * America/New_York",
+        cron: "5 0 1-12 12 * America/New_York",
         class: "Buddies::GenerateDailyPairsJob",
         args: -> { [Aoc.latest_day] }
       },
       # every puzzle day, every 5 minutes for 3 hours after a new puzzle is released
       update_puzzles_difficulty: {
-        cron: "*/5 0-2 1-25 12 * America/New_York",
+        cron: "*/5 0-2 1-12 12 * America/New_York",
         class: "UpdatePuzzlesDifficultyJob"
       },
       # every 5 minutes

@@ -20,6 +20,8 @@
       <%= render Calendar::AdventDayComponent.new(advent_day: advent_day, now: @now) %>
     <% elsif index == 12 && @all_puzzles_solved %>
       <%= image_tag "parrot.gif", class: "w-14 h-14 lg:w-20 lg:h-20" %>
+    <% elsif index == 12 && @now >= Aoc.begin_time %>
+      <span class="flex items-center justify-center text-3xl lg:text-4xl">❄️</span>
     <% else %>
       <div></div>
     <% end %>

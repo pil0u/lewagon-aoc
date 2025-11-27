@@ -63,6 +63,8 @@ module Completions
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
+      # Avoid CRL verification issues with OpenSSL 3.x (Homebrew) in development
+      https.cert_store = OpenSSL::X509::Store.new.tap(&:set_default_paths) if Rails.env.development?
 
       request = Net::HTTP::Get.new(url)
       request["Cookie"] = "session=#{ENV.fetch('SESSION_COOKIE')}"

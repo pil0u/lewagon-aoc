@@ -3,7 +3,7 @@
 class Aoc
   class << self
     def year
-      2024
+      2025
     end
 
     def event_timezone
@@ -21,7 +21,7 @@ class Aoc
     end
 
     def end_time
-      Time.new(year, 12, 25, 23, 59, 59, event_timezone)
+      Time.new(year, 12, 12, 23, 59, 59, event_timezone)
     end
 
     def in_progress?
@@ -34,7 +34,7 @@ class Aoc
       now = event_timezone.now
 
       return 0 if now < begin_time
-      return 25 if now > end_time
+      return 12 if now > end_time
 
       now.day
     end

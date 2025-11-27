@@ -7,6 +7,9 @@ require:
 
 AllCops:
   NewCops: enable
+  inherit_mode: { merge: [Exclude] }
+  Exclude:
+    - "__*/**/*"
 
 Lint/MissingSuper:
   Exclude:

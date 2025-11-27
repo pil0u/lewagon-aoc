@@ -15,8 +15,9 @@ module Completions
           update_users_sync_status(api_completions.keys)
           Rails.logger.info "✔ Users' sync status updated"
 
-          update_users_global_score(api_completions)
-          Rails.logger.info "✔ Users' global score updated"
+          # Global scores were removed in 2025
+          # update_users_global_score(api_completions)
+          # Rails.logger.info "✔ Users' global score updated"
 
           completion_attributes = transform_for_database(api_completions)
           Rails.logger.info "✔ Completions prepared for database import (total: #{completion_attributes.size})"

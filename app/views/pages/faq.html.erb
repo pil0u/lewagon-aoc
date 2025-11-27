@@ -23,10 +23,6 @@
         The event focuses on <span class="strong">learning</span> new programming skills and
         <span class="strong">sharing</span> with the community.
       </p>
-      <p>
-        If you feel competitive, you can earn points by solving puzzles <em>fast</em>. Enough points to win the golden
-        ticket? <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %>
-      </p>
 
       <% if user_signed_in? %>
         <p>Good luck!</p>
@@ -69,7 +65,6 @@
         <li>Solution sharing</li>
         <li>Squads</li>
         <li>Custom leaderboards</li>
-        <li>Golden tickets <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %></li>
       </ul>
     </div>
   </details>
@@ -157,45 +152,6 @@
                     rel: :noopener,
                     class: "link-explicit link-slack" %>
         to assemble your dream team now!
-      </p>
-    </div>
-  </details>
-
-  <details>
-    <%= render Faq::DetailsSummaryComponent.new(title: "What are the prizes?") %>
-
-    <div class="flex flex-col gap-y-2 text-justify">
-      <p>
-        Three exceptional individuals will receive a golden ticket
-        <%= inline_svg_tag "icons/golden_ticket.svg", class: "w-6 h-6 inline-block" %>
-        <ol class="ml-7 list-decimal list-inside">
-          <li>The greatest influencer of Le Wagon (see <%= link_to "patrons",
-                                                                   patrons_path,
-                                                                   class: "link-explicit link-internal" %>)</li>
-          <li>Announced soon™</li>
-          <li>Announced soon™</li>
-        </ol>
-      </p>
-      <p>
-        Each golden ticket unlocks a reward package worth <code class="strong">919€</code>.
-        More info <%= link_to "on Slack",
-                              Aoc.slack_channel,
-                              target: :_blank,
-                              rel: :noopener,
-                              class: "link-explicit link-slack" %>.
-      </p>
-      <p>
-        These rewards are gifted by
-        <%= link_to "Le Wagon",
-                    "https://www.lewagon.com/",
-                    target: :_blank,
-                    rel: :noopener,
-                    class: "text-wagon-red link-explicit" %>
-        and <%= link_to "ShipOnRails",
-                        "https://shiponrails.com/",
-                        target: :_blank,
-                        rel: :noopener,
-                        class: "link-external link-explicit" %>.
       </p>
     </div>
   </details>

@@ -10,13 +10,23 @@ class PagesController < ApplicationController
     @daily_buddy = Buddy.of_the_day(current_user)
 
     user_completions = current_user.completions.group(:day).count
-    @advent_days = [
-      2,  23, 19, 15, 6,
-      14, 10, 1,  22, 18,
-      21, 17, 13, 9,  5,
-      8,  4,  25, 16, 12,
-      20, 11, 7,  3,  24
-    ].map do |day|
+
+    @all_puzzles_solved = user_completions.values.sum == 24
+    @today_puzzle_solved = user_completions[Aoc.latest_day] == 2
+
+    # Snowflake pattern in 5x5 grid (0-indexed):
+    #   X  .  X  .  X     (0, 2, 4)
+    #   .  X  .  X  .     (6, 8)
+    #   X  .  .  .  X     (10, 14)
+    #   .  X  .  X  .     (16, 18)
+    #   X  .  X  .  X     (20, 22, 24)
+    snowflake_positions = [0, 2, 4, 6, 8, 10, 14, 16, 18, 20, 22, 24]
+    shuffled_days = [1, 8, 3, 6, 10, 11, 5, 4, 12, 9, 2, 7]
+
+    @advent_days = Array.new(25) do |position|
+      next nil unless snowflake_positions.include?(position)
+
+      day = shuffled_days[snowflake_positions.index(position)]
       {
         parts_solved: user_completions[day] || 0,
         release_time: Aoc.release_time(day)

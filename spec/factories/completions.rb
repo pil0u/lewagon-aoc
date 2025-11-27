@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :completion do
-    day { rand(1..25) }
+    day { rand(1..12) }
     challenge { rand(1..2) }
     association :user
   end

@@ -46,6 +46,50 @@
   </ul>
 </div>
 
+<div class="my-2">
+  <pre class="snippet break-words text-sm" data-language="ruby">
+    <%= raw render_markdown <<~RUBY, default_language: "ruby"
+          ```ruby
+          # How to reset a year
+
+          # 1. Change year in Aoc.year
+
+          # 2. Create and run migration for the hardcoded begin time in the completion virtual columns
+
+          # 3. Adjust the FAQ
+
+          # 4. Check the cron jobs
+
+          # 5. Reset the database
+
+          Cache::SoloPoint.destroy_all
+          Cache::SoloScore.destroy_all
+          Cache::InsanityPoint.destroy_all
+          Cache::InsanityScore.destroy_all
+          Cache::CityPoint.destroy_all
+          Cache::CityScore.destroy_all
+          Cache::UserDayScore.destroy_all
+          Cache::SquadPoint.destroy_all
+          Cache::SquadScore.destroy_all
+          State.destroy_all
+          State.create!(fetch_api_begin: Time.at(0).utc, fetch_api_end: Time.at(0).utc)
+          Completion.destroy_all
+          Achievement.destroy_all
+          Buddy.destroy_all
+          Message.destroy_all
+          Reaction.destroy_all
+          Snippet.destroy_all
+          User.destroy_all
+          Squad.destroy_all
+          # Sign in as pil0u, make him admin, contributor, beta_tester
+          User.first.update!(roles: %i[admin contributor beta_tester])
+          # { pilou: "6788", aquaj: "449", louis: "19049" }
+          ```
+        RUBY
+    %>
+  </pre>
+</div>
+
 <% else %>
 
 <div class="my-2 mx-auto">

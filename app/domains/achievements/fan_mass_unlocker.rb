@@ -4,6 +4,7 @@ module Achievements
   class FanMassUnlocker < MassUnlocker
     def call
       uri = URI("https://api.github.com/repos/pil0u/lewagon-aoc/stargazers")
+      uri = URI("http://api.github.com/repos/pil0u/lewagon-aoc/stargazers") if Rails.env.development?
       response = Net::HTTP.get_response(uri)
 
       return unless response.code == "200"

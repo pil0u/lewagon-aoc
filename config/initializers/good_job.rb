@@ -31,11 +31,11 @@ Rails.application.configure do
         class: "Buddies::GenerateDailyPairsJob",
         args: -> { [Aoc.latest_day] }
       },
-      # every puzzle day, every 5 minutes for 3 hours after a new puzzle is released
-      update_puzzles_difficulty: {
-        cron: "*/5 0-2 1-12 12 * America/New_York",
-        class: "UpdatePuzzlesDifficultyJob"
-      },
+      # # every puzzle day, every 5 minutes for 3 hours after a new puzzle is released
+      # update_puzzles_difficulty: {
+      #   cron: "*/5 0-2 1-12 12 * America/New_York",
+      #   class: "UpdatePuzzlesDifficultyJob"
+      # },
       # every 5 minutes
       blazer_run_all_checks: {
         cron: "*/5 * * * *",

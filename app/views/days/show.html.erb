@@ -2,10 +2,11 @@
   <div class="flex flex-wrap gap-x-6">
     <h2 class="strong">Day <%= @day %></h2>
 
-    <span class="opacity-70"
-          title="<%= @difficulty_title %>">
+    <!---
+    <span class="opacity-70" title="<%= @difficulty_title %>">
       <%= @part_1[:colour] %><%= @part_2[:colour] %>
     </span>
+    --->
 
     <% if @day <= Aoc.latest_day %>
       <span>·</span>

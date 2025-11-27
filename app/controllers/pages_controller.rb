@@ -18,7 +18,7 @@ class PagesController < ApplicationController
     #   .  X  .  X  .     (16, 18)
     #   X  .  X  .  X     (20, 22, 24)
     snowflake_positions = [0, 2, 4, 6, 8, 10, 14, 16, 18, 20, 22, 24]
-    shuffled_days = [7, 4, 1, 10, 11, 6, 8, 3, 2, 12, 9, 5]
+    shuffled_days = [1, 8, 3, 6, 10, 11, 5, 4, 12, 9, 2, 7]
 
     @advent_days = Array.new(25) do |position|
       next nil unless snowflake_positions.include?(position)

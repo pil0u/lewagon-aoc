@@ -15,10 +15,6 @@ module Completions
           update_users_sync_status(api_completions.keys)
           Rails.logger.info "✔ Users' sync status updated"
 
-          # Global scores were removed in 2025
-          # update_users_global_score(api_completions)
-          # Rails.logger.info "✔ Users' global score updated"
-
           completion_attributes = transform_for_database(api_completions)
           Rails.logger.info "✔ Completions prepared for database import (total: #{completion_attributes.size})"
 
@@ -103,20 +99,6 @@ module Completions
       end
       to_unsync.pluck(:id, :github_username).each do |(id, github_username)|
         Rails.logger.info "\t#{id}-#{github_username} is now unsynced."
-      end
-    end
-
-    def update_users_global_score(api_completions)
-      aoc_global_scores = api_completions.values.filter_map do |user|
-        { id: user["id"], global_score: user["global_score"] } if user["global_score"] > 0
-      end
-
-      aoc_global_scores.each do |obj|
-        aoc_id = obj[:id]
-        aoc_global_score = obj[:global_score]
-
-        User.find_by(aoc_id:).update(aoc_global_score:)
-        Rails.logger.info "\t#{aoc_id} has a global score of #{aoc_global_score}!"
       end
     end
 

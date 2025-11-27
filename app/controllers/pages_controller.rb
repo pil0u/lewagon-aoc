@@ -11,6 +11,9 @@ class PagesController < ApplicationController
 
     user_completions = current_user.completions.group(:day).count
 
+    @all_puzzles_solved = user_completions.values.sum == 24
+    @today_puzzle_solved = user_completions[Aoc.latest_day] == 2
+
     # Snowflake pattern in 5x5 grid (0-indexed):
     #   X  .  X  .  X     (0, 2, 4)
     #   .  X  .  X  .     (6, 8)
@@ -29,8 +32,6 @@ class PagesController < ApplicationController
         release_time: Aoc.release_time(day)
       }
     end
-
-    @all_puzzles_solved = current_user.completions.count == 24
 
     @now = Aoc.event_timezone.now
     @next_puzzle_time = Aoc.next_puzzle_time

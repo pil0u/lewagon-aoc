@@ -83,6 +83,7 @@
           Squad.destroy_all
           # Sign in as pil0u, make him admin, contributor, beta_tester
           User.first.update!(roles: %i[admin contributor beta_tester])
+          InsertNewCompletionsJob.perform_now
           # { pilou: "6788", aquaj: "449", louis: "19049" }
           ```
         RUBY

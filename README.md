@@ -1,8 +1,8 @@
 ![Le Wagon x Advent of Code](public/thumbnail.png)
 
 ```
-Ruby    3.3.5
-Rails   7.2.2.1
+Ruby    3.3.10
+Rails   7.2.2.2
 ```
 
 Found a bug? Please [open an Issue](/../../issues/new).<br>
